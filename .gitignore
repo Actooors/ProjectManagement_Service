@@ -1,5 +1,7 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
+/src/main/resources/application.yml
+/src/main/resources/generator/generatorConfig.xml
 
 ### STS ###
 .apt_generated

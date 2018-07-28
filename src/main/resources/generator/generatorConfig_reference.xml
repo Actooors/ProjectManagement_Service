@@ -1,3 +1,8 @@
+<!--############################################################-->
+<!--##### 请配置好数据库password 再建一个generatorConfig.xml#####-->
+<!--############################################################-->
+
+
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
@@ -13,9 +18,9 @@
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://47.106.224.202:3306/management?characterEncoding=utf-8&amp;useSSL=true"
+                        connectionURL="jdbc:mysql://xxxxxxxxxxx:3306/management?characterEncoding=utf-8&amp;useSSL=true"
                         userId="root"
-                        password="root">
+                        password="">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>

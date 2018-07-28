@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.management.dao.ProjectProgressMapper" >
+  <resultMap id="BaseResultMap" type="com.management.model.entity.ProjectProgress" >
+    <id column="project_progress_id" property="projectProgressId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="project_application_id" property="projectApplicationId" jdbcType="INTEGER" />
+    <result column="interim_report_upload_address" property="interimReportUploadAddress" jdbcType="VARCHAR" />
+    <result column="interim_report_time" property="interimReportTime" jdbcType="TIMESTAMP" />
+    <result column="is_finished_interim_report" property="isFinishedInterimReport" jdbcType="INTEGER" />
+    <result column="interim_report_failure_reason" property="interimReportFailureReason" jdbcType="VARCHAR" />
+    <result column="concluding_report_upload_address" property="concludingReportUploadAddress" jdbcType="VARCHAR" />
+    <result column="concluding_report_time" property="concludingReportTime" jdbcType="TIMESTAMP" />
+    <result column="is_finished_concluding_report" property="isFinishedConcludingReport" jdbcType="INTEGER" />
+    <result column="concluding_report_failure_reason" property="concludingReportFailureReason" jdbcType="VARCHAR" />
+    <result column="project_process" property="projectProcess" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    project_progress_id, user_id, project_application_id, interim_report_upload_address, 
+    interim_report_time, is_finished_interim_report, interim_report_failure_reason, concluding_report_upload_address, 
+    concluding_report_time, is_finished_concluding_report, concluding_report_failure_reason, 
+    project_process
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectProgressExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tbl_ProjectProgress
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ProjectProgress
+    where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_ProjectProgress
+    where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.management.model.entity.ProjectProgressExample" >
+    delete from tbl_ProjectProgress
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.management.model.entity.ProjectProgress" >
+    insert into tbl_ProjectProgress (project_progress_id, user_id, project_application_id, 
+      interim_report_upload_address, interim_report_time, 
+      is_finished_interim_report, interim_report_failure_reason, 
+      concluding_report_upload_address, concluding_report_time, 
+      is_finished_concluding_report, concluding_report_failure_reason, 
+      project_process)
+    values (#{projectProgressId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{projectApplicationId,jdbcType=INTEGER}, 
+      #{interimReportUploadAddress,jdbcType=VARCHAR}, #{interimReportTime,jdbcType=TIMESTAMP}, 
+      #{isFinishedInterimReport,jdbcType=INTEGER}, #{interimReportFailureReason,jdbcType=VARCHAR}, 
+      #{concludingReportUploadAddress,jdbcType=VARCHAR}, #{concludingReportTime,jdbcType=TIMESTAMP}, 
+      #{isFinishedConcludingReport,jdbcType=INTEGER}, #{concludingReportFailureReason,jdbcType=VARCHAR}, 
+      #{projectProcess,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.management.model.entity.ProjectProgress" >
+    insert into tbl_ProjectProgress
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectProgressId != null" >
+        project_progress_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="projectApplicationId != null" >
+        project_application_id,
+      </if>
+      <if test="interimReportUploadAddress != null" >
+        interim_report_upload_address,
+      </if>
+      <if test="interimReportTime != null" >
+        interim_report_time,
+      </if>
+      <if test="isFinishedInterimReport != null" >
+        is_finished_interim_report,
+      </if>
+      <if test="interimReportFailureReason != null" >
+        interim_report_failure_reason,
+      </if>
+      <if test="concludingReportUploadAddress != null" >
+        concluding_report_upload_address,
+      </if>
+      <if test="concludingReportTime != null" >
+        concluding_report_time,
+      </if>
+      <if test="isFinishedConcludingReport != null" >
+        is_finished_concluding_report,
+      </if>
+      <if test="concludingReportFailureReason != null" >
+        concluding_report_failure_reason,
+      </if>
+      <if test="projectProcess != null" >
+        project_process,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectProgressId != null" >
+        #{projectProgressId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectApplicationId != null" >
+        #{projectApplicationId,jdbcType=INTEGER},
+      </if>
+      <if test="interimReportUploadAddress != null" >
+        #{interimReportUploadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="interimReportTime != null" >
+        #{interimReportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isFinishedInterimReport != null" >
+        #{isFinishedInterimReport,jdbcType=INTEGER},
+      </if>
+      <if test="interimReportFailureReason != null" >
+        #{interimReportFailureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="concludingReportUploadAddress != null" >
+        #{concludingReportUploadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="concludingReportTime != null" >
+        #{concludingReportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isFinishedConcludingReport != null" >
+        #{isFinishedConcludingReport,jdbcType=INTEGER},
+      </if>
+      <if test="concludingReportFailureReason != null" >
+        #{concludingReportFailureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="projectProcess != null" >
+        #{projectProcess,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.management.model.entity.ProjectProgressExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_ProjectProgress
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_ProjectProgress
+    <set >
+      <if test="record.projectProgressId != null" >
+        project_progress_id = #{record.projectProgressId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectApplicationId != null" >
+        project_application_id = #{record.projectApplicationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.interimReportUploadAddress != null" >
+        interim_report_upload_address = #{record.interimReportUploadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.interimReportTime != null" >
+        interim_report_time = #{record.interimReportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isFinishedInterimReport != null" >
+        is_finished_interim_report = #{record.isFinishedInterimReport,jdbcType=INTEGER},
+      </if>
+      <if test="record.interimReportFailureReason != null" >
+        interim_report_failure_reason = #{record.interimReportFailureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.concludingReportUploadAddress != null" >
+        concluding_report_upload_address = #{record.concludingReportUploadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.concludingReportTime != null" >
+        concluding_report_time = #{record.concludingReportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isFinishedConcludingReport != null" >
+        is_finished_concluding_report = #{record.isFinishedConcludingReport,jdbcType=INTEGER},
+      </if>
+      <if test="record.concludingReportFailureReason != null" >
+        concluding_report_failure_reason = #{record.concludingReportFailureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectProcess != null" >
+        project_process = #{record.projectProcess,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_ProjectProgress
+    set project_progress_id = #{record.projectProgressId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      project_application_id = #{record.projectApplicationId,jdbcType=INTEGER},
+      interim_report_upload_address = #{record.interimReportUploadAddress,jdbcType=VARCHAR},
+      interim_report_time = #{record.interimReportTime,jdbcType=TIMESTAMP},
+      is_finished_interim_report = #{record.isFinishedInterimReport,jdbcType=INTEGER},
+      interim_report_failure_reason = #{record.interimReportFailureReason,jdbcType=VARCHAR},
+      concluding_report_upload_address = #{record.concludingReportUploadAddress,jdbcType=VARCHAR},
+      concluding_report_time = #{record.concludingReportTime,jdbcType=TIMESTAMP},
+      is_finished_concluding_report = #{record.isFinishedConcludingReport,jdbcType=INTEGER},
+      concluding_report_failure_reason = #{record.concludingReportFailureReason,jdbcType=VARCHAR},
+      project_process = #{record.projectProcess,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.management.model.entity.ProjectProgress" >
+    update tbl_ProjectProgress
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="projectApplicationId != null" >
+        project_application_id = #{projectApplicationId,jdbcType=INTEGER},
+      </if>
+      <if test="interimReportUploadAddress != null" >
+        interim_report_upload_address = #{interimReportUploadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="interimReportTime != null" >
+        interim_report_time = #{interimReportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isFinishedInterimReport != null" >
+        is_finished_interim_report = #{isFinishedInterimReport,jdbcType=INTEGER},
+      </if>
+      <if test="interimReportFailureReason != null" >
+        interim_report_failure_reason = #{interimReportFailureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="concludingReportUploadAddress != null" >
+        concluding_report_upload_address = #{concludingReportUploadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="concludingReportTime != null" >
+        concluding_report_time = #{concludingReportTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isFinishedConcludingReport != null" >
+        is_finished_concluding_report = #{isFinishedConcludingReport,jdbcType=INTEGER},
+      </if>
+      <if test="concludingReportFailureReason != null" >
+        concluding_report_failure_reason = #{concludingReportFailureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="projectProcess != null" >
+        project_process = #{projectProcess,jdbcType=INTEGER},
+      </if>
+    </set>
+    where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.management.model.entity.ProjectProgress" >
+    update tbl_ProjectProgress
+    set user_id = #{userId,jdbcType=VARCHAR},
+      project_application_id = #{projectApplicationId,jdbcType=INTEGER},
+      interim_report_upload_address = #{interimReportUploadAddress,jdbcType=VARCHAR},
+      interim_report_time = #{interimReportTime,jdbcType=TIMESTAMP},
+      is_finished_interim_report = #{isFinishedInterimReport,jdbcType=INTEGER},
+      interim_report_failure_reason = #{interimReportFailureReason,jdbcType=VARCHAR},
+      concluding_report_upload_address = #{concludingReportUploadAddress,jdbcType=VARCHAR},
+      concluding_report_time = #{concludingReportTime,jdbcType=TIMESTAMP},
+      is_finished_concluding_report = #{isFinishedConcludingReport,jdbcType=INTEGER},
+      concluding_report_failure_reason = #{concludingReportFailureReason,jdbcType=VARCHAR},
+      project_process = #{projectProcess,jdbcType=INTEGER}
+    where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
+  </update>
+</mapper>

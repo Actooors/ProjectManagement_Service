@@ -1,0 +1,434 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.management.dao.ProjectApplicationMapper" >
+  <resultMap id="BaseResultMap" type="com.management.model.entity.ProjectApplication" >
+    <id column="project_application_id" property="projectApplicationId" jdbcType="INTEGER" />
+    <result column="project_category_id" property="projectCategoryId" jdbcType="INTEGER" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_member" property="projectMember" jdbcType="VARCHAR" />
+    <result column="project_description" property="projectDescription" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="project_application_upload_address" property="projectApplicationUploadAddress" jdbcType="VARCHAR" />
+    <result column="is_meeting" property="isMeeting" jdbcType="INTEGER" />
+    <result column="meeting_review_message" property="meetingReviewMessage" jdbcType="VARCHAR" />
+    <result column="review_phase" property="reviewPhase" jdbcType="INTEGER" />
+    <result column="failure_reason" property="failureReason" jdbcType="VARCHAR" />
+    <result column="application_time" property="applicationTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    project_application_id, project_category_id, project_name, project_member, project_description, 
+    user_id, user_name, sex, department, phone, mail, position, major, project_application_upload_address, 
+    is_meeting, meeting_review_message, review_phase, failure_reason, application_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectApplicationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tbl_ProjectApplication
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ProjectApplication
+    where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_ProjectApplication
+    where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.management.model.entity.ProjectApplicationExample" >
+    delete from tbl_ProjectApplication
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.management.model.entity.ProjectApplication" >
+    insert into tbl_ProjectApplication (project_application_id, project_category_id, 
+      project_name, project_member, project_description, 
+      user_id, user_name, sex, 
+      department, phone, mail, 
+      position, major, project_application_upload_address, 
+      is_meeting, meeting_review_message, review_phase, 
+      failure_reason, application_time)
+    values (#{projectApplicationId,jdbcType=INTEGER}, #{projectCategoryId,jdbcType=INTEGER}, 
+      #{projectName,jdbcType=VARCHAR}, #{projectMember,jdbcType=VARCHAR}, #{projectDescription,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
+      #{position,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{projectApplicationUploadAddress,jdbcType=VARCHAR}, 
+      #{isMeeting,jdbcType=INTEGER}, #{meetingReviewMessage,jdbcType=VARCHAR}, #{reviewPhase,jdbcType=INTEGER}, 
+      #{failureReason,jdbcType=VARCHAR}, #{applicationTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.management.model.entity.ProjectApplication" >
+    insert into tbl_ProjectApplication
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectApplicationId != null" >
+        project_application_id,
+      </if>
+      <if test="projectCategoryId != null" >
+        project_category_id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="projectMember != null" >
+        project_member,
+      </if>
+      <if test="projectDescription != null" >
+        project_description,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="mail != null" >
+        mail,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="major != null" >
+        major,
+      </if>
+      <if test="projectApplicationUploadAddress != null" >
+        project_application_upload_address,
+      </if>
+      <if test="isMeeting != null" >
+        is_meeting,
+      </if>
+      <if test="meetingReviewMessage != null" >
+        meeting_review_message,
+      </if>
+      <if test="reviewPhase != null" >
+        review_phase,
+      </if>
+      <if test="failureReason != null" >
+        failure_reason,
+      </if>
+      <if test="applicationTime != null" >
+        application_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectApplicationId != null" >
+        #{projectApplicationId,jdbcType=INTEGER},
+      </if>
+      <if test="projectCategoryId != null" >
+        #{projectCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectMember != null" >
+        #{projectMember,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDescription != null" >
+        #{projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="projectApplicationUploadAddress != null" >
+        #{projectApplicationUploadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isMeeting != null" >
+        #{isMeeting,jdbcType=INTEGER},
+      </if>
+      <if test="meetingReviewMessage != null" >
+        #{meetingReviewMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewPhase != null" >
+        #{reviewPhase,jdbcType=INTEGER},
+      </if>
+      <if test="failureReason != null" >
+        #{failureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationTime != null" >
+        #{applicationTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.management.model.entity.ProjectApplicationExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_ProjectApplication
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_ProjectApplication
+    <set >
+      <if test="record.projectApplicationId != null" >
+        project_application_id = #{record.projectApplicationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectCategoryId != null" >
+        project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectName != null" >
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectMember != null" >
+        project_member = #{record.projectMember,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectDescription != null" >
+        project_description = #{record.projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mail != null" >
+        mail = #{record.mail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.position != null" >
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null" >
+        major = #{record.major,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectApplicationUploadAddress != null" >
+        project_application_upload_address = #{record.projectApplicationUploadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isMeeting != null" >
+        is_meeting = #{record.isMeeting,jdbcType=INTEGER},
+      </if>
+      <if test="record.meetingReviewMessage != null" >
+        meeting_review_message = #{record.meetingReviewMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewPhase != null" >
+        review_phase = #{record.reviewPhase,jdbcType=INTEGER},
+      </if>
+      <if test="record.failureReason != null" >
+        failure_reason = #{record.failureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationTime != null" >
+        application_time = #{record.applicationTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_ProjectApplication
+    set project_application_id = #{record.projectApplicationId,jdbcType=INTEGER},
+      project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      project_member = #{record.projectMember,jdbcType=VARCHAR},
+      project_description = #{record.projectDescription,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      mail = #{record.mail,jdbcType=VARCHAR},
+      position = #{record.position,jdbcType=VARCHAR},
+      major = #{record.major,jdbcType=VARCHAR},
+      project_application_upload_address = #{record.projectApplicationUploadAddress,jdbcType=VARCHAR},
+      is_meeting = #{record.isMeeting,jdbcType=INTEGER},
+      meeting_review_message = #{record.meetingReviewMessage,jdbcType=VARCHAR},
+      review_phase = #{record.reviewPhase,jdbcType=INTEGER},
+      failure_reason = #{record.failureReason,jdbcType=VARCHAR},
+      application_time = #{record.applicationTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.management.model.entity.ProjectApplication" >
+    update tbl_ProjectApplication
+    <set >
+      <if test="projectCategoryId != null" >
+        project_category_id = #{projectCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectMember != null" >
+        project_member = #{projectMember,jdbcType=VARCHAR},
+      </if>
+      <if test="projectDescription != null" >
+        project_description = #{projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="projectApplicationUploadAddress != null" >
+        project_application_upload_address = #{projectApplicationUploadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isMeeting != null" >
+        is_meeting = #{isMeeting,jdbcType=INTEGER},
+      </if>
+      <if test="meetingReviewMessage != null" >
+        meeting_review_message = #{meetingReviewMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewPhase != null" >
+        review_phase = #{reviewPhase,jdbcType=INTEGER},
+      </if>
+      <if test="failureReason != null" >
+        failure_reason = #{failureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationTime != null" >
+        application_time = #{applicationTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.management.model.entity.ProjectApplication" >
+    update tbl_ProjectApplication
+    set project_category_id = #{projectCategoryId,jdbcType=INTEGER},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      project_member = #{projectMember,jdbcType=VARCHAR},
+      project_description = #{projectDescription,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      project_application_upload_address = #{projectApplicationUploadAddress,jdbcType=VARCHAR},
+      is_meeting = #{isMeeting,jdbcType=INTEGER},
+      meeting_review_message = #{meetingReviewMessage,jdbcType=VARCHAR},
+      review_phase = #{reviewPhase,jdbcType=INTEGER},
+      failure_reason = #{failureReason,jdbcType=VARCHAR},
+      application_time = #{applicationTime,jdbcType=TIMESTAMP}
+    where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
+  </update>
+</mapper>

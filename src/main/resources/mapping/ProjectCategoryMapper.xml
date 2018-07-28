@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.management.dao.ProjectCategoryMapper" >
+  <resultMap id="BaseResultMap" type="com.management.model.entity.ProjectCategory" >
+    <id column="project_category_id" property="projectCategoryId" jdbcType="INTEGER" />
+    <result column="project_type" property="projectType" jdbcType="INTEGER" />
+    <result column="principal_id" property="principalId" jdbcType="VARCHAR" />
+    <result column="principal_name" property="principalName" jdbcType="VARCHAR" />
+    <result column="principal_phone" property="principalPhone" jdbcType="VARCHAR" />
+    <result column="applicant_type" property="applicantType" jdbcType="VARCHAR" />
+    <result column="max_money" property="maxMoney" jdbcType="VARCHAR" />
+    <result column="review_leader_id" property="reviewLeaderId" jdbcType="VARCHAR" />
+    <result column="review_leader_name" property="reviewLeaderName" jdbcType="VARCHAR" />
+    <result column="is_exist_meeting_review" property="isExistMeetingReview" jdbcType="INTEGER" />
+    <result column="project_application_download_address" property="projectApplicationDownloadAddress" jdbcType="VARCHAR" />
+    <result column="application_start_time" property="applicationStartTime" jdbcType="TIMESTAMP" />
+    <result column="application_end_time" property="applicationEndTime" jdbcType="TIMESTAMP" />
+    <result column="project_start_time" property="projectStartTime" jdbcType="TIMESTAMP" />
+    <result column="project_end_time" property="projectEndTime" jdbcType="TIMESTAMP" />
+    <result column="is_interim_report_activated" property="isInterimReportActivated" jdbcType="INTEGER" />
+    <result column="interim_report_start_time" property="interimReportStartTime" jdbcType="TIMESTAMP" />
+    <result column="interim_report_end_time" property="interimReportEndTime" jdbcType="TIMESTAMP" />
+    <result column="interim_report_download_address" property="interimReportDownloadAddress" jdbcType="VARCHAR" />
+    <result column="is_concluding_report_activated" property="isConcludingReportActivated" jdbcType="INTEGER" />
+    <result column="concluding_report_start_time" property="concludingReportStartTime" jdbcType="TIMESTAMP" />
+    <result column="concluding_report_end_time" property="concludingReportEndTime" jdbcType="TIMESTAMP" />
+    <result column="concluding_report_download_address" property="concludingReportDownloadAddress" jdbcType="VARCHAR" />
+    <result column="statistics" property="statistics" jdbcType="INTEGER" />
+    <result column="is_approved" property="isApproved" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    project_category_id, project_type, principal_id, principal_name, principal_phone, 
+    applicant_type, max_money, review_leader_id, review_leader_name, is_exist_meeting_review, 
+    project_application_download_address, application_start_time, application_end_time, 
+    project_start_time, project_end_time, is_interim_report_activated, interim_report_start_time, 
+    interim_report_end_time, interim_report_download_address, is_concluding_report_activated, 
+    concluding_report_start_time, concluding_report_end_time, concluding_report_download_address, 
+    statistics, is_approved
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectCategoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tbl_ProjectCategory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ProjectCategory
+    where project_category_id = #{projectCategoryId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_ProjectCategory
+    where project_category_id = #{projectCategoryId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.management.model.entity.ProjectCategoryExample" >
+    delete from tbl_ProjectCategory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.management.model.entity.ProjectCategory" >
+    insert into tbl_ProjectCategory (project_category_id, project_type, principal_id, 
+      principal_name, principal_phone, applicant_type, 
+      max_money, review_leader_id, review_leader_name, 
+      is_exist_meeting_review, project_application_download_address, 
+      application_start_time, application_end_time, 
+      project_start_time, project_end_time, is_interim_report_activated, 
+      interim_report_start_time, interim_report_end_time, 
+      interim_report_download_address, is_concluding_report_activated, 
+      concluding_report_start_time, concluding_report_end_time, 
+      concluding_report_download_address, statistics, 
+      is_approved)
+    values (#{projectCategoryId,jdbcType=INTEGER}, #{projectType,jdbcType=INTEGER}, #{principalId,jdbcType=VARCHAR}, 
+      #{principalName,jdbcType=VARCHAR}, #{principalPhone,jdbcType=VARCHAR}, #{applicantType,jdbcType=VARCHAR}, 
+      #{maxMoney,jdbcType=VARCHAR}, #{reviewLeaderId,jdbcType=VARCHAR}, #{reviewLeaderName,jdbcType=VARCHAR}, 
+      #{isExistMeetingReview,jdbcType=INTEGER}, #{projectApplicationDownloadAddress,jdbcType=VARCHAR}, 
+      #{applicationStartTime,jdbcType=TIMESTAMP}, #{applicationEndTime,jdbcType=TIMESTAMP}, 
+      #{projectStartTime,jdbcType=TIMESTAMP}, #{projectEndTime,jdbcType=TIMESTAMP}, #{isInterimReportActivated,jdbcType=INTEGER}, 
+      #{interimReportStartTime,jdbcType=TIMESTAMP}, #{interimReportEndTime,jdbcType=TIMESTAMP}, 
+      #{interimReportDownloadAddress,jdbcType=VARCHAR}, #{isConcludingReportActivated,jdbcType=INTEGER}, 
+      #{concludingReportStartTime,jdbcType=TIMESTAMP}, #{concludingReportEndTime,jdbcType=TIMESTAMP}, 
+      #{concludingReportDownloadAddress,jdbcType=VARCHAR}, #{statistics,jdbcType=INTEGER}, 
+      #{isApproved,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.management.model.entity.ProjectCategory" >
+    insert into tbl_ProjectCategory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectCategoryId != null" >
+        project_category_id,
+      </if>
+      <if test="projectType != null" >
+        project_type,
+      </if>
+      <if test="principalId != null" >
+        principal_id,
+      </if>
+      <if test="principalName != null" >
+        principal_name,
+      </if>
+      <if test="principalPhone != null" >
+        principal_phone,
+      </if>
+      <if test="applicantType != null" >
+        applicant_type,
+      </if>
+      <if test="maxMoney != null" >
+        max_money,
+      </if>
+      <if test="reviewLeaderId != null" >
+        review_leader_id,
+      </if>
+      <if test="reviewLeaderName != null" >
+        review_leader_name,
+      </if>
+      <if test="isExistMeetingReview != null" >
+        is_exist_meeting_review,
+      </if>
+      <if test="projectApplicationDownloadAddress != null" >
+        project_application_download_address,
+      </if>
+      <if test="applicationStartTime != null" >
+        application_start_time,
+      </if>
+      <if test="applicationEndTime != null" >
+        application_end_time,
+      </if>
+      <if test="projectStartTime != null" >
+        project_start_time,
+      </if>
+      <if test="projectEndTime != null" >
+        project_end_time,
+      </if>
+      <if test="isInterimReportActivated != null" >
+        is_interim_report_activated,
+      </if>
+      <if test="interimReportStartTime != null" >
+        interim_report_start_time,
+      </if>
+      <if test="interimReportEndTime != null" >
+        interim_report_end_time,
+      </if>
+      <if test="interimReportDownloadAddress != null" >
+        interim_report_download_address,
+      </if>
+      <if test="isConcludingReportActivated != null" >
+        is_concluding_report_activated,
+      </if>
+      <if test="concludingReportStartTime != null" >
+        concluding_report_start_time,
+      </if>
+      <if test="concludingReportEndTime != null" >
+        concluding_report_end_time,
+      </if>
+      <if test="concludingReportDownloadAddress != null" >
+        concluding_report_download_address,
+      </if>
+      <if test="statistics != null" >
+        statistics,
+      </if>
+      <if test="isApproved != null" >
+        is_approved,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectCategoryId != null" >
+        #{projectCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="projectType != null" >
+        #{projectType,jdbcType=INTEGER},
+      </if>
+      <if test="principalId != null" >
+        #{principalId,jdbcType=VARCHAR},
+      </if>
+      <if test="principalName != null" >
+        #{principalName,jdbcType=VARCHAR},
+      </if>
+      <if test="principalPhone != null" >
+        #{principalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantType != null" >
+        #{applicantType,jdbcType=VARCHAR},
+      </if>
+      <if test="maxMoney != null" >
+        #{maxMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewLeaderId != null" >
+        #{reviewLeaderId,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewLeaderName != null" >
+        #{reviewLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="isExistMeetingReview != null" >
+        #{isExistMeetingReview,jdbcType=INTEGER},
+      </if>
+      <if test="projectApplicationDownloadAddress != null" >
+        #{projectApplicationDownloadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationStartTime != null" >
+        #{applicationStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applicationEndTime != null" >
+        #{applicationEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectStartTime != null" >
+        #{projectStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectEndTime != null" >
+        #{projectEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isInterimReportActivated != null" >
+        #{isInterimReportActivated,jdbcType=INTEGER},
+      </if>
+      <if test="interimReportStartTime != null" >
+        #{interimReportStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interimReportEndTime != null" >
+        #{interimReportEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interimReportDownloadAddress != null" >
+        #{interimReportDownloadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isConcludingReportActivated != null" >
+        #{isConcludingReportActivated,jdbcType=INTEGER},
+      </if>
+      <if test="concludingReportStartTime != null" >
+        #{concludingReportStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="concludingReportEndTime != null" >
+        #{concludingReportEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="concludingReportDownloadAddress != null" >
+        #{concludingReportDownloadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="statistics != null" >
+        #{statistics,jdbcType=INTEGER},
+      </if>
+      <if test="isApproved != null" >
+        #{isApproved,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.management.model.entity.ProjectCategoryExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_ProjectCategory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_ProjectCategory
+    <set >
+      <if test="record.projectCategoryId != null" >
+        project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectType != null" >
+        project_type = #{record.projectType,jdbcType=INTEGER},
+      </if>
+      <if test="record.principalId != null" >
+        principal_id = #{record.principalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principalName != null" >
+        principal_name = #{record.principalName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principalPhone != null" >
+        principal_phone = #{record.principalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicantType != null" >
+        applicant_type = #{record.applicantType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.maxMoney != null" >
+        max_money = #{record.maxMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewLeaderId != null" >
+        review_leader_id = #{record.reviewLeaderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reviewLeaderName != null" >
+        review_leader_name = #{record.reviewLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isExistMeetingReview != null" >
+        is_exist_meeting_review = #{record.isExistMeetingReview,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectApplicationDownloadAddress != null" >
+        project_application_download_address = #{record.projectApplicationDownloadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.applicationStartTime != null" >
+        application_start_time = #{record.applicationStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applicationEndTime != null" >
+        application_end_time = #{record.applicationEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectStartTime != null" >
+        project_start_time = #{record.projectStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectEndTime != null" >
+        project_end_time = #{record.projectEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isInterimReportActivated != null" >
+        is_interim_report_activated = #{record.isInterimReportActivated,jdbcType=INTEGER},
+      </if>
+      <if test="record.interimReportStartTime != null" >
+        interim_report_start_time = #{record.interimReportStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.interimReportEndTime != null" >
+        interim_report_end_time = #{record.interimReportEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.interimReportDownloadAddress != null" >
+        interim_report_download_address = #{record.interimReportDownloadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isConcludingReportActivated != null" >
+        is_concluding_report_activated = #{record.isConcludingReportActivated,jdbcType=INTEGER},
+      </if>
+      <if test="record.concludingReportStartTime != null" >
+        concluding_report_start_time = #{record.concludingReportStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.concludingReportEndTime != null" >
+        concluding_report_end_time = #{record.concludingReportEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.concludingReportDownloadAddress != null" >
+        concluding_report_download_address = #{record.concludingReportDownloadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.statistics != null" >
+        statistics = #{record.statistics,jdbcType=INTEGER},
+      </if>
+      <if test="record.isApproved != null" >
+        is_approved = #{record.isApproved,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_ProjectCategory
+    set project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
+      project_type = #{record.projectType,jdbcType=INTEGER},
+      principal_id = #{record.principalId,jdbcType=VARCHAR},
+      principal_name = #{record.principalName,jdbcType=VARCHAR},
+      principal_phone = #{record.principalPhone,jdbcType=VARCHAR},
+      applicant_type = #{record.applicantType,jdbcType=VARCHAR},
+      max_money = #{record.maxMoney,jdbcType=VARCHAR},
+      review_leader_id = #{record.reviewLeaderId,jdbcType=VARCHAR},
+      review_leader_name = #{record.reviewLeaderName,jdbcType=VARCHAR},
+      is_exist_meeting_review = #{record.isExistMeetingReview,jdbcType=INTEGER},
+      project_application_download_address = #{record.projectApplicationDownloadAddress,jdbcType=VARCHAR},
+      application_start_time = #{record.applicationStartTime,jdbcType=TIMESTAMP},
+      application_end_time = #{record.applicationEndTime,jdbcType=TIMESTAMP},
+      project_start_time = #{record.projectStartTime,jdbcType=TIMESTAMP},
+      project_end_time = #{record.projectEndTime,jdbcType=TIMESTAMP},
+      is_interim_report_activated = #{record.isInterimReportActivated,jdbcType=INTEGER},
+      interim_report_start_time = #{record.interimReportStartTime,jdbcType=TIMESTAMP},
+      interim_report_end_time = #{record.interimReportEndTime,jdbcType=TIMESTAMP},
+      interim_report_download_address = #{record.interimReportDownloadAddress,jdbcType=VARCHAR},
+      is_concluding_report_activated = #{record.isConcludingReportActivated,jdbcType=INTEGER},
+      concluding_report_start_time = #{record.concludingReportStartTime,jdbcType=TIMESTAMP},
+      concluding_report_end_time = #{record.concludingReportEndTime,jdbcType=TIMESTAMP},
+      concluding_report_download_address = #{record.concludingReportDownloadAddress,jdbcType=VARCHAR},
+      statistics = #{record.statistics,jdbcType=INTEGER},
+      is_approved = #{record.isApproved,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.management.model.entity.ProjectCategory" >
+    update tbl_ProjectCategory
+    <set >
+      <if test="projectType != null" >
+        project_type = #{projectType,jdbcType=INTEGER},
+      </if>
+      <if test="principalId != null" >
+        principal_id = #{principalId,jdbcType=VARCHAR},
+      </if>
+      <if test="principalName != null" >
+        principal_name = #{principalName,jdbcType=VARCHAR},
+      </if>
+      <if test="principalPhone != null" >
+        principal_phone = #{principalPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="applicantType != null" >
+        applicant_type = #{applicantType,jdbcType=VARCHAR},
+      </if>
+      <if test="maxMoney != null" >
+        max_money = #{maxMoney,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewLeaderId != null" >
+        review_leader_id = #{reviewLeaderId,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewLeaderName != null" >
+        review_leader_name = #{reviewLeaderName,jdbcType=VARCHAR},
+      </if>
+      <if test="isExistMeetingReview != null" >
+        is_exist_meeting_review = #{isExistMeetingReview,jdbcType=INTEGER},
+      </if>
+      <if test="projectApplicationDownloadAddress != null" >
+        project_application_download_address = #{projectApplicationDownloadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="applicationStartTime != null" >
+        application_start_time = #{applicationStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applicationEndTime != null" >
+        application_end_time = #{applicationEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectStartTime != null" >
+        project_start_time = #{projectStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectEndTime != null" >
+        project_end_time = #{projectEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isInterimReportActivated != null" >
+        is_interim_report_activated = #{isInterimReportActivated,jdbcType=INTEGER},
+      </if>
+      <if test="interimReportStartTime != null" >
+        interim_report_start_time = #{interimReportStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interimReportEndTime != null" >
+        interim_report_end_time = #{interimReportEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="interimReportDownloadAddress != null" >
+        interim_report_download_address = #{interimReportDownloadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="isConcludingReportActivated != null" >
+        is_concluding_report_activated = #{isConcludingReportActivated,jdbcType=INTEGER},
+      </if>
+      <if test="concludingReportStartTime != null" >
+        concluding_report_start_time = #{concludingReportStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="concludingReportEndTime != null" >
+        concluding_report_end_time = #{concludingReportEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="concludingReportDownloadAddress != null" >
+        concluding_report_download_address = #{concludingReportDownloadAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="statistics != null" >
+        statistics = #{statistics,jdbcType=INTEGER},
+      </if>
+      <if test="isApproved != null" >
+        is_approved = #{isApproved,jdbcType=INTEGER},
+      </if>
+    </set>
+    where project_category_id = #{projectCategoryId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.management.model.entity.ProjectCategory" >
+    update tbl_ProjectCategory
+    set project_type = #{projectType,jdbcType=INTEGER},
+      principal_id = #{principalId,jdbcType=VARCHAR},
+      principal_name = #{principalName,jdbcType=VARCHAR},
+      principal_phone = #{principalPhone,jdbcType=VARCHAR},
+      applicant_type = #{applicantType,jdbcType=VARCHAR},
+      max_money = #{maxMoney,jdbcType=VARCHAR},
+      review_leader_id = #{reviewLeaderId,jdbcType=VARCHAR},
+      review_leader_name = #{reviewLeaderName,jdbcType=VARCHAR},
+      is_exist_meeting_review = #{isExistMeetingReview,jdbcType=INTEGER},
+      project_application_download_address = #{projectApplicationDownloadAddress,jdbcType=VARCHAR},
+      application_start_time = #{applicationStartTime,jdbcType=TIMESTAMP},
+      application_end_time = #{applicationEndTime,jdbcType=TIMESTAMP},
+      project_start_time = #{projectStartTime,jdbcType=TIMESTAMP},
+      project_end_time = #{projectEndTime,jdbcType=TIMESTAMP},
+      is_interim_report_activated = #{isInterimReportActivated,jdbcType=INTEGER},
+      interim_report_start_time = #{interimReportStartTime,jdbcType=TIMESTAMP},
+      interim_report_end_time = #{interimReportEndTime,jdbcType=TIMESTAMP},
+      interim_report_download_address = #{interimReportDownloadAddress,jdbcType=VARCHAR},
+      is_concluding_report_activated = #{isConcludingReportActivated,jdbcType=INTEGER},
+      concluding_report_start_time = #{concludingReportStartTime,jdbcType=TIMESTAMP},
+      concluding_report_end_time = #{concludingReportEndTime,jdbcType=TIMESTAMP},
+      concluding_report_download_address = #{concludingReportDownloadAddress,jdbcType=VARCHAR},
+      statistics = #{statistics,jdbcType=INTEGER},
+      is_approved = #{isApproved,jdbcType=INTEGER}
+    where project_category_id = #{projectCategoryId,jdbcType=INTEGER}
+  </update>
+</mapper>

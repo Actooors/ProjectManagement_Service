@@ -1,5 +1,5 @@
 create table tbl_User (
-  user_id int primary key comment '用户工号',
+  user_id varchar(8) primary key comment '用户工号',
   user_name varchar(8) comment '用户姓名',
   sex varchar(2) comment '性别',
   department varchar(32) comment '部门(学院)',
@@ -78,7 +78,6 @@ create table tbl_ProjectApplication (
 
 create table tbl_ProjectMember (
   project_member_id int  primary key comment '标识id',
-  project_id int  not null  comment '项目id',
   type int not null comment '判断是修改申请表修改的member还是项目申请表的member
                             1是项目申请表 2是项目修改申请表',
   user_id varchar(8) not null comment '用户工号',

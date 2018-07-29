@@ -2,6 +2,7 @@ package com.management.model.entity;
 
 import java.util.Date;
 
+
 public class News {
     private Integer newsId;
 

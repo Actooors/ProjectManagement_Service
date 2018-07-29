@@ -1,5 +1,5 @@
 create table tbl_User (
-  user_id int primary key comment '用户工号',
+  user_id varchar(8) primary key comment '用户工号',
   user_name varchar(8) comment '用户姓名',
   sex varchar(2) comment '性别',
   department varchar(32) comment '部门(学院)',

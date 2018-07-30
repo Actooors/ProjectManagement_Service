@@ -165,6 +165,216 @@ public class ProjectCategoryExample {
             return (Criteria) this;
         }
 
+        public Criteria andProjectCategoryNameIsNull() {
+            addCriterion("project_category_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameIsNotNull() {
+            addCriterion("project_category_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameEqualTo(String value) {
+            addCriterion("project_category_name =", value, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameNotEqualTo(String value) {
+            addCriterion("project_category_name <>", value, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameGreaterThan(String value) {
+            addCriterion("project_category_name >", value, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameGreaterThanOrEqualTo(String value) {
+            addCriterion("project_category_name >=", value, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameLessThan(String value) {
+            addCriterion("project_category_name <", value, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameLessThanOrEqualTo(String value) {
+            addCriterion("project_category_name <=", value, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameLike(String value) {
+            addCriterion("project_category_name like", value, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameNotLike(String value) {
+            addCriterion("project_category_name not like", value, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameIn(List<String> values) {
+            addCriterion("project_category_name in", values, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameNotIn(List<String> values) {
+            addCriterion("project_category_name not in", values, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameBetween(String value1, String value2) {
+            addCriterion("project_category_name between", value1, value2, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryNameNotBetween(String value1, String value2) {
+            addCriterion("project_category_name not between", value1, value2, "projectCategoryName");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionIsNull() {
+            addCriterion("project_category_description is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionIsNotNull() {
+            addCriterion("project_category_description is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionEqualTo(String value) {
+            addCriterion("project_category_description =", value, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionNotEqualTo(String value) {
+            addCriterion("project_category_description <>", value, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionGreaterThan(String value) {
+            addCriterion("project_category_description >", value, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionGreaterThanOrEqualTo(String value) {
+            addCriterion("project_category_description >=", value, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionLessThan(String value) {
+            addCriterion("project_category_description <", value, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionLessThanOrEqualTo(String value) {
+            addCriterion("project_category_description <=", value, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionLike(String value) {
+            addCriterion("project_category_description like", value, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionNotLike(String value) {
+            addCriterion("project_category_description not like", value, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionIn(List<String> values) {
+            addCriterion("project_category_description in", values, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionNotIn(List<String> values) {
+            addCriterion("project_category_description not in", values, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionBetween(String value1, String value2) {
+            addCriterion("project_category_description between", value1, value2, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionNotBetween(String value1, String value2) {
+            addCriterion("project_category_description not between", value1, value2, "projectCategoryDescription");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressIsNull() {
+            addCriterion("project_category_description_address is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressIsNotNull() {
+            addCriterion("project_category_description_address is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressEqualTo(String value) {
+            addCriterion("project_category_description_address =", value, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressNotEqualTo(String value) {
+            addCriterion("project_category_description_address <>", value, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressGreaterThan(String value) {
+            addCriterion("project_category_description_address >", value, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressGreaterThanOrEqualTo(String value) {
+            addCriterion("project_category_description_address >=", value, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressLessThan(String value) {
+            addCriterion("project_category_description_address <", value, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressLessThanOrEqualTo(String value) {
+            addCriterion("project_category_description_address <=", value, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressLike(String value) {
+            addCriterion("project_category_description_address like", value, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressNotLike(String value) {
+            addCriterion("project_category_description_address not like", value, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressIn(List<String> values) {
+            addCriterion("project_category_description_address in", values, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressNotIn(List<String> values) {
+            addCriterion("project_category_description_address not in", values, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressBetween(String value1, String value2) {
+            addCriterion("project_category_description_address between", value1, value2, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryDescriptionAddressNotBetween(String value1, String value2) {
+            addCriterion("project_category_description_address not between", value1, value2, "projectCategoryDescriptionAddress");
+            return (Criteria) this;
+        }
+
         public Criteria andProjectTypeIsNull() {
             addCriterion("project_type is null");
             return (Criteria) this;

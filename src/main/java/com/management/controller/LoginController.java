@@ -30,5 +30,4 @@ public class LoginController {
     public Result login(@RequestBody LoginInfo loginInfo) {
         return userService.login(loginInfo);
     }
-
 }

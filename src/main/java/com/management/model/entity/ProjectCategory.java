@@ -5,6 +5,12 @@ import java.util.Date;
 public class ProjectCategory {
     private Integer projectCategoryId;
 
+    private String projectCategoryName;
+
+    private String projectCategoryDescription;
+
+    private String projectCategoryDescriptionAddress;
+
     private Integer projectType;
 
     private String principalId;
@@ -59,6 +65,30 @@ public class ProjectCategory {
 
     public void setProjectCategoryId(Integer projectCategoryId) {
         this.projectCategoryId = projectCategoryId;
+    }
+
+    public String getProjectCategoryName() {
+        return projectCategoryName;
+    }
+
+    public void setProjectCategoryName(String projectCategoryName) {
+        this.projectCategoryName = projectCategoryName == null ? null : projectCategoryName.trim();
+    }
+
+    public String getProjectCategoryDescription() {
+        return projectCategoryDescription;
+    }
+
+    public void setProjectCategoryDescription(String projectCategoryDescription) {
+        this.projectCategoryDescription = projectCategoryDescription == null ? null : projectCategoryDescription.trim();
+    }
+
+    public String getProjectCategoryDescriptionAddress() {
+        return projectCategoryDescriptionAddress;
+    }
+
+    public void setProjectCategoryDescriptionAddress(String projectCategoryDescriptionAddress) {
+        this.projectCategoryDescriptionAddress = projectCategoryDescriptionAddress == null ? null : projectCategoryDescriptionAddress.trim();
     }
 
     public Integer getProjectType() {

@@ -17,6 +17,10 @@ create table tbl_User (
 
 create table tbl_ProjectCategory (
   project_category_id int primary key comment '标识id',
+  project_category_name varchar(32) not null comment '项目大类的名字',
+  project_category_description varchar(4096) comment '项目大类的简介
+                  业务员可以选择填写简介也可以选择上传包含介绍文件的ｚｉｐ文件',
+  project_category_description_address varchar(128) comment '项目大类介绍的ｚｉｐ文件',
   project_type int not null comment '项目类别 1 2 3 4对应不同项目，日后更新',
   principal_id varchar(8) not null comment '项目业务员id',
   principal_name varchar(16) not null comment '业务员姓名',

@@ -4,6 +4,8 @@ import com.management.model.OV.Result;
 import com.management.model.jsonrequestbody.LoginInfo;
 import com.management.service.UserService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -20,9 +22,11 @@ import javax.annotation.Resource;
 @Api(value = "登录controller")
 public class LoginController {
     @Resource
+    @ApiParam("和用户相关的业务操作")
     private UserService userService;
 
     @PostMapping("")
+    @ApiOperation(value = "登录", notes = "根据用户id和密码登录系统")
     public Result login(@RequestBody LoginInfo loginInfo) {
         return userService.login(loginInfo);
     }

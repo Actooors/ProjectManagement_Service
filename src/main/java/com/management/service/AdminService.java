@@ -11,11 +11,8 @@ import javax.annotation.Resource;
  *业务员层的各接口Seriver方法
  */
 @Service
-public class AdminService {
-    @Resource
-    private UserMapper userMapper;
-    @Resource
-    private ProjectCategoryMapper projectCategoryMapper;
+public interface AdminService {
+
 
     /**
      * 创建项目类别

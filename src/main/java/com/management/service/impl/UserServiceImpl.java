@@ -5,6 +5,7 @@ import com.management.dao.UserMapper;
 import com.management.model.OV.Result;
 import com.management.model.OV.resultsetting.IsTimeOutInfo;
 import com.management.model.OV.resultsetting.LoginResponse;
+import com.management.model.OV.resultsetting.ProjectCategoryListInfo;
 import com.management.model.entity.ProjectCategory;
 import com.management.model.entity.ProjectCategoryExample;
 import com.management.model.entity.User;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -54,26 +56,6 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
-    /**
-     * @Description: 根据projectCategoryId获取projectcategory
-     * @Param: [projectCategoryId]
-     * @Return: com.management.model.entity.ProjectCategory
-     * @Author: ggmr
-     * @Date: 18-7-31
-     */
-    private ProjectCategory getProjectCategoryById(int projectCategoryId) {
-        ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
-        projectCategoryExample.createCriteria()
-                .andProjectCategoryIdEqualTo(projectCategoryId);
-        List<ProjectCategory> projectCategoryList = projectCategoryMapper
-                .selectByExample(projectCategoryExample);
-        if(projectCategoryList.isEmpty()) {
-            return null;
-        } else {
-            return projectCategoryList.get(0);
-        }
-    }
-    
     /**
      * @Description: login接口的实现
      * @Param: [loginUser]
@@ -127,9 +109,17 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * @Description: isTimeOut接口的实现
+     * @Param: [projectCategoryId, type]
+     * @Return: com.management.model.OV.Result
+     * @Author: ggmr
+     * @Date: 18-7-31
+     */
     @Override
     public Result isTimeOut(int projectCategoryId, int type) {
-        ProjectCategory projectCategory = getProjectCategoryById(projectCategoryId);
+        ProjectCategory projectCategory = projectCategoryMapper
+                                .selectByPrimaryKey(projectCategoryId);
         if(projectCategory == null) {
             return ResultTool.error("不存在这个id的项目大类");
         } else {
@@ -148,6 +138,36 @@ public class UserServiceImpl implements UserService {
             }
             return ResultTool.success(new IsTimeOutInfo(isTimeOut));
         }
+    }
+
+    /**
+     * @Description: findAllProjectCategory接口的实现
+     * @Param: [projectCategoryType]
+     * @Return: com.management.model.OV.Result
+     * @Author: ggmr
+     * @Date: 18-7-31
+     */
+    @Override
+    public Result findAllProjectCategory(int projectCategoryType) {
+        ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
+        projectCategoryExample.createCriteria()
+                .andProjectTypeEqualTo(projectCategoryType)
+                .andApplicationEndTimeGreaterThan(new Date());
+        List<ProjectCategory> projectCategoryList = projectCategoryMapper
+                                        .selectByExample(projectCategoryExample);
+        if(projectCategoryList.isEmpty()) {
+            return ResultTool.error("该类别没有可申报项目");
+        }
+        List<ProjectCategoryListInfo> list = new LinkedList<>();
+
+        for(ProjectCategory projectCategory : projectCategoryList) {
+            ProjectCategoryListInfo projectCategoryListInfo = new ProjectCategoryListInfo();
+            projectCategoryListInfo.setApplicantType(projectCategory.getApplicantType());
+            projectCategoryListInfo.setApplicationDeadline(projectCategory.getApplicationEndTime().toString());
+            projectCategoryListInfo.setProjectCategoryName(projectCategory.getProjectCategoryName());
+            list.add(projectCategoryListInfo);
+        }
+        return ResultTool.success(list);
     }
 
 

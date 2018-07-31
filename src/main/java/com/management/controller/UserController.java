@@ -34,4 +34,20 @@ public class UserController {
         return userService.isTimeOut(prId, type);
     }
 
+    @GetMapping("/projectCategoryList/{projectIdCategoryType}")
+    @ApiOperation(value = "查找指定类别的项目大类", notes = "根据类别type查找项目大类")
+    public Result isTimeOut(@PathVariable(value = "projectIdCategoryType")int prType) {
+
+        return userService.findAllProjectCategory(prType);
+    }
+
+
+
+//    @GetMapping("projectCategory/{id}")
+//    @ApiOperation(value = "查找指定类别的项目大类", notes = "根据类别type查找项目大类")
+//    public Result isTimeOut(@PathVariable(value = "projectIdCategoryType")int prType) {
+//
+//        return userService.findAllProjectCategory(prType);
+//    }
+
 }

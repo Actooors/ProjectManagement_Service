@@ -14,6 +14,7 @@ import com.management.service.UserService;
 import com.management.tools.AuthTool;
 import com.management.tools.JwtUtil;
 import com.management.tools.ResultTool;
+import com.management.tools.TimeTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -163,7 +164,7 @@ public class UserServiceImpl implements UserService {
         for(ProjectCategory projectCategory : projectCategoryList) {
             ProjectCategoryListInfo projectCategoryListInfo = new ProjectCategoryListInfo();
             projectCategoryListInfo.setApplicantType(projectCategory.getApplicantType());
-            projectCategoryListInfo.setApplicationDeadline(projectCategory.getApplicationEndTime().toString());
+            projectCategoryListInfo.setApplicationDeadline(TimeTool.timetoString(projectCategory.getApplicationEndTime()));
             projectCategoryListInfo.setProjectCategoryName(projectCategory.getProjectCategoryName());
             list.add(projectCategoryListInfo);
         }

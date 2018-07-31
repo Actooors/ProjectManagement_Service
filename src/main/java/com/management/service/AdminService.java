@@ -18,6 +18,6 @@ import java.util.List;
 
 public interface AdminService {
 
-    Result CreateProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo);
+    Result createProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo);
     Result queryProjectCategory(String userId);
 }

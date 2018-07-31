@@ -12,7 +12,7 @@ public class TimeToolTest {
     public void stringToTime() {
         TimeTool timeTool = new TimeTool();
         String time = "2018-05-06 20:00";
-        System.out.print(timeTool.StringToTime(time));
+        System.out.print(TimeTool.stringToTime(time));
     }
 
     @Test

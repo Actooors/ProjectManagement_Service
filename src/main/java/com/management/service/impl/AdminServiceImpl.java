@@ -29,8 +29,6 @@ public class AdminServiceImpl {
     private UserMapper userMapper;
     @Resource
     private ProjectCategoryMapper projectCategoryMapper;
-    @Resource
-    private TimeTool timeTool;
 
     /**
      * @Description: 创建项目类别
@@ -39,12 +37,12 @@ public class AdminServiceImpl {
      * @Author: xw
      * @Date: 18-7-30
      */
-    public Result CreateProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo){
+    public Result createProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo){
         /*将字符串时间格式转化为Date时间类型*/
-        Date applicationStartTime = timeTool.StringToTime(projectCategoryInfo.getApplicationStartTime());
-        Date applicationEndTime = timeTool.StringToTime(projectCategoryInfo.getApplicationEndTime());
-        Date projectStartTime = timeTool.StringToTime(projectCategoryInfo.getProjectStartTime());
-        Date projectEndTime = timeTool.StringToTime(projectCategoryInfo.getProjectEndTime());
+        Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
+        Date applicationEndTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationEndTime());
+        Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
+        Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
         /*根据业务员id查询到业务员的信息及专家的id*/
         User adminuser = userMapper.selectByPrimaryKey(userId);
         User exportuser = userMapper.selectByPrimaryKey(projectCategoryInfo.getReviewLeaderId());

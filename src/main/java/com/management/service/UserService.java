@@ -1,14 +1,12 @@
 package com.management.service;
-
-
 import com.management.model.OV.Result;
 import com.management.model.jsonrequestbody.LoginInfo;
 
 /**
  * @program: management
- * @description: 登录接口的业务实现
+ * @description: 登录接口的业务实现接口
  * @author: ggmr
- * @create: 2018-07-29 17:21
+ * @create: 2018-07-29 17:22
  */
 public interface UserService {
 

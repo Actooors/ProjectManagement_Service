@@ -21,6 +21,7 @@ import java.io.PrintWriter;
 public class AuthInterceptor implements HandlerInterceptor {
     private static final String LOGIN_URL = "/api/login";
     private static final String TOKEN_NAME = "Authorization";
+    private static final int HTTP_CODE = 401;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
@@ -42,6 +43,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         rst.setCode(ResultCode.FAILED);
         rst.setMessage("请登录后再访问页面");
         response.setContentType("application/json;charset=utf-8");
+        response.setStatus(HTTP_CODE);
         PrintWriter out = response.getWriter();
         ObjectMapper mapper = new ObjectMapper();
         String jsonOfRST = mapper.writeValueAsString(rst);

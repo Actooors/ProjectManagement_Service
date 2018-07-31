@@ -8,6 +8,7 @@ import com.management.model.entity.ProjectCategoryExample;
 import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import com.management.tools.ResultTool;
+import com.management.tools.TimeTool;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.ParseException;
@@ -28,6 +29,8 @@ public class AdminServiceImpl {
     private UserMapper userMapper;
     @Resource
     private ProjectCategoryMapper projectCategoryMapper;
+    @Resource
+    private TimeTool timeTool;
 
     /**
      * @Description: 创建项目类别
@@ -38,48 +41,40 @@ public class AdminServiceImpl {
      */
     public Result CreateProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo){
         /*将字符串时间格式转化为Date时间类型*/
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+        Date applicationStartTime = timeTool.StringToTime(projectCategoryInfo.getApplicationStartTime());
+        Date applicationEndTime = timeTool.StringToTime(projectCategoryInfo.getApplicationEndTime());
+        Date projectStartTime = timeTool.StringToTime(projectCategoryInfo.getProjectStartTime());
+        Date projectEndTime = timeTool.StringToTime(projectCategoryInfo.getProjectEndTime());
+        /*根据业务员id查询到业务员的信息及专家的id*/
+        User adminuser = userMapper.selectByPrimaryKey(userId);
+        User exportuser = userMapper.selectByPrimaryKey(projectCategoryInfo.getReviewLeaderId());
+        ProjectCategory projectCategory = new ProjectCategory();
         try{
-            Date applicationStartTime = dateFormat.parse(projectCategoryInfo.getApplicationStartTime());
-            Date applicationEndTime = dateFormat.parse(projectCategoryInfo.getApplicationEndTime());
-            Date projectStartTime = dateFormat.parse(projectCategoryInfo.getProjectStartTime());
-            Date projectEndTime = dateFormat.parse(projectCategoryInfo.getProjectEndTime());
-            /*根据业务员id查询到业务员的信息及专家的id*/
-            User adminuser = userMapper.selectByPrimaryKey(userId);
-            User exportuser = userMapper.selectByPrimaryKey(projectCategoryInfo.getReviewLeaderId());
-            ProjectCategory projectCategory = new ProjectCategory();
-            try{
-                projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
-                projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
-                projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
-                projectCategory.setProjectType(projectCategoryInfo.getProjectType());
-                projectCategory.setPrincipalId(adminuser.getUserId());
-                projectCategory.setPrincipalName(adminuser.getUserName());
-                projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
-                projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
-                projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
-                projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
-                projectCategory.setReviewLeaderId(projectCategoryInfo.getReviewLeaderId());
-                projectCategory.setReviewLeaderName(exportuser.getUserName());
-                projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsEexistMeetingReview());
-                projectCategory.setApplicationStartTime(applicationStartTime);
-                projectCategory.setApplicationEndTime(applicationEndTime);
-                projectCategory.setProjectStartTime(projectStartTime);
-                projectCategory.setProjectEndTime(projectEndTime);
-                projectCategoryMapper.insert(projectCategory);
+            projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
+            projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
+            projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
+            projectCategory.setProjectType(projectCategoryInfo.getProjectType());
+            projectCategory.setPrincipalId(adminuser.getUserId());
+            projectCategory.setPrincipalName(adminuser.getUserName());
+            projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
+            projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
+            projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
+            projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
+            projectCategory.setReviewLeaderId(projectCategoryInfo.getReviewLeaderId());
+            projectCategory.setReviewLeaderName(exportuser.getUserName());
+            projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsEexistMeetingReview());
+            projectCategory.setApplicationStartTime(applicationStartTime);
+            projectCategory.setApplicationEndTime(applicationEndTime);
+            projectCategory.setProjectStartTime(projectStartTime);
+            projectCategory.setProjectEndTime(projectEndTime);
+            projectCategoryMapper.insert(projectCategory);
 
-                Result result = ResultTool.success();
-                result.setMessage("成功");
-                return result;
-            }catch (Exception e){
-                Result result = ResultTool.error();
-                result.setMessage("失败");
-                return result;
-            }
-        }catch(ParseException e){
-            e.printStackTrace();
+            Result result = ResultTool.success();
+            result.setMessage("成功");
+            return result;
+        }catch (Exception e){
             Result result = ResultTool.error();
-            result.setMessage("时间转化失败");
+            result.setMessage("失败");
             return result;
         }
     }

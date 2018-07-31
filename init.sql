@@ -12,7 +12,7 @@ create table tbl_User (
                                  4领导 5系统管理员',
   is_able_login int not null default 1 comment '是否可以登录
                                                 1可以登录 2不可登录'
-) comment '新闻表'
+) comment '用户表'
   charset = utf8;
 
 create table tbl_ProjectCategory (

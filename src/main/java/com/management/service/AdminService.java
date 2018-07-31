@@ -6,6 +6,8 @@ import com.management.model.entity.ProjectCategory;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @program: management
  * @description: 业务员层的各接口Seriver方法
@@ -16,5 +18,6 @@ import org.springframework.stereotype.Service;
 
 public interface AdminService {
 
-    Result CreateProjectCategory(ProjectCategoryInfo projectCategoryInfo);
+    Result CreateProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo);
+    Result queryProjectCategory(String userId);
 }

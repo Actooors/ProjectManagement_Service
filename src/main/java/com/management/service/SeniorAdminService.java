@@ -1,4 +1,4 @@
 package com.management.service;
 
-public class SeniorAdminService {
+public interface SeniorAdminService {
 }

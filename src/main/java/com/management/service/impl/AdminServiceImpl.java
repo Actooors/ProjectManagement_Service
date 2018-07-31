@@ -4,6 +4,7 @@ import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.UserMapper;
 import com.management.model.OV.Result;
 import com.management.model.entity.ProjectCategory;
+import com.management.model.entity.ProjectCategoryExample;
 import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import com.management.tools.ResultTool;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.*;
 
 /**
  * @program: management
@@ -82,4 +83,30 @@ public class AdminServiceImpl {
             return result;
         }
     }
+    
+    /**
+     * @Description: 业务员根据自己的ID查询创建的项目类别信息
+     * @Param: userId
+     * @Return: ProjectCategory
+     * @Author: xw
+     * @Date: 18-7-31
+     */
+     public Result queryProjectCategory(String userId){
+         ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
+         try{
+             projectCategoryExample.createCriteria()
+                     .andPrincipalIdEqualTo(userId);
+             List<ProjectCategory> projectCategoryList = projectCategoryMapper.selectByExample(projectCategoryExample);
+             Result result = ResultTool.success(projectCategoryList);
+             result.setMessage("成功");
+             return result;
+         }catch (Exception e){
+             Result result = ResultTool.error();
+             result.setMessage("失败");
+             return result;
+         }
+     }
+
+
+
 }

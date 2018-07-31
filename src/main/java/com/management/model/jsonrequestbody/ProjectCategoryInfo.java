@@ -15,7 +15,7 @@ public class ProjectCategoryInfo {
     private String maxMoney;
     private String reviewLeaderId;
     private String projectApplicationDownloadAddress;
-    private int isEexistMeetingReview;
+    private Integer isEexistMeetingReview;
     private String applicationStartTime;
     private String applicationEndTime;
     private String projectStartTime;

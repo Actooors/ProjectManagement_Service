@@ -1,12 +1,16 @@
 package com.management.interceptor;
 
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.management.tools.JwtUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.management.model.OV.Result;
+import com.management.model.OV.ResultCode;
+import com.management.tools.ChangeCharset;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /**
  * @program: management
@@ -17,19 +21,34 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
     private static final String LOGIN_URL = "/api/login";
+    private static final int HTTP_CODE = 401;
+    private static final String TOKEN_NAME = "Authorization";
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         // 登陆接口不做拦截
         if (LOGIN_URL.equals(request.getRequestURI())) {
             return true;
         }
-        try {
-            String userId = JwtUtil.parseJwt(request.getHeader("Authorization"));
-            return userId != null;
-        } catch (JWTVerificationException e) {
+        if(request.getHeader(TOKEN_NAME) == null) {
+            returnErrorMessage(response);
+//                response.sendError(HTTP_CODE, "error message");
             return false;
+        } else {
+            return true;
         }
+    }
 
+
+    private void returnErrorMessage(HttpServletResponse response) throws IOException {
+        Result rst = new Result();
+        rst.setCode(ResultCode.FAILED);
+        rst.setMessage("请登录后再访问页面");
+        response.setContentType("application/json;charset=utf-8");
+        PrintWriter out = response.getWriter();
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonOfRST = mapper.writeValueAsString(rst);
+        out.print(jsonOfRST);
+        out.flush();
     }
 }

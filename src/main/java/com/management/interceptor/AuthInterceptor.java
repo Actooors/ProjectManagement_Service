@@ -3,7 +3,6 @@ package com.management.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.management.model.OV.Result;
 import com.management.model.OV.ResultCode;
-import com.management.tools.ChangeCharset;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -21,7 +20,6 @@ import java.io.PrintWriter;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
     private static final String LOGIN_URL = "/api/login";
-    private static final int HTTP_CODE = 401;
     private static final String TOKEN_NAME = "Authorization";
 
     @Override
@@ -32,7 +30,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
         if(request.getHeader(TOKEN_NAME) == null) {
             returnErrorMessage(response);
-//                response.sendError(HTTP_CODE, "error message");
             return false;
         } else {
             return true;

@@ -3,7 +3,6 @@ package com.management.service.impl;
 import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.UserMapper;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.Resource;
 
 /**
@@ -14,13 +13,12 @@ import javax.annotation.Resource;
 */
 
 @Service
-public class AdminServiceImpl {
 
+public class AdminServiceImpl {
     @Resource
     private UserMapper userMapper;
     @Resource
     private ProjectCategoryMapper projectCategoryMapper;
-
     /**
      * @Description: 创建项目类别
      * @Param: 
@@ -28,6 +26,4 @@ public class AdminServiceImpl {
      * @Author: xw
      * @Date: 18-7-30
      */
-
-
 }

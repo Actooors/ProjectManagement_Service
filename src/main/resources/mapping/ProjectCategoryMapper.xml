@@ -3,6 +3,9 @@
 <mapper namespace="com.management.dao.ProjectCategoryMapper" >
   <resultMap id="BaseResultMap" type="com.management.model.entity.ProjectCategory" >
     <id column="project_category_id" property="projectCategoryId" jdbcType="INTEGER" />
+    <result column="project_category_name" property="projectCategoryName" jdbcType="VARCHAR" />
+    <result column="project_category_description" property="projectCategoryDescription" jdbcType="VARCHAR" />
+    <result column="project_category_description_address" property="projectCategoryDescriptionAddress" jdbcType="VARCHAR" />
     <result column="project_type" property="projectType" jdbcType="INTEGER" />
     <result column="principal_id" property="principalId" jdbcType="VARCHAR" />
     <result column="principal_name" property="principalName" jdbcType="VARCHAR" />
@@ -87,13 +90,13 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    project_category_id, project_type, principal_id, principal_name, principal_phone, 
-    applicant_type, max_money, review_leader_id, review_leader_name, is_exist_meeting_review, 
-    project_application_download_address, application_start_time, application_end_time, 
-    project_start_time, project_end_time, is_interim_report_activated, interim_report_start_time, 
-    interim_report_end_time, interim_report_download_address, is_concluding_report_activated, 
-    concluding_report_start_time, concluding_report_end_time, concluding_report_download_address, 
-    statistics, is_approved
+    project_category_id, project_category_name, project_category_description, project_category_description_address, 
+    project_type, principal_id, principal_name, principal_phone, applicant_type, max_money, 
+    review_leader_id, review_leader_name, is_exist_meeting_review, project_application_download_address, 
+    application_start_time, application_end_time, project_start_time, project_end_time, 
+    is_interim_report_activated, interim_report_start_time, interim_report_end_time, 
+    interim_report_download_address, is_concluding_report_activated, concluding_report_start_time, 
+    concluding_report_end_time, concluding_report_download_address, statistics, is_approved
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectCategoryExample" >
     select
@@ -127,23 +130,27 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.management.model.entity.ProjectCategory" >
-    insert into tbl_ProjectCategory (project_category_id, project_type, principal_id, 
-      principal_name, principal_phone, applicant_type, 
-      max_money, review_leader_id, review_leader_name, 
-      is_exist_meeting_review, project_application_download_address, 
-      application_start_time, application_end_time, 
-      project_start_time, project_end_time, is_interim_report_activated, 
+    insert into tbl_ProjectCategory (project_category_id, project_category_name, 
+      project_category_description, project_category_description_address, 
+      project_type, principal_id, principal_name, 
+      principal_phone, applicant_type, max_money, 
+      review_leader_id, review_leader_name, is_exist_meeting_review, 
+      project_application_download_address, application_start_time, 
+      application_end_time, project_start_time, 
+      project_end_time, is_interim_report_activated, 
       interim_report_start_time, interim_report_end_time, 
       interim_report_download_address, is_concluding_report_activated, 
       concluding_report_start_time, concluding_report_end_time, 
       concluding_report_download_address, statistics, 
       is_approved)
-    values (#{projectCategoryId,jdbcType=INTEGER}, #{projectType,jdbcType=INTEGER}, #{principalId,jdbcType=VARCHAR}, 
-      #{principalName,jdbcType=VARCHAR}, #{principalPhone,jdbcType=VARCHAR}, #{applicantType,jdbcType=VARCHAR}, 
-      #{maxMoney,jdbcType=VARCHAR}, #{reviewLeaderId,jdbcType=VARCHAR}, #{reviewLeaderName,jdbcType=VARCHAR}, 
-      #{isExistMeetingReview,jdbcType=INTEGER}, #{projectApplicationDownloadAddress,jdbcType=VARCHAR}, 
-      #{applicationStartTime,jdbcType=TIMESTAMP}, #{applicationEndTime,jdbcType=TIMESTAMP}, 
-      #{projectStartTime,jdbcType=TIMESTAMP}, #{projectEndTime,jdbcType=TIMESTAMP}, #{isInterimReportActivated,jdbcType=INTEGER}, 
+    values (#{projectCategoryId,jdbcType=INTEGER}, #{projectCategoryName,jdbcType=VARCHAR}, 
+      #{projectCategoryDescription,jdbcType=VARCHAR}, #{projectCategoryDescriptionAddress,jdbcType=VARCHAR}, 
+      #{projectType,jdbcType=INTEGER}, #{principalId,jdbcType=VARCHAR}, #{principalName,jdbcType=VARCHAR}, 
+      #{principalPhone,jdbcType=VARCHAR}, #{applicantType,jdbcType=VARCHAR}, #{maxMoney,jdbcType=VARCHAR}, 
+      #{reviewLeaderId,jdbcType=VARCHAR}, #{reviewLeaderName,jdbcType=VARCHAR}, #{isExistMeetingReview,jdbcType=INTEGER}, 
+      #{projectApplicationDownloadAddress,jdbcType=VARCHAR}, #{applicationStartTime,jdbcType=TIMESTAMP}, 
+      #{applicationEndTime,jdbcType=TIMESTAMP}, #{projectStartTime,jdbcType=TIMESTAMP}, 
+      #{projectEndTime,jdbcType=TIMESTAMP}, #{isInterimReportActivated,jdbcType=INTEGER}, 
       #{interimReportStartTime,jdbcType=TIMESTAMP}, #{interimReportEndTime,jdbcType=TIMESTAMP}, 
       #{interimReportDownloadAddress,jdbcType=VARCHAR}, #{isConcludingReportActivated,jdbcType=INTEGER}, 
       #{concludingReportStartTime,jdbcType=TIMESTAMP}, #{concludingReportEndTime,jdbcType=TIMESTAMP}, 
@@ -155,6 +162,15 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="projectCategoryId != null" >
         project_category_id,
+      </if>
+      <if test="projectCategoryName != null" >
+        project_category_name,
+      </if>
+      <if test="projectCategoryDescription != null" >
+        project_category_description,
+      </if>
+      <if test="projectCategoryDescriptionAddress != null" >
+        project_category_description_address,
       </if>
       <if test="projectType != null" >
         project_type,
@@ -232,6 +248,15 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="projectCategoryId != null" >
         #{projectCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="projectCategoryName != null" >
+        #{projectCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCategoryDescription != null" >
+        #{projectCategoryDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCategoryDescriptionAddress != null" >
+        #{projectCategoryDescriptionAddress,jdbcType=VARCHAR},
       </if>
       <if test="projectType != null" >
         #{projectType,jdbcType=INTEGER},
@@ -319,6 +344,15 @@
       <if test="record.projectCategoryId != null" >
         project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
       </if>
+      <if test="record.projectCategoryName != null" >
+        project_category_name = #{record.projectCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectCategoryDescription != null" >
+        project_category_description = #{record.projectCategoryDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectCategoryDescriptionAddress != null" >
+        project_category_description_address = #{record.projectCategoryDescriptionAddress,jdbcType=VARCHAR},
+      </if>
       <if test="record.projectType != null" >
         project_type = #{record.projectType,jdbcType=INTEGER},
       </if>
@@ -399,6 +433,9 @@
   <update id="updateByExample" parameterType="map" >
     update tbl_ProjectCategory
     set project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
+      project_category_name = #{record.projectCategoryName,jdbcType=VARCHAR},
+      project_category_description = #{record.projectCategoryDescription,jdbcType=VARCHAR},
+      project_category_description_address = #{record.projectCategoryDescriptionAddress,jdbcType=VARCHAR},
       project_type = #{record.projectType,jdbcType=INTEGER},
       principal_id = #{record.principalId,jdbcType=VARCHAR},
       principal_name = #{record.principalName,jdbcType=VARCHAR},
@@ -430,6 +467,15 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.management.model.entity.ProjectCategory" >
     update tbl_ProjectCategory
     <set >
+      <if test="projectCategoryName != null" >
+        project_category_name = #{projectCategoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCategoryDescription != null" >
+        project_category_description = #{projectCategoryDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCategoryDescriptionAddress != null" >
+        project_category_description_address = #{projectCategoryDescriptionAddress,jdbcType=VARCHAR},
+      </if>
       <if test="projectType != null" >
         project_type = #{projectType,jdbcType=INTEGER},
       </if>
@@ -507,7 +553,10 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.management.model.entity.ProjectCategory" >
     update tbl_ProjectCategory
-    set project_type = #{projectType,jdbcType=INTEGER},
+    set project_category_name = #{projectCategoryName,jdbcType=VARCHAR},
+      project_category_description = #{projectCategoryDescription,jdbcType=VARCHAR},
+      project_category_description_address = #{projectCategoryDescriptionAddress,jdbcType=VARCHAR},
+      project_type = #{projectType,jdbcType=INTEGER},
       principal_id = #{principalId,jdbcType=VARCHAR},
       principal_name = #{principalName,jdbcType=VARCHAR},
       principal_phone = #{principalPhone,jdbcType=VARCHAR},

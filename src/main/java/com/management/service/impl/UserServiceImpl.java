@@ -1,8 +1,12 @@
 package com.management.service.impl;
 
+import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.UserMapper;
 import com.management.model.OV.Result;
+import com.management.model.OV.resultsetting.IsTimeOutInfo;
 import com.management.model.OV.resultsetting.LoginResponse;
+import com.management.model.entity.ProjectCategory;
+import com.management.model.entity.ProjectCategoryExample;
 import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.LoginInfo;
 import com.management.service.UserService;
@@ -12,6 +16,8 @@ import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @program: management
@@ -25,10 +31,12 @@ public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private ProjectCategoryMapper projectCategoryMapper;
 
     private static final int LOGIN_ENABLE = 1;
 //    private static final byte LOGIN_DISABLE = 2;
-    
+
     /**
      * @Description: 根据参数生成登录返回需要的信息
      * @Param: [userId, identity, userName]
@@ -44,6 +52,26 @@ public class UserServiceImpl implements UserService {
         response.setUserId(userId);
         response.setUserName(userName);
         return response;
+    }
+
+    /**
+     * @Description: 根据projectCategoryId获取projectcategory
+     * @Param: [projectCategoryId]
+     * @Return: com.management.model.entity.ProjectCategory
+     * @Author: ggmr
+     * @Date: 18-7-31
+     */
+    private ProjectCategory getProjectCategoryById(int projectCategoryId) {
+        ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
+        projectCategoryExample.createCriteria()
+                .andProjectCategoryIdEqualTo(projectCategoryId);
+        List<ProjectCategory> projectCategoryList = projectCategoryMapper
+                .selectByExample(projectCategoryExample);
+        if(projectCategoryList.isEmpty()) {
+            return null;
+        } else {
+            return projectCategoryList.get(0);
+        }
     }
     
     /**
@@ -98,4 +126,29 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+    @Override
+    public Result isTimeOut(int projectCategoryId, int type) {
+        ProjectCategory projectCategory = getProjectCategoryById(projectCategoryId);
+        if(projectCategory == null) {
+            return ResultTool.error("不存在这个id的项目大类");
+        } else {
+            int isTimeOut = 1;
+            Date cur = new Date(),
+                      compareTime;
+            switch (type) {
+                case 1: compareTime = projectCategory.getApplicationEndTime(); break;
+                case 2: compareTime = projectCategory.getInterimReportEndTime(); break;
+                case 3: compareTime = projectCategory.getConcludingReportEndTime(); break;
+                case 4: compareTime = projectCategory.getProjectEndTime(); break;
+                default: return ResultTool.error("给予的type类型有误");
+            }
+            if(cur.before(compareTime)) {
+                isTimeOut = 2;
+            }
+            return ResultTool.success(new IsTimeOutInfo(isTimeOut));
+        }
+    }
+
+
 }

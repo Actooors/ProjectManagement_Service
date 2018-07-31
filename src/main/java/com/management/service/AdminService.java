@@ -16,5 +16,5 @@ import org.springframework.stereotype.Service;
 
 public interface AdminService {
 
-    Result CreateProjectCategory(ProjectCategoryInfo projectCategoryInfo);
+    Result CreateProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo);
 }

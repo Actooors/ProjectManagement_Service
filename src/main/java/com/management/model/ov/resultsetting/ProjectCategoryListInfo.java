@@ -1,4 +1,4 @@
-package com.management.model.OV.resultsetting;
+package com.management.model.ov.resultsetting;
 import lombok.Data;
 /**
  * @program: management

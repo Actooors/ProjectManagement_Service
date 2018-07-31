@@ -1,4 +1,4 @@
-package com.management.model.OV.resultsetting;
+package com.management.model.ov.resultsetting;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

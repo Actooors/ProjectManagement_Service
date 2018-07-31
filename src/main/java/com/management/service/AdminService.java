@@ -1,12 +1,7 @@
 package com.management.service;
-import com.management.dao.ProjectCategoryMapper;
-import com.management.dao.UserMapper;
-import com.management.model.OV.Result;
-import com.management.model.entity.ProjectCategory;
+import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @program: management

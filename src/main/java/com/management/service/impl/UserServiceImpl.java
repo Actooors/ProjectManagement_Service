@@ -2,10 +2,11 @@ package com.management.service.impl;
 
 import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.UserMapper;
-import com.management.model.OV.Result;
-import com.management.model.OV.resultsetting.IsTimeOutInfo;
-import com.management.model.OV.resultsetting.LoginResponse;
-import com.management.model.OV.resultsetting.ProjectCategoryListInfo;
+import com.management.model.ov.Result;
+import com.management.model.ov.resultsetting.IsTimeOutInfo;
+import com.management.model.ov.resultsetting.LoginResponse;
+import com.management.model.ov.resultsetting.ProjectCategoryInfo;
+import com.management.model.ov.resultsetting.ProjectCategoryListInfo;
 import com.management.model.entity.ProjectCategory;
 import com.management.model.entity.ProjectCategoryExample;
 import com.management.model.entity.User;
@@ -43,7 +44,7 @@ public class UserServiceImpl implements UserService {
     /**
      * @Description: 根据参数生成登录返回需要的信息
      * @Param: [userId, identity, userName]
-     * @Return: com.management.model.OV.resultsetting.LoginResponse
+     * @Return: com.management.model.ov.resultsetting.LoginResponse
      * @Author: ggmr
      * @Date: 18-7-29
      */
@@ -60,7 +61,7 @@ public class UserServiceImpl implements UserService {
     /**
      * @Description: login接口的实现
      * @Param: [loginUser]
-     * @Return: com.management.model.OV.Result
+     * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-29
      */
@@ -113,7 +114,7 @@ public class UserServiceImpl implements UserService {
     /**
      * @Description: isTimeOut接口的实现
      * @Param: [projectCategoryId, type]
-     * @Return: com.management.model.OV.Result
+     * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-31
      */
@@ -144,7 +145,7 @@ public class UserServiceImpl implements UserService {
     /**
      * @Description: findAllProjectCategory接口的实现
      * @Param: [projectCategoryType]
-     * @Return: com.management.model.OV.Result
+     * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-31
      */
@@ -153,7 +154,8 @@ public class UserServiceImpl implements UserService {
         ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
         projectCategoryExample.createCriteria()
                 .andProjectTypeEqualTo(projectCategoryType)
-                .andApplicationEndTimeGreaterThan(new Date());
+                .andApplicationEndTimeGreaterThan(new Date())
+                .andIsApprovedEqualTo(1);
         List<ProjectCategory> projectCategoryList = projectCategoryMapper
                                         .selectByExample(projectCategoryExample);
         if(projectCategoryList.isEmpty()) {
@@ -169,6 +171,37 @@ public class UserServiceImpl implements UserService {
             list.add(projectCategoryListInfo);
         }
         return ResultTool.success(list);
+    }
+
+    /**
+     * @Description: findProjectCategoryInfo接口的实现
+     * @Param: [projectCategoryId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-7-31
+     */
+    @Override
+    public Result findProjectCategoryInfo(int projectCategoryId) {
+        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectCategoryId);
+        if(projectCategory == null) {
+            return ResultTool.error("不存在这个Id的项目大类");
+        }
+        ProjectCategoryInfo projectCategoryInfo = new ProjectCategoryInfo();
+        projectCategoryInfo.setProjectCategoryName(projectCategory.getProjectCategoryName());
+        projectCategoryInfo.setApplicantType(projectCategory.getApplicantType());
+        projectCategoryInfo.setProjectCategoryDescription(projectCategory.getProjectCategoryDescription());
+        projectCategoryInfo.setProjectCategoryDescriptionAddress(projectCategory.getProjectCategoryDescriptionAddress());
+        projectCategoryInfo.setProjectType(projectCategory.getProjectType());
+        projectCategoryInfo.setPrincipalId(projectCategory.getPrincipalId());
+        projectCategoryInfo.setPrincipalName(projectCategory.getPrincipalName());
+        projectCategoryInfo.setMaxMoney(projectCategory.getMaxMoney());
+        projectCategoryInfo.setReviewLeaderName(projectCategory.getReviewLeaderName());
+        projectCategoryInfo.setProjectApplicationDownloadAddress(projectCategory.getProjectApplicationDownloadAddress());
+        projectCategoryInfo.setApplicationStartTime(TimeTool.timetoString(projectCategory.getApplicationStartTime()));
+        projectCategoryInfo.setApplicationDeadLine(TimeTool.timetoString(projectCategory.getApplicationEndTime()));
+        projectCategoryInfo.setProjectStartTime(TimeTool.timetoString(projectCategory.getProjectStartTime()));
+        projectCategoryInfo.setProjectDeadline(TimeTool.timetoString(projectCategory.getProjectEndTime()));
+        return ResultTool.success(projectCategoryInfo);
     }
 
 

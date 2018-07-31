@@ -1,11 +1,11 @@
 package com.management.tools;
 
-import com.management.model.OV.Result;
+import com.management.model.ov.Result;
 
 import java.util.List;
 
-import static com.management.model.OV.ResultCode.FAILED;
-import static com.management.model.OV.ResultCode.SUCCESS;
+import static com.management.model.ov.ResultCode.FAILED;
+import static com.management.model.ov.ResultCode.SUCCESS;
 
 /**
  * @program: management
@@ -18,7 +18,7 @@ public class ResultTool {
     /**
      * @Description: 当请求成功并且后端返回给前端的是一个列表json时使用
      * @Param: [object]
-     * @Return: com.management.model.OV.Result
+     * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-29
      */
@@ -33,7 +33,7 @@ public class ResultTool {
     /**
      * @Description: 当请求成功并且返回给前端是一个对象时使用
      * @Param: [object]
-     * @Return: com.management.model.OV.Result
+     * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-29
      */
@@ -48,7 +48,7 @@ public class ResultTool {
     /**
      * @Description: 当请求成功并且不需要返回任何数据时使用
      * @Param: []
-     * @Return: com.management.model.OV.Result
+     * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-29
      */
@@ -61,7 +61,7 @@ public class ResultTool {
     /**
      * @Description: 当请求失败并不需要返回任何信息时使用
      * @Param: []
-     * @Return: com.management.model.OV.Result
+     * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-29
      */
@@ -74,7 +74,7 @@ public class ResultTool {
     /**
      * @Description: 党请求失败并且返回失败信息时使用
      * @Param: [message]
-     * @Return: com.management.model.OV.Result
+     * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-29
      */

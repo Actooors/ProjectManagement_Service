@@ -1,4 +1,4 @@
-package com.management.model.OV;
+package com.management.model.ov;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.management.controller;
 
-import com.management.model.OV.Result;
+import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.LoginInfo;
 import com.management.service.UserService;
 import io.swagger.annotations.Api;

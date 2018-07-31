@@ -1,8 +1,8 @@
 package com.management.interceptor;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.management.model.OV.Result;
-import com.management.model.OV.ResultCode;
+import com.management.model.ov.Result;
+import com.management.model.ov.ResultCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 

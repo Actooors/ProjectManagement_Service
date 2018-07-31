@@ -1,12 +1,10 @@
 package com.management.controller;
 
-import com.management.model.OV.Result;
-import com.management.model.jsonrequestbody.LoginInfo;
+import com.management.model.ov.Result;
 import com.management.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ResponseHeader;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -43,11 +41,11 @@ public class UserController {
 
 
 
-//    @GetMapping("projectCategory/{id}")
-//    @ApiOperation(value = "查找指定类别的项目大类", notes = "根据类别type查找项目大类")
-//    public Result isTimeOut(@PathVariable(value = "projectIdCategoryType")int prType) {
-//
-//        return userService.findAllProjectCategory(prType);
-//    }
+    @GetMapping("projectCategory/{projectIdCategoryId}")
+    @ApiOperation(value = "返回某个项目大类的具体信息", notes = "根据项目大类id查找项目大类")
+    public Result findProjectCategoryInfo(@PathVariable(value = "projectIdCategoryId")int prId) {
+
+        return userService.findProjectCategoryInfo(prId);
+    }
 
 }

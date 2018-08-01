@@ -120,6 +120,7 @@ create table tbl_ProjectProgress (
 create table tbl_ReviewExpert (
   review_expert_id int primary key comment '标识id',
   expert_id varchar(8) not null comment '专家id',
+  expert_name varchar(16) not null comment '专家姓名',
   project_application_id int not null comment '对应项目申请书的id',
   score varchar(4) comment '专家打分',
   review_opinion varchar(256) comment '评审意见',

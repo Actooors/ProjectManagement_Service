@@ -5,7 +5,7 @@ public class ReviewExpert {
 
     private String expertId;
 
-    private Integer projectApplicationId;
+    private String expertName;
 
     private String score;
 
@@ -14,6 +14,8 @@ public class ReviewExpert {
     private Integer finalOpinion;
 
     private Integer isFinished;
+
+    private Integer projectApplicationId;
 
     public Integer getReviewExpertId() {
         return reviewExpertId;
@@ -31,12 +33,12 @@ public class ReviewExpert {
         this.expertId = expertId == null ? null : expertId.trim();
     }
 
-    public Integer getProjectApplicationId() {
-        return projectApplicationId;
+    public String getExpertName() {
+        return expertName;
     }
 
-    public void setProjectApplicationId(Integer projectApplicationId) {
-        this.projectApplicationId = projectApplicationId;
+    public void setExpertName(String expertName) {
+        this.expertName = expertName == null ? null : expertName.trim();
     }
 
     public String getScore() {
@@ -69,5 +71,13 @@ public class ReviewExpert {
 
     public void setIsFinished(Integer isFinished) {
         this.isFinished = isFinished;
+    }
+
+    public Integer getProjectApplicationId() {
+        return projectApplicationId;
+    }
+
+    public void setProjectApplicationId(Integer projectApplicationId) {
+        this.projectApplicationId = projectApplicationId;
     }
 }

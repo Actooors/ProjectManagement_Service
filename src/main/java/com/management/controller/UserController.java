@@ -41,9 +41,9 @@ public class UserController {
 
 
 
-    @GetMapping("projectCategory/{projectIdCategoryId}")
+    @GetMapping("projectCategory/{projectCategoryId}")
     @ApiOperation(value = "返回某个项目大类的具体信息", notes = "根据项目大类id查找项目大类")
-    public Result findProjectCategoryInfo(@PathVariable(value = "projectIdCategoryId")int prId) {
+    public Result findProjectCategoryInfo(@PathVariable(value = "projectCategoryId")int prId) {
 
         return userService.findProjectCategoryInfo(prId);
     }

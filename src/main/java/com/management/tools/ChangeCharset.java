@@ -21,7 +21,7 @@ public class ChangeCharset {
         return null;
     }
 
-    public static String toUTF_8(String str) throws UnsupportedEncodingException {
+    public static String toUtf8(String str) throws UnsupportedEncodingException {
         return changeCharset(str, UTF_8);
     }
 }

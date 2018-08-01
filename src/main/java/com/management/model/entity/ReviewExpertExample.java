@@ -234,63 +234,73 @@ public class ReviewExpertExample {
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdIsNull() {
-            addCriterion("project_application_id is null");
+        public Criteria andExpertNameIsNull() {
+            addCriterion("expert_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdIsNotNull() {
-            addCriterion("project_application_id is not null");
+        public Criteria andExpertNameIsNotNull() {
+            addCriterion("expert_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdEqualTo(Integer value) {
-            addCriterion("project_application_id =", value, "projectApplicationId");
+        public Criteria andExpertNameEqualTo(String value) {
+            addCriterion("expert_name =", value, "expertName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdNotEqualTo(Integer value) {
-            addCriterion("project_application_id <>", value, "projectApplicationId");
+        public Criteria andExpertNameNotEqualTo(String value) {
+            addCriterion("expert_name <>", value, "expertName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdGreaterThan(Integer value) {
-            addCriterion("project_application_id >", value, "projectApplicationId");
+        public Criteria andExpertNameGreaterThan(String value) {
+            addCriterion("expert_name >", value, "expertName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("project_application_id >=", value, "projectApplicationId");
+        public Criteria andExpertNameGreaterThanOrEqualTo(String value) {
+            addCriterion("expert_name >=", value, "expertName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdLessThan(Integer value) {
-            addCriterion("project_application_id <", value, "projectApplicationId");
+        public Criteria andExpertNameLessThan(String value) {
+            addCriterion("expert_name <", value, "expertName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdLessThanOrEqualTo(Integer value) {
-            addCriterion("project_application_id <=", value, "projectApplicationId");
+        public Criteria andExpertNameLessThanOrEqualTo(String value) {
+            addCriterion("expert_name <=", value, "expertName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdIn(List<Integer> values) {
-            addCriterion("project_application_id in", values, "projectApplicationId");
+        public Criteria andExpertNameLike(String value) {
+            addCriterion("expert_name like", value, "expertName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdNotIn(List<Integer> values) {
-            addCriterion("project_application_id not in", values, "projectApplicationId");
+        public Criteria andExpertNameNotLike(String value) {
+            addCriterion("expert_name not like", value, "expertName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdBetween(Integer value1, Integer value2) {
-            addCriterion("project_application_id between", value1, value2, "projectApplicationId");
+        public Criteria andExpertNameIn(List<String> values) {
+            addCriterion("expert_name in", values, "expertName");
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("project_application_id not between", value1, value2, "projectApplicationId");
+        public Criteria andExpertNameNotIn(List<String> values) {
+            addCriterion("expert_name not in", values, "expertName");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertNameBetween(String value1, String value2) {
+            addCriterion("expert_name between", value1, value2, "expertName");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertNameNotBetween(String value1, String value2) {
+            addCriterion("expert_name not between", value1, value2, "expertName");
             return (Criteria) this;
         }
 
@@ -551,6 +561,66 @@ public class ReviewExpertExample {
 
         public Criteria andIsFinishedNotBetween(Integer value1, Integer value2) {
             addCriterion("is_finished not between", value1, value2, "isFinished");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdIsNull() {
+            addCriterion("project_application_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdIsNotNull() {
+            addCriterion("project_application_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdEqualTo(Integer value) {
+            addCriterion("project_application_id =", value, "projectApplicationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdNotEqualTo(Integer value) {
+            addCriterion("project_application_id <>", value, "projectApplicationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdGreaterThan(Integer value) {
+            addCriterion("project_application_id >", value, "projectApplicationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("project_application_id >=", value, "projectApplicationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdLessThan(Integer value) {
+            addCriterion("project_application_id <", value, "projectApplicationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdLessThanOrEqualTo(Integer value) {
+            addCriterion("project_application_id <=", value, "projectApplicationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdIn(List<Integer> values) {
+            addCriterion("project_application_id in", values, "projectApplicationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdNotIn(List<Integer> values) {
+            addCriterion("project_application_id not in", values, "projectApplicationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdBetween(Integer value1, Integer value2) {
+            addCriterion("project_application_id between", value1, value2, "projectApplicationId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectApplicationIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("project_application_id not between", value1, value2, "projectApplicationId");
             return (Criteria) this;
         }
     }

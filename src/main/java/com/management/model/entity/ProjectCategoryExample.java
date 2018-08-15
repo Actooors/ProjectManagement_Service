@@ -1914,6 +1914,76 @@ public class ProjectCategoryExample {
             addCriterion("is_approved not between", value1, value2, "isApproved");
             return (Criteria) this;
         }
+
+        public Criteria andFailureReasonIsNull() {
+            addCriterion("failure_reason is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonIsNotNull() {
+            addCriterion("failure_reason is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonEqualTo(String value) {
+            addCriterion("failure_reason =", value, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonNotEqualTo(String value) {
+            addCriterion("failure_reason <>", value, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonGreaterThan(String value) {
+            addCriterion("failure_reason >", value, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonGreaterThanOrEqualTo(String value) {
+            addCriterion("failure_reason >=", value, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonLessThan(String value) {
+            addCriterion("failure_reason <", value, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonLessThanOrEqualTo(String value) {
+            addCriterion("failure_reason <=", value, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonLike(String value) {
+            addCriterion("failure_reason like", value, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonNotLike(String value) {
+            addCriterion("failure_reason not like", value, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonIn(List<String> values) {
+            addCriterion("failure_reason in", values, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonNotIn(List<String> values) {
+            addCriterion("failure_reason not in", values, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonBetween(String value1, String value2) {
+            addCriterion("failure_reason between", value1, value2, "failureReason");
+            return (Criteria) this;
+        }
+
+        public Criteria andFailureReasonNotBetween(String value1, String value2) {
+            addCriterion("failure_reason not between", value1, value2, "failureReason");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

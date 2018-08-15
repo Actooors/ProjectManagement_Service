@@ -59,6 +59,8 @@ public class ProjectCategory {
 
     private Integer isApproved;
 
+    private String failureReason;
+
     public Integer getProjectCategoryId() {
         return projectCategoryId;
     }
@@ -281,5 +283,13 @@ public class ProjectCategory {
 
     public void setIsApproved(Integer isApproved) {
         this.isApproved = isApproved;
+    }
+
+    public String getFailureReason() {
+        return failureReason;
+    }
+
+    public void setFailureReason(String failureReason) {
+        this.failureReason = failureReason == null ? null : failureReason.trim();
     }
 }

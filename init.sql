@@ -48,7 +48,8 @@ create table tbl_ProjectCategory (
   concluding_report_download_address varchar(128) comment '结题报告模板地址',
   statistics int not null default 0 comment '此类别的项目完结成功的项目总数 默认为0',
   is_approved int comment '项目是否通过审核
-                          1通过 2未通过'
+                          1通过 2未通过',
+  failure_reason varchar(256) comment '申请失败的时候的失败原因'
 ) comment '业务员开通项目大类表'
   charset = utf8;
 

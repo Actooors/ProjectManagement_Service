@@ -3,6 +3,7 @@ package com.management.controller;
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
 import com.management.model.ov.Result;
 import com.management.service.LeaderService;
+import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -29,5 +30,12 @@ public class LeaderController {
     @ApiOperation(value = "领导层一个项目大类的创建", notes = "根据给予的判断信息和理由更新数据库中的项目大类的情况")
     public Result findProjectCategoryInfo(@RequestBody IsProjectCategoryPassedPostInfo info) {
         return leaderService.isProjectCategoryPassed(info);
+    }
+
+    @GetMapping("/AllSubordinate")
+    @ApiOperation(value = "查找一个领导的所有的下属", notes = "根据领导id查找他的所有的下属")
+    public Result findProjectCategoryInfo(@RequestHeader(value = "Authorization")String token) {
+        String leaderId = JwtUtil.parseJwt(token);
+        return leaderService.findAllSubordinate(leaderId);
     }
 }

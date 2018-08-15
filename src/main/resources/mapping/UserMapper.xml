@@ -12,6 +12,7 @@
     <result column="major" property="major" jdbcType="VARCHAR" />
     <result column="identity" property="identity" jdbcType="INTEGER" />
     <result column="is_able_login" property="isAbleLogin" jdbcType="INTEGER" />
+    <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -72,7 +73,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, user_name, sex, department, phone, mail, position, major, identity, is_able_login
+    user_id, user_name, sex, department, phone, mail, position, major, identity, is_able_login, 
+    leader_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.UserExample" >
     select
@@ -109,11 +111,11 @@
     insert into tbl_User (user_id, user_name, sex, 
       department, phone, mail, 
       position, major, identity, 
-      is_able_login)
+      is_able_login, leader_id)
     values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
       #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{identity,jdbcType=INTEGER}, 
-      #{isAbleLogin,jdbcType=INTEGER})
+      #{isAbleLogin,jdbcType=INTEGER}, #{leaderId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.User" >
     insert into tbl_User
@@ -148,6 +150,9 @@
       <if test="isAbleLogin != null" >
         is_able_login,
       </if>
+      <if test="leaderId != null" >
+        leader_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -179,6 +184,9 @@
       </if>
       <if test="isAbleLogin != null" >
         #{isAbleLogin,jdbcType=INTEGER},
+      </if>
+      <if test="leaderId != null" >
+        #{leaderId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -221,6 +229,9 @@
       <if test="record.isAbleLogin != null" >
         is_able_login = #{record.isAbleLogin,jdbcType=INTEGER},
       </if>
+      <if test="record.leaderId != null" >
+        leader_id = #{record.leaderId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -237,7 +248,8 @@
       position = #{record.position,jdbcType=VARCHAR},
       major = #{record.major,jdbcType=VARCHAR},
       identity = #{record.identity,jdbcType=INTEGER},
-      is_able_login = #{record.isAbleLogin,jdbcType=INTEGER}
+      is_able_login = #{record.isAbleLogin,jdbcType=INTEGER},
+      leader_id = #{record.leaderId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -272,6 +284,9 @@
       <if test="isAbleLogin != null" >
         is_able_login = #{isAbleLogin,jdbcType=INTEGER},
       </if>
+      <if test="leaderId != null" >
+        leader_id = #{leaderId,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
@@ -285,7 +300,8 @@
       position = #{position,jdbcType=VARCHAR},
       major = #{major,jdbcType=VARCHAR},
       identity = #{identity,jdbcType=INTEGER},
-      is_able_login = #{isAbleLogin,jdbcType=INTEGER}
+      is_able_login = #{isAbleLogin,jdbcType=INTEGER},
+      leader_id = #{leaderId,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 </mapper>

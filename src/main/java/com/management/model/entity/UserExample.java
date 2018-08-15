@@ -783,6 +783,76 @@ public class UserExample {
             addCriterion("is_able_login not between", value1, value2, "isAbleLogin");
             return (Criteria) this;
         }
+
+        public Criteria andLeaderIdIsNull() {
+            addCriterion("leader_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdIsNotNull() {
+            addCriterion("leader_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdEqualTo(String value) {
+            addCriterion("leader_id =", value, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdNotEqualTo(String value) {
+            addCriterion("leader_id <>", value, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdGreaterThan(String value) {
+            addCriterion("leader_id >", value, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdGreaterThanOrEqualTo(String value) {
+            addCriterion("leader_id >=", value, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdLessThan(String value) {
+            addCriterion("leader_id <", value, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdLessThanOrEqualTo(String value) {
+            addCriterion("leader_id <=", value, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdLike(String value) {
+            addCriterion("leader_id like", value, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdNotLike(String value) {
+            addCriterion("leader_id not like", value, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdIn(List<String> values) {
+            addCriterion("leader_id in", values, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdNotIn(List<String> values) {
+            addCriterion("leader_id not in", values, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdBetween(String value1, String value2) {
+            addCriterion("leader_id between", value1, value2, "leaderId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLeaderIdNotBetween(String value1, String value2) {
+            addCriterion("leader_id not between", value1, value2, "leaderId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

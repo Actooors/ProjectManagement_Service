@@ -21,6 +21,8 @@ public class User {
 
     private Integer isAbleLogin;
 
+    private String leaderId;
+
     public String getUserId() {
         return userId;
     }
@@ -99,5 +101,13 @@ public class User {
 
     public void setIsAbleLogin(Integer isAbleLogin) {
         this.isAbleLogin = isAbleLogin;
+    }
+
+    public String getLeaderId() {
+        return leaderId;
+    }
+
+    public void setLeaderId(String leaderId) {
+        this.leaderId = leaderId == null ? null : leaderId.trim();
     }
 }

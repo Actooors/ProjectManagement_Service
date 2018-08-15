@@ -19,4 +19,13 @@ public interface LeaderService {
      * @Date: 18-8-15
      */
     Result isProjectCategoryPassed(IsProjectCategoryPassedPostInfo info);
+
+    /**
+     * @Description: 查找一个领导手下的所有业务员
+     * @Param: [leaderId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    Result findAllSubordinate(String leaderId);
 }

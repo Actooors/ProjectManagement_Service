@@ -12,6 +12,7 @@ create table tbl_User (
                                  4领导 5系统管理员',
   is_able_login int not null default 1 comment '是否可以登录
                                                 1可以登录 2不可登录'
+  leader_id varchar(8) comment '业务员对应的领导的id'
 ) comment '用户表'
   charset = utf8;
 

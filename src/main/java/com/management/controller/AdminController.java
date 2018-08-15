@@ -1,8 +1,8 @@
 package com.management.controller;
 
+import com.management.model.jsonrequestbody.ChooseProjectMeeting;
 import com.management.model.ov.Result;
 import com.management.service.AdminService;
-import com.management.service.ExpertService;
 import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -32,5 +32,12 @@ public class AdminController {
 
         String userId = JwtUtil.parseJwt(token);
         return adminService.someoneAllProjectCategory(userId);
+    }
+
+    @PostMapping("/meetingResult")
+    @ApiOperation(value = "业务员选择指定项目上会，另外的项目申请失败", notes = "根据项目号查找项目后更新内容")
+    public Result meetingResult(@RequestBody ChooseProjectMeeting info) {
+
+        return adminService.chooseProjectMeeting(info);
     }
 }

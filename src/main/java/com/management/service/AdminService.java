@@ -1,4 +1,5 @@
 package com.management.service;
+import com.management.model.jsonrequestbody.ChooseProjectMeeting;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import org.springframework.stereotype.Service;
@@ -25,4 +26,13 @@ public interface AdminService {
      * @Date: 18-8-15
      */
     Result someoneAllProjectCategory(String userId);
+
+    /**
+     * @Description: 业务员选择指定的一定数量的项目上会
+     * @Param: [info]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    Result chooseProjectMeeting(ChooseProjectMeeting info);
 }

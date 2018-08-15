@@ -1,10 +1,13 @@
 package com.management.service.impl;
 
+import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.UserMapper;
+import com.management.model.entity.ProjectApplication;
 import com.management.model.entity.ProjectCategory;
 import com.management.model.entity.ProjectCategoryExample;
 import com.management.model.entity.User;
+import com.management.model.jsonrequestbody.ChooseProjectMeeting;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
@@ -27,11 +30,19 @@ import static com.management.tools.TimeTool.timetoString;
 @Service
 
 public class AdminServiceImpl implements AdminService {
+
     @Resource
     private UserMapper userMapper;
+
     @Resource
     private ProjectCategoryMapper projectCategoryMapper;
 
+    @Resource
+    private ProjectApplicationMapper projectApplicationMapper;
+
+    private static final int MEETING_ENABLE = 1;
+    private static final int MEETING_UNABLE = 2;
+    private static final int REVIEW_FAILED = 6;
     /**
      * @Description: 创建项目类别
      * @Param: projectCategoryInfo
@@ -130,6 +141,36 @@ public class AdminServiceImpl implements AdminService {
             resList.add(res);
          }
          return ResultTool.success(resList);
+    }
+
+
+    /**
+     * @Description: chooseProjectMeeting接口的实现
+     * @Param: [info]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    @Override
+    public Result chooseProjectMeeting(ChooseProjectMeeting info) {
+        List<Integer> meetingList = info.getMeetingList();
+        List<Integer> notMeetingList = info.getNotMeetingList();
+        if(meetingList.isEmpty() && notMeetingList.isEmpty()) {
+            return ResultTool.error("不能给予空的上会项目列表");
+        }
+        for(Integer projectId : meetingList) {
+            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(projectId);
+            projectApplication.setIsMeeting(MEETING_ENABLE);
+            projectApplication.setReviewPhase(projectApplication.getReviewPhase() + 1);
+            projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
+        }
+        for(Integer projectId : notMeetingList) {
+            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(projectId);
+            projectApplication.setIsMeeting(MEETING_UNABLE);
+            projectApplication.setReviewPhase(REVIEW_FAILED);
+            projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
+        }
+        return ResultTool.success();
     }
 
 

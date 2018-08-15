@@ -1,15 +1,12 @@
 package com.management.service.impl;
 
-import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
-import com.management.dao.ProjectModificationApplicationMapper;
 import com.management.dao.UserMapper;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.LeaderSubordinateInfo;
 import com.management.model.ov.resultsetting.WaitJudgeProjectCategoryInfo;
-import com.management.model.ov.resultsetting.WaitJudgeProjectInfo;
 import com.management.service.LeaderService;
 import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
@@ -32,12 +29,9 @@ public class LeaderServiceImpl implements LeaderService {
     @Resource
     private UserMapper userMapper;
 
-    @Resource
-    private ProjectApplicationMapper projectApplicationMapper;
 
     private static final int STATE_TWO = 2;
     private static final int STATE_THREE = 3;
-    private static final int STATE_FOUR = 4;
     /**
      * @Description: isProjectCategoryPassed接口的实现
      * @Param: [info]

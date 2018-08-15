@@ -7,11 +7,15 @@ import com.management.model.entity.ProjectCategory;
 import com.management.model.entity.ProjectCategoryExample;
 import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
+import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
+import com.management.service.AdminService;
 import com.management.tools.ResultTool;
 import com.management.tools.TimeTool;
 import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.*;
+
+import static com.management.tools.TimeTool.timetoString;
 
 /**
  * @program: management
@@ -22,7 +26,7 @@ import java.util.*;
 
 @Service
 
-public class AdminServiceImpl {
+public class AdminServiceImpl implements AdminService {
     @Resource
     private UserMapper userMapper;
     @Resource
@@ -35,6 +39,7 @@ public class AdminServiceImpl {
      * @Author: xw
      * @Date: 18-7-30
      */
+    @Override
     public Result createProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo){
         /*将字符串时间格式转化为Date时间类型*/
         Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
@@ -82,6 +87,7 @@ public class AdminServiceImpl {
      * @Author: xw
      * @Date: 18-7-31
      */
+     @Override
      public Result queryProjectCategory(String userId){
          ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
          try{
@@ -98,6 +104,33 @@ public class AdminServiceImpl {
          }
      }
 
+     /**
+      * @Description: someoneAllProjectCategory的实现
+      * @Param: [userId]
+      * @Return: com.management.model.ov.Result
+      * @Author: ggmr
+      * @Date: 18-8-15
+      */
+    @Override
+    public Result someoneAllProjectCategory(String userId) {
+         ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
+         projectCategoryExample.createCriteria()
+                            .andPrincipalIdEqualTo(userId);
+         List<ProjectCategory> projectCategoryList = projectCategoryMapper.selectByExample(projectCategoryExample);
+         if(projectCategoryList.isEmpty()) {
+             return ResultTool.error("这个业务员没有开通过项目大类");
+         }
+         List<SomeoneAllProjectCategoryInfo> resList = new LinkedList<>();
+         for(ProjectCategory projectCategory : projectCategoryList) {
+            SomeoneAllProjectCategoryInfo res = new SomeoneAllProjectCategoryInfo();
+            res.setFinishPeople(projectCategory.getStatistics());
+            res.setProjectCategoryName(projectCategory.getProjectCategoryName());
+            res.setProjectDeadline(timetoString(projectCategory.getProjectEndTime()));
+            res.setType(projectCategory.getProjectType());
+            resList.add(res);
+         }
+         return ResultTool.success(resList);
+    }
 
 
 }

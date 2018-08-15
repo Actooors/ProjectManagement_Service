@@ -46,7 +46,7 @@ create table tbl_ProjectCategory (
   concluding_report_start_time timestamp default current_timestamp comment '结题报告开始时间',
   concluding_report_end_time timestamp default current_timestamp comment '结题报告结束时间',
   concluding_report_download_address varchar(128) comment '结题报告模板地址',
-  statistics int not null default 0 comment '此类别的立项成功的项目总数 默认为0',
+  statistics int not null default 0 comment '此类别的项目完结成功的项目总数 默认为0',
   is_approved int comment '项目是否通过审核
                           1通过 2未通过'
 ) comment '业务员开通项目大类表'

@@ -28,4 +28,14 @@ public interface LeaderService {
      * @Date: 18-8-15
      */
     Result findAllSubordinate(String leaderId);
+    
+    
+    /**
+     * @Description: 查看一个领导手下现在需要他进行终审的项目大类或项目申请列表
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    Result waitJudgeProjectCategoryList(String leaderId);
 }

@@ -9,16 +9,14 @@ import com.management.model.entity.UserExample;
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.LeaderSubordinateInfo;
+import com.management.model.ov.resultsetting.WaitJudgeProjectCategoryInfo;
 import com.management.service.LeaderService;
 import com.management.tools.ResultTool;
-import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @program: management
@@ -33,6 +31,9 @@ public class LeaderServiceImpl implements LeaderService {
 
     @Resource
     private UserMapper userMapper;
+
+    private static final int STATE_TWO = 2;
+    private static final int STATE_THREE = 3;
     /**
      * @Description: isProjectCategoryPassed接口的实现
      * @Param: [info]
@@ -48,7 +49,7 @@ public class LeaderServiceImpl implements LeaderService {
             return ResultTool.error("不存在这个id的项目大类");
         }
         Integer isPassed = info.getIsPassed();
-        if(isPassed == 2) {
+        if(isPassed == STATE_TWO) {
             projectCategory.setFailureReason(info.getMessage());
         }
         projectCategory.setIsApproved(isPassed);
@@ -78,6 +79,36 @@ public class LeaderServiceImpl implements LeaderService {
             res.setPhone(user.getPhone());
             res.setUserId(user.getUserId());
             res.setUserName(user.getUserName());
+            resList.add(res);
+        }
+        return ResultTool.success(resList);
+    }
+
+    /**
+     * @Description: waitJudgeProjectCategoryList接口的实现
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    @Override
+    public Result waitJudgeProjectCategoryList(String leaderId) {
+        ProjectCategoryExample pExacmple = new ProjectCategoryExample();
+        pExacmple.createCriteria()
+                .andReviewLeaderIdEqualTo(leaderId)
+                .andIsApprovedEqualTo(STATE_THREE);
+        List<ProjectCategory> list = projectCategoryMapper.selectByExample(pExacmple);
+        if(list.isEmpty()) {
+            return ResultTool.error("当前并没有需要处理的项目大类申请");
+        }
+        List<WaitJudgeProjectCategoryInfo> resList = new LinkedList<>();
+        for(ProjectCategory projectCategory : list) {
+            WaitJudgeProjectCategoryInfo res = new WaitJudgeProjectCategoryInfo();
+            res.setAdminId(projectCategory.getPrincipalId());
+            res.setAdminName(projectCategory.getPrincipalName());
+            res.setProjectCategoryId(projectCategory.getProjectCategoryId());
+            res.setProjectCategoryName(projectCategory.getProjectCategoryName());
+            res.setType(projectCategory.getProjectType());
             resList.add(res);
         }
         return ResultTool.success(resList);

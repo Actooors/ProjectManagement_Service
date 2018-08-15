@@ -38,4 +38,11 @@ public class LeaderController {
         String leaderId = JwtUtil.parseJwt(token);
         return leaderService.findAllSubordinate(leaderId);
     }
+
+    @GetMapping("/unJudgeProjectCategory")
+    @ApiOperation(value = "查找一个领导的所有待审核项目大类列表", notes = "根据领导id查找他的所有的待审核项目大类列表")
+    public Result findUnJudgeProjectCategory(@RequestHeader(value = "Authorization")String token) {
+        String leaderId = JwtUtil.parseJwt(token);
+        return leaderService.waitJudgeProjectCategoryList(leaderId);
+    }
 }

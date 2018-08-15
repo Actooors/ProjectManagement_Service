@@ -29,12 +29,14 @@ public class LeaderController {
     @PostMapping("/judgeProjectCategory")
     @ApiOperation(value = "领导层一个项目大类的创建", notes = "根据给予的判断信息和理由更新数据库中的项目大类的情况")
     public Result findProjectCategoryInfo(@RequestBody IsProjectCategoryPassedPostInfo info) {
+
         return leaderService.isProjectCategoryPassed(info);
     }
 
     @GetMapping("/AllSubordinate")
     @ApiOperation(value = "查找一个领导的所有的下属", notes = "根据领导id查找他的所有的下属")
     public Result findProjectCategoryInfo(@RequestHeader(value = "Authorization")String token) {
+
         String leaderId = JwtUtil.parseJwt(token);
         return leaderService.findAllSubordinate(leaderId);
     }
@@ -42,13 +44,8 @@ public class LeaderController {
     @GetMapping("/unJudgeProjectCategory")
     @ApiOperation(value = "查找一个领导的所有待审核项目大类列表", notes = "根据领导id查找他的所有的待审核项目大类列表")
     public Result findUnJudgeProjectCategory(@RequestHeader(value = "Authorization")String token) {
+
         String leaderId = JwtUtil.parseJwt(token);
         return leaderService.waitJudgeProjectCategoryList(leaderId);
-    }
-
-    @GetMapping("/projectCategory/{projectCategoryId}")
-    @ApiOperation(value = "查找一个领导的某个项目大类列表的所有待终审项目", notes = "根据项目大类id查找所有审核阶段为4的项目")
-    public Result findUnJudgeProjectCategory(@PathVariable(value = "projectCategoryId")int prCId) {
-        return leaderService.waitJudgeProjectList(prCId);
     }
 }

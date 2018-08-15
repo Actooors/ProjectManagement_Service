@@ -47,4 +47,14 @@ public interface UserService {
      */
     Result findProjectCategoryInfo(int projectCategoryId);
 
+    /**
+     * @Description: 查找某个项目大类的所有待审项目申请,
+     *               type为1业务员审核阶段 2评审专家审核阶段 3会评阶段 4领导审核阶段
+     * @Param: [leaderId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    Result waitJudgeProjectList(Integer projectCategoryId, Integer type);
+
 }

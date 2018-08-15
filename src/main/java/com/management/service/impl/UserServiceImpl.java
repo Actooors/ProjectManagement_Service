@@ -1,15 +1,11 @@
 package com.management.service.impl;
 
+import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.UserMapper;
-import com.management.model.entity.ProjectCategory;
-import com.management.model.entity.ProjectCategoryExample;
-import com.management.model.entity.User;
+import com.management.model.entity.*;
 import com.management.model.ov.Result;
-import com.management.model.ov.resultsetting.IsTimeOutInfo;
-import com.management.model.ov.resultsetting.LoginResponse;
-import com.management.model.ov.resultsetting.ProjectCategoryInfo;
-import com.management.model.ov.resultsetting.ProjectCategoryListInfo;
+import com.management.model.ov.resultsetting.*;
 import com.management.model.jsonrequestbody.LoginInfo;
 import com.management.service.UserService;
 import com.management.tools.AuthTool;
@@ -34,6 +30,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private ProjectApplicationMapper projectApplicationMapper;
 
     @Resource
     private ProjectCategoryMapper projectCategoryMapper;
@@ -202,6 +201,34 @@ public class UserServiceImpl implements UserService {
         projectCategoryInfo.setProjectStartTime(TimeTool.timetoString(projectCategory.getProjectStartTime()));
         projectCategoryInfo.setProjectDeadline(TimeTool.timetoString(projectCategory.getProjectEndTime()));
         return ResultTool.success(projectCategoryInfo);
+    }
+
+    /**
+     * @Description: waitJudgeProjectList接口的实现
+     * @Param: [leaderId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    @Override
+    public Result waitJudgeProjectList(Integer projectCategoryId, Integer type) {
+        ProjectApplicationExample pExample = new ProjectApplicationExample();
+        pExample.createCriteria()
+                .andProjectCategoryIdEqualTo(projectCategoryId)
+                .andReviewPhaseEqualTo(type);
+        List<ProjectApplication> list = projectApplicationMapper.selectByExample(pExample);
+        if(list.isEmpty()) {
+            return ResultTool.error("当前并没有需要审核的项目");
+        }
+        List<WaitJudgeProjectInfo> resList = new LinkedList<>();
+        for(ProjectApplication projectApplication : list) {
+            WaitJudgeProjectInfo res = new WaitJudgeProjectInfo();
+            res.setDescription(projectApplication.getProjectDescription());
+            res.setProjectId(projectApplication.getProjectApplicationId());
+            res.setProjectName(projectApplication.getProjectName());
+            resList.add(res);
+        }
+        return ResultTool.success(resList);
     }
 
 

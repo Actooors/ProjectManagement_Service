@@ -29,6 +29,7 @@ public class AdminController {
     @GetMapping("/allProjectCategory")
     @ApiOperation(value = "查一个业务员负责的所有的项目大类", notes = "根据业务员工号查找他负责的所有的项目大类")
     public Result findProjectCategoryInfo(@RequestHeader(value = "Authorization")String token) {
+
         String userId = JwtUtil.parseJwt(token);
         return adminService.someoneAllProjectCategory(userId);
     }

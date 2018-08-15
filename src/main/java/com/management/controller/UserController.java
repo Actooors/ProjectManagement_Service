@@ -48,4 +48,12 @@ public class UserController {
         return userService.findProjectCategoryInfo(prId);
     }
 
+    @GetMapping("/projectCategory/{projectCategoryId}/{type}")
+    @ApiOperation(value = "查找一个领导的某个项目大类列表的所有待终审项目", notes = "根据项目大类id查找所有审核阶段为4的项目")
+    public Result findUnJudgeProjectCategory(@PathVariable(value = "projectCategoryId")int prCId,
+                                             @PathVariable(value = "type")int type) {
+
+        return userService.waitJudgeProjectList(prCId, type);
+    }
+
 }

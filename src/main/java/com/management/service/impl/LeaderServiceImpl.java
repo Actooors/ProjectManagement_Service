@@ -118,32 +118,4 @@ public class LeaderServiceImpl implements LeaderService {
         return ResultTool.success(resList);
     }
 
-
-    /**
-     * @Description: waitJudgeProjectList接口的实现
-     * @Param: [leaderId]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-8-15
-     */
-    @Override
-    public Result waitJudgeProjectList(Integer projectCategoryId) {
-        ProjectApplicationExample pExample = new ProjectApplicationExample();
-        pExample.createCriteria()
-                .andProjectCategoryIdEqualTo(projectCategoryId)
-                .andReviewPhaseEqualTo(STATE_FOUR);
-        List<ProjectApplication> list = projectApplicationMapper.selectByExample(pExample);
-        if(list.isEmpty()) {
-            return ResultTool.error("当前并没有需要终审的项目申请");
-        }
-        List<WaitJudgeProjectInfo> resList = new LinkedList<>();
-        for(ProjectApplication projectApplication : list) {
-            WaitJudgeProjectInfo res = new WaitJudgeProjectInfo();
-            res.setDescription(projectApplication.getProjectDescription());
-            res.setProjectId(projectApplication.getProjectApplicationId());
-            res.setProjectName(projectApplication.getProjectName());
-            resList.add(res);
-        }
-        return ResultTool.success(resList);
-    }
 }

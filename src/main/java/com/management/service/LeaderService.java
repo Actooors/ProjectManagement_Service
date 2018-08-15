@@ -38,4 +38,13 @@ public interface LeaderService {
      * @Date: 18-8-15
      */
     Result waitJudgeProjectCategoryList(String leaderId);
+
+    /**
+     * @Description: 查找一个领导手下某个项目大类的所有待终审项目申请
+     * @Param: [leaderId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    Result waitJudgeProjectList(Integer projectCategoryId);
 }

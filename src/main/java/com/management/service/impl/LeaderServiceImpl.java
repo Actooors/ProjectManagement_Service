@@ -1,15 +1,15 @@
 package com.management.service.impl;
 
+import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
+import com.management.dao.ProjectModificationApplicationMapper;
 import com.management.dao.UserMapper;
-import com.management.model.entity.ProjectCategory;
-import com.management.model.entity.ProjectCategoryExample;
-import com.management.model.entity.User;
-import com.management.model.entity.UserExample;
+import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.LeaderSubordinateInfo;
 import com.management.model.ov.resultsetting.WaitJudgeProjectCategoryInfo;
+import com.management.model.ov.resultsetting.WaitJudgeProjectInfo;
 import com.management.service.LeaderService;
 import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
@@ -32,8 +32,12 @@ public class LeaderServiceImpl implements LeaderService {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private ProjectApplicationMapper projectApplicationMapper;
+
     private static final int STATE_TWO = 2;
     private static final int STATE_THREE = 3;
+    private static final int STATE_FOUR = 4;
     /**
      * @Description: isProjectCategoryPassed接口的实现
      * @Param: [info]
@@ -109,6 +113,35 @@ public class LeaderServiceImpl implements LeaderService {
             res.setProjectCategoryId(projectCategory.getProjectCategoryId());
             res.setProjectCategoryName(projectCategory.getProjectCategoryName());
             res.setType(projectCategory.getProjectType());
+            resList.add(res);
+        }
+        return ResultTool.success(resList);
+    }
+
+
+    /**
+     * @Description: waitJudgeProjectList接口的实现
+     * @Param: [leaderId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    @Override
+    public Result waitJudgeProjectList(Integer projectCategoryId) {
+        ProjectApplicationExample pExample = new ProjectApplicationExample();
+        pExample.createCriteria()
+                .andProjectCategoryIdEqualTo(projectCategoryId)
+                .andReviewPhaseEqualTo(STATE_FOUR);
+        List<ProjectApplication> list = projectApplicationMapper.selectByExample(pExample);
+        if(list.isEmpty()) {
+            return ResultTool.error("当前并没有需要终审的项目申请");
+        }
+        List<WaitJudgeProjectInfo> resList = new LinkedList<>();
+        for(ProjectApplication projectApplication : list) {
+            WaitJudgeProjectInfo res = new WaitJudgeProjectInfo();
+            res.setDescription(projectApplication.getProjectDescription());
+            res.setProjectId(projectApplication.getProjectApplicationId());
+            res.setProjectName(projectApplication.getProjectName());
             resList.add(res);
         }
         return ResultTool.success(resList);

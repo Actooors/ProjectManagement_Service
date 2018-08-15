@@ -74,7 +74,7 @@ create table tbl_ProjectApplication (
   meeting_review_message varchar(256) comment '会评意见',
   review_phase int not null default 1 comment '项目申请审核阶段
                             1业务员审核阶段 2评审专家审核阶段 3会评阶段
-                            4领导审核阶段 5审核通过',
+                            4领导审核阶段 5审核通过 6审核失败',
   failure_reason varchar(256) comment '申请失败的时候的失败原因',
   application_time timestamp default current_timestamp comment '申请递交时间'
 

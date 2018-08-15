@@ -4,6 +4,7 @@ import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.UserMapper;
 import com.management.model.entity.*;
+import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.*;
 import com.management.model.jsonrequestbody.LoginInfo;
@@ -38,8 +39,8 @@ public class UserServiceImpl implements UserService {
     private ProjectCategoryMapper projectCategoryMapper;
 
     private static final int LOGIN_ENABLE = 1;
-//    private static final byte LOGIN_DISABLE = 2;
-
+    private static final int STATE_TWO = 2;
+    private static final int REVIEW_FAILED = 6;
     /**
      * @Description: 根据参数生成登录返回需要的信息
      * @Param: [userId, identity, userName]
@@ -47,7 +48,7 @@ public class UserServiceImpl implements UserService {
      * @Author: ggmr
      * @Date: 18-7-29
      */
-    private LoginResponse setLoginResponse(String userId, int identity,
+    private LoginResponse setLoginResponse(String userId, Integer identity,
                                                     String userName) {
         LoginResponse response = new LoginResponse();
         response.setToken(JwtUtil.createJwt(userId));
@@ -118,7 +119,7 @@ public class UserServiceImpl implements UserService {
      * @Date: 18-7-31
      */
     @Override
-    public Result isTimeOut(int projectCategoryId, int type) {
+    public Result isTimeOut(Integer projectCategoryId, Integer type) {
         ProjectCategory projectCategory = projectCategoryMapper
                                 .selectByPrimaryKey(projectCategoryId);
         if(projectCategory == null) {
@@ -149,7 +150,7 @@ public class UserServiceImpl implements UserService {
      * @Date: 18-7-31
      */
     @Override
-    public Result findAllProjectCategory(int projectCategoryType) {
+    public Result findAllProjectCategory(Integer projectCategoryType) {
         ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
         projectCategoryExample.createCriteria()
                 .andProjectTypeEqualTo(projectCategoryType)
@@ -180,7 +181,7 @@ public class UserServiceImpl implements UserService {
      * @Date: 18-7-31
      */
     @Override
-    public Result findProjectCategoryInfo(int projectCategoryId) {
+    public Result findProjectCategoryInfo(Integer projectCategoryId) {
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectCategoryId);
         if(projectCategory == null) {
             return ResultTool.error("不存在这个Id的项目大类");
@@ -229,6 +230,30 @@ public class UserServiceImpl implements UserService {
             resList.add(res);
         }
         return ResultTool.success(resList);
+    }
+
+    /**
+     * @Description: projectJudgeResult接口的实现
+     * @Param: [projectId, info]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    @Override
+    public Result projectJudgeResult(IsProjectPassedPostInfo info) {
+        ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(info.getProjectId());
+        if(projectApplication == null) {
+            return ResultTool.error("不存在这个id的项目");
+        }
+        int judge = info.getIsPassed();
+        if(judge == STATE_TWO) {
+            projectApplication.setFailureReason(info.getMessage());
+            projectApplication.setReviewPhase(REVIEW_FAILED);
+        } else {
+            projectApplication.setReviewPhase(projectApplication.getReviewPhase() + 1);
+        }
+        projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
+        return ResultTool.success();
     }
 
 

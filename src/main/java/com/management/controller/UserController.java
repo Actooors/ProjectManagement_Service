@@ -1,5 +1,6 @@
 package com.management.controller;
 
+import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.ov.Result;
 import com.management.service.UserService;
 import io.swagger.annotations.Api;
@@ -49,11 +50,18 @@ public class UserController {
     }
 
     @GetMapping("/projectCategory/{projectCategoryId}/{type}")
-    @ApiOperation(value = "查找一个领导的某个项目大类列表的所有待终审项目", notes = "根据项目大类id查找所有审核阶段为4的项目")
+    @ApiOperation(value = "查找某个项目大类列表的所有待审项目", notes = "根据项目大类id查找所有审核阶段为type的项目")
     public Result findUnJudgeProjectCategory(@PathVariable(value = "projectCategoryId")int prCId,
                                              @PathVariable(value = "type")int type) {
 
         return userService.waitJudgeProjectList(prCId, type);
+    }
+
+    @PostMapping("/projectJudgement")
+    @ApiOperation(value = "审核一个项目某个阶段", notes = "如果通过那么项目的阶段++，如果已经到了第四阶段并且已经通过，那么结束")
+    public Result findUnJudgeProjectCategory(@RequestBody IsProjectPassedPostInfo info) {
+
+        return userService.projectJudgeResult(info);
     }
 
 }

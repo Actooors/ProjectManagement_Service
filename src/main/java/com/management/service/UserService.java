@@ -1,4 +1,5 @@
 package com.management.service;
+import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.LoginInfo;
 
@@ -27,7 +28,7 @@ public interface UserService {
      * @Author: ggmr
      * @Date: 18-7-31
      */
-    Result isTimeOut(int projectCategoryId, int type);
+    Result isTimeOut(Integer projectCategoryId, Integer type);
     /**
      * @Description: 根据项目大类的种类查找对应类别的所有的项目大类，项目类别按照１２３４分类
      *               只能看到没有超过申请时间deadline的项目
@@ -36,7 +37,7 @@ public interface UserService {
      * @Author: ggmr
      * @Date: 18-7-31
      */
-    Result findAllProjectCategory(int projectCategoryType);
+    Result findAllProjectCategory(Integer projectCategoryType);
 
     /**
      * @Description: 根据项目大类Id查找一个具体的项目大类的信息
@@ -45,7 +46,7 @@ public interface UserService {
      * @Author: ggmr
      * @Date: 18-7-31
      */
-    Result findProjectCategoryInfo(int projectCategoryId);
+    Result findProjectCategoryInfo(Integer projectCategoryId);
 
     /**
      * @Description: 查找某个项目大类的所有待审项目申请,
@@ -57,4 +58,12 @@ public interface UserService {
      */
     Result waitJudgeProjectList(Integer projectCategoryId, Integer type);
 
+    /**
+     * @Description: 审核一个项目的进行情况，如果通过那么项目的阶段++，如果已经到了第四阶段并且已经通过，那么结束
+     * @Param: [projectId, info]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-15
+     */
+    Result projectJudgeResult(IsProjectPassedPostInfo info);
 }

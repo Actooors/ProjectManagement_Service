@@ -5,6 +5,7 @@ import com.management.model.ov.Result;
 import com.management.model.ov.ResultCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,11 +22,12 @@ import java.io.PrintWriter;
 public class AuthInterceptor implements HandlerInterceptor {
     private static final String LOGIN_URL = "/api/login";
     private static final String TOKEN_NAME = "Authorization";
+    private static final String SWAGGER_URL="/api/swagger-ui.html";
     private static final int HTTP_CODE = 401;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
-        // 登陆接口不做拦截
+        // 登陆接口和Swagger界面不做拦截
         if (LOGIN_URL.equals(request.getRequestURI())) {
             return true;
         }
@@ -50,4 +52,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         out.print(jsonOfRST);
         out.flush();
     }
+
+
 }

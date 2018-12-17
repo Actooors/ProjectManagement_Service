@@ -25,7 +25,12 @@ public class TimeTool {
     }
 
     public static String timetoString(Date date){
+
         return new SimpleDateFormat("yyyy-MM-dd hh:mm").format(date);
     }
 
+    public static String timeToString1(Date date) {
+
+        return new SimpleDateFormat("yyyy-MM-dd").format(date);
+    }
 }

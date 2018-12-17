@@ -16,9 +16,12 @@ import com.management.tools.TimeTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+
+import static com.management.tools.TimeTool.timeToString1;
 
 /**
  * @program: management
@@ -254,6 +257,51 @@ public class UserServiceImpl implements UserService {
         }
         projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
         return ResultTool.success();
+    }
+
+
+    /**
+     * @Description: 获取全部的可申报项目
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/17
+     */
+    @Override
+    public Result getAllAviProject() {
+
+        ProjectCategoryExample example = new ProjectCategoryExample();
+        example.createCriteria()
+                .andApplicationEndTimeGreaterThan(new Date())
+                .andProjectCategoryIdIsNotNull();
+        List<ProjectCategory> projectCategoryList = projectCategoryMapper
+                .selectByExample(example);
+        Collections.sort(projectCategoryList);
+        //获取到最大的项目类别
+        int maxType = projectCategoryList.get(0).getProjectType();
+        List<AviProjectCategoryInfoList> resList = new LinkedList<>();
+
+        for(int i = maxType, count = 0, len = projectCategoryList.size(); i >= 1; i--) {
+            AviProjectCategoryInfoList singleList = new AviProjectCategoryInfoList();
+            singleList.setType(ConstCorrespond.projectType[i]);
+            List<AviProjectCategoryInfo> infoList = new LinkedList<>();
+            for(;count < len; count++) {
+                if(projectCategoryList.get(count).getProjectType() == i) {
+                    AviProjectCategoryInfo info = new AviProjectCategoryInfo();
+                    ProjectCategory p =  projectCategoryList.get(count);
+                    info.setDeadLine(timeToString1(p.getApplicationEndTime()));
+                    info.setIntroduce(p.getProjectCategoryDescription());
+                    info.setProjectId(p.getProjectCategoryId());
+                    info.setProjectName(p.getProjectCategoryName());
+                    infoList.add(info);
+                } else {
+                    break;
+                }
+            }
+            singleList.setProjectList(infoList);
+            resList.add(singleList);
+        }
+        return ResultTool.success(resList);
     }
 
 

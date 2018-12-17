@@ -66,4 +66,13 @@ public interface UserService {
      * @Date: 18-8-15
      */
     Result projectJudgeResult(IsProjectPassedPostInfo info);
+
+    /**
+     * @Description: 获取普通用户的全部的可申报项目
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/17
+     */
+    Result getAllAviProject();
 }

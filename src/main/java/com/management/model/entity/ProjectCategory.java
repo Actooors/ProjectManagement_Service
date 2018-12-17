@@ -2,7 +2,7 @@ package com.management.model.entity;
 
 import java.util.Date;
 
-public class ProjectCategory {
+public class ProjectCategory implements Comparable<ProjectCategory> {
     private Integer projectCategoryId;
 
     private String projectCategoryName;
@@ -60,6 +60,11 @@ public class ProjectCategory {
     private Integer isApproved;
 
     private String failureReason;
+
+    @Override
+    public int compareTo(ProjectCategory o) {
+        return o.projectType.compareTo(this.projectType);
+    }
 
     public Integer getProjectCategoryId() {
         return projectCategoryId;

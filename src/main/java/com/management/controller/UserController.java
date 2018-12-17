@@ -64,4 +64,11 @@ public class UserController {
         return userService.projectJudgeResult(info);
     }
 
+    @GetMapping("/AllAviProjectCategory")
+    @ApiOperation(value = "查找当前可以申报的所有的项目大类", notes = "根据类别去分类所有的项目大类并返回给用户")
+    public Result findAllAViProjectCategory() {
+
+        return userService.getAllAviProject();
+    }
+
 }

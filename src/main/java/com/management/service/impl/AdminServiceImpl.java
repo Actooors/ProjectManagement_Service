@@ -74,11 +74,15 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
             projectCategory.setReviewLeaderId(projectCategoryInfo.getReviewLeaderId());
             projectCategory.setReviewLeaderName(exportuser.getUserName());
-            projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsEexistMeetingReview());
+            projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsExistMeetingReview());
+            projectCategory.setIsInterimReportActivated(2);
             projectCategory.setApplicationStartTime(applicationStartTime);
             projectCategory.setApplicationEndTime(applicationEndTime);
             projectCategory.setProjectStartTime(projectStartTime);
             projectCategory.setProjectEndTime(projectEndTime);
+            projectCategory.setStatistics(0);
+            projectCategory.setIsApproved(2);
+            projectCategory.setIsConcludingReportActivated(2);
             projectCategoryMapper.insert(projectCategory);
 
             Result result = ResultTool.success();

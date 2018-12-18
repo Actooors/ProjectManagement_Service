@@ -1,5 +1,6 @@
 package com.management.service;
 import com.management.model.jsonrequestbody.ChooseProjectMeeting;
+import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import org.springframework.stereotype.Service;
@@ -32,6 +33,15 @@ public interface AdminService {
      * @Date: 18-7-31
      */
     Result queryProjectCategory(String userId);
+
+    /**
+     * @Description: 根据项目号查找项目后更新内容
+     * @Param: UpdateProjectCategoryInfo
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-12-18
+     */
+    Result updateProjectCategoryInfo(UpdateProjectCategoryInfo updateProjectCategoryInfo);
 
 
     /**

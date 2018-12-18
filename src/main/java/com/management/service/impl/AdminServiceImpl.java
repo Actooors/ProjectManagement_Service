@@ -8,6 +8,7 @@ import com.management.model.entity.ProjectCategory;
 import com.management.model.entity.ProjectCategoryExample;
 import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.ChooseProjectMeeting;
+import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
@@ -118,6 +119,53 @@ public class AdminServiceImpl implements AdminService {
              return result;
          }
      }
+
+     /**
+      * @Description: 根据项目号查找项目后更新内容
+      * @Param: UpdateProjectCategoryInfo
+      * @Return: Result
+      * @Author: xw
+      * @Date: 18-12-18
+      */
+     @Override
+     public Result updateProjectCategoryInfo(UpdateProjectCategoryInfo updateProjectCategoryInfo){
+
+         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(updateProjectCategoryInfo.getProjectCategoryId());
+         ProjectCategoryInfo projectCategoryInfo = updateProjectCategoryInfo.getProjectCategoryInfo();
+         /*将字符串时间格式转化为Date时间类型*/
+         Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
+         Date applicationEndTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationEndTime());
+         Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
+         Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
+         try{
+             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
+             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
+             projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
+             projectCategory.setProjectType(projectCategoryInfo.getProjectType());
+             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
+             projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
+             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
+             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
+             projectCategory.setReviewLeaderId(projectCategoryInfo.getReviewLeaderId());
+             projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsExistMeetingReview());
+             projectCategory.setApplicationStartTime(applicationStartTime);
+             projectCategory.setApplicationEndTime(applicationEndTime);
+             projectCategory.setProjectStartTime(projectStartTime);
+             projectCategory.setProjectEndTime(projectEndTime);
+             projectCategoryMapper.updateByPrimaryKey(projectCategory);
+
+             Result result = ResultTool.success();
+             result.setMessage("成功");
+             return result;
+
+         }catch (Exception e){
+             Result result = ResultTool.error();
+             result.setMessage("失败");
+             return result;
+         }
+     }
+
+
 
      /**
       * @Description: someoneAllProjectCategory的实现

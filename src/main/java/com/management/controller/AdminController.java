@@ -2,6 +2,7 @@ package com.management.controller;
 
 import com.management.model.jsonrequestbody.ChooseProjectMeeting;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
+import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
 import com.management.model.ov.Result;
 import com.management.service.AdminService;
 import com.management.tools.JwtUtil;
@@ -50,7 +51,15 @@ public class AdminController {
         return adminService.createProjectCategory(userId,projectCategoryInfo);
     }
 
-    @PostMapping("projectCategory/3")
+    @PostMapping("projectCategory/2")
+    @ApiOperation(value = "业务员修改项目类别", notes = "根据项目号查找项目后更新内容")
+    public Result updateProject(@RequestHeader(value = "Authorization")String token,
+                                @RequestBody UpdateProjectCategoryInfo updateProjectCategoryInfo){
+
+        return adminService.updateProjectCategoryInfo(updateProjectCategoryInfo);
+    }
+
+    @GetMapping("projectCategory/3")
     @ApiOperation(value = "查询业务员负责的项目详细信息", notes = "根据业务员Id查询业务员负责的项目详细信息")
     public Result queryProjectCategoryInfo(@RequestHeader(value = "Authorization")String token){
 

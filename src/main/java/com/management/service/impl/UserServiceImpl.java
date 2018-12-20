@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
     private static final int LOGIN_ENABLE = 1;
     private static final int STATE_TWO = 2;
     private static final int REVIEW_FAILED = 6;
+
     /**
      * @Description: 根据参数生成登录返回需要的信息
      * @Param: [userId, identity, userName]
@@ -52,7 +53,7 @@ public class UserServiceImpl implements UserService {
      * @Date: 18-7-29
      */
     private LoginResponse setLoginResponse(String userId, Integer identity,
-                                                    String userName) {
+                                           String userName) {
         LoginResponse response = new LoginResponse();
         response.setToken(JwtUtil.createJwt(userId));
         response.setIdentity(identity);
@@ -71,8 +72,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result login(LoginInfo loginUser) {
         //先判断账号和密码是否输入为空
-        if(loginUser == null || loginUser.getUserId() == null || "".equals(loginUser.getUserId())
-             || "".equals(loginUser.getPassword()) ||loginUser.getPassword() == null) {
+        if (loginUser == null || loginUser.getUserId() == null || "".equals(loginUser.getUserId())
+                || "".equals(loginUser.getPassword()) || loginUser.getPassword() == null) {
             return ResultTool.error("账号或密码不能为空");
         }
         User existedUser = userMapper.selectByPrimaryKey(loginUser.getUserId());
@@ -80,13 +81,13 @@ public class UserServiceImpl implements UserService {
         if (existedUser != null) {
             //如果该账户的账号密码验证正确并且可以登录
             if (AuthTool.getAuth(loginUser.getUserId(), loginUser.getPassword()) &&
-                    existedUser.getIsAbleLogin() == LOGIN_ENABLE ) {
+                    existedUser.getIsAbleLogin() == LOGIN_ENABLE) {
                 return ResultTool.success(setLoginResponse(loginUser.getUserId(),
                         existedUser.getIdentity(), existedUser.getUserName()));
-            //如果密码输入错误
+                //如果密码输入错误
             } else if (!AuthTool.getAuth(loginUser.getUserId(), loginUser.getPassword())) {
                 return ResultTool.error("密码输入错误");
-            //如果该账户登录权限为禁止登陆
+                //如果该账户登录权限为禁止登陆
             } else {
                 return ResultTool.error("您没有权限登录该系统");
             }
@@ -99,14 +100,14 @@ public class UserServiceImpl implements UserService {
                     newUser.setIdentity(1);
                     newUser.setIsAbleLogin(1);
                     userMapper.insert(newUser);
-                    
+
                     return ResultTool.success(setLoginResponse(loginUser.getUserId(),
-                                                1, newUser.getUserName()));
-                //如果没有得到newUser，说明验证异常
+                            1, newUser.getUserName()));
+                    //如果没有得到newUser，说明验证异常
                 } else {
                     return ResultTool.error("验证过程中发生异常,一般是由于工号/学号无效!");
                 }
-            //直接去上海大学接口验证仍然发生了错误，说明账号或者密码输入错误
+                //直接去上海大学接口验证仍然发生了错误，说明账号或者密码输入错误
             } else {
                 return ResultTool.error("账号或密码输入错误");
             }
@@ -124,21 +125,30 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result isTimeOut(Integer projectCategoryId, Integer type) {
         ProjectCategory projectCategory = projectCategoryMapper
-                                .selectByPrimaryKey(projectCategoryId);
-        if(projectCategory == null) {
+                .selectByPrimaryKey(projectCategoryId);
+        if (projectCategory == null) {
             return ResultTool.error("不存在这个id的项目大类");
         } else {
             int isTimeOut = 1;
             Date cur = new Date(),
-                      compareTime;
+                    compareTime;
             switch (type) {
-                case 1: compareTime = projectCategory.getApplicationEndTime(); break;
-                case 2: compareTime = projectCategory.getInterimReportEndTime(); break;
-                case 3: compareTime = projectCategory.getConcludingReportEndTime(); break;
-                case 4: compareTime = projectCategory.getProjectEndTime(); break;
-                default: return ResultTool.error("给予的type类型有误");
+                case 1:
+                    compareTime = projectCategory.getApplicationEndTime();
+                    break;
+                case 2:
+                    compareTime = projectCategory.getInterimReportEndTime();
+                    break;
+                case 3:
+                    compareTime = projectCategory.getConcludingReportEndTime();
+                    break;
+                case 4:
+                    compareTime = projectCategory.getProjectEndTime();
+                    break;
+                default:
+                    return ResultTool.error("给予的type类型有误");
             }
-            if(cur.before(compareTime)) {
+            if (cur.before(compareTime)) {
                 isTimeOut = 2;
             }
             return ResultTool.success(new IsTimeOutInfo(isTimeOut));
@@ -160,13 +170,13 @@ public class UserServiceImpl implements UserService {
                 .andApplicationEndTimeGreaterThan(new Date())
                 .andIsApprovedEqualTo(1);
         List<ProjectCategory> projectCategoryList = projectCategoryMapper
-                                        .selectByExample(projectCategoryExample);
-        if(projectCategoryList.isEmpty()) {
+                .selectByExample(projectCategoryExample);
+        if (projectCategoryList.isEmpty()) {
             return ResultTool.error("该类别没有可申报项目");
         }
         List<ProjectCategoryListInfo> list = new LinkedList<>();
 
-        for(ProjectCategory projectCategory : projectCategoryList) {
+        for (ProjectCategory projectCategory : projectCategoryList) {
             ProjectCategoryListInfo projectCategoryListInfo = new ProjectCategoryListInfo();
             projectCategoryListInfo.setApplicantType(projectCategory.getApplicantType());
             projectCategoryListInfo.setApplicationDeadline(TimeTool.timetoString(projectCategory.getApplicationEndTime()));
@@ -186,7 +196,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result findProjectCategoryInfo(Integer projectCategoryId) {
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectCategoryId);
-        if(projectCategory == null) {
+        if (projectCategory == null) {
             return ResultTool.error("不存在这个Id的项目大类");
         }
         ProjectCategoryInfo projectCategoryInfo = new ProjectCategoryInfo();
@@ -221,11 +231,11 @@ public class UserServiceImpl implements UserService {
                 .andProjectCategoryIdEqualTo(projectCategoryId)
                 .andReviewPhaseEqualTo(type);
         List<ProjectApplication> list = projectApplicationMapper.selectByExample(pExample);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return ResultTool.error("当前并没有需要审核的项目");
         }
         List<WaitJudgeProjectInfo> resList = new LinkedList<>();
-        for(ProjectApplication projectApplication : list) {
+        for (ProjectApplication projectApplication : list) {
             WaitJudgeProjectInfo res = new WaitJudgeProjectInfo();
             res.setDescription(projectApplication.getProjectDescription());
             res.setProjectId(projectApplication.getProjectApplicationId());
@@ -245,11 +255,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result projectJudgeResult(IsProjectPassedPostInfo info) {
         ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(info.getProjectId());
-        if(projectApplication == null) {
+        if (projectApplication == null) {
             return ResultTool.error("不存在这个id的项目");
         }
         int judge = info.getIsPassed();
-        if(judge == STATE_TWO) {
+        if (judge == STATE_TWO) {
             projectApplication.setFailureReason(info.getMessage());
             projectApplication.setReviewPhase(REVIEW_FAILED);
         } else {
@@ -275,7 +285,7 @@ public class UserServiceImpl implements UserService {
                 .andApplicationEndTimeGreaterThan(new Date());
         List<ProjectCategory> projectCategoryList = projectCategoryMapper
                 .selectByExample(example);
-        if(projectCategoryList.isEmpty()) {
+        if (projectCategoryList.isEmpty()) {
             return ResultTool.success(new AviProjectCategoryInfoList());
         }
         //根据项目类别的int值排序
@@ -285,14 +295,14 @@ public class UserServiceImpl implements UserService {
         List<AviProjectCategoryInfoList> resList = new LinkedList<>();
         //根据排序好的结果，先遍历的创建包含这些type的内容，
         // 然后去遍历projectCategoryList内容找到符合当前条件的加进去
-        for(int i = maxType, count = 0, len = projectCategoryList.size(); i >= 1; i--) {
+        for (int i = maxType, count = 0, len = projectCategoryList.size(); i >= 1; i--) {
             AviProjectCategoryInfoList singleList = new AviProjectCategoryInfoList();
             singleList.setType(ConstCorrespond.projectType[i]);
             List<AviProjectCategoryInfo> infoList = new LinkedList<>();
-            for(;count < len; count++) {
-                if(projectCategoryList.get(count).getProjectType() == i) {
+            for (; count < len; count++) {
+                if (projectCategoryList.get(count).getProjectType() == i) {
                     AviProjectCategoryInfo info = new AviProjectCategoryInfo();
-                    ProjectCategory p =  projectCategoryList.get(count);
+                    ProjectCategory p = projectCategoryList.get(count);
                     info.setDeadLine(timeToString1(p.getApplicationEndTime()));
                     info.setIntroduce(p.getProjectCategoryDescription());
                     info.setProjectId(p.getProjectCategoryId());
@@ -306,6 +316,49 @@ public class UserServiceImpl implements UserService {
             resList.add(singleList);
         }
         return ResultTool.success(resList);
+    }
+
+    /**
+     * @Description: 查询个人信息, 适用于所有用户
+     * @Param: userId
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-12-19
+     */
+    public Result queryUserId(String userId) {
+        try {
+            User user = userMapper.selectByPrimaryKey(userId);
+            Result result = ResultTool.success(user);
+            result.setMessage("成功");
+            return result;
+        } catch (Exception e) {
+            Result result = ResultTool.error();
+            result.setMessage("失败");
+            return result;
+        }
+    }
+
+    /**
+     * @Description: 修改个人信息
+     * @Param: User
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-12-19
+     */
+    public Result updateUserInfo(User user) {
+        try {
+            UserExample example = new UserExample();
+            example.createCriteria()
+                    .andUserIdEqualTo(user.getUserId());
+            userMapper.updateByExample(user, example);
+            Result result = ResultTool.success();
+            result.setMessage("成功");
+            return result;
+        } catch (Exception e) {
+            Result result = ResultTool.error();
+            result.setMessage("失败");
+            return result;
+        }
     }
 
 

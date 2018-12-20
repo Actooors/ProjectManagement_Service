@@ -1,4 +1,5 @@
 package com.management.service;
+
 import com.management.model.jsonrequestbody.ChooseProjectMeeting;
 import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
 import com.management.model.ov.Result;
@@ -42,6 +43,15 @@ public interface AdminService {
      * @Date: 18-12-18
      */
     Result updateProjectCategoryInfo(UpdateProjectCategoryInfo updateProjectCategoryInfo);
+
+    /**
+     * @Description:根据项目大类id查找到相应项目大类并删除
+     * @Param: projectCategoryId
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-12-19
+     */
+    Result deleteProjectCategory(Integer projectCategoryId);
 
 
     /**

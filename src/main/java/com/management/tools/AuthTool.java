@@ -28,8 +28,8 @@ public class AuthTool {
                     "</CheckUserLogin>" +
                     "</soap:Body>" +
                     "</soap:Envelope>";
-            String urlStr = "http://202.120.121.204:8888/WebService/shulibLogin.asmx?WSDL";
-            //String urlStr = "http://api.mzz.pub:18888/WebService/shulibLogin.asmx?WSDL";
+            //String urlStr = "http://202.120.121.204:8888/WebService/shulibLogin.asmx?WSDL";
+            String urlStr = "http://api.mzz.pub:18888/WebService/shulibLogin.asmx?WSDL";
 
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -73,8 +73,8 @@ public class AuthTool {
                     "</GetStudentInfo>" +
                     "</soap:Body>" +
                     "</soap:Envelope>";
-              String urlStr = "http://202.120.121.204:8888/WebService/shulibLogin.asmx?WSDL";
- //           String urlStr = "http://api.mzz.pub:18888/WebService/shulibLogin.asmx?WSDL";
+             // String urlStr = "http://202.120.121.204:8888/WebService/shulibLogin.asmx?WSDL";
+            String urlStr = "http://api.mzz.pub:18888/WebService/shulibLogin.asmx?WSDL";
 
             URL url = new URL(urlStr);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();

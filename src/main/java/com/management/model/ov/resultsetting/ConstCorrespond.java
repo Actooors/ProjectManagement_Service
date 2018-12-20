@@ -8,9 +8,9 @@ package com.management.model.ov.resultsetting;
  */
 public class ConstCorrespond {
     public static String[] projectType = {
-            "",
-            "经管",
-            "计算机",
-            "人文"
+            "经济管理类",
+            "人文哲学类",
+            "计算科学类",
+            "生物化学类"
     };
 }

@@ -82,7 +82,7 @@ public class UserController {
 
     @PostMapping("/userInfo/2")
     @ApiOperation(value = "用户修改更新个人信息", notes = "此接口适用于所有用户")
-    public Result updateUserInfo(@RequestHeader(value = "Authorization") String token,@RequestBody User user){
+    public Result updateUserInfo(@RequestBody User user){
         return userService.updateUserInfo(user);
     }
 

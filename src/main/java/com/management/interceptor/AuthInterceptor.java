@@ -30,10 +30,15 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (LOGIN_URL.equals(request.getRequestURI())) {
             return true;
         }
+        if (request.getMethod().equals("OPTIONS")) {
+            return true;
+        }
         if (request.getHeader(TOKEN_NAME) == null) {
             returnErrorMessage(response);
             return false;
+
         } else {
+
             return true;
         }
     }

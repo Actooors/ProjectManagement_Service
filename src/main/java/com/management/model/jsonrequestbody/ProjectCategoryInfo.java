@@ -3,6 +3,11 @@ package com.management.model.jsonrequestbody;
 
 import lombok.Data;
 
+/**
+ * @Description: 业务员创建项目大类请求的数据格式
+ * @Author: xw
+ * @Date: 18-12-18
+ */
 @Data
 public class ProjectCategoryInfo {
 
@@ -15,9 +20,10 @@ public class ProjectCategoryInfo {
     private String maxMoney;
     private String reviewLeaderId;
     private String projectApplicationDownloadAddress;
-    private Integer isEexistMeetingReview;
+    private Integer isExistMeetingReview;
     private String applicationStartTime;
     private String applicationEndTime;
     private String projectStartTime;
     private String projectEndTime;
+
 }

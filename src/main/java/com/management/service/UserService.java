@@ -1,4 +1,6 @@
 package com.management.service;
+
+import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.LoginInfo;
@@ -12,26 +14,28 @@ import com.management.model.jsonrequestbody.LoginInfo;
 public interface UserService {
 
     /**
-     * @Description: 登录接口,根据用户提供的账户和密码进行登录
+     * @Description: 登录接口, 根据用户提供的账户和密码进行登录
      * @Param: [loginInfo]
      * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-30
      */
     Result login(LoginInfo loginInfo);
+
     /**
      * @Description: 判断是否超过截止时间的接口，超过返回１未超过返回２
-     *               项目申报时间的结束时间，项目中期报告提交的结束时间和项目结题报告提交的结束时间
-     *               以及项目结束的时间，这四个情况分别对应数字1 2 3 4
+     * 项目申报时间的结束时间，项目中期报告提交的结束时间和项目结题报告提交的结束时间
+     * 以及项目结束的时间，这四个情况分别对应数字1 2 3 4
      * @Param: [projectCategoryId, type]
      * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 18-7-31
      */
     Result isTimeOut(Integer projectCategoryId, Integer type);
+
     /**
      * @Description: 根据项目大类的种类查找对应类别的所有的项目大类，项目类别按照１２３４分类
-     *               只能看到没有超过申请时间deadline的项目
+     * 只能看到没有超过申请时间deadline的项目
      * @Param: [projectCategoryType]
      * @Return: com.management.model.ov.Result
      * @Author: ggmr
@@ -50,7 +54,7 @@ public interface UserService {
 
     /**
      * @Description: 查找某个项目大类的所有待审项目申请,
-     *               type为1业务员审核阶段 2评审专家审核阶段 3会评阶段 4领导审核阶段
+     * type为1业务员审核阶段 2评审专家审核阶段 3会评阶段 4领导审核阶段
      * @Param: [leaderId]
      * @Return: com.management.model.ov.Result
      * @Author: ggmr
@@ -75,4 +79,23 @@ public interface UserService {
      * @Date: 2018/12/17
      */
     Result getAllAviProject();
+
+    /**
+     * @Description: 查询个人信息, 适用于所有用户
+     * @Param: userId
+     * @Return: com.management.model.ov.Result
+     * @Author: xw
+     * @Date: 18-12-19
+     */
+    Result queryUserId(String userId);
+
+    /**
+     * @Description: 修改个人信息
+     * @Param: User
+     * @Return: com.management.model.ov.Result
+     * @Author: xw
+     * @Date: 18-12-19
+     */
+    Result updateUserInfo(User user);
+
 }

@@ -22,7 +22,6 @@ import java.io.PrintWriter;
 public class AuthInterceptor implements HandlerInterceptor {
     private static final String LOGIN_URL = "/api/login";
     private static final String TOKEN_NAME = "Authorization";
-    private static final String SWAGGER_URL="/api/swagger-ui.html";
     private static final int HTTP_CODE = 401;
 
     @Override
@@ -31,7 +30,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (LOGIN_URL.equals(request.getRequestURI())) {
             return true;
         }
-        if(request.getHeader(TOKEN_NAME) == null) {
+        if (request.getHeader(TOKEN_NAME) == null) {
             returnErrorMessage(response);
             return false;
         } else {

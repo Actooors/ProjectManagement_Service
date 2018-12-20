@@ -1,5 +1,7 @@
 package com.management.service;
+
 import com.management.model.jsonrequestbody.ChooseProjectMeeting;
+import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,42 @@ import org.springframework.stereotype.Service;
 
 public interface AdminService {
 
+
+    /**
+     * @Description: 业务员创建项目类别
+     * @Param: projectCategoryInfo
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-7-30
+     */
     Result createProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo);
+
+    /**
+     * @Description: 业务员根据自己的ID查询创建的项目类别信息
+     * @Param: userId
+     * @Return: ProjectCategory
+     * @Author: xw
+     * @Date: 18-7-31
+     */
     Result queryProjectCategory(String userId);
+
+    /**
+     * @Description: 根据项目号查找项目后更新内容
+     * @Param: UpdateProjectCategoryInfo
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-12-18
+     */
+    Result updateProjectCategoryInfo(UpdateProjectCategoryInfo updateProjectCategoryInfo);
+
+    /**
+     * @Description:根据项目大类id查找到相应项目大类并删除
+     * @Param: projectCategoryId
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-12-19
+     */
+    Result deleteProjectCategory(Integer projectCategoryId);
 
 
     /**

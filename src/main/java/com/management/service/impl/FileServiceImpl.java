@@ -46,7 +46,7 @@ public class FileServiceImpl implements FileService {
         try(OutputStream os = new FileOutputStream(absolutePath)) {
             os.write(file.getBytes());
         } catch (IOException e) {
-            return ResultTool.error("读取文件字节流失败");
+            return ResultTool.error(e.toString());
         }
         return ResultTool.success(absolutePath);
     }

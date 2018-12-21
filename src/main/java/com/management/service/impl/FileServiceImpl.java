@@ -42,7 +42,12 @@ public class FileServiceImpl implements FileService {
         //在指定的目录位置下存放文件
 
         String absolutePath = directory + fileId + "|" + originalFileName;
-        new File(absolutePath);
+
+        File destDirectory = new File(directory);
+        if (!destDirectory.exists()) {
+            destDirectory.mkdirs();
+        }
+
         try(OutputStream os = new FileOutputStream(absolutePath)) {
             os.write(file.getBytes());
         } catch (IOException e) {

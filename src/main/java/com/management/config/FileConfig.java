@@ -20,7 +20,7 @@ public class FileConfig {
         MultipartConfigFactory factory = new MultipartConfigFactory();
         factory.setMaxFileSize("10MB");
         factory.setMaxRequestSize("20MB");
-        factory.setLocation("/home/ubuntu/tmp");
+//        factory.setLocation("/home/ubuntu/tmp");
         return factory.createMultipartConfig();
     }
 }

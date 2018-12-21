@@ -43,8 +43,7 @@ public class FileServiceImpl implements FileService {
 
         String absolutePath = directory + fileId + "|" + originalFileName;
         new File(absolutePath);
-        try {
-            OutputStream os = new FileOutputStream(absolutePath);
+        try(OutputStream os = new FileOutputStream(absolutePath)) {
             os.write(file.getBytes());
         } catch (IOException e) {
             return ResultTool.error("读取文件字节流失败");

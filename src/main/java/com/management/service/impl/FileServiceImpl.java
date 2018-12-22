@@ -39,8 +39,8 @@ public class FileServiceImpl implements FileService {
         //源文件名
         String originalFileName = ChangeCharset.toUtf8(file.getOriginalFilename());
         //在指定的目录位置下存放文件
-        String absolutePath = directory + File.separator + fileId + "|" + originalFileName;
-        String realPath = realDirectory + File.separator + fileId + "|" + originalFileName;
+        String absolutePath = directory + File.separator + fileId + "---" + originalFileName;
+        String realPath = realDirectory + File.separator + fileId + "---" + originalFileName;
         //如果存放文件的文件夹不存在，就创建文件夹
         File destDirectory = new File(directory);
         if (!destDirectory.exists()) {
@@ -63,7 +63,7 @@ public class FileServiceImpl implements FileService {
         if(downloadFile.exists()) {
             response.setContentType("application/octet-stream");
             String headerKey = "Content-Disposition";
-            String fileName = downloadFile.getName().split("\\|")[1];
+            String fileName = downloadFile.getName().split("---")[1];
             String headerValue = "attachment; filename=" + fileName;
             response.setHeader(headerKey, headerValue);
             response.setContentLength((int) downloadFile.length());
@@ -72,6 +72,8 @@ public class FileServiceImpl implements FileService {
                 OutputStream toClient = response.getOutputStream();
                 IOUtils.copy(myStream, toClient);
                 response.flushBuffer();
+                myStream.close();
+                toClient.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

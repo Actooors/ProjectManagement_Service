@@ -24,7 +24,7 @@ public interface FileService {
      * @Author: ggmr
      * @Date: 2018/12/22
      */
-    Result uploadFile(@RequestBody MultipartFile file);
+    Result uploadFile(@RequestBody MultipartFile file, HttpServletRequest request);
 
     /**
      * @Description: 文件下载

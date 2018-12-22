@@ -29,10 +29,9 @@ public class FileController {
 
     @PostMapping("upload")
     @ApiOperation(value = "上传文件", notes = "输入参数为文件和httpRequest")
-    public Result upload(@RequestBody MultipartFile file,
-                         HttpServletRequest request) {
+    public Result upload(@RequestBody MultipartFile file) {
 
-        return fileService.uploadFile(file, request);
+        return fileService.uploadFile(file);
     }
 
     @GetMapping("download")

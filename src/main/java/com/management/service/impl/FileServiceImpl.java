@@ -25,7 +25,7 @@ public class FileServiceImpl implements FileService {
     private String directory;
 
     @Override
-    public Result uploadFile(MultipartFile file,HttpServletRequest request) {
+    public Result uploadFile(MultipartFile file) {
 
         if (file.isEmpty()) {
             return ResultTool.error("上传文件为空");
@@ -42,14 +42,8 @@ public class FileServiceImpl implements FileService {
             destDirectory.mkdirs();
         }
 
-        File saveFile = new File(absolutePath);
-        try(FileOutputStream os = new FileOutputStream(saveFile)) {
-            byte temp[] = new byte[1024];
-            int size = -1;
-            while((size= request.getInputStream().read(temp)) != -1) {
-                os.write(temp, 0, size);
-                os.close();
-            }
+        try(OutputStream os = new FileOutputStream(absolutePath)) {
+            os.write(file.getBytes());
         } catch (IOException e) {
             return ResultTool.error("上传出错");
         }
@@ -61,19 +55,23 @@ public class FileServiceImpl implements FileService {
                                HttpServletResponse response, String fileAddress) {
 
         File downloadFile = new File(fileAddress);
-        response.setContentType("application/octet-stream");
-        String headerKey = "Content-Disposition";
-        String fileName = downloadFile.getName().split("\\|")[1];
-        String headerValue = "attachment; filename=" + fileName;
-        response.setHeader(headerKey, headerValue);
-        response.setContentLength((int) downloadFile.length());
-        try  {
-            InputStream myStream = new FileInputStream(downloadFile);
-            OutputStream toClient = response.getOutputStream();
-            IOUtils.copy(myStream, toClient);
-            response.flushBuffer();
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(downloadFile.exists()) {
+            response.setContentType("application/octet-stream");
+            String headerKey = "Content-Disposition";
+            String fileName = downloadFile.getName().split("\\|")[1];
+            String headerValue = "attachment; filename=" + fileName;
+            response.setHeader(headerKey, headerValue);
+            response.setContentLength((int) downloadFile.length());
+            try {
+                InputStream myStream = new FileInputStream(fileAddress);
+                OutputStream toClient = response.getOutputStream();
+                IOUtils.copy(myStream, toClient);
+                response.flushBuffer();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            new Exception("不存在文件").printStackTrace();
         }
     }
 }

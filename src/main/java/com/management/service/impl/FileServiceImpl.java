@@ -1,18 +1,14 @@
 package com.management.service.impl;
-
 import com.management.model.ov.Result;
 import com.management.tools.ResultTool;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.management.service.FileService;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.file.Files;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 import java.util.UUID;
 
 /**
@@ -28,9 +24,8 @@ public class FileServiceImpl implements FileService {
     @Value("${upload.path}")
     private String directory;
 
-
     @Override
-    public Result uploadFile(MultipartFile file, HttpServletRequest request) {
+    public Result uploadFile(MultipartFile file) {
 
         if (file.isEmpty()) {
             return ResultTool.error("上传文件为空");
@@ -40,9 +35,8 @@ public class FileServiceImpl implements FileService {
         //源文件名
         String originalFileName = file.getOriginalFilename();
         //在指定的目录位置下存放文件
-
-        String absolutePath = directory + fileId + "|" + originalFileName;
-
+        String absolutePath = directory + File.separator + fileId + "|" + originalFileName;
+        //如果存放文件的文件夹不存在，就创建文件夹
         File destDirectory = new File(directory);
         if (!destDirectory.exists()) {
             destDirectory.mkdirs();
@@ -51,8 +45,29 @@ public class FileServiceImpl implements FileService {
         try(OutputStream os = new FileOutputStream(absolutePath)) {
             os.write(file.getBytes());
         } catch (IOException e) {
-            return ResultTool.error(e.toString());
+            return ResultTool.error("上传出错");
         }
         return ResultTool.success(absolutePath);
+    }
+
+    @Override
+    public void downloadFile(HttpServletRequest request,
+                               HttpServletResponse response, String fileAddress) {
+
+        File downloadFile = new File(fileAddress);
+        response.setContentType("application/octet-stream");
+        String headerKey = "Content-Disposition";
+        String fileName = downloadFile.getName().split("\\|")[1];
+        String headerValue = "attachment; filename=" + fileName;
+        response.setHeader(headerKey, headerValue);
+        response.setContentLength((int) downloadFile.length());
+        try  {
+            InputStream myStream = new FileInputStream(downloadFile);
+            OutputStream toClient = response.getOutputStream();
+            IOUtils.copy(myStream, toClient);
+            response.flushBuffer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

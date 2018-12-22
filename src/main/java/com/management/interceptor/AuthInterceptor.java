@@ -27,21 +27,23 @@ public class AuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         // 登陆接口和Swagger界面不做拦截
-        if (LOGIN_URL.equals(request.getRequestURI())) {
-            return true;
-        }
-        if (request.getMethod().equals("OPTIONS")) {
-            return true;
-        }
-        if (request.getHeader(TOKEN_NAME) == null) {
-            returnErrorMessage(response);
-            return false;
-
-        } else {
-
-            return true;
-        }
+//        if (LOGIN_URL.equals(request.getRequestURI())) {
+//            return true;
+//        }
+//        if (request.getMethod().equals("OPTIONS")) {
+//            return true;
+//        }
+//        if (request.getHeader(TOKEN_NAME) == null) {
+//            returnErrorMessage(response);
+//            return false;
+//
+//        } else {
+//
+//            return true;
+//        }
+        return true;
     }
+
 
 
     private void returnErrorMessage(HttpServletResponse response) throws IOException {

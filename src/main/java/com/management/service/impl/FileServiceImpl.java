@@ -25,9 +25,6 @@ public class FileServiceImpl implements FileService {
     @Value("${upload.path}")
     private String directory;
 
-    @Value("${upload.realPath}")
-    private String realDirectory;
-
     @Override
     public Result uploadFile(MultipartFile file) throws UnsupportedEncodingException {
 
@@ -40,7 +37,6 @@ public class FileServiceImpl implements FileService {
         String originalFileName = ChangeCharset.toUtf8(file.getOriginalFilename());
         //在指定的目录位置下存放文件
         String absolutePath = directory + File.separator + fileId + "---" + originalFileName;
-        String realPath = realDirectory + File.separator + fileId + "---" + originalFileName;
         //如果存放文件的文件夹不存在，就创建文件夹
         File destDirectory = new File(directory);
         if (!destDirectory.exists()) {
@@ -52,7 +48,7 @@ public class FileServiceImpl implements FileService {
         } catch (IOException e) {
             return ResultTool.error("上传出错");
         }
-        return ResultTool.success(realPath);
+        return ResultTool.success(absolutePath);
     }
 
     @Override

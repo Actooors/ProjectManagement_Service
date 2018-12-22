@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 
 /**
@@ -24,7 +25,7 @@ public interface FileService {
      * @Author: ggmr
      * @Date: 2018/12/22
      */
-    Result uploadFile(@RequestBody MultipartFile file);
+    Result uploadFile(@RequestBody MultipartFile file) throws UnsupportedEncodingException;
 
     /**
      * @Description: 文件下载

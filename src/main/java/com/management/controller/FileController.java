@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @program: management
@@ -29,7 +30,7 @@ public class FileController {
 
     @PostMapping("upload")
     @ApiOperation(value = "上传文件", notes = "输入参数为文件和httpRequest")
-    public Result upload(@RequestBody MultipartFile file) {
+    public Result upload(@RequestBody MultipartFile file) throws UnsupportedEncodingException {
 
         return fileService.uploadFile(file);
     }

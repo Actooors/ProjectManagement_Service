@@ -1,5 +1,6 @@
 package com.management.service.impl;
 import com.management.model.ov.Result;
+import com.management.tools.ChangeCharset;
 import com.management.tools.ResultTool;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,8 +25,11 @@ public class FileServiceImpl implements FileService {
     @Value("${upload.path}")
     private String directory;
 
+    @Value("${upload.realPath}")
+    private String realDirectory;
+
     @Override
-    public Result uploadFile(MultipartFile file) {
+    public Result uploadFile(MultipartFile file) throws UnsupportedEncodingException {
 
         if (file.isEmpty()) {
             return ResultTool.error("上传文件为空");
@@ -33,9 +37,10 @@ public class FileServiceImpl implements FileService {
         //文件存放的id名
         String fileId = UUID.randomUUID().toString();
         //源文件名
-        String originalFileName = file.getOriginalFilename();
+        String originalFileName = ChangeCharset.toUtf8(file.getOriginalFilename());
         //在指定的目录位置下存放文件
         String absolutePath = directory + File.separator + fileId + "|" + originalFileName;
+        String realPath = realDirectory + File.separator + fileId + "|" + originalFileName;
         //如果存放文件的文件夹不存在，就创建文件夹
         File destDirectory = new File(directory);
         if (!destDirectory.exists()) {
@@ -47,7 +52,7 @@ public class FileServiceImpl implements FileService {
         } catch (IOException e) {
             return ResultTool.error("上传出错");
         }
-        return ResultTool.success(absolutePath);
+        return ResultTool.success(realPath);
     }
 
     @Override

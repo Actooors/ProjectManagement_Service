@@ -11,7 +11,7 @@ import lombok.Data;
  */
 @Data
 public class AviProjectCategoryInfo {
-
+    private String type;
     private Integer projectId;
     private String projectName;
     private String deadLine;

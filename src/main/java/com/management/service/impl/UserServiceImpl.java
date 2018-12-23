@@ -297,12 +297,12 @@ public class UserServiceImpl implements UserService {
         // 然后去遍历projectCategoryList内容找到符合当前条件的加进去
         for (int i = maxType, count = 0, len = projectCategoryList.size(); i >= 1; i--) {
             AviProjectCategoryInfoList singleList = new AviProjectCategoryInfoList();
-            singleList.setType(ConstCorrespond.projectType[i]);
             List<AviProjectCategoryInfo> infoList = new LinkedList<>();
             for (; count < len; count++) {
                 if (projectCategoryList.get(count).getProjectType() == i) {
                     AviProjectCategoryInfo info = new AviProjectCategoryInfo();
                     ProjectCategory p = projectCategoryList.get(count);
+                    info.setType(ConstCorrespond.projectType[i]);
                     info.setDeadLine(timeToString1(p.getApplicationEndTime()));
                     info.setIntroduce(p.getProjectCategoryDescription());
                     info.setProjectId(p.getProjectCategoryId());

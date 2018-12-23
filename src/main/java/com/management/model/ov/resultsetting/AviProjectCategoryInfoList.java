@@ -12,6 +12,5 @@ import java.util.List;
  */
 @Data
 public class AviProjectCategoryInfoList {
-    private String type;
     private List<AviProjectCategoryInfo> projectList;
 }

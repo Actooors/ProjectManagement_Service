@@ -286,18 +286,16 @@ public class UserServiceImpl implements UserService {
         List<ProjectCategory> projectCategoryList = projectCategoryMapper
                 .selectByExample(example);
         if (projectCategoryList.isEmpty()) {
-            return ResultTool.success(new AviProjectCategoryInfoList());
+            return ResultTool.success(new LinkedList<AviProjectCategoryInfo>());
         }
         //根据项目类别的int值排序
         Collections.sort(projectCategoryList);
         //获取到最大的项目类别
         int maxType = projectCategoryList.get(0).getProjectType();
-        List<AviProjectCategoryInfoList> resList = new LinkedList<>();
         //根据排序好的结果，先遍历的创建包含这些type的内容，
         // 然后去遍历projectCategoryList内容找到符合当前条件的加进去
+        List<AviProjectCategoryInfo> resList = new LinkedList<>();
         for (int i = maxType, count = 0, len = projectCategoryList.size(); i >= 1; i--) {
-            AviProjectCategoryInfoList singleList = new AviProjectCategoryInfoList();
-            List<AviProjectCategoryInfo> infoList = new LinkedList<>();
             for (; count < len; count++) {
                 if (projectCategoryList.get(count).getProjectType() == i) {
                     AviProjectCategoryInfo info = new AviProjectCategoryInfo();
@@ -307,13 +305,11 @@ public class UserServiceImpl implements UserService {
                     info.setIntroduce(p.getProjectCategoryDescription());
                     info.setProjectId(p.getProjectCategoryId());
                     info.setProjectName(p.getProjectCategoryName());
-                    infoList.add(info);
+                    resList.add(info);
                 } else {
                     break;
                 }
             }
-            singleList.setProjectList(infoList);
-            resList.add(singleList);
         }
         return ResultTool.success(resList);
     }

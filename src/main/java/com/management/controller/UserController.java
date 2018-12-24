@@ -1,7 +1,9 @@
 package com.management.controller;
 
+import com.management.model.entity.ProjectApplication;
 import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
+import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
 import com.management.service.UserService;
 import com.management.tools.JwtUtil;
@@ -85,5 +87,12 @@ public class UserController {
     public Result updateUserInfo(@RequestBody User user){
         return userService.updateUserInfo(user);
     }
+
+    @PostMapping("/applyProject")
+    @ApiOperation(value = "用户申请一个项目")
+    public Result applyProject(@RequestBody ProjectApplicationInfo info){
+        return userService.applyProject(info);
+    }
+
 
 }

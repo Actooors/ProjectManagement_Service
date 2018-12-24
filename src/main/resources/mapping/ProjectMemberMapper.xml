@@ -3,7 +3,6 @@
 <mapper namespace="com.management.dao.ProjectMemberMapper" >
   <resultMap id="BaseResultMap" type="com.management.model.entity.ProjectMember" >
     <id column="project_member_id" property="projectMemberId" jdbcType="INTEGER" />
-    <result column="project_id" property="projectId" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -13,6 +12,8 @@
     <result column="mail" property="mail" jdbcType="VARCHAR" />
     <result column="position" property="position" jdbcType="VARCHAR" />
     <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="project_user_id" property="projectUserId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -73,8 +74,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    project_member_id, project_id, type, user_id, user_name, sex, department, phone, 
-    mail, position, major
+    project_member_id, type, user_id, user_name, sex, department, phone, mail, position, 
+    major, project_name, project_user_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectMemberExample" >
     select
@@ -108,23 +109,22 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.management.model.entity.ProjectMember" >
-    insert into tbl_ProjectMember (project_member_id, project_id, type, 
-      user_id, user_name, sex, 
-      department, phone, mail, 
-      position, major)
-    values (#{projectMemberId,jdbcType=INTEGER}, #{projectId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, 
-      #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
-      #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
-      #{position,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR})
+    insert into tbl_ProjectMember (project_member_id, type, user_id, 
+      user_name, sex, department, 
+      phone, mail, position, 
+      major, project_name, project_user_id
+      )
+    values (#{projectMemberId,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, 
+      #{major,jdbcType=VARCHAR}, #{projectName,jdbcType=VARCHAR}, #{projectUserId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.ProjectMember" >
     insert into tbl_ProjectMember
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="projectMemberId != null" >
         project_member_id,
-      </if>
-      <if test="projectId != null" >
-        project_id,
       </if>
       <if test="type != null" >
         type,
@@ -153,13 +153,16 @@
       <if test="major != null" >
         major,
       </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="projectUserId != null" >
+        project_user_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="projectMemberId != null" >
         #{projectMemberId,jdbcType=INTEGER},
-      </if>
-      <if test="projectId != null" >
-        #{projectId,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
@@ -188,6 +191,12 @@
       <if test="major != null" >
         #{major,jdbcType=VARCHAR},
       </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectUserId != null" >
+        #{projectUserId,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.management.model.entity.ProjectMemberExample" resultType="java.lang.Integer" >
@@ -201,9 +210,6 @@
     <set >
       <if test="record.projectMemberId != null" >
         project_member_id = #{record.projectMemberId,jdbcType=INTEGER},
-      </if>
-      <if test="record.projectId != null" >
-        project_id = #{record.projectId,jdbcType=INTEGER},
       </if>
       <if test="record.type != null" >
         type = #{record.type,jdbcType=INTEGER},
@@ -232,6 +238,12 @@
       <if test="record.major != null" >
         major = #{record.major,jdbcType=VARCHAR},
       </if>
+      <if test="record.projectName != null" >
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectUserId != null" >
+        project_user_id = #{record.projectUserId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -240,7 +252,6 @@
   <update id="updateByExample" parameterType="map" >
     update tbl_ProjectMember
     set project_member_id = #{record.projectMemberId,jdbcType=INTEGER},
-      project_id = #{record.projectId,jdbcType=INTEGER},
       type = #{record.type,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
@@ -249,7 +260,9 @@
       phone = #{record.phone,jdbcType=VARCHAR},
       mail = #{record.mail,jdbcType=VARCHAR},
       position = #{record.position,jdbcType=VARCHAR},
-      major = #{record.major,jdbcType=VARCHAR}
+      major = #{record.major,jdbcType=VARCHAR},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      project_user_id = #{record.projectUserId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -257,9 +270,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.management.model.entity.ProjectMember" >
     update tbl_ProjectMember
     <set >
-      <if test="projectId != null" >
-        project_id = #{projectId,jdbcType=INTEGER},
-      </if>
       <if test="type != null" >
         type = #{type,jdbcType=INTEGER},
       </if>
@@ -287,13 +297,18 @@
       <if test="major != null" >
         major = #{major,jdbcType=VARCHAR},
       </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="projectUserId != null" >
+        project_user_id = #{projectUserId,jdbcType=VARCHAR},
+      </if>
     </set>
     where project_member_id = #{projectMemberId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.management.model.entity.ProjectMember" >
     update tbl_ProjectMember
-    set project_id = #{projectId,jdbcType=INTEGER},
-      type = #{type,jdbcType=INTEGER},
+    set type = #{type,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
@@ -301,7 +316,9 @@
       phone = #{phone,jdbcType=VARCHAR},
       mail = #{mail,jdbcType=VARCHAR},
       position = #{position,jdbcType=VARCHAR},
-      major = #{major,jdbcType=VARCHAR}
+      major = #{major,jdbcType=VARCHAR},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      project_user_id = #{projectUserId,jdbcType=VARCHAR}
     where project_member_id = #{projectMemberId,jdbcType=INTEGER}
   </update>
 </mapper>

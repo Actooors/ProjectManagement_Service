@@ -16,5 +16,5 @@ public class AviProjectCategoryInfo {
     private String projectName;
     private String deadLine;
     private String introduce;
-
+    private Boolean isMeeting;
 }

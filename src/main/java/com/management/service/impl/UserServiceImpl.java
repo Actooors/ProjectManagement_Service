@@ -2,9 +2,12 @@ package com.management.service.impl;
 
 import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
+import com.management.dao.ProjectMemberMapper;
 import com.management.dao.UserMapper;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
+import com.management.model.jsonrequestbody.ProjectApplicationInfo;
+import com.management.model.jsonrequestbody.ProjectMembers;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.*;
 import com.management.model.jsonrequestbody.LoginInfo;
@@ -40,6 +43,9 @@ public class UserServiceImpl implements UserService {
 
     @Resource
     private ProjectCategoryMapper projectCategoryMapper;
+
+    @Resource
+    private ProjectMemberMapper projectMemberMapper;
 
     private static final int LOGIN_ENABLE = 1;
     private static final int STATE_TWO = 2;
@@ -305,6 +311,7 @@ public class UserServiceImpl implements UserService {
                     info.setIntroduce(p.getProjectCategoryDescription());
                     info.setProjectId(p.getProjectCategoryId());
                     info.setProjectName(p.getProjectCategoryName());
+                    info.setIsMeeting(p.getIsExistMeetingReview() == 1);
                     resList.add(info);
                 } else {
                     break;
@@ -355,6 +362,54 @@ public class UserServiceImpl implements UserService {
             result.setMessage("失败");
             return result;
         }
+    }
+
+    /**
+     * @Description: 申请一个项目
+     * @Param: [projectApplicationInfo]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/24
+     */
+    @Override
+    public Result applyProject(ProjectApplicationInfo projectApplicationInfo) {
+        ProjectApplication res = new ProjectApplication();
+        res.setProjectCategoryId(projectApplicationInfo.getProjectCategoryId());
+        res.setProjectName(projectApplicationInfo.getProjectName());
+        res.setProjectDescription(projectApplicationInfo.getDescription());
+        res.setUserId(projectApplicationInfo.getUserId());
+        res.setUserName(projectApplicationInfo.getUserName());
+        res.setSex(projectApplicationInfo.getSex());
+        res.setDepartment(projectApplicationInfo.getDepartment());
+        res.setPhone(projectApplicationInfo.getPhone());
+        res.setMail(projectApplicationInfo.getMail());
+        res.setProjectApplicationUploadAddress(projectApplicationInfo.getUploadAddress());
+        res.setReviewPhase(1);
+        //1上会2不上
+        res.setIsMeeting(projectApplicationInfo.getIsMeeting() ? 1 : 2);
+        try {
+            projectApplicationMapper.insert(res);
+        } catch (Exception e) {
+            return ResultTool.error(e.toString());
+        }
+
+        for(ProjectMembers projectMembers: projectApplicationInfo.getMembers()) {
+            ProjectMember member = new ProjectMember();
+            member.setUserId(projectMembers.getUserId());
+            member.setUserName(projectMembers.getUserName());
+            member.setDepartment(projectMembers.getDepartment());
+            member.setPhone(projectMembers.getPhone());
+            member.setMail(projectMembers.getMail());
+            member.setProjectName(projectApplicationInfo.getProjectName());
+            member.setType(1);
+            member.setProjectUserId(projectApplicationInfo.getUserId());
+            try {
+                projectMemberMapper.insert(member);
+            } catch (Exception e) {
+                return ResultTool.error(e.toString());
+            }
+        }
+        return ResultTool.success();
     }
 
 

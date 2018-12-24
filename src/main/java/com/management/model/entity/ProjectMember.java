@@ -3,8 +3,6 @@ package com.management.model.entity;
 public class ProjectMember {
     private Integer projectMemberId;
 
-    private Integer projectId;
-
     private Integer type;
 
     private String userId;
@@ -23,20 +21,16 @@ public class ProjectMember {
 
     private String major;
 
+    private String projectName;
+
+    private String projectUserId;
+
     public Integer getProjectMemberId() {
         return projectMemberId;
     }
 
     public void setProjectMemberId(Integer projectMemberId) {
         this.projectMemberId = projectMemberId;
-    }
-
-    public Integer getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(Integer projectId) {
-        this.projectId = projectId;
     }
 
     public Integer getType() {
@@ -109,5 +103,21 @@ public class ProjectMember {
 
     public void setMajor(String major) {
         this.major = major == null ? null : major.trim();
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
+
+    public void setProjectName(String projectName) {
+        this.projectName = projectName == null ? null : projectName.trim();
+    }
+
+    public String getProjectUserId() {
+        return projectUserId;
+    }
+
+    public void setProjectUserId(String projectUserId) {
+        this.projectUserId = projectUserId == null ? null : projectUserId.trim();
     }
 }

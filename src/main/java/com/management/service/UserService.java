@@ -2,6 +2,7 @@ package com.management.service;
 
 import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
+import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.LoginInfo;
 
@@ -97,5 +98,7 @@ public interface UserService {
      * @Date: 18-12-19
      */
     Result updateUserInfo(User user);
+
+    Result applyProject(ProjectApplicationInfo projectApplicationInfo);
 
 }

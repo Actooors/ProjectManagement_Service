@@ -2,7 +2,7 @@ package com.management.model.entity;
 
 import java.util.Date;
 
-public class ProjectCategory implements Comparable<ProjectCategory> {
+public class ProjectCategory implements Comparable<ProjectCategory>{
     private Integer projectCategoryId;
 
     private String projectCategoryName;
@@ -60,6 +60,8 @@ public class ProjectCategory implements Comparable<ProjectCategory> {
     private Integer isApproved;
 
     private String failureReason;
+
+    private String reviewExpertId;
 
     @Override
     public int compareTo(ProjectCategory o) {
@@ -296,5 +298,13 @@ public class ProjectCategory implements Comparable<ProjectCategory> {
 
     public void setFailureReason(String failureReason) {
         this.failureReason = failureReason == null ? null : failureReason.trim();
+    }
+
+    public String getReviewExpertId() {
+        return reviewExpertId;
+    }
+
+    public void setReviewExpertId(String reviewExpertId) {
+        this.reviewExpertId = reviewExpertId == null ? null : reviewExpertId.trim();
     }
 }

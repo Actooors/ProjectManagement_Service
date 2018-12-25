@@ -31,6 +31,7 @@
     <result column="statistics" property="statistics" jdbcType="INTEGER" />
     <result column="is_approved" property="isApproved" jdbcType="INTEGER" />
     <result column="failure_reason" property="failureReason" jdbcType="VARCHAR" />
+    <result column="review_expert_id" property="reviewExpertId" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -98,7 +99,7 @@
     is_interim_report_activated, interim_report_start_time, interim_report_end_time, 
     interim_report_download_address, is_concluding_report_activated, concluding_report_start_time, 
     concluding_report_end_time, concluding_report_download_address, statistics, is_approved, 
-    failure_reason
+    failure_reason, review_expert_id
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectCategoryExample" >
     select
@@ -144,7 +145,8 @@
       interim_report_download_address, is_concluding_report_activated, 
       concluding_report_start_time, concluding_report_end_time, 
       concluding_report_download_address, statistics, 
-      is_approved, failure_reason)
+      is_approved, failure_reason, review_expert_id
+      )
     values (#{projectCategoryId,jdbcType=INTEGER}, #{projectCategoryName,jdbcType=VARCHAR}, 
       #{projectCategoryDescription,jdbcType=VARCHAR}, #{projectCategoryDescriptionAddress,jdbcType=VARCHAR}, 
       #{projectType,jdbcType=INTEGER}, #{principalId,jdbcType=VARCHAR}, #{principalName,jdbcType=VARCHAR}, 
@@ -157,7 +159,8 @@
       #{interimReportDownloadAddress,jdbcType=VARCHAR}, #{isConcludingReportActivated,jdbcType=INTEGER}, 
       #{concludingReportStartTime,jdbcType=TIMESTAMP}, #{concludingReportEndTime,jdbcType=TIMESTAMP}, 
       #{concludingReportDownloadAddress,jdbcType=VARCHAR}, #{statistics,jdbcType=INTEGER}, 
-      #{isApproved,jdbcType=INTEGER}, #{failureReason,jdbcType=VARCHAR})
+      #{isApproved,jdbcType=INTEGER}, #{failureReason,jdbcType=VARCHAR}, #{reviewExpertId,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.ProjectCategory" >
     insert into tbl_ProjectCategory
@@ -249,6 +252,9 @@
       <if test="failureReason != null" >
         failure_reason,
       </if>
+      <if test="reviewExpertId != null" >
+        review_expert_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="projectCategoryId != null" >
@@ -337,6 +343,9 @@
       </if>
       <if test="failureReason != null" >
         #{failureReason,jdbcType=VARCHAR},
+      </if>
+      <if test="reviewExpertId != null" >
+        #{reviewExpertId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -436,6 +445,9 @@
       <if test="record.failureReason != null" >
         failure_reason = #{record.failureReason,jdbcType=VARCHAR},
       </if>
+      <if test="record.reviewExpertId != null" >
+        review_expert_id = #{record.reviewExpertId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -471,7 +483,8 @@
       concluding_report_download_address = #{record.concludingReportDownloadAddress,jdbcType=VARCHAR},
       statistics = #{record.statistics,jdbcType=INTEGER},
       is_approved = #{record.isApproved,jdbcType=INTEGER},
-      failure_reason = #{record.failureReason,jdbcType=VARCHAR}
+      failure_reason = #{record.failureReason,jdbcType=VARCHAR},
+      review_expert_id = #{record.reviewExpertId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -563,6 +576,9 @@
       <if test="failureReason != null" >
         failure_reason = #{failureReason,jdbcType=VARCHAR},
       </if>
+      <if test="reviewExpertId != null" >
+        review_expert_id = #{reviewExpertId,jdbcType=VARCHAR},
+      </if>
     </set>
     where project_category_id = #{projectCategoryId,jdbcType=INTEGER}
   </update>
@@ -595,7 +611,8 @@
       concluding_report_download_address = #{concludingReportDownloadAddress,jdbcType=VARCHAR},
       statistics = #{statistics,jdbcType=INTEGER},
       is_approved = #{isApproved,jdbcType=INTEGER},
-      failure_reason = #{failureReason,jdbcType=VARCHAR}
+      failure_reason = #{failureReason,jdbcType=VARCHAR},
+      review_expert_id = #{reviewExpertId,jdbcType=VARCHAR}
     where project_category_id = #{projectCategoryId,jdbcType=INTEGER}
   </update>
 </mapper>

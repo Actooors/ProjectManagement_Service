@@ -7,8 +7,6 @@ public class ProjectProgress {
 
     private String userId;
 
-    private Integer projectApplicationId;
-
     private String interimReportUploadAddress;
 
     private Date interimReportTime;
@@ -41,14 +39,6 @@ public class ProjectProgress {
 
     public void setUserId(String userId) {
         this.userId = userId == null ? null : userId.trim();
-    }
-
-    public Integer getProjectApplicationId() {
-        return projectApplicationId;
-    }
-
-    public void setProjectApplicationId(Integer projectApplicationId) {
-        this.projectApplicationId = projectApplicationId;
     }
 
     public String getInterimReportUploadAddress() {

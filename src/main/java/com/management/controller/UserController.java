@@ -110,5 +110,11 @@ public class UserController {
         return userService.deleteApplication(info,userId);
     }
 
+    @GetMapping("/progressProject")
+    @ApiOperation(value = "查找用户正r在进行的项目")
+    public Result findProgressProject(@RequestHeader(value = "Authorization") String token){
+        String userId = JwtUtil.parseJwt(token);
+        return userService.findProgressProject(userId);
+    }
 
 }

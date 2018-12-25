@@ -12,10 +12,10 @@ import java.util.Date;
  * @create: 2018-12-25 16:31
  */
 @Data
-public class FindInTheApplication {
+public class ProjectTotalInfo {
     private Integer projectApplicationId;
     private String projectName;
-    private String applicationTime;
+    private String time;
     private String reviewPhase;
     private String description;
 }

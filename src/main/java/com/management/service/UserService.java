@@ -126,4 +126,13 @@ public interface UserService {
      * @Date: 2018/12/25
      */
     Result deleteApplication(DeleteApplication info, String userId);
+
+    /**
+     * @Description: 查找一个用户正在进行中的项目已经结题的项目
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/25
+     */
+    Result findProgressProject(String userId);
 }

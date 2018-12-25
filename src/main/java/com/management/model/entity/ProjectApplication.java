@@ -41,6 +41,14 @@ public class ProjectApplication {
 
     private Date applicationTime;
 
+    private Date applicationDeadline;
+
+    private Date middleDeadline;
+
+    private Date finalDeadline;
+
+    private Date projectDeadline;
+
     public Integer getProjectApplicationId() {
         return projectApplicationId;
     }
@@ -191,5 +199,37 @@ public class ProjectApplication {
 
     public void setApplicationTime(Date applicationTime) {
         this.applicationTime = applicationTime;
+    }
+
+    public Date getApplicationDeadline() {
+        return applicationDeadline;
+    }
+
+    public void setApplicationDeadline(Date applicationDeadline) {
+        this.applicationDeadline = applicationDeadline;
+    }
+
+    public Date getMiddleDeadline() {
+        return middleDeadline;
+    }
+
+    public void setMiddleDeadline(Date middleDeadline) {
+        this.middleDeadline = middleDeadline;
+    }
+
+    public Date getFinalDeadline() {
+        return finalDeadline;
+    }
+
+    public void setFinalDeadline(Date finalDeadline) {
+        this.finalDeadline = finalDeadline;
+    }
+
+    public Date getProjectDeadline() {
+        return projectDeadline;
+    }
+
+    public void setProjectDeadline(Date projectDeadline) {
+        this.projectDeadline = projectDeadline;
     }
 }

@@ -5,12 +5,10 @@ import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.ProjectMemberMapper;
 import com.management.dao.UserMapper;
 import com.management.model.entity.*;
-import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
-import com.management.model.jsonrequestbody.ProjectApplicationInfo;
-import com.management.model.jsonrequestbody.ProjectMembers;
+import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.*;
-import com.management.model.jsonrequestbody.LoginInfo;
+import com.management.model.ov.resultsetting.ProjectCategoryInfo;
 import com.management.service.UserService;
 import com.management.tools.AuthTool;
 import com.management.tools.JwtUtil;
@@ -418,6 +416,11 @@ public class UserServiceImpl implements UserService {
             }
         }
         return ResultTool.success();
+    }
+
+    @Override
+    public Result findMyApplication(FindInTheApplication inTheApply) {
+        return null;
     }
 
 

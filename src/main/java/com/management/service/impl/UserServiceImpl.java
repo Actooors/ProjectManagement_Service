@@ -5,12 +5,10 @@ import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.ProjectMemberMapper;
 import com.management.dao.UserMapper;
 import com.management.model.entity.*;
-import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
-import com.management.model.jsonrequestbody.ProjectApplicationInfo;
-import com.management.model.jsonrequestbody.ProjectMembers;
+import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.*;
-import com.management.model.jsonrequestbody.LoginInfo;
+import com.management.model.ov.resultsetting.ProjectCategoryInfo;
 import com.management.service.UserService;
 import com.management.tools.AuthTool;
 import com.management.tools.JwtUtil;
@@ -311,7 +309,9 @@ public class UserServiceImpl implements UserService {
                     info.setIntroduce(p.getProjectCategoryDescription());
                     info.setProjectId(p.getProjectCategoryId());
                     info.setProjectName(p.getProjectCategoryName());
-                    info.setIsMeeting(p.getIsExistMeetingReview() == 1);
+                    info.setIsMeeting(p.getIsExistMeetingReview() == 1 ? "true":"false");
+                    info.setDownLoadAddress(ConstCorrespond.downloadAddres +
+                            p.getProjectCategoryDescriptionAddress());
                     resList.add(info);
                 } else {
                     break;
@@ -420,5 +420,43 @@ public class UserServiceImpl implements UserService {
         return ResultTool.success();
     }
 
+    @Override
+    public Result findMyApplication(String userId) {
+        ProjectApplicationExample example = new ProjectApplicationExample();
+        example.createCriteria()
+                .andUserIdEqualTo(userId);
+        List<ProjectApplication> findList = projectApplicationMapper
+                                                .selectByExample(example);
+        if(findList.isEmpty()) {
+            return ResultTool.error("你目前没有正在申请中的项目");
+        }
+        List<FindInTheApplication> resList = new LinkedList<>();
+        for(ProjectApplication application : findList) {
+            FindInTheApplication res = new FindInTheApplication();
+            res.setApplicationTime(TimeTool.timeToString1(application.getApplicationTime()));
+            res.setProjectApplicationId(application.getProjectApplicationId());
+            res.setProjectName(application.getProjectName());
+            res.setReviewPhase(ConstCorrespond
+                    .reviewPhrase[application.getReviewPhase()]);
+            res.setDescription(application.getProjectDescription());
+            resList.add(res);
+        }
+        return ResultTool.success(resList);
+    }
+
+    @Override
+    public Result deleteApplication(DeleteApplication info,String userId) {
+        ProjectMemberExample example = new ProjectMemberExample();
+        example.createCriteria()
+                .andProjectUserIdEqualTo(userId)
+                .andProjectNameEqualTo(info.getApplicationName());
+        try {
+            projectApplicationMapper.deleteByPrimaryKey(info.getApplicationId());
+            projectMemberMapper.deleteByExample(example);
+        } catch (Exception e) {
+            return ResultTool.error(e.toString());
+        }
+        return ResultTool.success();
+    }
 
 }

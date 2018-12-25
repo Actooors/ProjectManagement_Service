@@ -1,6 +1,7 @@
 package com.management.service;
 
 import com.management.model.entity.User;
+import com.management.model.jsonrequestbody.DeleteApplication;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
@@ -99,6 +100,30 @@ public interface UserService {
      */
     Result updateUserInfo(User user);
 
+    /**
+     * @Description: 申报项目
+     * @Param: [projectApplicationInfo]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/25
+     */
     Result applyProject(ProjectApplicationInfo projectApplicationInfo);
 
+    /**
+     * @Description: 查看我正在申报中的项目列表
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/25
+     */
+    Result findMyApplication(String userId);
+
+    /**
+     * @Description: 撤销一个项目的申请
+     * @Param: [applicationId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/25
+     */
+    Result deleteApplication(DeleteApplication info, String userId);
 }

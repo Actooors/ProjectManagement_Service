@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.management.dao.ProjectCategoryExpertMapper" >
+  <resultMap id="BaseResultMap" type="com.management.model.entity.ProjectCategoryExpert" >
+    <id column="project_expert_id" property="projectExpertId" jdbcType="INTEGER" />
+    <result column="expert_id" property="expertId" jdbcType="VARCHAR" />
+    <result column="expert_name" property="expertName" jdbcType="VARCHAR" />
+    <result column="expert_department" property="expertDepartment" jdbcType="VARCHAR" />
+    <result column="project_category_id" property="projectCategoryId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    project_expert_id, expert_id, expert_name, expert_department, project_category_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectCategoryExpertExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tbl_ProjectCategoryExpert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tbl_ProjectCategoryExpert
+    where project_expert_id = #{projectExpertId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tbl_ProjectCategoryExpert
+    where project_expert_id = #{projectExpertId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.management.model.entity.ProjectCategoryExpertExample" >
+    delete from tbl_ProjectCategoryExpert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.management.model.entity.ProjectCategoryExpert" >
+    insert into tbl_ProjectCategoryExpert (project_expert_id, expert_id, expert_name, 
+      expert_department, project_category_id)
+    values (#{projectExpertId,jdbcType=INTEGER}, #{expertId,jdbcType=VARCHAR}, #{expertName,jdbcType=VARCHAR}, 
+      #{expertDepartment,jdbcType=VARCHAR}, #{projectCategoryId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.management.model.entity.ProjectCategoryExpert" >
+    insert into tbl_ProjectCategoryExpert
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectExpertId != null" >
+        project_expert_id,
+      </if>
+      <if test="expertId != null" >
+        expert_id,
+      </if>
+      <if test="expertName != null" >
+        expert_name,
+      </if>
+      <if test="expertDepartment != null" >
+        expert_department,
+      </if>
+      <if test="projectCategoryId != null" >
+        project_category_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectExpertId != null" >
+        #{projectExpertId,jdbcType=INTEGER},
+      </if>
+      <if test="expertId != null" >
+        #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="expertName != null" >
+        #{expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="expertDepartment != null" >
+        #{expertDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCategoryId != null" >
+        #{projectCategoryId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.management.model.entity.ProjectCategoryExpertExample" resultType="java.lang.Integer" >
+    select count(*) from tbl_ProjectCategoryExpert
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tbl_ProjectCategoryExpert
+    <set >
+      <if test="record.projectExpertId != null" >
+        project_expert_id = #{record.projectExpertId,jdbcType=INTEGER},
+      </if>
+      <if test="record.expertId != null" >
+        expert_id = #{record.expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expertName != null" >
+        expert_name = #{record.expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expertDepartment != null" >
+        expert_department = #{record.expertDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.projectCategoryId != null" >
+        project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tbl_ProjectCategoryExpert
+    set project_expert_id = #{record.projectExpertId,jdbcType=INTEGER},
+      expert_id = #{record.expertId,jdbcType=VARCHAR},
+      expert_name = #{record.expertName,jdbcType=VARCHAR},
+      expert_department = #{record.expertDepartment,jdbcType=VARCHAR},
+      project_category_id = #{record.projectCategoryId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.management.model.entity.ProjectCategoryExpert" >
+    update tbl_ProjectCategoryExpert
+    <set >
+      <if test="expertId != null" >
+        expert_id = #{expertId,jdbcType=VARCHAR},
+      </if>
+      <if test="expertName != null" >
+        expert_name = #{expertName,jdbcType=VARCHAR},
+      </if>
+      <if test="expertDepartment != null" >
+        expert_department = #{expertDepartment,jdbcType=VARCHAR},
+      </if>
+      <if test="projectCategoryId != null" >
+        project_category_id = #{projectCategoryId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where project_expert_id = #{projectExpertId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.management.model.entity.ProjectCategoryExpert" >
+    update tbl_ProjectCategoryExpert
+    set expert_id = #{expertId,jdbcType=VARCHAR},
+      expert_name = #{expertName,jdbcType=VARCHAR},
+      expert_department = #{expertDepartment,jdbcType=VARCHAR},
+      project_category_id = #{projectCategoryId,jdbcType=INTEGER}
+    where project_expert_id = #{projectExpertId,jdbcType=INTEGER}
+  </update>
+</mapper>

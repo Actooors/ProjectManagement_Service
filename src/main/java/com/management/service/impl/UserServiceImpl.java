@@ -1,9 +1,6 @@
 package com.management.service.impl;
 
-import com.management.dao.ProjectApplicationMapper;
-import com.management.dao.ProjectCategoryMapper;
-import com.management.dao.ProjectMemberMapper;
-import com.management.dao.UserMapper;
+import com.management.dao.*;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
@@ -45,10 +42,13 @@ public class UserServiceImpl implements UserService {
     @Resource
     private ProjectMemberMapper projectMemberMapper;
 
+    @Resource
+    private ProjectProgressMapper projectProgressMapper;
+
     private static final int LOGIN_ENABLE = 1;
     private static final int STATE_TWO = 2;
     private static final int REVIEW_FAILED = 6;
-
+    private static final int REVIEW_LAST_PHASE = 5;
     /**
      * @Description: 根据参数生成登录返回需要的信息
      * @Param: [userId, identity, userName]
@@ -310,7 +310,7 @@ public class UserServiceImpl implements UserService {
                     info.setProjectId(p.getProjectCategoryId());
                     info.setProjectName(p.getProjectCategoryName());
                     info.setIsMeeting(p.getIsExistMeetingReview() == 1 ? "true":"false");
-                    info.setDownLoadAddress(ConstCorrespond.downloadAddres +
+                    info.setDownLoadAddress(ConstCorrespond.downloadAddress +
                             p.getProjectCategoryDescriptionAddress());
                     resList.add(info);
                 } else {
@@ -387,7 +387,6 @@ public class UserServiceImpl implements UserService {
         res.setDepartment(mainMember.getDepartment());
         res.setPhone(mainMember.getPhone());
         res.setMail(mainMember.getMail());
-
         res.setProjectApplicationUploadAddress(projectApplicationInfo.getUploadAddress());
         res.setReviewPhase(1);
         //1上会2不上
@@ -430,16 +429,18 @@ public class UserServiceImpl implements UserService {
         if(findList.isEmpty()) {
             return ResultTool.error("你目前没有正在申请中的项目");
         }
-        List<FindInTheApplication> resList = new LinkedList<>();
+        List<ProjectTotalInfo> resList = new LinkedList<>();
         for(ProjectApplication application : findList) {
-            FindInTheApplication res = new FindInTheApplication();
-            res.setApplicationTime(TimeTool.timeToString1(application.getApplicationTime()));
-            res.setProjectApplicationId(application.getProjectApplicationId());
-            res.setProjectName(application.getProjectName());
-            res.setReviewPhase(ConstCorrespond
-                    .reviewPhrase[application.getReviewPhase()]);
-            res.setDescription(application.getProjectDescription());
-            resList.add(res);
+            if(application.getReviewPhase() != REVIEW_LAST_PHASE) {
+                ProjectTotalInfo res = new ProjectTotalInfo();
+                res.setTime(TimeTool.timeToString1(application.getApplicationTime()));
+                res.setProjectApplicationId(application.getProjectApplicationId());
+                res.setProjectName(application.getProjectName());
+                res.setReviewPhase(ConstCorrespond
+                        .reviewPhrase[application.getReviewPhase()]);
+                res.setDescription(application.getProjectDescription());
+                resList.add(res);
+            }
         }
         return ResultTool.success(resList);
     }
@@ -457,6 +458,54 @@ public class UserServiceImpl implements UserService {
             return ResultTool.error(e.toString());
         }
         return ResultTool.success();
+    }
+
+    @Override
+    public Result findProgressProject(String userId) {
+
+        ProjectApplicationExample applicationExample = new ProjectApplicationExample();
+        applicationExample.createCriteria()
+                .andUserIdEqualTo(userId)
+                .andReviewPhaseEqualTo(REVIEW_LAST_PHASE);
+        List<ProjectApplication> resBigList = projectApplicationMapper
+                .selectByExample(applicationExample);
+        if(resBigList.isEmpty()) {
+            return ResultTool.error("你目前没有正在进行或已经完成的项目");
+        }
+        List<ProjectTotalInfo> buildProject = new LinkedList<>();
+        List<ProjectTotalInfo> middleProject = new LinkedList<>();
+        List<ProjectTotalInfo> finalProject = new LinkedList<>();
+        List<ProjectTotalInfo> finishProject = new LinkedList<>();
+
+        FindProgressProjectInfo res = new FindProgressProjectInfo();
+        for(ProjectApplication application : resBigList) {
+            ProjectProgress progress = projectProgressMapper
+                    .selectByPrimaryKey(application.getProjectApplicationId());
+            ProjectTotalInfo info = new ProjectTotalInfo();
+            info.setDescription(application.getProjectDescription());
+            info.setProjectApplicationId(application.getProjectApplicationId());
+            info.setProjectName(application.getProjectName());
+            info.setReviewPhase(ConstCorrespond
+                    .PROJECT_PROGRESS[progress.getProjectProcess()]);
+            if(progress.getProjectProcess() == 2) {
+                info.setTime(timeToString1(application.getMiddleDeadline()));
+                middleProject.add(info);
+            } else if(progress.getProjectProcess() == 3) {
+                info.setTime(timeToString1(application.getFinalDeadline()));
+                finalProject.add(info);
+            } else if(progress.getProjectProcess() == 4){
+                info.setTime(timeToString1(application.getProjectDeadline()));
+                finishProject.add(info);
+            } else {
+                info.setTime(timeToString1(application.getProjectDeadline()));
+                buildProject.add(info);
+            }
+        }
+        res.setBuildProject(buildProject);
+        res.setMiddleProject(middleProject);
+        res.setFinalProject(finalProject);
+        res.setFinishProject(finishProject);
+        return ResultTool.success(res);
     }
 
 }

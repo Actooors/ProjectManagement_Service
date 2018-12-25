@@ -235,66 +235,6 @@ public class ProjectProgressExample {
             return (Criteria) this;
         }
 
-        public Criteria andProjectApplicationIdIsNull() {
-            addCriterion("project_application_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdIsNotNull() {
-            addCriterion("project_application_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdEqualTo(Integer value) {
-            addCriterion("project_application_id =", value, "projectApplicationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdNotEqualTo(Integer value) {
-            addCriterion("project_application_id <>", value, "projectApplicationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdGreaterThan(Integer value) {
-            addCriterion("project_application_id >", value, "projectApplicationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("project_application_id >=", value, "projectApplicationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdLessThan(Integer value) {
-            addCriterion("project_application_id <", value, "projectApplicationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdLessThanOrEqualTo(Integer value) {
-            addCriterion("project_application_id <=", value, "projectApplicationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdIn(List<Integer> values) {
-            addCriterion("project_application_id in", values, "projectApplicationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdNotIn(List<Integer> values) {
-            addCriterion("project_application_id not in", values, "projectApplicationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdBetween(Integer value1, Integer value2) {
-            addCriterion("project_application_id between", value1, value2, "projectApplicationId");
-            return (Criteria) this;
-        }
-
-        public Criteria andProjectApplicationIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("project_application_id not between", value1, value2, "projectApplicationId");
-            return (Criteria) this;
-        }
-
         public Criteria andInterimReportUploadAddressIsNull() {
             addCriterion("interim_report_upload_address is null");
             return (Criteria) this;

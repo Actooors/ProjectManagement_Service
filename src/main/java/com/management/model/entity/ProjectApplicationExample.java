@@ -1384,6 +1384,246 @@ public class ProjectApplicationExample {
             addCriterion("application_time not between", value1, value2, "applicationTime");
             return (Criteria) this;
         }
+
+        public Criteria andApplicationDeadlineIsNull() {
+            addCriterion("application_deadline is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineIsNotNull() {
+            addCriterion("application_deadline is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineEqualTo(Date value) {
+            addCriterion("application_deadline =", value, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineNotEqualTo(Date value) {
+            addCriterion("application_deadline <>", value, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineGreaterThan(Date value) {
+            addCriterion("application_deadline >", value, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineGreaterThanOrEqualTo(Date value) {
+            addCriterion("application_deadline >=", value, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineLessThan(Date value) {
+            addCriterion("application_deadline <", value, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineLessThanOrEqualTo(Date value) {
+            addCriterion("application_deadline <=", value, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineIn(List<Date> values) {
+            addCriterion("application_deadline in", values, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineNotIn(List<Date> values) {
+            addCriterion("application_deadline not in", values, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineBetween(Date value1, Date value2) {
+            addCriterion("application_deadline between", value1, value2, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andApplicationDeadlineNotBetween(Date value1, Date value2) {
+            addCriterion("application_deadline not between", value1, value2, "applicationDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineIsNull() {
+            addCriterion("middle_deadline is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineIsNotNull() {
+            addCriterion("middle_deadline is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineEqualTo(Date value) {
+            addCriterion("middle_deadline =", value, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineNotEqualTo(Date value) {
+            addCriterion("middle_deadline <>", value, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineGreaterThan(Date value) {
+            addCriterion("middle_deadline >", value, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineGreaterThanOrEqualTo(Date value) {
+            addCriterion("middle_deadline >=", value, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineLessThan(Date value) {
+            addCriterion("middle_deadline <", value, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineLessThanOrEqualTo(Date value) {
+            addCriterion("middle_deadline <=", value, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineIn(List<Date> values) {
+            addCriterion("middle_deadline in", values, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineNotIn(List<Date> values) {
+            addCriterion("middle_deadline not in", values, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineBetween(Date value1, Date value2) {
+            addCriterion("middle_deadline between", value1, value2, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andMiddleDeadlineNotBetween(Date value1, Date value2) {
+            addCriterion("middle_deadline not between", value1, value2, "middleDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineIsNull() {
+            addCriterion("final_deadline is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineIsNotNull() {
+            addCriterion("final_deadline is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineEqualTo(Date value) {
+            addCriterion("final_deadline =", value, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineNotEqualTo(Date value) {
+            addCriterion("final_deadline <>", value, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineGreaterThan(Date value) {
+            addCriterion("final_deadline >", value, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineGreaterThanOrEqualTo(Date value) {
+            addCriterion("final_deadline >=", value, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineLessThan(Date value) {
+            addCriterion("final_deadline <", value, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineLessThanOrEqualTo(Date value) {
+            addCriterion("final_deadline <=", value, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineIn(List<Date> values) {
+            addCriterion("final_deadline in", values, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineNotIn(List<Date> values) {
+            addCriterion("final_deadline not in", values, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineBetween(Date value1, Date value2) {
+            addCriterion("final_deadline between", value1, value2, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andFinalDeadlineNotBetween(Date value1, Date value2) {
+            addCriterion("final_deadline not between", value1, value2, "finalDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineIsNull() {
+            addCriterion("project_deadline is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineIsNotNull() {
+            addCriterion("project_deadline is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineEqualTo(Date value) {
+            addCriterion("project_deadline =", value, "projectDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineNotEqualTo(Date value) {
+            addCriterion("project_deadline <>", value, "projectDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineGreaterThan(Date value) {
+            addCriterion("project_deadline >", value, "projectDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineGreaterThanOrEqualTo(Date value) {
+            addCriterion("project_deadline >=", value, "projectDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineLessThan(Date value) {
+            addCriterion("project_deadline <", value, "projectDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineLessThanOrEqualTo(Date value) {
+            addCriterion("project_deadline <=", value, "projectDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineIn(List<Date> values) {
+            addCriterion("project_deadline in", values, "projectDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineNotIn(List<Date> values) {
+            addCriterion("project_deadline not in", values, "projectDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineBetween(Date value1, Date value2) {
+            addCriterion("project_deadline between", value1, value2, "projectDeadline");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectDeadlineNotBetween(Date value1, Date value2) {
+            addCriterion("project_deadline not between", value1, value2, "projectDeadline");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

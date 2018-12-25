@@ -24,6 +24,14 @@ public class ConstCorrespond {
             "审核通过"
 
     };
-    public final static String downloadAddres = "http://129.204.71.113:8888/api/file/download?fileAddress=";
 
+    public final static String downloadAddress = "http://129.204.71.113:8888/api/file/download?fileAddress=";
+
+    public final static String[] PROJECT_PROGRESS = {
+            "",
+            "立项",
+            "中期报告审核阶段",
+            "结题报告审核阶段",
+            "项目完成"
+    };
 }

@@ -21,6 +21,10 @@
     <result column="review_phase" property="reviewPhase" jdbcType="INTEGER" />
     <result column="failure_reason" property="failureReason" jdbcType="VARCHAR" />
     <result column="application_time" property="applicationTime" jdbcType="TIMESTAMP" />
+    <result column="application_deadline" property="applicationDeadline" jdbcType="TIMESTAMP" />
+    <result column="middle_deadline" property="middleDeadline" jdbcType="TIMESTAMP" />
+    <result column="final_deadline" property="finalDeadline" jdbcType="TIMESTAMP" />
+    <result column="project_deadline" property="projectDeadline" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -83,7 +87,8 @@
   <sql id="Base_Column_List" >
     project_application_id, project_category_id, project_name, project_member, project_description, 
     user_id, user_name, sex, department, phone, mail, position, major, project_application_upload_address, 
-    is_meeting, meeting_review_message, review_phase, failure_reason, application_time
+    is_meeting, meeting_review_message, review_phase, failure_reason, application_time, 
+    application_deadline, middle_deadline, final_deadline, project_deadline
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectApplicationExample" >
     select
@@ -123,14 +128,18 @@
       department, phone, mail, 
       position, major, project_application_upload_address, 
       is_meeting, meeting_review_message, review_phase, 
-      failure_reason, application_time)
+      failure_reason, application_time, application_deadline, 
+      middle_deadline, final_deadline, project_deadline
+      )
     values (#{projectApplicationId,jdbcType=INTEGER}, #{projectCategoryId,jdbcType=INTEGER}, 
       #{projectName,jdbcType=VARCHAR}, #{projectMember,jdbcType=VARCHAR}, #{projectDescription,jdbcType=VARCHAR}, 
       #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
       #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
       #{position,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{projectApplicationUploadAddress,jdbcType=VARCHAR}, 
       #{isMeeting,jdbcType=INTEGER}, #{meetingReviewMessage,jdbcType=VARCHAR}, #{reviewPhase,jdbcType=INTEGER}, 
-      #{failureReason,jdbcType=VARCHAR}, #{applicationTime,jdbcType=TIMESTAMP})
+      #{failureReason,jdbcType=VARCHAR}, #{applicationTime,jdbcType=TIMESTAMP}, #{applicationDeadline,jdbcType=TIMESTAMP}, 
+      #{middleDeadline,jdbcType=TIMESTAMP}, #{finalDeadline,jdbcType=TIMESTAMP}, #{projectDeadline,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.ProjectApplication" >
     insert into tbl_ProjectApplication
@@ -192,6 +201,18 @@
       <if test="applicationTime != null" >
         application_time,
       </if>
+      <if test="applicationDeadline != null" >
+        application_deadline,
+      </if>
+      <if test="middleDeadline != null" >
+        middle_deadline,
+      </if>
+      <if test="finalDeadline != null" >
+        final_deadline,
+      </if>
+      <if test="projectDeadline != null" >
+        project_deadline,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="projectApplicationId != null" >
@@ -250,6 +271,18 @@
       </if>
       <if test="applicationTime != null" >
         #{applicationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applicationDeadline != null" >
+        #{applicationDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="middleDeadline != null" >
+        #{middleDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finalDeadline != null" >
+        #{finalDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectDeadline != null" >
+        #{projectDeadline,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -319,6 +352,18 @@
       <if test="record.applicationTime != null" >
         application_time = #{record.applicationTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.applicationDeadline != null" >
+        application_deadline = #{record.applicationDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.middleDeadline != null" >
+        middle_deadline = #{record.middleDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.finalDeadline != null" >
+        final_deadline = #{record.finalDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.projectDeadline != null" >
+        project_deadline = #{record.projectDeadline,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -344,7 +389,11 @@
       meeting_review_message = #{record.meetingReviewMessage,jdbcType=VARCHAR},
       review_phase = #{record.reviewPhase,jdbcType=INTEGER},
       failure_reason = #{record.failureReason,jdbcType=VARCHAR},
-      application_time = #{record.applicationTime,jdbcType=TIMESTAMP}
+      application_time = #{record.applicationTime,jdbcType=TIMESTAMP},
+      application_deadline = #{record.applicationDeadline,jdbcType=TIMESTAMP},
+      middle_deadline = #{record.middleDeadline,jdbcType=TIMESTAMP},
+      final_deadline = #{record.finalDeadline,jdbcType=TIMESTAMP},
+      project_deadline = #{record.projectDeadline,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -406,6 +455,18 @@
       <if test="applicationTime != null" >
         application_time = #{applicationTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="applicationDeadline != null" >
+        application_deadline = #{applicationDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="middleDeadline != null" >
+        middle_deadline = #{middleDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finalDeadline != null" >
+        final_deadline = #{finalDeadline,jdbcType=TIMESTAMP},
+      </if>
+      <if test="projectDeadline != null" >
+        project_deadline = #{projectDeadline,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
   </update>
@@ -428,7 +489,11 @@
       meeting_review_message = #{meetingReviewMessage,jdbcType=VARCHAR},
       review_phase = #{reviewPhase,jdbcType=INTEGER},
       failure_reason = #{failureReason,jdbcType=VARCHAR},
-      application_time = #{applicationTime,jdbcType=TIMESTAMP}
+      application_time = #{applicationTime,jdbcType=TIMESTAMP},
+      application_deadline = #{applicationDeadline,jdbcType=TIMESTAMP},
+      middle_deadline = #{middleDeadline,jdbcType=TIMESTAMP},
+      final_deadline = #{finalDeadline,jdbcType=TIMESTAMP},
+      project_deadline = #{projectDeadline,jdbcType=TIMESTAMP}
     where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
   </update>
 </mapper>

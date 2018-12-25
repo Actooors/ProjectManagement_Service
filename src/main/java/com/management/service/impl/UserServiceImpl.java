@@ -373,16 +373,21 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public Result applyProject(ProjectApplicationInfo projectApplicationInfo) {
+        List<ProjectMembers> membersList = projectApplicationInfo.getMembers();
+        if(membersList.isEmpty()) {
+            return ResultTool.error("没有申报人");
+        }
         ProjectApplication res = new ProjectApplication();
         res.setProjectCategoryId(projectApplicationInfo.getProjectCategoryId());
         res.setProjectName(projectApplicationInfo.getProjectName());
         res.setProjectDescription(projectApplicationInfo.getDescription());
-        res.setUserId(projectApplicationInfo.getUserId());
-        res.setUserName(projectApplicationInfo.getUserName());
-        res.setSex(projectApplicationInfo.getSex());
-        res.setDepartment(projectApplicationInfo.getDepartment());
-        res.setPhone(projectApplicationInfo.getPhone());
-        res.setMail(projectApplicationInfo.getMail());
+        ProjectMembers mainMember = membersList.get(0);
+        res.setUserId(mainMember.getUserId());
+        res.setUserName(mainMember.getUserName());
+        res.setDepartment(mainMember.getDepartment());
+        res.setPhone(mainMember.getPhone());
+        res.setMail(mainMember.getMail());
+
         res.setProjectApplicationUploadAddress(projectApplicationInfo.getUploadAddress());
         res.setReviewPhase(1);
         //1上会2不上
@@ -392,8 +397,11 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             return ResultTool.error(e.toString());
         }
-
-        for(ProjectMembers projectMembers: projectApplicationInfo.getMembers()) {
+        int cou = 0;
+        for(ProjectMembers projectMembers: membersList) {
+            if(cou == 0) {
+                cou++; continue;
+            }
             ProjectMember member = new ProjectMember();
             member.setUserId(projectMembers.getUserId());
             member.setUserName(projectMembers.getUserName());
@@ -402,7 +410,7 @@ public class UserServiceImpl implements UserService {
             member.setMail(projectMembers.getMail());
             member.setProjectName(projectApplicationInfo.getProjectName());
             member.setType(1);
-            member.setProjectUserId(projectApplicationInfo.getUserId());
+            member.setProjectUserId(mainMember.getUserId());
             try {
                 projectMemberMapper.insert(member);
             } catch (Exception e) {

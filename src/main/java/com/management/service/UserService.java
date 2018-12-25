@@ -1,7 +1,6 @@
 package com.management.service;
 
 import com.management.model.entity.User;
-import com.management.model.jsonrequestbody.FindInTheApplication;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
@@ -109,5 +108,5 @@ public interface UserService {
      */
     Result applyProject(ProjectApplicationInfo projectApplicationInfo);
     
-    Result findMyApplication(FindInTheApplication inTheApply);
+    Result findMyApplication(String userId);
 }

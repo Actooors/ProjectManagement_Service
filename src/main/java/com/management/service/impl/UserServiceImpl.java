@@ -310,6 +310,8 @@ public class UserServiceImpl implements UserService {
                     info.setProjectId(p.getProjectCategoryId());
                     info.setProjectName(p.getProjectCategoryName());
                     info.setIsMeeting(p.getIsExistMeetingReview() == 1 ? "true":"false");
+                    info.setDownLoadAddress(ConstCorrespond.downloadAddres +
+                            p.getProjectCategoryDescriptionAddress());
                     resList.add(info);
                 } else {
                     break;
@@ -419,8 +421,27 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result findMyApplication(FindInTheApplication inTheApply) {
-        return null;
+    public Result findMyApplication(String userId) {
+        ProjectApplicationExample example = new ProjectApplicationExample();
+        example.createCriteria()
+                .andUserIdEqualTo(userId);
+        List<ProjectApplication> findList = projectApplicationMapper
+                                                .selectByExample(example);
+        if(findList.isEmpty()) {
+            return ResultTool.error("你目前没有正在申请中的项目");
+        }
+        List<FindInTheApplication> resList = new LinkedList<>();
+        for(ProjectApplication application : findList) {
+            FindInTheApplication res = new FindInTheApplication();
+            res.setApplicationTime(TimeTool.timeToString1(application.getApplicationTime()));
+            res.setProjectApplicationId(application.getProjectApplicationId());
+            res.setProjectName(application.getProjectName());
+            res.setReviewPhase(ConstCorrespond
+                    .reviewPhrase[application.getReviewPhase()]);
+            res.setDescription(application.getProjectDescription());
+            resList.add(res);
+        }
+        return ResultTool.success(resList);
     }
 
 

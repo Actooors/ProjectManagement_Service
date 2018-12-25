@@ -1,4 +1,4 @@
-package com.management.model.jsonrequestbody;
+package com.management.model.ov.resultsetting;
 
 import io.swagger.models.auth.In;
 import lombok.Data;
@@ -15,6 +15,7 @@ import java.util.Date;
 public class FindInTheApplication {
     private Integer projectApplicationId;
     private String projectName;
-    private Date applicationTime;
+    private String applicationTime;
     private String reviewPhase;
+    private String description;
 }

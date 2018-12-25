@@ -1,6 +1,5 @@
 package com.management.controller;
 
-import com.management.model.entity.ProjectApplication;
 import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
@@ -92,6 +91,14 @@ public class UserController {
     @ApiOperation(value = "用户申请一个项目")
     public Result applyProject(@RequestBody ProjectApplicationInfo info){
         return userService.applyProject(info);
+    }
+
+
+    @GetMapping("/inTheApplicationList")
+    @ApiOperation(value = "查找用户正在申报中的项目")
+    public Result inTheApplicationList(@RequestHeader(value = "Authorization") String token){
+        String userId = JwtUtil.parseJwt(token);
+        return userService.findMyApplication(userId);
     }
 
 

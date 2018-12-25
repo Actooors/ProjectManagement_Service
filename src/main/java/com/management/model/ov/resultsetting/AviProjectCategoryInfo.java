@@ -17,4 +17,5 @@ public class AviProjectCategoryInfo {
     private String deadLine;
     private String introduce;
     private String isMeeting;
+    private String downLoadAddress;
 }

@@ -311,7 +311,7 @@ public class UserServiceImpl implements UserService {
                     info.setIntroduce(p.getProjectCategoryDescription());
                     info.setProjectId(p.getProjectCategoryId());
                     info.setProjectName(p.getProjectCategoryName());
-                    info.setIsMeeting(p.getIsExistMeetingReview() == 1);
+                    info.setIsMeeting(p.getIsExistMeetingReview() == 1 ? "true":"false");
                     resList.add(info);
                 } else {
                     break;

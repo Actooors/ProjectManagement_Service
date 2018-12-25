@@ -1,6 +1,7 @@
 package com.management.controller;
 
 import com.management.model.entity.User;
+import com.management.model.jsonrequestbody.DeleteApplication;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
@@ -99,6 +100,14 @@ public class UserController {
     public Result inTheApplicationList(@RequestHeader(value = "Authorization") String token){
         String userId = JwtUtil.parseJwt(token);
         return userService.findMyApplication(userId);
+    }
+
+    @PostMapping("/deleteApplication")
+    @ApiOperation(value = "用户撤销申报中的项目")
+    public Result deleteApplication(@RequestHeader(value = "Authorization") String token,
+                                    @RequestBody DeleteApplication info){
+        String userId = JwtUtil.parseJwt(token);
+        return userService.deleteApplication(info,userId);
     }
 
 

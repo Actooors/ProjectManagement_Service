@@ -444,5 +444,19 @@ public class UserServiceImpl implements UserService {
         return ResultTool.success(resList);
     }
 
+    @Override
+    public Result deleteApplication(DeleteApplication info,String userId) {
+        ProjectMemberExample example = new ProjectMemberExample();
+        example.createCriteria()
+                .andProjectUserIdEqualTo(userId)
+                .andProjectNameEqualTo(info.getApplicationName());
+        try {
+            projectApplicationMapper.deleteByPrimaryKey(info.getApplicationId());
+            projectMemberMapper.deleteByExample(example);
+        } catch (Exception e) {
+            return ResultTool.error(e.toString());
+        }
+        return ResultTool.success();
+    }
 
 }

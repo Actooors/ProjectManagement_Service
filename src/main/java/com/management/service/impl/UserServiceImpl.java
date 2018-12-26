@@ -539,15 +539,17 @@ public class UserServiceImpl implements UserService {
         ProjectProgress resProgress = projectProgressMapper
                 .selectByPrimaryKey(applicationId);
         ProjectMoreInfo res = new ProjectMoreInfo();
-        res.setApplicationAddress(resApplication
-                .getProjectApplicationUploadAddress());
+        res.setApplicationAddress(ConstCorrespond.downloadAddress +
+                resApplication.getProjectApplicationUploadAddress());
         res.setApplicationId(resApplication.getProjectApplicationId());
         res.setProjectCategoryId(resApplication.getProjectCategoryId());
         if(resProgress.getIsFinishedInterimReport() == 1) {
-            res.setInterimAddress(resProgress.getInterimReportUploadAddress());
+            res.setInterimAddress(ConstCorrespond.downloadAddress +
+                    resProgress.getInterimReportUploadAddress());
         }
         if(resProgress.getIsFinishedConcludingReport() == 1) {
-            res.setConcludingAddress(resProgress.getConcludingReportUploadAddress());
+            res.setConcludingAddress(ConstCorrespond.downloadAddress +
+                    resProgress.getConcludingReportUploadAddress());
         }
         res.setDescription(resApplication.getProjectDescription());
         res.setProjectName(resApplication.getProjectName());

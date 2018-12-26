@@ -20,6 +20,8 @@ public interface ProjectApplicationMapper {
 
     ProjectApplication selectByPrimaryKey(Integer projectApplicationId);
 
+    ProjectApplication selectByProjectCategoryId(Integer projectCategoryId);
+
     int updateByExampleSelective(@Param("record") ProjectApplication record, @Param("example") ProjectApplicationExample example);
 
     int updateByExample(@Param("record") ProjectApplication record, @Param("example") ProjectApplicationExample example);

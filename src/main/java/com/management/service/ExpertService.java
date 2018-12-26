@@ -11,4 +11,13 @@ public interface ExpertService {
      * @Date: 18-8-1
      */
     Result expertOpinionList(int projectId);
+
+    /**
+     * @Description: 审核专家通过自身id查询负责的项目申请
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: xw
+     * @Date: 18-12-25
+     */
+    Result findProjectApplication(String userId);
 }

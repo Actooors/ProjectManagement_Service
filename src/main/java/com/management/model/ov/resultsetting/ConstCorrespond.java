@@ -34,4 +34,7 @@ public class ConstCorrespond {
             "结题报告审核阶段",
             "项目完成"
     };
+
+    public final static int MIDDLE_PROGRESS = 1;
+    public final static int FINAL_PROGRESS = 1;
 }

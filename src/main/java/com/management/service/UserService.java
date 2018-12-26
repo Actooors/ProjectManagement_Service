@@ -1,11 +1,8 @@
 package com.management.service;
 
 import com.management.model.entity.User;
-import com.management.model.jsonrequestbody.DeleteApplication;
-import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
-import com.management.model.jsonrequestbody.ProjectApplicationInfo;
+import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
-import com.management.model.jsonrequestbody.LoginInfo;
 
 /**
  * @program: management
@@ -135,4 +132,13 @@ public interface UserService {
      * @Date: 2018/12/25
      */
     Result findProgressProject(String userId);
+
+    /**
+     * @Description: 上传中期报告或者结题报告
+     * @Param: [info]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/26
+     */
+    Result commitReport(CommitInfo info);
 }

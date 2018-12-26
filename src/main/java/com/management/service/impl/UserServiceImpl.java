@@ -19,6 +19,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.management.model.ov.resultsetting.ConstCorrespond.FINAL_PROGRESS;
+import static com.management.model.ov.resultsetting.ConstCorrespond.MIDDLE_PROGRESS;
 import static com.management.tools.TimeTool.timeToString1;
 
 /**
@@ -506,6 +508,28 @@ public class UserServiceImpl implements UserService {
         res.setFinalProject(finalProject);
         res.setFinishProject(finishProject);
         return ResultTool.success(res);
+    }
+
+    @Override
+    public Result commitReport(CommitInfo info) {
+        ProjectProgress progress = projectProgressMapper
+                .selectByPrimaryKey(info.getApplicationId());
+        String uploadAddress = info.getUploadAddress();
+        int type = info.getType();
+        if(type == 1) {
+            //中期报告
+            progress.setInterimReportUploadAddress(uploadAddress);
+            progress.setIsFinishedInterimReport(1);
+            progress.setInterimReportTime(new Date());
+            progress.setProjectProcess(FINAL_PROGRESS);
+        } else if(type == 2) {
+            //结题报告
+            progress.setConcludingReportUploadAddress(uploadAddress);
+            progress.setConcludingReportTime(new Date());
+            progress.setIsFinishedConcludingReport(1);
+        }
+        projectProgressMapper.updateByPrimaryKeySelective(progress);
+        return ResultTool.success();
     }
 
 }

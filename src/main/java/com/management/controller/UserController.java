@@ -1,6 +1,7 @@
 package com.management.controller;
 
 import com.management.model.entity.User;
+import com.management.model.jsonrequestbody.CommitInfo;
 import com.management.model.jsonrequestbody.DeleteApplication;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
@@ -115,6 +116,13 @@ public class UserController {
     public Result findProgressProject(@RequestHeader(value = "Authorization") String token){
         String userId = JwtUtil.parseJwt(token);
         return userService.findProgressProject(userId);
+    }
+
+    @PostMapping("/commitReport")
+    @ApiOperation(value = "用户提交中期报告和结题报告")
+    public Result deleteApplication(@RequestBody CommitInfo info){
+
+        return userService.commitReport(info);
     }
 
 }

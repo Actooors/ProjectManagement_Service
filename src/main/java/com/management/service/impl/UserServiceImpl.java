@@ -532,4 +532,52 @@ public class UserServiceImpl implements UserService {
         return ResultTool.success();
     }
 
+    @Override
+    public Result findMoreInfo(int applicationId) {
+        ProjectApplication resApplication = projectApplicationMapper
+                .selectByPrimaryKey(applicationId);
+        ProjectProgress resProgress = projectProgressMapper
+                .selectByPrimaryKey(applicationId);
+        ProjectMoreInfo res = new ProjectMoreInfo();
+        res.setApplicationAddress(resApplication
+                .getProjectApplicationUploadAddress());
+        res.setApplicationId(resApplication.getProjectApplicationId());
+        res.setProjectCategoryId(resApplication.getProjectCategoryId());
+        if(resProgress.getIsFinishedInterimReport() == 1) {
+            res.setInterimAddress(resProgress.getInterimReportUploadAddress());
+        }
+        if(resProgress.getIsFinishedConcludingReport() == 1) {
+            res.setConcludingAddress(resProgress.getConcludingReportUploadAddress());
+        }
+        res.setDescription(resApplication.getProjectDescription());
+        res.setProjectName(resApplication.getProjectName());
+        ProjectMemberExample example = new ProjectMemberExample();
+        example.createCriteria()
+                .andProjectNameEqualTo(resApplication.getProjectName())
+                .andProjectUserIdEqualTo(resApplication.getUserId());
+        List<ProjectMember> members = projectMemberMapper
+                .selectByExample(example);
+        List<ProjectMembers> resMembers = new LinkedList<>();
+        //先添加负责人的信息
+        ProjectMembers firstMember = new ProjectMembers();
+        firstMember.setDepartment(resApplication.getDepartment());
+        firstMember.setMail(resApplication.getMail());
+        firstMember.setPhone(resApplication.getPhone());
+        firstMember.setUserId(resApplication.getUserId());
+        firstMember.setUserName(resApplication.getUserName());
+        resMembers.add(firstMember);
+        for(ProjectMember member : members) {
+            ProjectMembers resMember = new ProjectMembers();
+            resMember.setDepartment(member.getDepartment());
+            resMember.setMail(member.getMail());
+            resMember.setPhone(member.getPhone());
+            resMember.setUserId(member.getUserId());
+            resMember.setUserName(member.getUserName());
+            resMembers.add(resMember);
+        }
+        res.setMembers(resMembers);
+        return ResultTool.success(res);
+
+    }
+
 }

@@ -141,4 +141,13 @@ public interface UserService {
      * @Date: 2018/12/26
      */
     Result commitReport(CommitInfo info);
+    
+    /**
+     * @Description: 查看用户项目详情
+     * @Param: 
+     * @Return: 
+     * @Author: ggmr
+     * @Date: 2018/12/26
+     */
+    Result findMoreInfo(int applicationId);
 }

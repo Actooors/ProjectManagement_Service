@@ -125,4 +125,11 @@ public class UserController {
         return userService.commitReport(info);
     }
 
+    @GetMapping("/projectMoreInfo")
+    @ApiOperation(value = "查看用户一个项目的详细信息")
+    public Result findProjectMoreInfo(@RequestParam(value = "applicationId") int applicationId){
+
+        return userService.findMoreInfo(applicationId);
+    }
+
 }

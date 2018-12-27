@@ -46,7 +46,7 @@ public interface AdminService {
     Result updateProjectCategoryInfo(UpdateProjectCategoryInfo updateProjectCategoryInfo);
 
     /**
-     * @Description:根据项目大类id查找到相应项目大类并删除
+     * @Description: 根据项目大类id查找到相应项目大类并删除
      * @Param: projectCategoryId
      * @Return: Result
      * @Author: xw
@@ -82,5 +82,6 @@ public interface AdminService {
      * @Date: 2018/12/27
      */
     Result oneJudge(OneJudgeInfo info);
+
 
 }

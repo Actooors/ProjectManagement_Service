@@ -5,11 +5,8 @@ import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.ReviewExpertMapper;
 import com.management.dao.UserMapper;
 import com.management.model.entity.*;
-import com.management.model.jsonrequestbody.ChooseProjectMeeting;
-import com.management.model.jsonrequestbody.OneJudgeInfo;
-import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
+import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
-import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
 import com.management.service.AdminService;
 import com.management.tools.ResultTool;
@@ -45,9 +42,8 @@ public class AdminServiceImpl implements AdminService {
     @Resource
     private ReviewExpertMapper reviewExpertMapper;
 
-    private static final int MEETING_ENABLE = 1;
-    private static final int MEETING_UNABLE = 2;
     private static final int EXPERT_REVIEW = 2;
+    private static final int MEETING_REVIEW = 3;
     private static final int REVIEW_FAILED = 6;
     private static final int EXPERT_NOT_FINISH = 2;
 
@@ -239,22 +235,23 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Result chooseProjectMeeting(ChooseProjectMeeting info) {
-        List<Integer> meetingList = info.getMeetingList();
-        List<Integer> notMeetingList = info.getNotMeetingList();
-        if (meetingList.isEmpty() && notMeetingList.isEmpty()) {
+        List<ProjectMeetingInfo> meetingList = info.getMeetingList();
+        if (meetingList.isEmpty()) {
             return ResultTool.error("不能给予空的上会项目列表");
         }
-        for (Integer projectId : meetingList) {
-            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(projectId);
-            projectApplication.setIsMeeting(MEETING_ENABLE);
-            projectApplication.setReviewPhase(projectApplication.getReviewPhase() + 1);
-            projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
-        }
-        for (Integer projectId : notMeetingList) {
-            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(projectId);
-            projectApplication.setIsMeeting(MEETING_UNABLE);
-            projectApplication.setReviewPhase(REVIEW_FAILED);
-            projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
+        for (ProjectMeetingInfo project : meetingList) {
+            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(project.getApplicationId());
+            if(project.getIsMeeting()) {
+                projectApplication.setReviewPhase(MEETING_REVIEW);
+            } else {
+                projectApplication.setReviewPhase(REVIEW_FAILED);
+                projectApplication.setFailureReason(project.getMsg());
+            }
+            try {
+                projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
+            } catch (Exception e) {
+                return ResultTool.error(e.toString());
+            }
         }
         return ResultTool.success();
     }

@@ -12,6 +12,5 @@ import java.util.List;
  */
 @Data
 public class ChooseProjectMeeting {
-    private List<Integer> meetingList;
-    private List<Integer> notMeetingList;
+    private List<ProjectMeetingInfo> meetingList;
 }

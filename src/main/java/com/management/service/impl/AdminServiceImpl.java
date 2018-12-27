@@ -1,9 +1,6 @@
 package com.management.service.impl;
 
-import com.management.dao.ProjectApplicationMapper;
-import com.management.dao.ProjectCategoryMapper;
-import com.management.dao.ReviewExpertMapper;
-import com.management.dao.UserMapper;
+import com.management.dao.*;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
@@ -41,6 +38,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Resource
     private ReviewExpertMapper reviewExpertMapper;
+
+    @Resource
+    private ProjectCategoryExpertMapper projectCategoryExpertMapper;
 
     private static final int EXPERT_REVIEW = 2;
     private static final int MEETING_REVIEW = 3;
@@ -228,7 +228,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     /**
-     * @Description: chooseProjectMeeting接口的实现
+     * @Description: 业务员选择指定的一定数量的项目上会
      * @Param: [info]
      * @Return: com.management.model.ov.Result
      * @Author: ggmr
@@ -259,20 +259,10 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result oneJudge(OneJudgeInfo info) {
-        ProjectApplication res = projectApplicationMapper.selectByPrimaryKey(info.getApplicationId());
+        ProjectApplication res = projectApplicationMapper
+                .selectByPrimaryKey(info.getApplicationId());
         if(info.getJudge()) {
             res.setReviewPhase(EXPERT_REVIEW);
-            for(String expertId : info.getExpertIdList()) {
-                ReviewExpert expert = new ReviewExpert();
-                expert.setExpertId(expertId);
-                expert.setProjectApplicationId(info.getApplicationId());
-                expert.setIsFinished(EXPERT_NOT_FINISH);
-                try {
-                    reviewExpertMapper.insert(expert);
-                } catch (Exception e ) {
-                    return ResultTool.error(e.toString());
-                }
-            }
         } else {
             res.setReviewPhase(REVIEW_FAILED);
             res.setFailureReason(info.getMsg());

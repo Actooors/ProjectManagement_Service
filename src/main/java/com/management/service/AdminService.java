@@ -80,6 +80,12 @@ public interface AdminService {
      */
     Result oneJudge(OneJudgeInfo info);
 
-
+    /**
+     * @Description: 会评
+     * @Param: [info]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/27
+     */
     Result meetingReview(MeetingResult info);
 }

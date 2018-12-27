@@ -1,9 +1,12 @@
 package com.management.service.impl;
 
+import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.UserMapper;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
+import com.management.model.jsonrequestbody.LeaderJudgeInfo;
+import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.LeaderSubordinateInfo;
 import com.management.model.ov.resultsetting.WaitJudgeProjectCategoryInfo;
@@ -12,6 +15,7 @@ import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +29,9 @@ import java.util.List;
 public class LeaderServiceImpl implements LeaderService {
     @Resource
     private ProjectCategoryMapper projectCategoryMapper;
+
+    @Resource
+    private ProjectApplicationMapper projectApplicationMapper;
 
     @Resource
     private UserMapper userMapper;
@@ -110,6 +117,77 @@ public class LeaderServiceImpl implements LeaderService {
             resList.add(res);
         }
         return ResultTool.success(resList);
+    }
+
+    /**
+     * @Description: 查找待审核的项目申请信息
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: xw
+     * @Date: 18-12-27
+     */
+    public Result findUnJudgeProjectApplication(String userId){
+        List<ProjectApplication> proList = new ArrayList<>();
+        try {
+            //根据Leaderid得到其负责的且审核通过的项目大类id
+            ProjectCategoryExample example1 = new ProjectCategoryExample();
+            example1.createCriteria()
+                    .andReviewLeaderIdEqualTo(userId)
+                    .andIsApprovedEqualTo(1);
+            List<ProjectCategory> projectCategoryList = projectCategoryMapper.selectByExample(example1);
+            //根据项目大类id在application表中查找相应的项目申请信息
+            for (ProjectCategory projectCategory : projectCategoryList) {
+                ProjectApplicationExample example = new ProjectApplicationExample();
+                example.createCriteria()
+                        .andProjectCategoryIdEqualTo(projectCategory.getProjectCategoryId());
+                List<ProjectApplication> projectApplicationList = projectApplicationMapper.selectByExample(example);
+                if(projectApplicationList!=null){
+                    for (ProjectApplication projectApplication : projectApplicationList) {
+                        ProjectApplicationInfo projectInfo = new ProjectApplicationInfo();
+                        projectInfo.setUserId(projectApplication.getUserId());
+                        projectInfo.setUserName(projectApplication.getUserName());
+                        projectInfo.setProjectCategoryName(projectCategoryMapper.selectByPrimaryKey(projectApplication.getProjectApplicationId()).getProjectCategoryName());
+                        projectInfo.setProjectName(projectApplication.getProjectName());
+                        projectInfo.setProjectApplicationId(projectApplication.getProjectApplicationId());
+                        projectInfo.setDescription(projectApplication.getProjectDescription());
+                        projectInfo.setDepartment(projectApplication.getDepartment());
+                        projectInfo.setUploadAddress(projectApplication.getProjectApplicationUploadAddress());
+                        proList.add(projectApplication);
+                    }
+                }else{
+                    return ResultTool.error("暂无待审核信息!");
+                }
+            }
+            return ResultTool.success(proList);
+        }catch (Exception e){
+            return ResultTool.error("查询失败!");
+        }
+
+    }
+
+    /**
+     * @Description: 领导审核待审核的用户项目申请
+     * @Param: [projectApplicationId]
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-12-27
+     */
+    @Override
+    public Result judgeProjectApplication(LeaderJudgeInfo leaderJudgeInfo){
+        try{
+            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(leaderJudgeInfo.getApplicationId());
+            if(leaderJudgeInfo.getJudge().equals(true)){
+                projectApplication.setReviewPhase(5);
+            }else {
+                projectApplication.setReviewPhase(6);
+                projectApplication.setFailureReason(leaderJudgeInfo.getMsg());
+            }
+            projectApplicationMapper.updateByPrimaryKey(projectApplication);
+
+            return ResultTool.success();
+        }catch (Exception e){
+            return ResultTool.error("操作失败!");
+        }
     }
 
 }

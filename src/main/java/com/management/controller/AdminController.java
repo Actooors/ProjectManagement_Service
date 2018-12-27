@@ -42,7 +42,7 @@ public class AdminController {
         return adminService.chooseProjectMeeting(info);
     }
 
-    @PostMapping("projectCategory/1")
+    @PostMapping("/projectCategory/1")
     @ApiOperation(value = "业务员创建项目类别,默认为待审核")
     public Result insertProjectCategory(@RequestHeader(value = "Authorization") String token,
                                         @RequestBody ProjectCategoryInfo projectCategoryInfo) {
@@ -50,14 +50,14 @@ public class AdminController {
         return adminService.createProjectCategory(userId, projectCategoryInfo);
     }
 
-    @PostMapping("projectCategory/2")
+    @PostMapping("/projectCategory/2")
     @ApiOperation(value = "业务员修改项目类别", notes = "根据项目号查找项目后更新内容")
     public Result updateProject(@RequestBody UpdateProjectCategoryInfo updateProjectCategoryInfo) {
 
         return adminService.updateProjectCategoryInfo(updateProjectCategoryInfo);
     }
 
-    @GetMapping("projectCategory/3")
+    @GetMapping("/projectCategory/3")
     @ApiOperation(value = "查询业务员负责的项目详细信息", notes = "根据业务员Id查询业务员负责的项目详细信息")
     public Result queryProjectCategoryInfo(@RequestHeader(value = "Authorization") String token) {
 
@@ -65,19 +65,19 @@ public class AdminController {
         return adminService.queryProjectCategory(userId);
     }
 
-    @PostMapping("projectCategory/{projectCategoryId}")
+    @PostMapping("/projectCategory/{projectCategoryId}")
     @ApiOperation(value = "根据项目大类id删除项目大类信息")
     public Result deleteProjectCategory(@PathVariable(value = "projectCategoryId") Integer projectCategoryId) {
         return adminService.deleteProjectCategory(projectCategoryId);
     }
 
-    @PostMapping("firstTrial")
+    @PostMapping("/firstTrial")
     @ApiOperation(value = "业务员初审项目")
     public Result adminFirstTrail(@RequestBody OneJudgeInfo info) {
         return adminService.oneJudge(info);
     }
 
-    @PostMapping("meetingTrial")
+    @PostMapping("/meetingTrial")
     @ApiOperation(value = "对项目会评")
     public Result meetingTrail(@RequestBody MeetingResult info) {
         return adminService.meetingReview(info);

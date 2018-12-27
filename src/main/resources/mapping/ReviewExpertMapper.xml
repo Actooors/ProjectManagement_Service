@@ -94,6 +94,12 @@
     from tbl_ReviewExpert
     where review_expert_id = #{reviewExpertId,jdbcType=INTEGER}
   </select>
+  <select id="selectByProjectApplicationId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from tbl_ReviewExpert
+    where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_ReviewExpert
     where review_expert_id = #{reviewExpertId,jdbcType=INTEGER}

@@ -1,6 +1,7 @@
 package com.management.controller;
 
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
+import com.management.model.jsonrequestbody.LeaderJudgeInfo;
 import com.management.model.ov.Result;
 import com.management.service.LeaderService;
 import com.management.tools.JwtUtil;
@@ -47,5 +48,18 @@ public class LeaderController {
 
         String leaderId = JwtUtil.parseJwt(token);
         return leaderService.waitJudgeProjectCategoryList(leaderId);
+    }
+
+    @PostMapping("/unjudgeApplicatetion")
+    @ApiOperation(value = "领导查找待审核项目申请")
+    public Result findUnJudgeProjectApplicatetion(@RequestHeader(value = "Authorization")String token){
+        String leaderId = JwtUtil.parseJwt(token);
+        return leaderService.findUnJudgeProjectApplication(leaderId);
+    }
+
+    @PostMapping("/JudgeApplication")
+    @ApiOperation(value = "领导审核用户提交的项目申请")
+    public Result JudgeApplication(@RequestBody LeaderJudgeInfo leaderJudgeInfo){
+        return leaderService.judgeProjectApplication(leaderJudgeInfo);
     }
 }

@@ -1,6 +1,7 @@
 package com.management.service;
 
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
+import com.management.model.jsonrequestbody.LeaderJudgeInfo;
 import com.management.model.ov.Result;
 
 /**
@@ -39,5 +40,22 @@ public interface LeaderService {
      */
     Result waitJudgeProjectCategoryList(String leaderId);
 
+    /**
+     * @Description: 查找待审核的项目申请信息
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: xw
+     * @Date: 18-12-27
+     */
+    Result findUnJudgeProjectApplication(String userId);
+
+    /**
+     * @Description: 领导审核待审核的用户项目申请
+     * @Param: [projectApplicationId]
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-12-27
+     */
+    Result judgeProjectApplication(LeaderJudgeInfo leaderJudgeInfo);
 
 }

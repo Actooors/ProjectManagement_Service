@@ -20,6 +20,8 @@ public interface ReviewExpertMapper {
 
     ReviewExpert selectByPrimaryKey(Integer reviewExpertId);
 
+    ReviewExpert selectByProjectApplicationId(Integer projectApplicationId);
+
     int updateByExampleSelective(@Param("record") ReviewExpert record, @Param("example") ReviewExpertExample example);
 
     int updateByExample(@Param("record") ReviewExpert record, @Param("example") ReviewExpertExample example);

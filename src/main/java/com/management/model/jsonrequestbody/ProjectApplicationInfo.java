@@ -13,6 +13,8 @@ import java.util.List;
 @Data
 public class ProjectApplicationInfo {
     private int projectCategoryId;
+    private String projectCategoryName;
+    private int projectApplicationId;
     private String projectName;
     private List<ProjectMembers> members;
     private String description;

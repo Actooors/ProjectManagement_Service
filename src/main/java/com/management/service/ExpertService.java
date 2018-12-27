@@ -1,5 +1,6 @@
 package com.management.service;
 
+import com.management.model.jsonrequestbody.ExpertJudgeInfo;
 import com.management.model.ov.Result;
 
 public interface ExpertService {
@@ -20,4 +21,13 @@ public interface ExpertService {
      * @Date: 18-12-25
      */
     Result findProjectApplication(String userId);
+
+    /**
+     * @Description: 专家审核项目申请并提交审核意见
+     * @Param: [projectApplicationId]
+     * @Return: Result
+     * @Author: xw
+     * @Date: 18-12-26
+     */
+    Result judgeProjectApplication(String userId,ExpertJudgeInfo expertJudgeInfo);
 }

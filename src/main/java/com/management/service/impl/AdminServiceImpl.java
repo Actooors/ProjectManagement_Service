@@ -11,7 +11,6 @@ import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
 import com.management.service.AdminService;
 import com.management.tools.ResultTool;
 import com.management.tools.TimeTool;
-import javafx.application.Application;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -88,15 +87,24 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setStatistics(0);
             projectCategory.setIsApproved(2);
             projectCategory.setIsConcludingReportActivated(2);
+            StringBuilder experts = new StringBuilder();
+            List<String> list = projectCategoryInfo.getExpertList();
+            if(list.isEmpty()) {
+                return ResultTool.error("专家列表不能为空");
+            }
+            int len = list.size();
+            for(int i = 0; i < len; i++) {
+                experts.append(list.get(i));
+                if(i < len - 1) {
+                    experts.append("|");
+                }
+            }
+            projectCategory.setExpertList(experts.toString());
             projectCategoryMapper.insert(projectCategory);
 
-            Result result = ResultTool.success();
-            result.setMessage("成功");
-            return result;
+            return ResultTool.success();
         } catch (Exception e) {
-            Result result = ResultTool.error();
-            result.setMessage("失败");
-            return result;
+            return ResultTool.error(e.toString());
         }
     }
 
@@ -260,9 +268,11 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Result oneJudge(OneJudgeInfo info) {
         ProjectApplication res = projectApplicationMapper.selectByPrimaryKey(info.getApplicationId());
+        ProjectCategory category = projectCategoryMapper.selectByPrimaryKey(res.getProjectCategoryId());
         if(info.getJudge()) {
             res.setReviewPhase(EXPERT_REVIEW);
-            for(String expertId : info.getExpertIdList()) {
+            String[] experts = category.getExpertList().split("\\|");
+            for(String expertId : experts) {
                 ReviewExpert expert = new ReviewExpert();
                 expert.setExpertId(expertId);
                 expert.setProjectApplicationId(info.getApplicationId());

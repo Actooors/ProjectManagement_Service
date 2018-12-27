@@ -63,6 +63,8 @@ public class ProjectCategory implements Comparable<ProjectCategory>{
 
     private String reviewExpertId;
 
+    private String expertList;
+
     @Override
     public int compareTo(ProjectCategory o) {
         return o.projectType.compareTo(this.projectType);
@@ -306,5 +308,13 @@ public class ProjectCategory implements Comparable<ProjectCategory>{
 
     public void setReviewExpertId(String reviewExpertId) {
         this.reviewExpertId = reviewExpertId == null ? null : reviewExpertId.trim();
+    }
+
+    public String getExpertList() {
+        return expertList;
+    }
+
+    public void setExpertList(String expertList) {
+        this.expertList = expertList == null ? null : expertList.trim();
     }
 }

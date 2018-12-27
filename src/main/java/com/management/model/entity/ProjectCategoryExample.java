@@ -2054,6 +2054,76 @@ public class ProjectCategoryExample {
             addCriterion("review_expert_id not between", value1, value2, "reviewExpertId");
             return (Criteria) this;
         }
+
+        public Criteria andExpertListIsNull() {
+            addCriterion("expert_list is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListIsNotNull() {
+            addCriterion("expert_list is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListEqualTo(String value) {
+            addCriterion("expert_list =", value, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListNotEqualTo(String value) {
+            addCriterion("expert_list <>", value, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListGreaterThan(String value) {
+            addCriterion("expert_list >", value, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListGreaterThanOrEqualTo(String value) {
+            addCriterion("expert_list >=", value, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListLessThan(String value) {
+            addCriterion("expert_list <", value, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListLessThanOrEqualTo(String value) {
+            addCriterion("expert_list <=", value, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListLike(String value) {
+            addCriterion("expert_list like", value, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListNotLike(String value) {
+            addCriterion("expert_list not like", value, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListIn(List<String> values) {
+            addCriterion("expert_list in", values, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListNotIn(List<String> values) {
+            addCriterion("expert_list not in", values, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListBetween(String value1, String value2) {
+            addCriterion("expert_list between", value1, value2, "expertList");
+            return (Criteria) this;
+        }
+
+        public Criteria andExpertListNotBetween(String value1, String value2) {
+            addCriterion("expert_list not between", value1, value2, "expertList");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

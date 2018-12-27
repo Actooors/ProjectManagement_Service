@@ -49,7 +49,7 @@ public interface AdminService {
      * @Author: xw
      * @Date: 18-12-19
      */
-    Result deleteProjectCategory(Integer projectCategoryId);
+    Result deleteProjectCategory(DeleteProjectCategoryInfo info);
 
 
     /**

@@ -185,7 +185,9 @@ public class AdminServiceImpl implements AdminService {
      * @Author: xw
      * @Date: 18-12-19
      */
-    public Result deleteProjectCategory(Integer projectCategoryId) {
+    @Override
+    public Result deleteProjectCategory(DeleteProjectCategoryInfo info) {
+        int projectCategoryId = info.getProjectCategoryId();
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectCategoryId);
         try {
             if (projectCategory != null) {

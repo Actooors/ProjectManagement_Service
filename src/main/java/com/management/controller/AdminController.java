@@ -65,10 +65,10 @@ public class AdminController {
         return adminService.queryProjectCategory(userId);
     }
 
-    @PostMapping("projectCategory/{projectCategoryId}")
+    @PostMapping("deleteProjectCategory")
     @ApiOperation(value = "根据项目大类id删除项目大类信息")
-    public Result deleteProjectCategory(@PathVariable(value = "projectCategoryId") Integer projectCategoryId) {
-        return adminService.deleteProjectCategory(projectCategoryId);
+    public Result deleteProjectCategory(@RequestBody DeleteProjectCategoryInfo info) {
+        return adminService.deleteProjectCategory(info);
     }
 
     @PostMapping("firstTrial")

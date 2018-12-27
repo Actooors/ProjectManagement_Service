@@ -1,6 +1,7 @@
 package com.management.service;
 
 import com.management.model.jsonrequestbody.ChooseProjectMeeting;
+import com.management.model.jsonrequestbody.OneJudgeInfo;
 import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
@@ -71,4 +72,15 @@ public interface AdminService {
      * @Date: 18-8-15
      */
     Result chooseProjectMeeting(ChooseProjectMeeting info);
+
+
+    /**
+     * @Description: 业务员对刚提交上来的申请书给与判决
+     * @Param:
+     * @Return:
+     * @Author: ggmr
+     * @Date: 2018/12/27
+     */
+    Result oneJudge(OneJudgeInfo info);
+
 }

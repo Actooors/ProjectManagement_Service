@@ -1,6 +1,7 @@
 package com.management.controller;
 
 import com.management.model.jsonrequestbody.ChooseProjectMeeting;
+import com.management.model.jsonrequestbody.OneJudgeInfo;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
 import com.management.model.ov.Result;
@@ -9,6 +10,7 @@ import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -70,6 +72,12 @@ public class AdminController {
     @ApiOperation(value = "根据项目大类id删除项目大类信息")
     public Result deleteProjectCategory(@PathVariable(value = "projectCategoryId") Integer projectCategoryId) {
         return adminService.deleteProjectCategory(projectCategoryId);
+    }
+
+    @PostMapping("firstTrial")
+    @ApiOperation(value = "业务员初审项目")
+    public Result adminFirstTrail(@RequestBody OneJudgeInfo info) {
+        return adminService.oneJudge(info);
     }
 
 }

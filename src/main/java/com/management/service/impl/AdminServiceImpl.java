@@ -2,12 +2,11 @@ package com.management.service.impl;
 
 import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
+import com.management.dao.ReviewExpertMapper;
 import com.management.dao.UserMapper;
-import com.management.model.entity.ProjectApplication;
-import com.management.model.entity.ProjectCategory;
-import com.management.model.entity.ProjectCategoryExample;
-import com.management.model.entity.User;
+import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.ChooseProjectMeeting;
+import com.management.model.jsonrequestbody.OneJudgeInfo;
 import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
 import com.management.model.ov.Result;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
@@ -15,6 +14,7 @@ import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
 import com.management.service.AdminService;
 import com.management.tools.ResultTool;
 import com.management.tools.TimeTool;
+import javafx.application.Application;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -42,9 +42,14 @@ public class AdminServiceImpl implements AdminService {
     @Resource
     private ProjectApplicationMapper projectApplicationMapper;
 
+    @Resource
+    private ReviewExpertMapper reviewExpertMapper;
+
     private static final int MEETING_ENABLE = 1;
     private static final int MEETING_UNABLE = 2;
+    private static final int EXPERT_REVIEW = 2;
     private static final int REVIEW_FAILED = 6;
+    private static final int EXPERT_NOT_FINISH = 2;
 
     /**
      * @Description: 创建项目类别
@@ -253,6 +258,35 @@ public class AdminServiceImpl implements AdminService {
         }
         return ResultTool.success();
     }
+
+    @Override
+    public Result oneJudge(OneJudgeInfo info) {
+        ProjectApplication res = projectApplicationMapper.selectByPrimaryKey(info.getApplicationId());
+        if(info.getJudge()) {
+            res.setReviewPhase(EXPERT_REVIEW);
+            for(String expertId : info.getExpertIdList()) {
+                ReviewExpert expert = new ReviewExpert();
+                expert.setExpertId(expertId);
+                expert.setProjectApplicationId(info.getApplicationId());
+                expert.setIsFinished(EXPERT_NOT_FINISH);
+                try {
+                    reviewExpertMapper.insert(expert);
+                } catch (Exception e ) {
+                    return ResultTool.error(e.toString());
+                }
+            }
+        } else {
+            res.setReviewPhase(REVIEW_FAILED);
+            res.setFailureReason(info.getMsg());
+        }
+        try {
+            projectApplicationMapper.updateByPrimaryKeySelective(res);
+        } catch (Exception e) {
+            return ResultTool.error(e.toString());
+        }
+        return ResultTool.success();
+    }
+
 
 
 }

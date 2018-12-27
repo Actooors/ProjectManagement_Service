@@ -45,6 +45,7 @@ public class AdminServiceImpl implements AdminService {
     private static final int EXPERT_REVIEW = 2;
     private static final int MEETING_REVIEW = 3;
     private static final int REVIEW_FAILED = 6;
+    private static final int LEADER_REVIEW = 4;
     private static final int EXPERT_NOT_FINISH = 2;
 
     /**
@@ -284,6 +285,22 @@ public class AdminServiceImpl implements AdminService {
         return ResultTool.success();
     }
 
-
-
+    @Override
+    public Result meetingReview(MeetingResult info) {
+        ProjectApplication application =projectApplicationMapper
+                .selectByPrimaryKey(info.getApplicationId());
+        if(info.getIsPassed()) {
+            application.setReviewPhase(LEADER_REVIEW);
+            application.setMeetingReviewMessage(info.getMsg());
+        } else {
+            application.setReviewPhase(REVIEW_FAILED);
+            application.setFailureReason(info.getMsg());
+        }
+        try {
+            projectApplicationMapper.updateByPrimaryKeySelective(application);
+        } catch (Exception e) {
+            return ResultTool.error(e.toString());
+        }
+        return ResultTool.success();
+    }
 }

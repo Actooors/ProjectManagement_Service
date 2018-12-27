@@ -1,10 +1,7 @@
 package com.management.service;
 
-import com.management.model.jsonrequestbody.ChooseProjectMeeting;
-import com.management.model.jsonrequestbody.OneJudgeInfo;
-import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
+import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
-import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -84,4 +81,5 @@ public interface AdminService {
     Result oneJudge(OneJudgeInfo info);
 
 
+    Result meetingReview(MeetingResult info);
 }

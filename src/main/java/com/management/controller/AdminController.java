@@ -1,9 +1,6 @@
 package com.management.controller;
 
-import com.management.model.jsonrequestbody.ChooseProjectMeeting;
-import com.management.model.jsonrequestbody.OneJudgeInfo;
-import com.management.model.jsonrequestbody.ProjectCategoryInfo;
-import com.management.model.jsonrequestbody.UpdateProjectCategoryInfo;
+import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
 import com.management.service.AdminService;
 import com.management.tools.JwtUtil;
@@ -38,7 +35,7 @@ public class AdminController {
         return adminService.someoneAllProjectCategory(userId);
     }
 
-    @PostMapping("/meetingResult")
+    @PostMapping("/isMeeting")
     @ApiOperation(value = "业务员选择指定项目上会，另外的项目申请失败", notes = "根据项目号查找项目后更新内容")
     public Result meetingResult(@RequestBody ChooseProjectMeeting info) {
 
@@ -78,6 +75,12 @@ public class AdminController {
     @ApiOperation(value = "业务员初审项目")
     public Result adminFirstTrail(@RequestBody OneJudgeInfo info) {
         return adminService.oneJudge(info);
+    }
+
+    @PostMapping("meetingTrial")
+    @ApiOperation(value = "对项目会评")
+    public Result meetingTrail(@RequestBody MeetingResult info) {
+        return adminService.meetingReview(info);
     }
 
 }

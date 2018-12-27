@@ -7,6 +7,7 @@ import com.management.dao.UserMapper;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
+import com.management.model.ov.resultsetting.ExpertListInfo;
 import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
 import com.management.service.AdminService;
 import com.management.tools.ResultTool;
@@ -46,7 +47,7 @@ public class AdminServiceImpl implements AdminService {
     private static final int REVIEW_FAILED = 6;
     private static final int LEADER_REVIEW = 4;
     private static final int EXPERT_NOT_FINISH = 2;
-
+    private static final int EXPERT_IDENTITY = 3;
     /**
      * @Description: 创建项目类别
      * @Param: projectCategoryInfo
@@ -312,5 +313,24 @@ public class AdminServiceImpl implements AdminService {
             return ResultTool.error(e.toString());
         }
         return ResultTool.success();
+    }
+
+    @Override
+    public Result findExpertList() {
+        UserExample example = new UserExample();
+        example.createCriteria()
+                .andIdentityEqualTo(EXPERT_IDENTITY);
+        List<User> list = userMapper.selectByExample(example);
+        List<ExpertListInfo> resList = new LinkedList<>();
+        for(User user : list) {
+            ExpertListInfo res = new ExpertListInfo();
+            res.setDepartment(user.getDepartment());
+            res.setMail(user.getMail());
+            res.setPhone(user.getPhone());
+            res.setUserId(user.getUserId());
+            res.setUserName(user.getUserName());
+            resList.add(res);
+        }
+        return ResultTool.success(resList);
     }
 }

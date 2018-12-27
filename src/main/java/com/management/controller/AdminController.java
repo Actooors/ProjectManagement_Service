@@ -74,13 +74,22 @@ public class AdminController {
     @PostMapping("firstTrial")
     @ApiOperation(value = "业务员初审项目")
     public Result adminFirstTrail(@RequestBody OneJudgeInfo info) {
+
         return adminService.oneJudge(info);
     }
 
     @PostMapping("meetingTrial")
     @ApiOperation(value = "对项目会评")
     public Result meetingTrail(@RequestBody MeetingResult info) {
+
         return adminService.meetingReview(info);
+    }
+
+    @GetMapping("expertList")
+    @ApiOperation(value = "业务员在创建项目大类的时候指定一些审核专家来审核项目")
+    public Result getExpertList() {
+
+        return adminService.findExpertList();
     }
 
 }

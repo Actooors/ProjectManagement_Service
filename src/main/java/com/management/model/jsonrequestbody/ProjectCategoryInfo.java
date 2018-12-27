@@ -3,6 +3,8 @@ package com.management.model.jsonrequestbody;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @Description: 业务员创建项目大类请求的数据格式
  * @Author: xw
@@ -25,5 +27,6 @@ public class ProjectCategoryInfo {
     private String applicationEndTime;
     private String projectStartTime;
     private String projectEndTime;
+    private List<String> expertList;
 
 }

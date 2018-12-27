@@ -1,14 +1,17 @@
 package com.management.service.impl;
 
-import com.management.dao.*;
+import com.management.dao.ProjectApplicationMapper;
+import com.management.dao.ProjectCategoryMapper;
+import com.management.dao.ReviewExpertMapper;
+import com.management.dao.UserMapper;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
+import com.management.model.ov.resultsetting.ExpertListInfo;
 import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
 import com.management.service.AdminService;
 import com.management.tools.ResultTool;
 import com.management.tools.TimeTool;
-import javafx.application.Application;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -39,15 +42,12 @@ public class AdminServiceImpl implements AdminService {
     @Resource
     private ReviewExpertMapper reviewExpertMapper;
 
-    @Resource
-    private ProjectCategoryExpertMapper projectCategoryExpertMapper;
-
     private static final int EXPERT_REVIEW = 2;
     private static final int MEETING_REVIEW = 3;
     private static final int REVIEW_FAILED = 6;
     private static final int LEADER_REVIEW = 4;
     private static final int EXPERT_NOT_FINISH = 2;
-
+    private static final int EXPERT_IDENTITY = 3;
     /**
      * @Description: 创建项目类别
      * @Param: projectCategoryInfo
@@ -88,15 +88,24 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setStatistics(0);
             projectCategory.setIsApproved(2);
             projectCategory.setIsConcludingReportActivated(2);
+            StringBuilder experts = new StringBuilder();
+            List<String> list = projectCategoryInfo.getExpertList();
+            if(list.isEmpty()) {
+                return ResultTool.error("专家列表不能为空");
+            }
+            int len = list.size();
+            for(int i = 0; i < len; i++) {
+                experts.append(list.get(i));
+                if(i < len - 1) {
+                    experts.append("|");
+                }
+            }
+            projectCategory.setExpertList(experts.toString());
             projectCategoryMapper.insert(projectCategory);
 
-            Result result = ResultTool.success();
-            result.setMessage("成功");
-            return result;
+            return ResultTool.success();
         } catch (Exception e) {
-            Result result = ResultTool.error();
-            result.setMessage("失败");
-            return result;
+            return ResultTool.error(e.toString());
         }
     }
 
@@ -176,25 +185,33 @@ public class AdminServiceImpl implements AdminService {
      * @Author: xw
      * @Date: 18-12-19
      */
-    public Result deleteProjectCategory(Integer projectCategoryId) {
+    @Override
+    public Result deleteProjectCategory(DeleteProjectCategoryInfo info) {
+        int projectCategoryId = info.getProjectCategoryId();
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectCategoryId);
         try {
             if (projectCategory != null) {
                 projectCategoryMapper.deleteByPrimaryKey(projectCategoryId);
-                Result result = ResultTool.success();
-                result.setMessage("成功");
-                return result;
             } else {
-                Result result = ResultTool.error();
-                result.setMessage("数据不存在");
-                return result;
+                return ResultTool.error("没有这个id的项目大类");
             }
-
         } catch (Exception e) {
-            Result result = ResultTool.error();
-            result.setMessage("失败");
-            return result;
+            return ResultTool.error(e.toString());
         }
+        ProjectApplicationExample example = new ProjectApplicationExample();
+        example.createCriteria()
+                .andProjectCategoryIdEqualTo(projectCategoryId);
+        List<ProjectApplication> list = projectApplicationMapper.selectByExample(example);
+        for (ProjectApplication application: list) {
+            application.setFailureReason("业务员取消了这个项目类别，申请无效");
+            application.setReviewPhase(REVIEW_FAILED);
+            try {
+                projectApplicationMapper.updateByPrimaryKeySelective(application);
+            } catch (Exception e) {
+                return ResultTool.error(e.toString());
+            }
+        }
+        return ResultTool.success();
     }
 
 
@@ -228,7 +245,7 @@ public class AdminServiceImpl implements AdminService {
 
 
     /**
-     * @Description: 业务员选择指定的一定数量的项目上会
+     * @Description: chooseProjectMeeting接口的实现
      * @Param: [info]
      * @Return: com.management.model.ov.Result
      * @Author: ggmr
@@ -259,10 +276,22 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result oneJudge(OneJudgeInfo info) {
-        ProjectApplication res = projectApplicationMapper
-                .selectByPrimaryKey(info.getApplicationId());
+        ProjectApplication res = projectApplicationMapper.selectByPrimaryKey(info.getApplicationId());
+        ProjectCategory category = projectCategoryMapper.selectByPrimaryKey(res.getProjectCategoryId());
         if(info.getJudge()) {
             res.setReviewPhase(EXPERT_REVIEW);
+            String[] experts = category.getExpertList().split("\\|");
+            for(String expertId : experts) {
+                ReviewExpert expert = new ReviewExpert();
+                expert.setExpertId(expertId);
+                expert.setProjectApplicationId(info.getApplicationId());
+                expert.setIsFinished(EXPERT_NOT_FINISH);
+                try {
+                    reviewExpertMapper.insert(expert);
+                } catch (Exception e ) {
+                    return ResultTool.error(e.toString());
+                }
+            }
         } else {
             res.setReviewPhase(REVIEW_FAILED);
             res.setFailureReason(info.getMsg());
@@ -292,5 +321,24 @@ public class AdminServiceImpl implements AdminService {
             return ResultTool.error(e.toString());
         }
         return ResultTool.success();
+    }
+
+    @Override
+    public Result findExpertList() {
+        UserExample example = new UserExample();
+        example.createCriteria()
+                .andIdentityEqualTo(EXPERT_IDENTITY);
+        List<User> list = userMapper.selectByExample(example);
+        List<ExpertListInfo> resList = new LinkedList<>();
+        for(User user : list) {
+            ExpertListInfo res = new ExpertListInfo();
+            res.setDepartment(user.getDepartment());
+            res.setMail(user.getMail());
+            res.setPhone(user.getPhone());
+            res.setUserId(user.getUserId());
+            res.setUserName(user.getUserName());
+            resList.add(res);
+        }
+        return ResultTool.success(resList);
     }
 }

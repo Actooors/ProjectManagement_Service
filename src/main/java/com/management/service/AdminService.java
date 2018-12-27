@@ -49,7 +49,7 @@ public interface AdminService {
      * @Author: xw
      * @Date: 18-12-19
      */
-    Result deleteProjectCategory(Integer projectCategoryId);
+    Result deleteProjectCategory(DeleteProjectCategoryInfo info);
 
 
     /**
@@ -88,4 +88,13 @@ public interface AdminService {
      * @Date: 2018/12/27
      */
     Result meetingReview(MeetingResult info);
+    
+    /**
+     * @Description: 查找所有的审核专家
+     * @Param: []
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/27
+     */
+    Result findExpertList();
 }

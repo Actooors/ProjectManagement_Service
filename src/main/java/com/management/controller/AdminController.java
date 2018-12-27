@@ -65,22 +65,30 @@ public class AdminController {
         return adminService.queryProjectCategory(userId);
     }
 
-    @PostMapping("/projectCategory/{projectCategoryId}")
+    @PostMapping("deleteProjectCategory")
     @ApiOperation(value = "根据项目大类id删除项目大类信息")
-    public Result deleteProjectCategory(@PathVariable(value = "projectCategoryId") Integer projectCategoryId) {
-        return adminService.deleteProjectCategory(projectCategoryId);
+    public Result deleteProjectCategory(@RequestBody DeleteProjectCategoryInfo info) {
+        return adminService.deleteProjectCategory(info);
     }
 
     @PostMapping("/firstTrial")
     @ApiOperation(value = "业务员初审项目")
     public Result adminFirstTrail(@RequestBody OneJudgeInfo info) {
+
         return adminService.oneJudge(info);
     }
 
     @PostMapping("/meetingTrial")
     @ApiOperation(value = "对项目会评")
     public Result meetingTrail(@RequestBody MeetingResult info) {
+
         return adminService.meetingReview(info);
     }
 
+    @GetMapping("expertList")
+    @ApiOperation(value = "业务员在创建项目大类的时候指定一些审核专家来审核项目")
+    public Result getExpertList() {
+
+        return adminService.findExpertList();
+    }
 }

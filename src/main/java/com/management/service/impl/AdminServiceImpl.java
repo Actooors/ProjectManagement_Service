@@ -190,20 +190,26 @@ public class AdminServiceImpl implements AdminService {
         try {
             if (projectCategory != null) {
                 projectCategoryMapper.deleteByPrimaryKey(projectCategoryId);
-                Result result = ResultTool.success();
-                result.setMessage("成功");
-                return result;
             } else {
-                Result result = ResultTool.error();
-                result.setMessage("数据不存在");
-                return result;
+                return ResultTool.error("没有这个id的项目大类");
             }
-
         } catch (Exception e) {
-            Result result = ResultTool.error();
-            result.setMessage("失败");
-            return result;
+            return ResultTool.error(e.toString());
         }
+        ProjectApplicationExample example = new ProjectApplicationExample();
+        example.createCriteria()
+                .andProjectCategoryIdEqualTo(projectCategoryId);
+        List<ProjectApplication> list = projectApplicationMapper.selectByExample(example);
+        for (ProjectApplication application: list) {
+            application.setFailureReason("业务员取消了这个项目类别，申请无效");
+            application.setReviewPhase(REVIEW_FAILED);
+            try {
+                projectApplicationMapper.updateByPrimaryKeySelective(application);
+            } catch (Exception e) {
+                return ResultTool.error(e.toString());
+            }
+        }
+        return ResultTool.success();
     }
 
 

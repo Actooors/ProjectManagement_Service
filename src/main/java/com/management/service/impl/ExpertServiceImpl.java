@@ -91,7 +91,8 @@ public class ExpertServiceImpl implements ExpertService {
                     ProjectApplicationInfo projectInfo = new ProjectApplicationInfo();
                     projectInfo.setUserId(projectApplication.getUserId());
                     projectInfo.setUserName(projectApplication.getUserName());
-                    projectInfo.setProjectCategoryName(projectCategoryMapper.selectByPrimaryKey(projectApplication.getProjectApplicationId()).getProjectCategoryName());
+                    ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectApplication.getProjectCategoryId());
+                    projectInfo.setProjectCategoryName(projectCategory.getProjectCategoryName());
                     projectInfo.setProjectName(projectApplication.getProjectName());
                     projectInfo.setProjectApplicationId(projectApplication.getProjectApplicationId());
                     projectInfo.setDescription(projectApplication.getProjectDescription());

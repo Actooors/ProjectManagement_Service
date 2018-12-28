@@ -22,7 +22,7 @@ public class JwtUtil {
         Date currentDate = new Date();
         // 过期时间5天
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, 5);
+        calendar.add(Calendar.DATE, 30000);
         Algorithm algorithm = Algorithm.HMAC512(ENCODE_KEY);
         return JWT.create()
                 .withIssuedAt(currentDate)

@@ -433,7 +433,7 @@ public class UserServiceImpl implements UserService {
         }
         List<ProjectTotalInfo> resList = new LinkedList<>();
         for(ProjectApplication application : findList) {
-            if(application.getReviewPhase() != REVIEW_LAST_PHASE) {
+            if(application.getReviewPhase() < REVIEW_LAST_PHASE) {
                 ProjectTotalInfo res = new ProjectTotalInfo();
                 res.setTime(TimeTool.timeToString1(application.getApplicationTime()));
                 res.setProjectApplicationId(application.getProjectApplicationId());

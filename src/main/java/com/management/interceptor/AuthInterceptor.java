@@ -39,6 +39,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             return false;
         } else {
             try {
+                String userId = JwtUtil.parseJwt(request.getHeader("Authorization"));
                 JwtUtil.parseJwt(request.getHeader("Authorization"));
             } catch (Exception e) {
                 returnErrorMessage(response, 2);

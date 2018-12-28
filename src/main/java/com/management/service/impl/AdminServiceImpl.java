@@ -67,6 +67,8 @@ public class AdminServiceImpl implements AdminService {
         User exportuser = userMapper.selectByPrimaryKey(projectCategoryInfo.getReviewLeaderId());
         ProjectCategory projectCategory = new ProjectCategory();
         try {
+            User user = userMapper.selectByPrimaryKey(userId);
+            projectCategory.setReviewLeaderId(user.getLeaderId());
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
             projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());

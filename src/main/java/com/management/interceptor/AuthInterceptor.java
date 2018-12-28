@@ -3,6 +3,7 @@ package com.management.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.management.model.ov.Result;
 import com.management.model.ov.ResultCode;
+import com.management.tools.JwtUtil;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -34,21 +35,27 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
         if (request.getHeader(TOKEN_NAME) == null) {
-            returnErrorMessage(response);
+            returnErrorMessage(response, 1);
             return false;
-
         } else {
-
+            try {
+                JwtUtil.parseJwt(request.getHeader("Authorization"));
+            } catch (Exception e) {
+                returnErrorMessage(response, 2);
+                return false;
+            }
             return true;
         }
     }
 
-
-
-    private void returnErrorMessage(HttpServletResponse response) throws IOException {
+    private void returnErrorMessage(HttpServletResponse response, int type) throws IOException {
         Result rst = new Result();
         rst.setCode(ResultCode.FAILED);
-        rst.setMessage("请登录后再访问页面");
+        if(type == 1) {
+            rst.setMessage("请登录后再访问页面");
+        } else if(type == 2){
+            rst.setMessage("token已经过期");
+        }
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HTTP_CODE);
         PrintWriter out = response.getWriter();

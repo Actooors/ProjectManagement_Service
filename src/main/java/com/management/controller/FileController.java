@@ -2,6 +2,7 @@ package com.management.controller;
 
 import com.management.model.ov.Result;
 import com.management.service.FileService;
+import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +39,10 @@ public class FileController {
     @GetMapping("download")
     @ApiOperation(value = "下载文件", notes = "输入参数为文件下载地址")
     public void upload(HttpServletRequest request, HttpServletResponse response,
+                       @RequestHeader(value = "Authorization") String token,
                          @RequestParam(value = "fileAddress")String fileAddress) throws IOException {
 
+        String userId = JwtUtil.parseJwt(token);
         fileService.downloadFile(request, response, fileAddress);
     }
 }

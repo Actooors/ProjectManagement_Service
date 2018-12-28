@@ -76,7 +76,7 @@ public class ExpertServiceImpl implements ExpertService {
      */
     @Override
     public Result findProjectApplication(String userId) {
-        List<ProjectApplication> projectApplicationList = new ArrayList<>();
+        List<ProjectApplicationInfo> projectApplicationList = new ArrayList<>();
         try {
             //在ReviewExpert表中找到expertId=userId且状态为2的待审核的信息
             ReviewExpertExample example = new ReviewExpertExample();
@@ -103,7 +103,7 @@ public class ExpertServiceImpl implements ExpertService {
                     } else {
                         projectInfo.setIsMeeting(false);
                     }
-                    projectApplicationList.add(projectApplication);
+                    projectApplicationList.add(projectInfo);
                 }
             }
             return ResultTool.success(projectApplicationList);

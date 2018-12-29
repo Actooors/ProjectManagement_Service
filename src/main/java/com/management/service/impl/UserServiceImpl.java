@@ -61,7 +61,7 @@ public class UserServiceImpl implements UserService {
     private LoginResponse setLoginResponse(String userId, Integer identity,
                                            String userName) {
         LoginResponse response = new LoginResponse();
-        response.setToken(JwtUtil.createJwt(userId));
+        response.setToken(JwtUtil.createJwt(userId, identity));
         response.setIdentity(identity);
         response.setUserId(userId);
         response.setUserName(userName);

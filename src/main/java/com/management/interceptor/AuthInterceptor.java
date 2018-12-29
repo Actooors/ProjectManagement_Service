@@ -54,7 +54,8 @@ public class AuthInterceptor implements HandlerInterceptor {
                 return false;
             }
             // 在token没有问题的情况下判断返回的用户访问的页面是否符合规则
-            return judgeType(token, requestUri, response);
+//            return judgeType(token, requestUri, response);
+            return true;
         }
     }
 

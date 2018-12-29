@@ -133,6 +133,7 @@ public class ExpertServiceImpl implements ExpertService {
             reviewExpert.setScore(expertJudgeInfo.getScore());
             reviewExpert.setReviewOpinion(expertJudgeInfo.getReviewOpinion());
             reviewExpert.setFinalOpinion(expertJudgeInfo.getFinalOpinion());
+            reviewExpert.setIsFinished(1);
             reviewExpertMapper.updateByPrimaryKey(reviewExpert);
 
             //审核完毕后将申请状态改为会评或者领导审核状态

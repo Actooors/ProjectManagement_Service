@@ -97,4 +97,12 @@ public class AdminController {
 
         return adminService.expertOpinionList(prId);
     }
+
+    @GetMapping("/reviewPhase/{reviewPhase}")
+    @ApiOperation(value = "查找某个审核阶段的项目列表")
+    public Result findReviewPhaseInfo(@PathVariable(value = "reviewPhase") int reviewPhase,
+                                      @RequestHeader(value = "Authorization") String token) {
+        String userId = JwtUtil.parseJwt(token);
+        return adminService.findReviewPhaseList(userId, reviewPhase);
+    }
 }

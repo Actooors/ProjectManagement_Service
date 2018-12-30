@@ -6,10 +6,9 @@ import com.management.dao.ReviewExpertMapper;
 import com.management.dao.UserMapper;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.*;
+import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import com.management.model.ov.Result;
-import com.management.model.ov.resultsetting.ExpertListInfo;
-import com.management.model.ov.resultsetting.ExpertOpinionInfo;
-import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
+import com.management.model.ov.resultsetting.*;
 import com.management.service.AdminService;
 import com.management.tools.ResultTool;
 import com.management.tools.TimeTool;
@@ -342,6 +341,43 @@ public class AdminServiceImpl implements AdminService {
         return ResultTool.success(resList);
     }
 
+    @Override
+    public Result findReviewPhaseList(String userId, int reviewPhase) {
+        ProjectCategoryExample example = new ProjectCategoryExample();
+        example.createCriteria()
+                .andPrincipalIdEqualTo(userId)
+            .andApplicationEndTimeGreaterThan(new Date());
+        List<ProjectCategory> list = projectCategoryMapper.selectByExample(example);
+        if(list.isEmpty()) {
+            return ResultTool.error("你没有创建任何的项目大类");
+        }
+        List<AdminJudgeTotalInfo> resList = new LinkedList<>();
+        for(ProjectCategory category : list) {
+            ProjectApplicationExample applicationExample = new ProjectApplicationExample();
+            applicationExample.createCriteria()
+                    .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
+                    .andReviewPhaseEqualTo(reviewPhase);
+            List<ProjectApplication> applicationList = projectApplicationMapper
+                    .selectByExample(applicationExample);
+            if(applicationList.isEmpty()) continue;
+            AdminJudgeTotalInfo res = new AdminJudgeTotalInfo();
+            res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
+            res.setProjectCategoryId(category.getProjectCategoryId());
+            res.setProjectCategoryName(category.getProjectCategoryName());
+            List<AdminJudgeInfo> infoList = new LinkedList<>();
+            for(ProjectApplication application : applicationList) {
+                AdminJudgeInfo info = new AdminJudgeInfo();
+                info.setProjectApplicationDownloadAddress(application.getProjectApplicationUploadAddress());
+                info.setProjectName(application.getProjectName());
+                info.setDescription(application.getProjectDescription());
+                infoList.add(info);
+            }
+            res.setList(infoList);
+            resList.add(res);
+        }
+        return ResultTool.success(resList);
+    }
+
     /**
      * @Description: expertOpinionList接口的实现
      * @Param: [projectId]
@@ -373,5 +409,6 @@ public class AdminServiceImpl implements AdminService {
             list.add(expertOpinionInfo);
         }
         return ResultTool.success(list);
+
     }
 }

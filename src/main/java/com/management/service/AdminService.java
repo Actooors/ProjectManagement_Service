@@ -106,4 +106,13 @@ public interface AdminService {
      * @Date: 18-8-1
      */
     Result expertOpinionList(int projectId);
+
+    /**
+     * @Description: 查找某个审核阶段的所有的待审核项目
+     * @Param: []
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 2018/12/30
+     */
+    Result findReviewPhaseList(String userId, int reviewPhase);
 }

@@ -90,4 +90,11 @@ public class AdminController {
 
         return adminService.findExpertList();
     }
+
+    @GetMapping("/project/{projectId}")
+    @ApiOperation(value = "查找某个项目的全部审核专家的审核意见", notes = "根据项目id查找所有的审核专家的审核意见")
+    public Result findProjectCategoryInfo(@PathVariable(value = "projectId") int prId) {
+
+        return adminService.expertOpinionList(prId);
+    }
 }

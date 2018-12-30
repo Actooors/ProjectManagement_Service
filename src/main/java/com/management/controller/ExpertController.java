@@ -26,12 +26,6 @@ public class ExpertController {
     @ApiParam("和专家相关的业务操作")
     private ExpertService expertService;
 
-    @GetMapping("/project/{projectId}")
-    @ApiOperation(value = "查找某个项目的全部审核专家的审核意见", notes = "根据项目id查找所有的审核专家的审核意见")
-    public Result findProjectCategoryInfo(@PathVariable(value = "projectId") int prId) {
-
-        return expertService.expertOpinionList(prId);
-    }
 
     @GetMapping("/unJudgeProject")
     @ApiOperation(value = "专家查询负责项目大类的待审核项目申请")

@@ -37,35 +37,7 @@ public class ExpertServiceImpl implements ExpertService {
     @Resource
     private ReviewExpertMapper reviewExpertMapper;
 
-    /**
-     * @Description: expertOpinionList接口的实现
-     * @Param: [projectId]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-8-1
-     */
-    @Override
-    public Result expertOpinionList(int projectId) {
-        ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(projectId);
-        if (projectApplication == null) {
-            return ResultTool.error("给予的项目id有误");
-        }
-        ReviewExpertExample reviewExpertExample = new ReviewExpertExample();
-        reviewExpertExample.createCriteria()
-                .andProjectApplicationIdEqualTo(projectId);
-        List<ReviewExpert> reviewExpertList = reviewExpertMapper.selectByExample(reviewExpertExample);
-        List<ExpertOpinionInfo> list = new LinkedList<>();
-        for (ReviewExpert reviewExpert : reviewExpertList) {
-            ExpertOpinionInfo expertOpinionInfo = new ExpertOpinionInfo();
-            expertOpinionInfo.setExpertId(reviewExpert.getExpertId());
-            expertOpinionInfo.setExpertName(reviewExpert.getExpertName());
-            expertOpinionInfo.setFinalOpinion(reviewExpert.getFinalOpinion());
-            expertOpinionInfo.setReviewOpinion(reviewExpert.getReviewOpinion());
-            expertOpinionInfo.setScore(reviewExpert.getScore());
-            list.add(expertOpinionInfo);
-        }
-        return ResultTool.success(list);
-    }
+
 
     /**
      * @Description: findProjectApplication接口的实现

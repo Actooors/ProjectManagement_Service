@@ -15,4 +15,5 @@ public class ExpertOpinionInfo {
     private String score;
     private String reviewOpinion;
     private Integer finalOpinion;
+    private int isFinished;
 }

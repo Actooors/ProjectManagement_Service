@@ -8,6 +8,7 @@ import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.ExpertListInfo;
+import com.management.model.ov.resultsetting.ExpertOpinionInfo;
 import com.management.model.ov.resultsetting.SomeoneAllProjectCategoryInfo;
 import com.management.service.AdminService;
 import com.management.tools.ResultTool;
@@ -279,8 +280,10 @@ public class AdminServiceImpl implements AdminService {
             res.setReviewPhase(EXPERT_REVIEW);
             String[] experts = category.getExpertList().split("\\|");
             for(String expertId : experts) {
+                User user = userMapper.selectByPrimaryKey(expertId);
                 ReviewExpert expert = new ReviewExpert();
                 expert.setExpertId(expertId);
+                expert.setExpertName(user.getUserName());
                 expert.setProjectApplicationId(info.getApplicationId());
                 expert.setIsFinished(EXPERT_NOT_FINISH);
                 try {
@@ -337,5 +340,38 @@ public class AdminServiceImpl implements AdminService {
             resList.add(res);
         }
         return ResultTool.success(resList);
+    }
+
+    /**
+     * @Description: expertOpinionList接口的实现
+     * @Param: [projectId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-1
+     */
+    @Override
+    public Result expertOpinionList(int projectId) {
+        ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(projectId);
+        if (projectApplication == null) {
+            return ResultTool.error("给予的项目id有误");
+        }
+        ReviewExpertExample reviewExpertExample = new ReviewExpertExample();
+        reviewExpertExample.createCriteria()
+                .andProjectApplicationIdEqualTo(projectId);
+        List<ReviewExpert> reviewExpertList = reviewExpertMapper.selectByExample(reviewExpertExample);
+        List<ExpertOpinionInfo> list = new LinkedList<>();
+        for (ReviewExpert reviewExpert : reviewExpertList) {
+            ExpertOpinionInfo expertOpinionInfo = new ExpertOpinionInfo();
+            expertOpinionInfo.setExpertId(reviewExpert.getExpertId());
+            expertOpinionInfo.setExpertName(reviewExpert.getExpertName());
+            expertOpinionInfo.setIsFinished(reviewExpert.getIsFinished());
+            if(reviewExpert.getIsFinished() == 1) {
+                expertOpinionInfo.setFinalOpinion(reviewExpert.getFinalOpinion());
+                expertOpinionInfo.setReviewOpinion(reviewExpert.getReviewOpinion());
+                expertOpinionInfo.setScore(reviewExpert.getScore());
+            }
+            list.add(expertOpinionInfo);
+        }
+        return ResultTool.success(list);
     }
 }

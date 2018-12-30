@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @program: management
- * @description: 申报项目的信息
+ * @description: 申报项目申请的信息
  * @author: ggmr
  * @create: 2018-12-24 23:23
  */

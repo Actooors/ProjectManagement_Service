@@ -175,7 +175,7 @@ public class LeaderServiceImpl implements LeaderService {
     @Override
     public Result judgeProjectApplication(LeaderJudgeInfo leaderJudgeInfo){
         try{
-            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(leaderJudgeInfo.getApplicationId());
+            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(leaderJudgeInfo.getProjectApplicationId());
             if(leaderJudgeInfo.getJudge().equals(true)){
                 projectApplication.setReviewPhase(5);
             }else {

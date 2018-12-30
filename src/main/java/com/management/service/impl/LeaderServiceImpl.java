@@ -139,7 +139,8 @@ public class LeaderServiceImpl implements LeaderService {
             for (ProjectCategory projectCategory : projectCategoryList) {
                 ProjectApplicationExample example = new ProjectApplicationExample();
                 example.createCriteria()
-                        .andProjectCategoryIdEqualTo(projectCategory.getProjectCategoryId());
+                        .andProjectCategoryIdEqualTo(projectCategory.getProjectCategoryId())
+                        .andReviewPhaseEqualTo(4);
                 List<ProjectApplication> projectApplicationList = projectApplicationMapper.selectByExample(example);
                 if(projectApplicationList!=null){
                     for (ProjectApplication projectApplication : projectApplicationList) {

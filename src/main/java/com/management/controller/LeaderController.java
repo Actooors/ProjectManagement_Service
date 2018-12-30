@@ -50,7 +50,7 @@ public class LeaderController {
         return leaderService.waitJudgeProjectCategoryList(leaderId);
     }
 
-    @PostMapping("/unjudgeApplicatetion")
+    @GetMapping("/unjudgeApplicatetion")
     @ApiOperation(value = "领导查找待审核项目申请")
     public Result findUnJudgeProjectApplicatetion(@RequestHeader(value = "Authorization")String token){
         String leaderId = JwtUtil.parseJwt(token);

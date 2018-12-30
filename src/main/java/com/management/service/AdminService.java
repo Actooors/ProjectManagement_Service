@@ -109,7 +109,7 @@ public interface AdminService {
 
     /**
      * @Description: 查找某个审核阶段的所有的待审核项目
-     * @Param: []
+     * @Param: [userId,reviewPhase]
      * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 2018/12/30

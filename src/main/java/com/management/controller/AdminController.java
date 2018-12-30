@@ -56,7 +56,7 @@ public class AdminController {
         return adminService.updateProjectCategoryInfo(updateProjectCategoryInfo);
     }
 
-    @GetMapping("/projectCategory/3")
+    @GetMapping("/findMyProjectCategory")
     @ApiOperation(value = "查询业务员负责的项目详细信息", notes = "根据业务员Id查询业务员负责的项目详细信息")
     public Result queryProjectCategoryInfo(@RequestHeader(value = "Authorization") String token) {
 

@@ -70,11 +70,19 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
             projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
-            projectCategory.setProjectType(projectCategoryInfo.getProjectType());
             projectCategory.setPrincipalId(adminUser.getUserId());
             projectCategory.setPrincipalName(adminUser.getUserName());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
-            projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
+            StringBuilder applicantType = new StringBuilder();
+            List<String> applicantList = projectCategoryInfo.getApplicantType();
+            int cou = applicantList.size();
+            for(int i = 0; i < cou; i++) {
+                applicantType.append(applicantList.get(i));
+                if(i != cou - 1) {
+                    applicantType.append("|");
+                }
+            }
+            projectCategory.setApplicantType(applicantType.toString());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
             projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsExistMeetingReview());
@@ -152,9 +160,8 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
             projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
-            projectCategory.setProjectType(projectCategoryInfo.getProjectType());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
-            projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
+//            projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
             projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsExistMeetingReview());
@@ -255,7 +262,8 @@ public class AdminServiceImpl implements AdminService {
             return ResultTool.error("不能给予空的上会项目列表");
         }
         for (ProjectMeetingInfo project : meetingList) {
-            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(project.getApplicationId());
+            ProjectApplication projectApplication = projectApplicationMapper
+                    .selectByPrimaryKey(project.getApplicationId());
             if(project.getIsMeeting()) {
                 projectApplication.setReviewPhase(MEETING_REVIEW);
             } else {
@@ -273,8 +281,10 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result oneJudge(OneJudgeInfo info) {
-        ProjectApplication res = projectApplicationMapper.selectByPrimaryKey(info.getApplicationId());
-        ProjectCategory category = projectCategoryMapper.selectByPrimaryKey(res.getProjectCategoryId());
+        ProjectApplication res = projectApplicationMapper
+                .selectByPrimaryKey(info.getApplicationId());
+        ProjectCategory category = projectCategoryMapper
+                .selectByPrimaryKey(res.getProjectCategoryId());
         if(info.getJudge()) {
             res.setReviewPhase(EXPERT_REVIEW);
             String[] experts = category.getExpertList().split("\\|");
@@ -367,7 +377,8 @@ public class AdminServiceImpl implements AdminService {
             List<AdminJudgeInfo> infoList = new LinkedList<>();
             for(ProjectApplication application : applicationList) {
                 AdminJudgeInfo info = new AdminJudgeInfo();
-                info.setProjectApplicationDownloadAddress(application.getProjectApplicationUploadAddress());
+                info.setProjectApplicationDownloadAddress(application
+                        .getProjectApplicationUploadAddress());
                 info.setProjectName(application.getProjectName());
                 info.setDescription(application.getProjectDescription());
                 infoList.add(info);
@@ -387,14 +398,16 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Result expertOpinionList(int projectId) {
-        ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(projectId);
+        ProjectApplication projectApplication = projectApplicationMapper
+                .selectByPrimaryKey(projectId);
         if (projectApplication == null) {
             return ResultTool.error("给予的项目id有误");
         }
         ReviewExpertExample reviewExpertExample = new ReviewExpertExample();
         reviewExpertExample.createCriteria()
                 .andProjectApplicationIdEqualTo(projectId);
-        List<ReviewExpert> reviewExpertList = reviewExpertMapper.selectByExample(reviewExpertExample);
+        List<ReviewExpert> reviewExpertList = reviewExpertMapper
+                .selectByExample(reviewExpertExample);
         List<ExpertOpinionInfo> list = new LinkedList<>();
         for (ReviewExpert reviewExpert : reviewExpertList) {
             ExpertOpinionInfo expertOpinionInfo = new ExpertOpinionInfo();
@@ -411,4 +424,5 @@ public class AdminServiceImpl implements AdminService {
         return ResultTool.success(list);
 
     }
+
 }

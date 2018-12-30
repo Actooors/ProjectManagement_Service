@@ -41,7 +41,7 @@ public class AdminController {
         return adminService.chooseProjectMeeting(info);
     }
 
-    @PostMapping("/projectCategory/1")
+    @PostMapping("/createProjectCategory")
     @ApiOperation(value = "业务员创建项目类别,默认为待审核")
     public Result insertProjectCategory(@RequestHeader(value = "Authorization") String token,
                                         @RequestBody ProjectCategoryInfo projectCategoryInfo) {

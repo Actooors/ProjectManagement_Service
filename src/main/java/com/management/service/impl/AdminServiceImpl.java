@@ -63,24 +63,20 @@ public class AdminServiceImpl implements AdminService {
         Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
         Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
         /*根据业务员id查询到业务员的信息及专家的id*/
-        User adminuser = userMapper.selectByPrimaryKey(userId);
-        User exportuser = userMapper.selectByPrimaryKey(projectCategoryInfo.getReviewLeaderId());
+        User adminUser = userMapper.selectByPrimaryKey(userId);
         ProjectCategory projectCategory = new ProjectCategory();
         try {
-            User user = userMapper.selectByPrimaryKey(userId);
-            projectCategory.setReviewLeaderId(user.getLeaderId());
+            projectCategory.setReviewLeaderId(adminUser.getLeaderId());
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
             projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
             projectCategory.setProjectType(projectCategoryInfo.getProjectType());
-            projectCategory.setPrincipalId(adminuser.getUserId());
-            projectCategory.setPrincipalName(adminuser.getUserName());
+            projectCategory.setPrincipalId(adminUser.getUserId());
+            projectCategory.setPrincipalName(adminUser.getUserName());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
             projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
-            projectCategory.setReviewLeaderId(projectCategoryInfo.getReviewLeaderId());
-            projectCategory.setReviewLeaderName(exportuser.getUserName());
             projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsExistMeetingReview());
             projectCategory.setIsInterimReportActivated(2);
             projectCategory.setApplicationStartTime(applicationStartTime);
@@ -88,7 +84,7 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setProjectStartTime(projectStartTime);
             projectCategory.setProjectEndTime(projectEndTime);
             projectCategory.setStatistics(0);
-            projectCategory.setIsApproved(2);
+            projectCategory.setIsApproved(1);
             projectCategory.setIsConcludingReportActivated(2);
             StringBuilder experts = new StringBuilder();
             List<String> list = projectCategoryInfo.getExpertList();
@@ -161,7 +157,6 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
-            projectCategory.setReviewLeaderId(projectCategoryInfo.getReviewLeaderId());
             projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsExistMeetingReview());
             projectCategory.setApplicationStartTime(applicationStartTime);
             projectCategory.setApplicationEndTime(applicationEndTime);

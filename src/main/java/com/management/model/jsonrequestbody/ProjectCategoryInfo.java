@@ -20,7 +20,6 @@ public class ProjectCategoryInfo {
     private String principalPhone;
     private String applicantType;
     private String maxMoney;
-    private String reviewLeaderId;
     private String projectApplicationDownloadAddress;
     private Integer isExistMeetingReview;
     private String applicationStartTime;

@@ -127,7 +127,7 @@ public class LeaderServiceImpl implements LeaderService {
      * @Date: 18-12-27
      */
     public Result findUnJudgeProjectApplication(String userId){
-        List<ProjectApplication> proList = new ArrayList<>();
+        List<ProjectApplicationInfo> proList = new ArrayList<>();
         try {
             //根据Leaderid得到其负责的且审核通过的项目大类id
             ProjectCategoryExample example1 = new ProjectCategoryExample();
@@ -146,13 +146,13 @@ public class LeaderServiceImpl implements LeaderService {
                         ProjectApplicationInfo projectInfo = new ProjectApplicationInfo();
                         projectInfo.setUserId(projectApplication.getUserId());
                         projectInfo.setUserName(projectApplication.getUserName());
-                        projectInfo.setProjectCategoryName(projectCategoryMapper.selectByPrimaryKey(projectApplication.getProjectApplicationId()).getProjectCategoryName());
+                        projectInfo.setProjectCategoryName(projectCategoryMapper.selectByPrimaryKey(projectApplication.getProjectCategoryId()).getProjectCategoryName());
                         projectInfo.setProjectName(projectApplication.getProjectName());
                         projectInfo.setProjectApplicationId(projectApplication.getProjectApplicationId());
                         projectInfo.setDescription(projectApplication.getProjectDescription());
                         projectInfo.setDepartment(projectApplication.getDepartment());
                         projectInfo.setUploadAddress(projectApplication.getProjectApplicationUploadAddress());
-                        proList.add(projectApplication);
+                        proList.add(projectInfo);
                     }
                 }else{
                     return ResultTool.error("暂无待审核信息!");

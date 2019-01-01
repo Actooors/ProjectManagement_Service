@@ -8,13 +8,23 @@ package com.management.model.ov.resultsetting;
  */
 public class ConstCorrespond {
     //这个第一个为空是有说法的，请勿删除
-    public final static String[] projectType = {
+    public final static String[] PROJECT_TYPE = {
             "",
             "经济管理类",
             "人文哲学类",
             "计算科学类",
             "生物化学类"
     };
+
+    public final static String[] APPLICAN_TTYPE = {
+            "",
+            "本科生",
+            "研究生",
+            "博士生",
+            "研究员",
+            "教授"
+    };
+
     public final static String[] reviewPhrase = {
             "",
             "业务员审核阶段",

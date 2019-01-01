@@ -74,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setPrincipalName(adminUser.getUserName());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
             StringBuilder applicantType = new StringBuilder();
-            List<String> applicantList = projectCategoryInfo.getApplicantType();
+            List<Integer> applicantList = projectCategoryInfo.getApplicantType();
             int cou = applicantList.size();
             for(int i = 0; i < cou; i++) {
                 applicantType.append(applicantList.get(i));
@@ -126,18 +126,89 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Result queryProjectCategory(String userId) {
         ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
-        try {
-            projectCategoryExample.createCriteria()
-                    .andPrincipalIdEqualTo(userId);
-            List<ProjectCategory> projectCategoryList = projectCategoryMapper.selectByExample(projectCategoryExample);
-            Result result = ResultTool.success(projectCategoryList);
-            result.setMessage("成功");
-            return result;
-        } catch (Exception e) {
-            Result result = ResultTool.error();
-            result.setMessage("失败");
-            return result;
+        projectCategoryExample.createCriteria()
+                .andPrincipalIdEqualTo(userId);
+        List<ProjectCategory> projectCategoryList = projectCategoryMapper.selectByExample(projectCategoryExample);
+        if(projectCategoryList.isEmpty()) {
+            return ResultTool.error("您没有开通任何的项目大类");
         }
+        List<AdminListInfo> resList = new LinkedList<>();
+        for(ProjectCategory projectCategory : projectCategoryList) {
+            AdminListInfo res = new AdminListInfo();
+            res.setProjectName(projectCategory.getProjectCategoryName());
+            res.setProjectDescription(projectCategory
+                    .getProjectCategoryDescription());
+            res.setProjectDescriptionAddress(projectCategory
+                    .getProjectCategoryDescriptionAddress());
+            res.setPrincipalPhone(projectCategory.getPrincipalPhone());
+            res.setProjectType(ConstCorrespond.PROJECT_TYPE[projectCategory.getProjectType()]);
+            String[] applicantTypeArray = projectCategory.getApplicantType().split("\\|");
+            int cou = 0;
+            for(String applicantType : applicantTypeArray) {
+                applicantTypeArray[cou++] = ConstCorrespond.APPLICAN_TTYPE[
+                        Integer.parseInt(applicantType)];
+            }
+            List<String> applicantTypeTrueList = new LinkedList<>(
+                    Arrays.asList(applicantTypeArray));
+            res.setApplicantType(applicantTypeTrueList);
+            res.setMaxMoney(projectCategory.getMaxMoney());
+            res.setProjectApplicationDownloadAddress(projectCategory
+                    .getProjectApplicationDownloadAddress());
+            res.setIsExistMeetingReview(projectCategory.getIsExistMeetingReview());
+            res.setApplicationStartTime(timetoString(projectCategory
+                    .getApplicationStartTime()));
+            res.setApplicationEndTime(timetoString(projectCategory
+                    .getApplicationEndTime()));
+            res.setProjectStartTime(timetoString(projectCategory
+                    .getProjectStartTime()));
+            res.setProjectEndTime(timetoString(projectCategory
+                    .getProjectEndTime()));
+            String[] expertArray = projectCategory.getExpertList().split("\\|");
+            List<ExpertListInfo> list = new LinkedList<>();
+            for(String expertId : expertArray) {
+                User user = userMapper.selectByPrimaryKey(expertId);
+                ExpertListInfo info = new ExpertListInfo();
+                info.setUserName(user.getUserName());
+                info.setUserId(user.getUserId());
+                info.setPhone(user.getPhone());
+                info.setMail(user.getMail());
+                info.setDepartment(user.getDepartment());
+                list.add(info);
+            }
+            res.setExpertList(list);
+            ReportInfo interimInfo = new ReportInfo();
+            if(projectCategory.getIsInterimReportActivated() == 1) {
+                interimInfo.setDeadline(timetoString(projectCategory
+                        .getInterimReportEndTime()));
+                interimInfo.setIsReportActivated(true);
+                interimInfo.setStartTime(timetoString(projectCategory
+                        .getInterimReportStartTime()));
+                interimInfo.setReportTemplateAddress(projectCategory
+                        .getInterimReportDownloadAddress());
+                res.setInterimReport(interimInfo);
+            } else {
+                interimInfo.setIsReportActivated(false);
+            }
+            res.setInterimReport(interimInfo);
+            ReportInfo concludingInfo = new ReportInfo();
+            if(projectCategory.getIsConcludingReportActivated() == 1) {
+
+                concludingInfo.setDeadline(timetoString(projectCategory
+                        .getConcludingReportEndTime()));
+                concludingInfo.setIsReportActivated(true);
+                concludingInfo.setStartTime(timetoString(projectCategory
+                        .getConcludingReportStartTime()));
+                concludingInfo.setReportTemplateAddress(projectCategory
+                        .getConcludingReportDownloadAddress());
+                res.setConcludingReport(concludingInfo);
+            } else {
+                concludingInfo.setIsReportActivated(false);
+            }
+            res.setConcludingReport(concludingInfo);
+            resList.add(res);
+        }
+        return ResultTool.success(resList);
+
     }
 
     /**

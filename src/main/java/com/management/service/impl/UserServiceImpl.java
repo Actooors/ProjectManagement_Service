@@ -306,7 +306,7 @@ public class UserServiceImpl implements UserService {
                 if (projectCategoryList.get(count).getProjectType() == i) {
                     AviProjectCategoryInfo info = new AviProjectCategoryInfo();
                     ProjectCategory p = projectCategoryList.get(count);
-                    info.setType(ConstCorrespond.projectType[i]);
+                    info.setType(ConstCorrespond.PROJECT_TYPE[i]);
                     info.setDeadLine(timeToString1(p.getApplicationEndTime()));
                     info.setIntroduce(p.getProjectCategoryDescription());
                     info.setProjectId(p.getProjectCategoryId());

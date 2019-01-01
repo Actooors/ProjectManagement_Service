@@ -1,24 +1,23 @@
-package com.management.model.jsonrequestbody;
-
+package com.management.model.ov.resultsetting;
 
 import lombok.Data;
 
 import java.util.List;
 
 /**
- * @Description: 业务员创建项目大类请求的数据格式
- * @Author: xw
- * @Date: 18-12-18
+ * @program: management
+ * @description: 业务员所有的项目大类的详情
+ * @author: ggmr
+ * @create: 2018-12-30 18:15
  */
 @Data
-public class ProjectCategoryInfo {
-
+public class AdminListInfo {
     private String projectName;
     private String projectDescription;
     private String projectDescriptionAddress;
     private String principalPhone;
     private String projectType;
-    private List<Integer> applicantType;
+    private List<String> applicantType;
     private String maxMoney;
     private String projectApplicationDownloadAddress;
     private Integer isExistMeetingReview;
@@ -26,6 +25,7 @@ public class ProjectCategoryInfo {
     private String applicationEndTime;
     private String projectStartTime;
     private String projectEndTime;
-    private List<String> expertList;
-
+    private List<ExpertListInfo> expertList;
+    private ReportInfo interimReport;
+    private ReportInfo concludingReport;
 }

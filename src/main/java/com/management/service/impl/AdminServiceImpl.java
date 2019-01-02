@@ -74,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setPrincipalName(adminUser.getUserName());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
             StringBuilder applicantType = new StringBuilder();
-            List<Integer> applicantList = projectCategoryInfo.getApplicantType();
+            List<String> applicantList = projectCategoryInfo.getApplicantType();
             int cou = applicantList.size();
             for(int i = 0; i < cou; i++) {
                 applicantType.append(applicantList.get(i));
@@ -82,11 +82,15 @@ public class AdminServiceImpl implements AdminService {
                     applicantType.append("|");
                 }
             }
-            projectCategory.setApplicantType(projectCategoryInfo.getProjectType());
+            //projectCategory.setApplicantType(projectCategoryInfo.getProjectType());
             projectCategory.setApplicantType(applicantType.toString());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             //projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
-            projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsExistMeetingReview());
+            if(projectCategoryInfo.getIsExistMeetingReview().equals(true)){
+                projectCategory.setIsExistMeetingReview(1);
+            }else {
+                projectCategory.setIsExistMeetingReview(2);
+            }
             projectCategory.setIsInterimReportActivated(2);
             projectCategory.setApplicationStartTime(applicationStartTime);
             projectCategory.setApplicationEndTime(applicationEndTime);
@@ -236,7 +240,11 @@ public class AdminServiceImpl implements AdminService {
 //            projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
-            projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsExistMeetingReview());
+            if(projectCategoryInfo.getIsExistMeetingReview().equals(true)){
+                projectCategory.setIsExistMeetingReview(1);
+            }else {
+                projectCategory.setIsExistMeetingReview(2);
+            }
             projectCategory.setApplicationStartTime(applicationStartTime);
             projectCategory.setApplicationEndTime(applicationEndTime);
             projectCategory.setProjectStartTime(projectStartTime);

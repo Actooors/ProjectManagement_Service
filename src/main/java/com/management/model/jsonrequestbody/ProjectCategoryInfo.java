@@ -18,10 +18,10 @@ public class ProjectCategoryInfo {
     private String projectDescriptionAddress;
     private String principalPhone;
     private String projectType;
-    private List<Integer> applicantType;
+    private List<String> applicantType;
     private String maxMoney;
     private String projectApplicationDownloadAddress;
-    private Integer isExistMeetingReview;
+    private Boolean isExistMeetingReview;
     private String applicationStartTime;
     private String applicationEndTime;
     private String projectStartTime;

@@ -85,7 +85,7 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setApplicantType(projectCategoryInfo.getProjectType());
             projectCategory.setApplicantType(applicantType.toString());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
-            projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
+            //projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
             projectCategory.setIsExistMeetingReview(projectCategoryInfo.getIsExistMeetingReview());
             projectCategory.setIsInterimReportActivated(2);
             projectCategory.setApplicationStartTime(applicationStartTime);

@@ -236,6 +236,7 @@ public class AdminServiceImpl implements AdminService {
             }else {
                 projectCategory.setIsExistMeetingReview(2);
             }
+
             projectCategory.setApplicationStartTime(projectCategoryInfo.getApplicationStartTime());
             projectCategory.setApplicationEndTime(projectCategoryInfo.getApplicationEndTime());
             projectCategory.setProjectStartTime(projectCategoryInfo.getProjectStartTime());

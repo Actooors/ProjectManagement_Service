@@ -57,11 +57,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Result createProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo) {
-        /*将字符串时间格式转化为Date时间类型*/
-        Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
-        Date applicationEndTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationEndTime());
-        Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
-        Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
+
         /*根据业务员id查询到业务员的信息及专家的id*/
         User adminUser = userMapper.selectByPrimaryKey(userId);
         ProjectCategory projectCategory = new ProjectCategory();
@@ -92,10 +88,10 @@ public class AdminServiceImpl implements AdminService {
                 projectCategory.setIsExistMeetingReview(2);
             }
             projectCategory.setIsInterimReportActivated(2);
-            projectCategory.setApplicationStartTime(applicationStartTime);
-            projectCategory.setApplicationEndTime(applicationEndTime);
-            projectCategory.setProjectStartTime(projectStartTime);
-            projectCategory.setProjectEndTime(projectEndTime);
+            projectCategory.setApplicationStartTime(projectCategoryInfo.getApplicationStartTime());
+            projectCategory.setApplicationEndTime(projectCategoryInfo.getApplicationEndTime());
+            projectCategory.setProjectStartTime(projectCategoryInfo.getProjectStartTime());
+            projectCategory.setProjectEndTime(projectCategoryInfo.getProjectEndTime());
             projectCategory.setStatistics(0);
             projectCategory.setIsApproved(1);
             projectCategory.setIsConcludingReportActivated(2);
@@ -227,11 +223,6 @@ public class AdminServiceImpl implements AdminService {
 
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(updateProjectCategoryInfo.getProjectCategoryId());
         ProjectCategoryInfo projectCategoryInfo = updateProjectCategoryInfo.getProjectCategoryInfo();
-        /*将字符串时间格式转化为Date时间类型*/
-        Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
-        Date applicationEndTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationEndTime());
-        Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
-        Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
         try {
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
@@ -245,10 +236,10 @@ public class AdminServiceImpl implements AdminService {
             }else {
                 projectCategory.setIsExistMeetingReview(2);
             }
-            projectCategory.setApplicationStartTime(applicationStartTime);
-            projectCategory.setApplicationEndTime(applicationEndTime);
-            projectCategory.setProjectStartTime(projectStartTime);
-            projectCategory.setProjectEndTime(projectEndTime);
+            projectCategory.setApplicationStartTime(projectCategoryInfo.getApplicationStartTime());
+            projectCategory.setApplicationEndTime(projectCategoryInfo.getApplicationEndTime());
+            projectCategory.setProjectStartTime(projectCategoryInfo.getProjectStartTime());
+            projectCategory.setProjectEndTime(projectCategoryInfo.getProjectEndTime());
             projectCategoryMapper.updateByPrimaryKey(projectCategory);
 
             Result result = ResultTool.success();

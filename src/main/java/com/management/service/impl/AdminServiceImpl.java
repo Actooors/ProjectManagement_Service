@@ -82,7 +82,7 @@ public class AdminServiceImpl implements AdminService {
                     applicantType.append("|");
                 }
             }
-            projectCategory.setApplicantType(projectCategoryInfo.getProjectType());
+            projectCategory.setProjectType(projectCategoryInfo.getProjectType());
             projectCategory.setApplicantType(applicantType.toString());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             //projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());

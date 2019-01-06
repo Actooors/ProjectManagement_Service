@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Data
 public class AdminListInfo {
+    private Integer projectId;
     private String projectName;
     private String projectDescription;
     private String projectDescriptionAddress;

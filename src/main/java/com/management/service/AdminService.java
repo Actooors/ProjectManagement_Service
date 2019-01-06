@@ -2,6 +2,7 @@ package com.management.service;
 
 import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 
 /**
@@ -32,6 +33,15 @@ public interface AdminService {
      * @Date: 18-7-31
      */
     Result queryProjectCategory(String userId);
+
+    /**
+     * @Description: 业务员根据项目id查找项目具体信息
+     * @Param: projectId
+     * @Return: ProjectCategory
+     * @Author: xw
+     * @Date: 19-1-7
+     */
+    Result queryProjectById(Integer projectId);
 
     /**
      * @Description: 根据项目号查找项目后更新内容

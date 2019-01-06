@@ -1,12 +1,16 @@
 package com.management.controller;
 
+import com.management.dao.ProjectCategoryMapper;
+import com.management.model.entity.ProjectCategory;
 import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
 import com.management.service.AdminService;
 import com.management.tools.JwtUtil;
+import com.management.tools.ResultTool;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.models.auth.In;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,6 +29,8 @@ public class AdminController {
     @Resource
     @ApiParam("和专家相关的业务操作")
     private AdminService adminService;
+    @Resource
+    private ProjectCategoryMapper projectCategoryMapper;
 
     @GetMapping("/allProjectCategory")
     @ApiOperation(value = "查一个业务员负责的所有的项目大类", notes = "根据业务员工号查找他负责的所有的项目大类")
@@ -33,6 +39,8 @@ public class AdminController {
         String userId = JwtUtil.parseJwt(token);
         return adminService.someoneAllProjectCategory(userId);
     }
+
+
 
     @PostMapping("/isMeeting")
     @ApiOperation(value = "业务员选择指定项目上会，另外的项目申请失败", notes = "根据项目号查找项目后更新内容")
@@ -63,6 +71,14 @@ public class AdminController {
         String userId = JwtUtil.parseJwt(token);
         return adminService.queryProjectCategory(userId);
     }
+
+    @GetMapping("/findProjectCategory/{projectId}")
+    @ApiOperation(value = "业务员根据项目大类id来查询具体信息")
+    public Result queryProCategoryInfoById(@PathVariable(value = "projectId") Integer projectId){
+
+        return adminService.queryProjectById(projectId);
+    }
+
 
     @PostMapping("deleteProjectCategory")
     @ApiOperation(value = "根据项目大类id删除项目大类信息")

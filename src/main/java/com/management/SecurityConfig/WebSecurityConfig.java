@@ -71,12 +71,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-resources/**", "/webjars/**", "/v2/**", "/swagger-ui.html/**").permitAll()
                 .antMatchers("/admin/**").access("hasAuthority('ROLE_ADMIN')")
                 .antMatchers("/leader/**").access("hasAuthority('ROLE_LEADER')")
-                .antMatchers("/expert/**").access("hasAuthority('ROLE_EXPRET')")
-                .antMatchers("/user/**").access("hasAnyAuthority('ROLE_ADMIN','ROLE_EXPRET','ROLE_LEADER','ROLE_USER')");
+                .antMatchers("/expert/**").access("hasAuthority('ROLE_EXPERT')")
+                .antMatchers("/user/**").access("hasAnyAuthority('ROLE_ADMIN','ROLE_EXPERT','ROLE_LEADER','ROLE_USER')");
         httpSecurity
                 .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         httpSecurity
                 .exceptionHandling().accessDeniedHandler(getAccessDeniedHandler());
+        // 禁用缓存
+        httpSecurity.headers().cacheControl();
 
     }
 

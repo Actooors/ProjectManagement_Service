@@ -24,28 +24,29 @@ import java.io.IOException;
  */
 
 @Component
-public class JwtAuthenticationTokenFilter  extends OncePerRequestFilter {
+public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Resource
     private CustomUserService customUserService;
+
     @Override
     protected void doFilterInternal(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        FilterChain chain) throws ServletException, IOException {
-            String authToken = request.getHeader("Authorization");
-            if (authToken != null) {
-                String userId = JwtUtil.parseJwt(authToken);
-                //logger.info("checking authentication " + userId);
-                if (userId != null) {
-                    UserDetails userDetails = customUserService.loadUserByUsername(userId);
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                            userDetails, null, userDetails.getAuthorities());
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
-                            request));
-                    //logger.info("authenticated user " + userId + ", setting security context");
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain chain) throws ServletException, IOException {
+        String authToken = request.getHeader("Authorization");
+        if (authToken != null) {
+            String userId = JwtUtil.parseJwt(authToken);
+            //logger.info("checking authentication " + userId);
+            if (userId != null) {
+                UserDetails userDetails = customUserService.loadUserByUsername(userId);
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
+                        request));
+                //logger.info("authenticated user " + userId + ", setting security context");
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            }
         }
         chain.doFilter(request, response);
     }

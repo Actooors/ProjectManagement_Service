@@ -23,7 +23,7 @@ public class CustomUserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userMapper.selectByPrimaryKey(s);
-        if(user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("用户不存在");
         }
         return user;

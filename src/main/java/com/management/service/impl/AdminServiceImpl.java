@@ -12,6 +12,8 @@ import com.management.model.ov.resultsetting.*;
 import com.management.service.AdminService;
 import com.management.tools.ResultTool;
 import com.management.tools.TimeTool;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -29,6 +31,8 @@ import static com.management.tools.TimeTool.timetoString;
 @Service
 
 public class AdminServiceImpl implements AdminService {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Resource
     private UserMapper userMapper;
@@ -53,17 +57,17 @@ public class AdminServiceImpl implements AdminService {
      * @Param: projectCategoryInfo
      * @Return: Result
      * @Author: xw
-     * @Date: 18-7-30
+     * @Date: 18-7-30d
      */
     @Override
-    public Result createProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo) {
+    public Result createProjectCategory(User adminUser, ProjectCategoryInfo projectCategoryInfo) {
         /*将字符串时间格式转化为Date时间类型*/
         Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
         Date applicationEndTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationEndTime());
         Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
         Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
+
         /*根据业务员id查询到业务员的信息及专家的id*/
-        User adminUser = userMapper.selectByPrimaryKey(userId);
         ProjectCategory projectCategory = new ProjectCategory();
         try {
             projectCategory.setReviewLeaderId(adminUser.getLeaderId());
@@ -73,6 +77,7 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setPrincipalId(adminUser.getUserId());
             projectCategory.setPrincipalName(adminUser.getUserName());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
+            projectCategory.setProjectType(projectCategoryInfo.getProjectType());
             StringBuilder applicantType = new StringBuilder();
             List<Integer> applicantList = projectCategoryInfo.getApplicantType();
             int cou = applicantList.size();
@@ -82,7 +87,6 @@ public class AdminServiceImpl implements AdminService {
                     applicantType.append("|");
                 }
             }
-            projectCategory.setApplicantType(projectCategoryInfo.getProjectType());
             projectCategory.setApplicantType(applicantType.toString());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
@@ -145,8 +149,8 @@ public class AdminServiceImpl implements AdminService {
             String[] applicantTypeArray = projectCategory.getApplicantType().split("\\|");
             int cou = 0;
             for(String applicantType : applicantTypeArray) {
-                applicantTypeArray[cou++] = ConstCorrespond.APPLICAN_TTYPE[
-                        Integer.parseInt(applicantType)];
+                applicantTypeArray[cou++] = ConstCorrespond
+                        .APPLICAN_TYPE[Integer.parseInt(applicantType)];
             }
             List<String> applicantTypeTrueList = new LinkedList<>(
                     Arrays.asList(applicantTypeArray));

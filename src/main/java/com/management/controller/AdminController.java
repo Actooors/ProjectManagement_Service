@@ -1,12 +1,15 @@
 package com.management.controller;
 
+import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
+import com.management.security.UserContext;
 import com.management.service.AdminService;
-import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,15 +25,18 @@ import javax.annotation.Resource;
 @RequestMapping(value = "/admin")
 @Api(value = "AdminService对应的controller")
 public class AdminController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Resource
     @ApiParam("和专家相关的业务操作")
     private AdminService adminService;
 
     @GetMapping("/allProjectCategory")
     @ApiOperation(value = "查一个业务员负责的所有的项目大类", notes = "根据业务员工号查找他负责的所有的项目大类")
-    public Result findProjectCategoryInfo(@RequestHeader(value = "Authorization") String token) {
+    public Result findProjectCategoryInfo() {
 
-        String userId = JwtUtil.parseJwt(token);
+        String userId = UserContext.getCurrentUser().getUserId();
         return adminService.someoneAllProjectCategory(userId);
     }
 
@@ -43,10 +49,9 @@ public class AdminController {
 
     @PostMapping("/createProjectCategory")
     @ApiOperation(value = "业务员创建项目类别,默认为待审核")
-    public Result insertProjectCategory(@RequestHeader(value = "Authorization") String token,
-                                        @RequestBody ProjectCategoryInfo projectCategoryInfo) {
-        String userId = JwtUtil.parseJwt(token);
-        return adminService.createProjectCategory(userId, projectCategoryInfo);
+    public Result insertProjectCategory(@RequestBody ProjectCategoryInfo projectCategoryInfo) {
+        User user = UserContext.getCurrentUser();
+        return adminService.createProjectCategory(user, projectCategoryInfo);
     }
 
     @PostMapping("/projectCategory/2")
@@ -58,9 +63,10 @@ public class AdminController {
 
     @GetMapping("/findMyProjectCategory")
     @ApiOperation(value = "查询业务员负责的项目详细信息", notes = "根据业务员Id查询业务员负责的项目详细信息")
-    public Result queryProjectCategoryInfo(@RequestHeader(value = "Authorization") String token) {
+    public Result queryProjectCategoryInfo() {
 
-        String userId = JwtUtil.parseJwt(token);
+        String userId = UserContext.getCurrentUser().getUserId();
+        logger.info(userId);
         return adminService.queryProjectCategory(userId);
     }
 
@@ -100,9 +106,8 @@ public class AdminController {
 
     @GetMapping("/reviewPhase/{reviewPhase}")
     @ApiOperation(value = "查找某个审核阶段的项目列表")
-    public Result findReviewPhaseInfo(@PathVariable(value = "reviewPhase") int reviewPhase,
-                                      @RequestHeader(value = "Authorization") String token) {
-        String userId = JwtUtil.parseJwt(token);
+    public Result findReviewPhaseInfo(@PathVariable(value = "reviewPhase") int reviewPhase) {
+        String userId = UserContext.getCurrentUser().getUserId();
         return adminService.findReviewPhaseList(userId, reviewPhase);
     }
 }

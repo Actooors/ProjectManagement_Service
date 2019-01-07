@@ -5,6 +5,8 @@ public class User {
 
     private String userName;
 
+    private String password;
+
     private String sex;
 
     private String department;
@@ -17,11 +19,11 @@ public class User {
 
     private String major;
 
-    private Integer identity;
-
     private Integer isAbleLogin;
 
     private String leaderId;
+
+    private Integer identity;
 
     public String getUserId() {
         return userId;
@@ -37,6 +39,14 @@ public class User {
 
     public void setUserName(String userName) {
         this.userName = userName == null ? null : userName.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
     }
 
     public String getSex() {
@@ -87,14 +97,6 @@ public class User {
         this.major = major == null ? null : major.trim();
     }
 
-    public Integer getIdentity() {
-        return identity;
-    }
-
-    public void setIdentity(Integer identity) {
-        this.identity = identity;
-    }
-
     public Integer getIsAbleLogin() {
         return isAbleLogin;
     }
@@ -109,5 +111,13 @@ public class User {
 
     public void setLeaderId(String leaderId) {
         this.leaderId = leaderId == null ? null : leaderId.trim();
+    }
+
+    public Integer getIdentity() {
+        return identity;
+    }
+
+    public void setIdentity(Integer identity) {
+        this.identity = identity;
     }
 }

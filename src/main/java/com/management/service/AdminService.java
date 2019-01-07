@@ -1,5 +1,6 @@
 package com.management.service;
 
+import com.management.model.entity.User;
 import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public interface AdminService {
      * @Author: xw
      * @Date: 18-7-30
      */
-    Result createProjectCategory(String userId, ProjectCategoryInfo projectCategoryInfo);
+    Result createProjectCategory(User user, ProjectCategoryInfo projectCategoryInfo);
 
     /**
      * @Description: 业务员根据自己的ID查询创建的项目类别信息

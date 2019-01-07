@@ -17,7 +17,7 @@ public class ProjectCategoryInfo {
     private String projectDescription;
     private String projectDescriptionAddress;
     private String principalPhone;
-    private String projectType;
+    private int projectType;
     private List<Integer> applicantType;
     private String maxMoney;
     private String projectApplicationDownloadAddress;

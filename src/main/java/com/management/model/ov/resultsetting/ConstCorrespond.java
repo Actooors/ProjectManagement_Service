@@ -16,7 +16,7 @@ public class ConstCorrespond {
             "生物化学类"
     };
 
-    public final static String[] APPLICAN_TTYPE = {
+    public final static String[] APPLICAN_TYPE = {
             "",
             "本科生",
             "研究生",
@@ -45,6 +45,17 @@ public class ConstCorrespond {
             "项目完成"
     };
 
+    public final static String[] USER_AUTHORIZATION = {
+            "",
+            "ROLE_USER",
+            "ROLE_ADMIN",
+            "ROLE_EXPERT",
+            "ROLE_LEADER",
+            "ROLE_SUPERADMIN"
+    };
+
     public final static int MIDDLE_PROGRESS = 1;
     public final static int FINAL_PROGRESS = 1;
+
+    public static final String TOKEN_HEAD = "Bearer ";
 }

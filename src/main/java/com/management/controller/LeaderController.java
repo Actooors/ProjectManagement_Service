@@ -3,6 +3,7 @@ package com.management.controller;
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
 import com.management.model.jsonrequestbody.LeaderJudgeInfo;
 import com.management.model.ov.Result;
+import com.management.security.UserContext;
 import com.management.service.LeaderService;
 import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
@@ -36,24 +37,24 @@ public class LeaderController {
 
     @GetMapping("/AllSubordinate")
     @ApiOperation(value = "查找一个领导的所有的下属", notes = "根据领导id查找他的所有的下属")
-    public Result findProjectCategoryInfo(@RequestHeader(value = "Authorization")String token) {
+    public Result findProjectCategoryInfo() {
 
-        String leaderId = JwtUtil.parseJwt(token);
+        String leaderId = UserContext.getCurrentUser().getUserId();
         return leaderService.findAllSubordinate(leaderId);
     }
 
     @GetMapping("/unJudgeProjectCategory")
     @ApiOperation(value = "查找一个领导的所有待审核项目大类列表", notes = "根据领导id查找他的所有的待审核项目大类列表")
-    public Result findUnJudgeProjectCategory(@RequestHeader(value = "Authorization")String token) {
+    public Result findUnJudgeProjectCategory() {
 
-        String leaderId = JwtUtil.parseJwt(token);
+        String leaderId = UserContext.getCurrentUser().getUserId();
         return leaderService.waitJudgeProjectCategoryList(leaderId);
     }
 
     @GetMapping("/unjudgeApplicatetion")
     @ApiOperation(value = "领导查找待审核项目申请")
-    public Result findUnJudgeProjectApplicatetion(@RequestHeader(value = "Authorization")String token){
-        String leaderId = JwtUtil.parseJwt(token);
+    public Result findUnJudgeProjectApplicatetion(){
+        String leaderId = UserContext.getCurrentUser().getUserId();
         return leaderService.findUnJudgeProjectApplication(leaderId);
     }
 

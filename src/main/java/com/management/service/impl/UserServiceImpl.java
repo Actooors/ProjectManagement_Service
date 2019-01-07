@@ -47,6 +47,9 @@ public class UserServiceImpl implements UserService {
     @Resource
     private ProjectProgressMapper projectProgressMapper;
 
+    @Resource
+    private JwtUtil jwtUtil;
+
     private static final int LOGIN_ENABLE = 1;
     private static final int STATE_TWO = 2;
     private static final int REVIEW_FAILED = 6;
@@ -61,7 +64,7 @@ public class UserServiceImpl implements UserService {
     private LoginResponse setLoginResponse(String userId, Integer identity,
                                            String userName) {
         LoginResponse response = new LoginResponse();
-        response.setToken(JwtUtil.createJwt(userId, identity));
+        response.setToken(jwtUtil.createJwt(userId, identity));
         response.setIdentity(identity);
         response.setUserId(userId);
         response.setUserName(userName);

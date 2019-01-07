@@ -2,6 +2,7 @@ package com.management.controller;
 
 import com.management.model.jsonrequestbody.ExpertJudgeInfo;
 import com.management.model.ov.Result;
+import com.management.security.UserContext;
 import com.management.service.ExpertService;
 import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
@@ -29,16 +30,15 @@ public class ExpertController {
 
     @GetMapping("/unJudgeProject")
     @ApiOperation(value = "专家查询负责项目大类的待审核项目申请")
-    public Result findProjectApplication(@RequestHeader(value = "Authorization") String token) {
-        String userId = JwtUtil.parseJwt(token);
+    public Result findProjectApplication() {
+        String userId = UserContext.getCurrentUser().getUserId();
         return expertService.findProjectApplication(userId);
     }
 
     @PostMapping("/judgeProject")
     @ApiOperation(value = "专家审核项目申请并提交审核意见")
-    public Result judgeProjectApplication(@RequestHeader(value = "Authorization") String token,
-                                          @RequestBody ExpertJudgeInfo expertJudgeInfo){
-        String userId = JwtUtil.parseJwt(token);
+    public Result judgeProjectApplication(@RequestBody ExpertJudgeInfo expertJudgeInfo){
+        String userId = UserContext.getCurrentUser().getUserId();
         return expertService.judgeProjectApplication(userId,expertJudgeInfo);
     }
 

@@ -6,6 +6,7 @@ import com.management.model.jsonrequestbody.DeleteApplication;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
+import com.management.security.UserContext;
 import com.management.service.UserService;
 import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
@@ -77,9 +78,9 @@ public class UserController {
 
     @GetMapping("/userInfo/1")
     @ApiOperation(value = "用户查看个人信息", notes = "此接口适用于所有用户")
-    public Result findUserInfo(@RequestHeader(value = "Authorization") String token) {
+    public Result findUserInfo() {
 
-        String userId = JwtUtil.parseJwt(token);
+        String userId = UserContext.getCurrentUser().getUserId();
         return userService.queryUserId(userId);
     }
 
@@ -98,23 +99,22 @@ public class UserController {
 
     @GetMapping("/inTheApplicationList")
     @ApiOperation(value = "查找用户正在申报中的项目")
-    public Result inTheApplicationList(@RequestHeader(value = "Authorization") String token){
-        String userId = JwtUtil.parseJwt(token);
+    public Result inTheApplicationList(){
+        String userId = UserContext.getCurrentUser().getUserId();
         return userService.findMyApplication(userId);
     }
 
     @PostMapping("/deleteApplication")
     @ApiOperation(value = "用户撤销申报中的项目")
-    public Result deleteApplication(@RequestHeader(value = "Authorization") String token,
-                                    @RequestBody DeleteApplication info){
-        String userId = JwtUtil.parseJwt(token);
+    public Result deleteApplication(@RequestBody DeleteApplication info){
+        String userId = UserContext.getCurrentUser().getUserId();
         return userService.deleteApplication(info,userId);
     }
 
     @GetMapping("/progressProject")
     @ApiOperation(value = "查找用户正r在进行的项目")
-    public Result findProgressProject(@RequestHeader(value = "Authorization") String token){
-        String userId = JwtUtil.parseJwt(token);
+    public Result findProgressProject(){
+        String userId = UserContext.getCurrentUser().getUserId();
         return userService.findProgressProject(userId);
     }
 

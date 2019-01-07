@@ -48,7 +48,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AccessDeniedHandler getAccessDeniedHandler() {
-        return new RestAuthenticationAccessDeniedHandler();
+        return new BootAccessDeniedHandler();
     }
 
     @Bean

@@ -477,8 +477,8 @@ public class AdminServiceImpl implements AdminService {
             res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
             res.setProjectCategoryId(category.getProjectCategoryId());
             res.setProjectCategoryName(category.getProjectCategoryName());
-
             for(ProjectApplication application : applicationList) {
+                res.setProjectId(application.getProjectApplicationId());
                 res.setProjectApplicationDownloadAddress(application
                         .getProjectApplicationUploadAddress());
                 res.setProjectName(application.getProjectName());

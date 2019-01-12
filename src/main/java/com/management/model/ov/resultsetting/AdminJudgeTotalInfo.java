@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Data
 public class AdminJudgeTotalInfo {
+    private int projectId;
     private int projectCategoryId;
     private String projectCategoryName;
     private String applicationDeadLine;

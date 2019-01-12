@@ -139,6 +139,7 @@ public class AdminServiceImpl implements AdminService {
         List<AdminListInfo> resList = new LinkedList<>();
         for(ProjectCategory projectCategory : projectCategoryList) {
             AdminListInfo res = new AdminListInfo();
+            res.setProjectCategoryId(projectCategory.getProjectCategoryId());
             res.setProjectName(projectCategory.getProjectCategoryName());
             res.setProjectDescription(projectCategory
                     .getProjectCategoryDescription());

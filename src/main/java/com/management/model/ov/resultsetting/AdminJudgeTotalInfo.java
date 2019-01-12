@@ -15,5 +15,7 @@ public class AdminJudgeTotalInfo {
     private int projectCategoryId;
     private String projectCategoryName;
     private String applicationDeadLine;
-    private List<AdminJudgeInfo> list;
+    private String projectName;
+    private String projectApplicationDownloadAddress;
+    private String description;
 }

@@ -477,17 +477,14 @@ public class AdminServiceImpl implements AdminService {
             res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
             res.setProjectCategoryId(category.getProjectCategoryId());
             res.setProjectCategoryName(category.getProjectCategoryName());
-            List<AdminJudgeInfo> infoList = new LinkedList<>();
+
             for(ProjectApplication application : applicationList) {
-                AdminJudgeInfo info = new AdminJudgeInfo();
-                info.setProjectApplicationDownloadAddress(application
+                res.setProjectApplicationDownloadAddress(application
                         .getProjectApplicationUploadAddress());
-                info.setProjectName(application.getProjectName());
-                info.setDescription(application.getProjectDescription());
-                infoList.add(info);
+                res.setProjectName(application.getProjectName());
+                res.setDescription(application.getProjectDescription());
+                resList.add(res);
             }
-            res.setList(infoList);
-            resList.add(res);
         }
         return ResultTool.success(resList);
     }

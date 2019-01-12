@@ -116,4 +116,13 @@ public interface AdminService {
      * @Date: 2018/12/30
      */
     Result findReviewPhaseList(String userId, int reviewPhase);
+
+    /**
+     * @Description: 根据id查找某一个项目大类的具体信息
+     * @Param:
+     * @Return:
+     * @Author: 0GGmr0
+     * @Date: 2019-01-12
+     */
+    Result queryOneProjectCategory(Integer projectCategoryId);
 }

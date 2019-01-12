@@ -70,6 +70,14 @@ public class AdminController {
         return adminService.queryProjectCategory(userId);
     }
 
+    @GetMapping("/category/{id}")
+    @ApiOperation(value = "根据id查找某一个项目大类的具体信息")
+    public Result queryOneProjectCategoryInfo(@PathVariable("id") Integer projectCategoryId) {
+
+        return adminService.queryOneProjectCategory(projectCategoryId);
+    }
+
+
     @PostMapping("deleteProjectCategory")
     @ApiOperation(value = "根据项目大类id删除项目大类信息")
     public Result deleteProjectCategory(@RequestBody DeleteProjectCategoryInfo info) {

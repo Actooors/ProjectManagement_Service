@@ -121,6 +121,104 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
+     * @Description: 根据项目大类查找项目大类的具体信息然后加入到AdminListInfo中
+     * @Param: [projectCategory]
+     * @Return: com.management.model.ov.resultsetting.AdminListInfo
+     * @Author: 0GGmr0
+     * @Date: 2019-01-12
+     */
+    private AdminListInfo addInfoToAdminListInfo(ProjectCategory projectCategory) {
+        AdminListInfo res = new AdminListInfo();
+        res.setProjectCategoryId(projectCategory.getProjectCategoryId());
+        res.setProjectName(projectCategory.getProjectCategoryName());
+        res.setProjectDescription(projectCategory
+                .getProjectCategoryDescription());
+        res.setProjectDescriptionAddress(projectCategory
+                .getProjectCategoryDescriptionAddress());
+        res.setPrincipalPhone(projectCategory.getPrincipalPhone());
+        res.setProjectType(ConstCorrespond.PROJECT_TYPE[projectCategory.getProjectType()]);
+        String[] applicantTypeArray = projectCategory.getApplicantType().split("\\|");
+        int cou = 0;
+        for(String applicantType : applicantTypeArray) {
+            applicantTypeArray[cou++] = ConstCorrespond
+                    .APPLICAN_TYPE[Integer.parseInt(applicantType)];
+        }
+        List<String> applicantTypeTrueList = new LinkedList<>(
+                Arrays.asList(applicantTypeArray));
+        res.setApplicantType(applicantTypeTrueList);
+        res.setMaxMoney(projectCategory.getMaxMoney());
+        res.setProjectApplicationDownloadAddress(projectCategory
+                .getProjectApplicationDownloadAddress());
+        res.setIsExistMeetingReview(projectCategory.getIsExistMeetingReview());
+        res.setApplicationStartTime(timetoString(projectCategory
+                .getApplicationStartTime()));
+        res.setApplicationEndTime(timetoString(projectCategory
+                .getApplicationEndTime()));
+        res.setProjectStartTime(timetoString(projectCategory
+                .getProjectStartTime()));
+        res.setProjectEndTime(timetoString(projectCategory
+                .getProjectEndTime()));
+        String[] expertArray = projectCategory.getExpertList().split("\\|");
+        List<ExpertListInfo> list = new LinkedList<>();
+        for(String expertId : expertArray) {
+            User user = userMapper.selectByPrimaryKey(expertId);
+            ExpertListInfo info = new ExpertListInfo();
+            info.setUserName(user.getUserName());
+            info.setUserId(user.getUserId());
+            info.setPhone(user.getPhone());
+            info.setMail(user.getMail());
+            info.setDepartment(user.getDepartment());
+            list.add(info);
+        }
+        res.setExpertList(list);
+        ReportInfo interimInfo = new ReportInfo();
+        if(projectCategory.getIsInterimReportActivated() == 1) {
+            interimInfo.setDeadline(timetoString(projectCategory
+                    .getInterimReportEndTime()));
+            interimInfo.setIsReportActivated(true);
+            interimInfo.setStartTime(timetoString(projectCategory
+                    .getInterimReportStartTime()));
+            interimInfo.setReportTemplateAddress(projectCategory
+                    .getInterimReportDownloadAddress());
+            res.setInterimReport(interimInfo);
+        } else {
+            interimInfo.setIsReportActivated(false);
+        }
+        res.setInterimReport(interimInfo);
+        ReportInfo concludingInfo = new ReportInfo();
+        if(projectCategory.getIsConcludingReportActivated() == 1) {
+
+            concludingInfo.setDeadline(timetoString(projectCategory
+                    .getConcludingReportEndTime()));
+            concludingInfo.setIsReportActivated(true);
+            concludingInfo.setStartTime(timetoString(projectCategory
+                    .getConcludingReportStartTime()));
+            concludingInfo.setReportTemplateAddress(projectCategory
+                    .getConcludingReportDownloadAddress());
+            res.setConcludingReport(concludingInfo);
+        } else {
+            concludingInfo.setIsReportActivated(false);
+        }
+        res.setConcludingReport(concludingInfo);
+        return res;
+    }
+    
+    
+    /**
+     * @Description: 根据项目大类的id查找创建的项目大类的信息
+     * @Param: [projectCategoryId]
+     * @Return: com.management.model.ov.Result
+     * @Author: 0GGmr0
+     * @Date: 2019-01-12
+     */
+    @Override
+    public Result queryOneProjectCategory(Integer projectCategoryId) {
+        ProjectCategory projectCategory = projectCategoryMapper
+                .selectByPrimaryKey(projectCategoryId);
+        return ResultTool.success(addInfoToAdminListInfo(projectCategory));
+    }
+
+    /**
      * @Description: 业务员根据自己的ID查询创建的项目类别信息
      * @Param: userId
      * @Return: ProjectCategory
@@ -138,79 +236,7 @@ public class AdminServiceImpl implements AdminService {
         }
         List<AdminListInfo> resList = new LinkedList<>();
         for(ProjectCategory projectCategory : projectCategoryList) {
-            AdminListInfo res = new AdminListInfo();
-            res.setProjectCategoryId(projectCategory.getProjectCategoryId());
-            res.setProjectName(projectCategory.getProjectCategoryName());
-            res.setProjectDescription(projectCategory
-                    .getProjectCategoryDescription());
-            res.setProjectDescriptionAddress(projectCategory
-                    .getProjectCategoryDescriptionAddress());
-            res.setPrincipalPhone(projectCategory.getPrincipalPhone());
-            res.setProjectType(ConstCorrespond.PROJECT_TYPE[projectCategory.getProjectType()]);
-            String[] applicantTypeArray = projectCategory.getApplicantType().split("\\|");
-            int cou = 0;
-            for(String applicantType : applicantTypeArray) {
-                applicantTypeArray[cou++] = ConstCorrespond
-                        .APPLICAN_TYPE[Integer.parseInt(applicantType)];
-            }
-            List<String> applicantTypeTrueList = new LinkedList<>(
-                    Arrays.asList(applicantTypeArray));
-            res.setApplicantType(applicantTypeTrueList);
-            res.setMaxMoney(projectCategory.getMaxMoney());
-            res.setProjectApplicationDownloadAddress(projectCategory
-                    .getProjectApplicationDownloadAddress());
-            res.setIsExistMeetingReview(projectCategory.getIsExistMeetingReview());
-            res.setApplicationStartTime(timetoString(projectCategory
-                    .getApplicationStartTime()));
-            res.setApplicationEndTime(timetoString(projectCategory
-                    .getApplicationEndTime()));
-            res.setProjectStartTime(timetoString(projectCategory
-                    .getProjectStartTime()));
-            res.setProjectEndTime(timetoString(projectCategory
-                    .getProjectEndTime()));
-            String[] expertArray = projectCategory.getExpertList().split("\\|");
-            List<ExpertListInfo> list = new LinkedList<>();
-            for(String expertId : expertArray) {
-                User user = userMapper.selectByPrimaryKey(expertId);
-                ExpertListInfo info = new ExpertListInfo();
-                info.setUserName(user.getUserName());
-                info.setUserId(user.getUserId());
-                info.setPhone(user.getPhone());
-                info.setMail(user.getMail());
-                info.setDepartment(user.getDepartment());
-                list.add(info);
-            }
-            res.setExpertList(list);
-            ReportInfo interimInfo = new ReportInfo();
-            if(projectCategory.getIsInterimReportActivated() == 1) {
-                interimInfo.setDeadline(timetoString(projectCategory
-                        .getInterimReportEndTime()));
-                interimInfo.setIsReportActivated(true);
-                interimInfo.setStartTime(timetoString(projectCategory
-                        .getInterimReportStartTime()));
-                interimInfo.setReportTemplateAddress(projectCategory
-                        .getInterimReportDownloadAddress());
-                res.setInterimReport(interimInfo);
-            } else {
-                interimInfo.setIsReportActivated(false);
-            }
-            res.setInterimReport(interimInfo);
-            ReportInfo concludingInfo = new ReportInfo();
-            if(projectCategory.getIsConcludingReportActivated() == 1) {
-
-                concludingInfo.setDeadline(timetoString(projectCategory
-                        .getConcludingReportEndTime()));
-                concludingInfo.setIsReportActivated(true);
-                concludingInfo.setStartTime(timetoString(projectCategory
-                        .getConcludingReportStartTime()));
-                concludingInfo.setReportTemplateAddress(projectCategory
-                        .getConcludingReportDownloadAddress());
-                res.setConcludingReport(concludingInfo);
-            } else {
-                concludingInfo.setIsReportActivated(false);
-            }
-            res.setConcludingReport(concludingInfo);
-            resList.add(res);
+            resList.add(addInfoToAdminListInfo(projectCategory));
         }
         return ResultTool.success(resList);
 

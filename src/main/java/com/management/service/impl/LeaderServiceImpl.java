@@ -248,16 +248,21 @@ public class LeaderServiceImpl implements LeaderService {
                     .andProjectProcessEqualTo(FINAL_PROGRESS);
             List<ProjectProgress> progressList = projectProgressMapper.selectByExample(example1);
             if(progressList.isEmpty()) continue;
-            FinalReportInfo info = new FinalReportInfo();
-//            info.setDepartment();
-//            info.setDescription();
-//            info.setProjectApplicationId();
-//            info.setProjectCategoryId();
-//            info.setProjectApplicationId();
-
+            for(ProjectProgress progress : progressList) {
+                FinalReportInfo info = new FinalReportInfo();
+                info.setDepartment(progress.getDepartment());
+                info.setDescription(progress.getDescription());
+                info.setProjectApplicationId(progress.getProjectProgressId());
+                info.setProjectCategoryId(progress.getProjectCategoryId());
+                info.setProjectCategoryName(progress.getProjectName());
+                info.setProjectName(progress.getProjectName());
+                info.setReportAddress(progress.getConcludingReportUploadAddress());
+                info.setUserId(progress.getUserId());
+                info.setUserName(progress.getUserName());
+                resList.add(info);
+            }
         }
-
-        return ResultTool.success();
+        return ResultTool.success(resList);
 
     }
 }

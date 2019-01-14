@@ -69,4 +69,11 @@ public class LeaderController {
     public Result judgeFinalReport(@RequestBody LeaderJudgeInfo leaderJudgeInfo){
         return leaderService.judgeFinalReport(leaderJudgeInfo);
     }
+
+    @GetMapping("/waitFinalJudge")
+    @ApiOperation(value = "领导待审核结题报告的项目列表")
+    public Result waitFinalReportList(){
+        String leaderId = UserContext.getCurrentUser().getUserId();
+        return leaderService.findWaitFinalJudgeList(leaderId);
+    }
 }

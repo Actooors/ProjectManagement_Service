@@ -136,5 +136,12 @@ public interface AdminService {
     Result queryOneProjectCategory(Integer projectCategoryId);
 
 
-//    Result createMiddleReport(ReportMessage reportMessage);
+    /**
+     * @Description: 业务员开通中期报告/结题报告
+     * @Param: [reportMessage]
+     * @Return: com.management.model.ov.Result
+     * @Author: 0GGmr0
+     * @Date: 2019-01-14
+     */
+    Result createReport(ReportMessage reportMessage);
 }

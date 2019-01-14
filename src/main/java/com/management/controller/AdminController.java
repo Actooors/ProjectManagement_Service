@@ -125,4 +125,13 @@ public class AdminController {
 
         return adminService.secondJudge(info);
     }
+
+
+
+    @PostMapping("/createReport")
+    @ApiOperation(value = "业务员开通中期报告和结题报告的申报内容")
+    public Result createReport(@RequestBody ReportMessage info) {
+
+        return adminService.createReport(info);
+    }
 }

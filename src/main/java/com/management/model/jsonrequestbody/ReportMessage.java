@@ -2,6 +2,8 @@ package com.management.model.jsonrequestbody;
 
 import lombok.Data;
 
+import java.util.Date;
+
 /**
  * @program: management
  * @description: 业务员开通中期/结题报告
@@ -10,5 +12,10 @@ import lombok.Data;
  */
 @Data
 public class ReportMessage {
-//    private String
+    private int projectCategoryId;
+    // type 1 中期报告  2结题报告
+    private int type;
+    private String reportAddress;
+    private String startTime;
+    private String deadline;
 }

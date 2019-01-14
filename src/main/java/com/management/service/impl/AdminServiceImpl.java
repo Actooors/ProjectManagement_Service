@@ -568,6 +568,29 @@ public class AdminServiceImpl implements AdminService {
 
     }
 
-
-
+    /**
+     * @Description: 业务员开通中期报告/结题报告
+     * @Param: [reportMessage]
+     * @Return: com.management.model.ov.Result
+     * @Author: 0GGmr0
+     * @Date: 2019-01-14
+     */
+    @Override
+    public Result createReport(ReportMessage reportMessage) {
+        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(reportMessage.getProjectCategoryId());
+        //中期报告
+        if(reportMessage.getType() == 1) {
+            projectCategory.setInterimReportDownloadAddress(reportMessage.getReportAddress());
+            projectCategory.setIsInterimReportActivated(1);
+            projectCategory.setInterimReportStartTime(TimeTool.stringToTime(reportMessage.getStartTime()));
+            projectCategory.setInterimReportEndTime(TimeTool.stringToTime(reportMessage.getDeadline()));
+        } else {
+            projectCategory.setConcludingReportDownloadAddress(reportMessage.getReportAddress());
+            projectCategory.setIsConcludingReportActivated(1);
+            projectCategory.setConcludingReportStartTime(TimeTool.stringToTime(reportMessage.getStartTime()));
+            projectCategory.setConcludingReportEndTime(TimeTool.stringToTime(reportMessage.getDeadline()));
+        }
+        projectCategoryMapper.updateByPrimaryKey(projectCategory);
+        return ResultTool.success();
+    }
 }

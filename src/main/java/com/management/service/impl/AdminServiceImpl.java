@@ -17,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.*;
 
 import static com.management.tools.TimeTool.timetoString;
@@ -493,26 +495,39 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-    private List<ExpertOpinionInfo> getExpertOpinionList(int projectId) {
+    private ExpertOpinionMain getExpertOpinionList(int projectId) {
         ReviewExpertExample reviewExpertExample = new ReviewExpertExample();
         reviewExpertExample.createCriteria()
                 .andProjectApplicationIdEqualTo(projectId);
         List<ReviewExpert> reviewExpertList = reviewExpertMapper
                 .selectByExample(reviewExpertExample);
         List<ExpertOpinionInfo> list = new LinkedList<>();
+        int totalNum = 0;
+        int finishNum = 0;
         for (ReviewExpert reviewExpert : reviewExpertList) {
             ExpertOpinionInfo expertOpinionInfo = new ExpertOpinionInfo();
             expertOpinionInfo.setExpertId(reviewExpert.getExpertId());
             expertOpinionInfo.setExpertName(reviewExpert.getExpertName());
             expertOpinionInfo.setIsFinished(reviewExpert.getIsFinished());
             if(reviewExpert.getIsFinished() == 1) {
+                finishNum++;
                 expertOpinionInfo.setFinalOpinion(reviewExpert.getFinalOpinion());
                 expertOpinionInfo.setReviewOpinion(reviewExpert.getReviewOpinion());
                 expertOpinionInfo.setScore(reviewExpert.getScore());
             }
             list.add(expertOpinionInfo);
+            totalNum++;
         }
-        return list;
+        ExpertOpinionMain res = new ExpertOpinionMain();
+        res.setExpertOpinion(list);
+        res.setFinishNum(finishNum);
+        res.setTotalNum(totalNum);
+        if(totalNum != 0) {
+            double percentage = 100.0 * finishNum / totalNum;
+            BigDecimal bd = new BigDecimal(percentage);
+            res.setPercentage(bd.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
+        }
+        return res;
     }
 
 

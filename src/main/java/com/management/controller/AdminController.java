@@ -118,4 +118,11 @@ public class AdminController {
         String userId = UserContext.getCurrentUser().getUserId();
         return adminService.findReviewPhaseList(userId, reviewPhase);
     }
+
+    @PostMapping("/expertTrial")
+    @ApiOperation(value = "业务员初审项目")
+    public Result adminExpertTrail(@RequestBody SecondJudgeInfo info) {
+
+        return adminService.secondJudge(info);
+    }
 }

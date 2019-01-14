@@ -82,6 +82,15 @@ public interface AdminService {
     Result oneJudge(OneJudgeInfo info);
 
     /**
+     * @Description: 业务员对刚提交上来的申请书给与判决
+     * @Param:
+     * @Return:
+     * @Author: ggmr
+     * @Date: 2018/12/27
+     */
+    Result secondJudge(SecondJudgeInfo info);
+
+    /**
      * @Description: 会评
      * @Param: [info]
      * @Return: com.management.model.ov.Result
@@ -125,4 +134,5 @@ public interface AdminService {
      * @Date: 2019-01-12
      */
     Result queryOneProjectCategory(Integer projectCategoryId);
+
 }

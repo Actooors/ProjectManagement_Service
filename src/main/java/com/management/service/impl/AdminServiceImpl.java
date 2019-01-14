@@ -384,6 +384,29 @@ public class AdminServiceImpl implements AdminService {
         return ResultTool.success();
     }
 
+
+    @Override
+    public Result secondJudge(SecondJudgeInfo info) {
+        ProjectApplication res = projectApplicationMapper
+                .selectByPrimaryKey(info.getApplicationId());
+        if(info.getJudge()) {
+            if(res.getIsMeeting() == 2) {
+                res.setReviewPhase(MEETING_REVIEW);
+            } else {
+                res.setReviewPhase(LEADER_REVIEW);
+            }
+        } else {
+            res.setReviewPhase(REVIEW_FAILED);
+            res.setFailureReason(info.getMsg());
+        }
+        try {
+            projectApplicationMapper.updateByPrimaryKeySelective(res);
+        } catch (Exception e) {
+            return ResultTool.error(e.toString());
+        }
+        return ResultTool.success();
+    }
+
     @Override
     public Result oneJudge(OneJudgeInfo info) {
         ProjectApplication res = projectApplicationMapper

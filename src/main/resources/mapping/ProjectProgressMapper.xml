@@ -18,7 +18,6 @@
     <result column="description" property="description" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="department" property="department" jdbcType="VARCHAR" />
-    <result column="upload_address" property="uploadAddress" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -82,8 +81,7 @@
     project_progress_id, user_id, interim_report_upload_address, interim_report_time, 
     is_finished_interim_report, interim_report_failure_reason, concluding_report_upload_address, 
     concluding_report_time, is_finished_concluding_report, concluding_report_failure_reason, 
-    project_process, project_category_id, project_name, description, user_name, department, 
-    upload_address
+    project_process, project_category_id, project_name, description, user_name, department
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectProgressExample" >
     select
@@ -123,16 +121,14 @@
       concluding_report_time, is_finished_concluding_report, 
       concluding_report_failure_reason, project_process, 
       project_category_id, project_name, description, 
-      user_name, department, upload_address
-      )
+      user_name, department)
     values (#{projectProgressId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{interimReportUploadAddress,jdbcType=VARCHAR}, 
       #{interimReportTime,jdbcType=TIMESTAMP}, #{isFinishedInterimReport,jdbcType=INTEGER}, 
       #{interimReportFailureReason,jdbcType=VARCHAR}, #{concludingReportUploadAddress,jdbcType=VARCHAR}, 
       #{concludingReportTime,jdbcType=TIMESTAMP}, #{isFinishedConcludingReport,jdbcType=INTEGER}, 
       #{concludingReportFailureReason,jdbcType=VARCHAR}, #{projectProcess,jdbcType=INTEGER}, 
       #{projectCategoryId,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{userName,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{uploadAddress,jdbcType=VARCHAR}
-      )
+      #{userName,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.ProjectProgress" >
     insert into tbl_ProjectProgress
@@ -185,9 +181,6 @@
       <if test="department != null" >
         department,
       </if>
-      <if test="uploadAddress != null" >
-        upload_address,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="projectProgressId != null" >
@@ -237,9 +230,6 @@
       </if>
       <if test="department != null" >
         #{department,jdbcType=VARCHAR},
-      </if>
-      <if test="uploadAddress != null" >
-        #{uploadAddress,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -300,9 +290,6 @@
       <if test="record.department != null" >
         department = #{record.department,jdbcType=VARCHAR},
       </if>
-      <if test="record.uploadAddress != null" >
-        upload_address = #{record.uploadAddress,jdbcType=VARCHAR},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -325,8 +312,7 @@
       project_name = #{record.projectName,jdbcType=VARCHAR},
       description = #{record.description,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
-      department = #{record.department,jdbcType=VARCHAR},
-      upload_address = #{record.uploadAddress,jdbcType=VARCHAR}
+      department = #{record.department,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -379,9 +365,6 @@
       <if test="department != null" >
         department = #{department,jdbcType=VARCHAR},
       </if>
-      <if test="uploadAddress != null" >
-        upload_address = #{uploadAddress,jdbcType=VARCHAR},
-      </if>
     </set>
     where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
   </update>
@@ -401,8 +384,7 @@
       project_name = #{projectName,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
-      department = #{department,jdbcType=VARCHAR},
-      upload_address = #{uploadAddress,jdbcType=VARCHAR}
+      department = #{department,jdbcType=VARCHAR}
     where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
   </update>
 </mapper>

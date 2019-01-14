@@ -3,8 +3,7 @@ package com.management.model.entity;
 import java.util.Date;
 
 public class ProjectApplication {
-
-    private Integer projectId;
+    private Integer projectApplicationId;
 
     private Integer projectCategoryId;
 
@@ -51,13 +50,12 @@ public class ProjectApplication {
     private Date projectDeadline;
 
     public Integer getProjectApplicationId() {
-        return this.projectId;
+        return projectApplicationId;
     }
 
     public void setProjectApplicationId(Integer projectApplicationId) {
-        this.projectId = projectApplicationId;
+        this.projectApplicationId = projectApplicationId;
     }
-
 
     public Integer getProjectCategoryId() {
         return projectCategoryId;

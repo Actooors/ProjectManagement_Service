@@ -390,7 +390,7 @@ public class AdminServiceImpl implements AdminService {
         ProjectApplication res = projectApplicationMapper
                 .selectByPrimaryKey(info.getApplicationId());
         if(info.getJudge()) {
-            if(res.getIsMeeting() == 2) {
+            if(res.getIsMeeting() == 1) {
                 res.setReviewPhase(MEETING_REVIEW);
             } else {
                 res.setReviewPhase(LEADER_REVIEW);
@@ -498,11 +498,11 @@ public class AdminServiceImpl implements AdminService {
             List<ProjectApplication> applicationList = projectApplicationMapper
                     .selectByExample(applicationExample);
             if(applicationList.isEmpty()) continue;
-            AdminJudgeTotalInfo res = new AdminJudgeTotalInfo();
-            res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
-            res.setProjectCategoryId(category.getProjectCategoryId());
-            res.setProjectCategoryName(category.getProjectCategoryName());
             for(ProjectApplication application : applicationList) {
+                AdminJudgeTotalInfo res = new AdminJudgeTotalInfo();
+                res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
+                res.setProjectCategoryId(category.getProjectCategoryId());
+                res.setProjectCategoryName(category.getProjectCategoryName());
                 res.setProjectId(application.getProjectApplicationId());
                 res.setProjectApplicationDownloadAddress(application
                         .getProjectApplicationUploadAddress());

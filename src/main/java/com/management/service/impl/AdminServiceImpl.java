@@ -518,7 +518,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-    private ExpertOpinionMain getExpertOpinionList(int projectId) {
+    ExpertOpinionMain getExpertOpinionList(int projectId) {
         ReviewExpertExample reviewExpertExample = new ReviewExpertExample();
         reviewExpertExample.createCriteria()
                 .andProjectApplicationIdEqualTo(projectId);

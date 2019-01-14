@@ -2,6 +2,7 @@ package com.management.model.jsonrequestbody;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,4 +27,5 @@ public class ProjectApplicationInfo {
     private String mail;
     private String uploadAddress;
     private Boolean isMeeting;
+    private String applicationDeadline;
 }

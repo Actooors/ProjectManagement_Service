@@ -9,18 +9,23 @@ import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
 import com.management.model.jsonrequestbody.LeaderJudgeInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
+import com.management.model.ov.resultsetting.AdminJudgeTotalInfo;
+import com.management.model.ov.resultsetting.FinalReportInfo;
 import com.management.model.ov.resultsetting.LeaderSubordinateInfo;
 import com.management.model.ov.resultsetting.WaitJudgeProjectCategoryInfo;
+import com.management.service.AdminService;
 import com.management.service.LeaderService;
 import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
 import static com.management.model.ov.resultsetting.ConstCorrespond.*;
+import static com.management.tools.TimeTool.timetoString;
 
 /**
  * @program: management
@@ -42,6 +47,8 @@ public class LeaderServiceImpl implements LeaderService {
     @Resource
     private UserMapper userMapper;
 
+    @Resource
+    private AdminServiceImpl adminService;
 
     private static final int STATE_TWO = 2;
     private static final int STATE_THREE = 3;
@@ -133,42 +140,39 @@ public class LeaderServiceImpl implements LeaderService {
      * @Date: 18-12-27
      */
     public Result findUnJudgeProjectApplication(String userId){
-        List<ProjectApplicationInfo> proList = new ArrayList<>();
-        try {
-            //根据Leaderid得到其负责的且审核通过的项目大类id
-            ProjectCategoryExample example1 = new ProjectCategoryExample();
-            example1.createCriteria()
-                    .andReviewLeaderIdEqualTo(userId)
-                    .andIsApprovedEqualTo(1);
-            List<ProjectCategory> projectCategoryList = projectCategoryMapper.selectByExample(example1);
-            //根据项目大类id在application表中查找相应的项目申请信息
-            for (ProjectCategory projectCategory : projectCategoryList) {
-                ProjectApplicationExample example = new ProjectApplicationExample();
-                example.createCriteria()
-                        .andProjectCategoryIdEqualTo(projectCategory.getProjectCategoryId())
-                        .andReviewPhaseEqualTo(4);
-                List<ProjectApplication> projectApplicationList = projectApplicationMapper.selectByExample(example);
-                if(projectApplicationList!=null){
-                    for (ProjectApplication projectApplication : projectApplicationList) {
-                        ProjectApplicationInfo projectInfo = new ProjectApplicationInfo();
-                        projectInfo.setUserId(projectApplication.getUserId());
-                        projectInfo.setUserName(projectApplication.getUserName());
-                        projectInfo.setProjectCategoryName(projectCategoryMapper.selectByPrimaryKey(projectApplication.getProjectCategoryId()).getProjectCategoryName());
-                        projectInfo.setProjectName(projectApplication.getProjectName());
-                        projectInfo.setProjectApplicationId(projectApplication.getProjectApplicationId());
-                        projectInfo.setDescription(projectApplication.getProjectDescription());
-                        projectInfo.setDepartment(projectApplication.getDepartment());
-                        projectInfo.setUploadAddress(projectApplication.getProjectApplicationUploadAddress());
-                        proList.add(projectInfo);
-                    }
-                }else{
-                    return ResultTool.error("暂无待审核信息!");
-                }
-            }
-            return ResultTool.success(proList);
-        }catch (Exception e){
-            return ResultTool.error("查询失败!");
+
+        ProjectCategoryExample example = new ProjectCategoryExample();
+        example.createCriteria()
+                .andReviewLeaderIdEqualTo(userId)
+                .andApplicationEndTimeGreaterThan(new Date());
+        List<ProjectCategory> list = projectCategoryMapper.selectByExample(example);
+        if(list.isEmpty()) {
+            return ResultTool.error("您没有下属业务员创建项目大类");
         }
+        List<AdminJudgeTotalInfo> resList = new LinkedList<>();
+        for(ProjectCategory category : list) {
+            ProjectApplicationExample applicationExample = new ProjectApplicationExample();
+            applicationExample.createCriteria()
+                    .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
+                    .andReviewPhaseEqualTo(4);
+            List<ProjectApplication> applicationList = projectApplicationMapper
+                    .selectByExample(applicationExample);
+            if (applicationList.isEmpty()) continue;
+            for (ProjectApplication application : applicationList) {
+                AdminJudgeTotalInfo res = new AdminJudgeTotalInfo();
+                res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
+                res.setProjectCategoryId(category.getProjectCategoryId());
+                res.setProjectCategoryName(category.getProjectCategoryName());
+                res.setProjectId(application.getProjectApplicationId());
+                res.setProjectApplicationDownloadAddress(application
+                        .getProjectApplicationUploadAddress());
+                res.setProjectName(application.getProjectName());
+                res.setDescription(application.getProjectDescription());
+                res.setExpertOpinion(adminService.getExpertOpinionList(application.getProjectApplicationId()));
+                resList.add(res);
+            }
+        }
+        return ResultTool.success(resList);
 
     }
 
@@ -239,6 +243,7 @@ public class LeaderServiceImpl implements LeaderService {
         if(categoryList.isEmpty()) {
             return ResultTool.success("没有待终审项目");
         }
+        List<FinalReportInfo> resList = new LinkedList<>();
         for(ProjectCategory projectCategory : categoryList) {
             ProjectProgressExample example1 = new ProjectProgressExample();
             example1.createCriteria()
@@ -246,7 +251,12 @@ public class LeaderServiceImpl implements LeaderService {
                     .andProjectProcessEqualTo(FINAL_PROGRESS);
             List<ProjectProgress> progressList = projectProgressMapper.selectByExample(example1);
             if(progressList.isEmpty()) continue;
-
+            FinalReportInfo info = new FinalReportInfo();
+//            info.setDepartment();
+//            info.setDescription();
+//            info.setProjectApplicationId();
+//            info.setProjectCategoryId();
+//            info.setProjectApplicationId();
 
         }
 

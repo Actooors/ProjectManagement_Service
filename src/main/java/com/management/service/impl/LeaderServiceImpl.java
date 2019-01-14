@@ -2,6 +2,7 @@ package com.management.service.impl;
 
 import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
+import com.management.dao.ProjectProgressMapper;
 import com.management.dao.UserMapper;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
@@ -32,6 +33,9 @@ public class LeaderServiceImpl implements LeaderService {
 
     @Resource
     private ProjectApplicationMapper projectApplicationMapper;
+
+    @Resource
+    private ProjectProgressMapper projectProgressMapper;
 
     @Resource
     private UserMapper userMapper;
@@ -177,14 +181,24 @@ public class LeaderServiceImpl implements LeaderService {
     public Result judgeProjectApplication(LeaderJudgeInfo leaderJudgeInfo){
         try{
             ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(leaderJudgeInfo.getProjectApplicationId());
-            if(leaderJudgeInfo.getJudge().equals(true)){
+            if(leaderJudgeInfo.getJudge()){
                 projectApplication.setReviewPhase(5);
+
+                ProjectProgress projectProgress = new ProjectProgress();
+                projectProgress.setIsFinishedConcludingReport(2);
+                projectProgress.setIsFinishedInterimReport(2);
+                projectProgress.setProjectProcess(1);
+                projectProgress.setUserId(projectApplication.getUserId());
+                try {
+                    projectProgressMapper.insert(projectProgress);
+                } catch (Exception e) {
+                    return ResultTool.error("审核通过后创建项目的projectprogress失败，理由为" + e.toString());
+                }
             }else {
                 projectApplication.setReviewPhase(6);
                 projectApplication.setFailureReason(leaderJudgeInfo.getMsg());
             }
             projectApplicationMapper.updateByPrimaryKey(projectApplication);
-
             return ResultTool.success();
         }catch (Exception e){
             return ResultTool.error("操作失败!");

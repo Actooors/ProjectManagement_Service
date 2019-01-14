@@ -20,8 +20,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.management.model.ov.resultsetting.ConstCorrespond.FINISH_PROGRESS_FAILED;
-import static com.management.model.ov.resultsetting.ConstCorrespond.FINISH_PROJECT;
+import static com.management.model.ov.resultsetting.ConstCorrespond.*;
 
 /**
  * @program: management
@@ -173,6 +172,9 @@ public class LeaderServiceImpl implements LeaderService {
 
     }
 
+
+
+
     /**
      * @Description: 领导审核待审核的用户项目申请
      * @Param: [projectApplicationId]
@@ -192,7 +194,12 @@ public class LeaderServiceImpl implements LeaderService {
                 projectProgress.setIsFinishedConcludingReport(2);
                 projectProgress.setIsFinishedInterimReport(2);
                 projectProgress.setProjectProcess(1);
+                projectProgress.setProjectCategoryId(projectApplication.getProjectCategoryId());
                 projectProgress.setUserId(projectApplication.getUserId());
+                projectProgress.setProjectName(projectApplication.getProjectName());
+                projectProgress.setDescription(projectApplication.getProjectDescription());
+                projectProgress.setUserName(projectApplication.getUserName());
+                projectProgress.setDepartment(projectApplication.getDepartment());
                 try {
                     projectProgressMapper.insert(projectProgress);
                 } catch (Exception e) {
@@ -221,5 +228,29 @@ public class LeaderServiceImpl implements LeaderService {
         }
         projectProgressMapper.updateByPrimaryKeySelective(projectProgress);
         return ResultTool.success();
+    }
+
+    @Override
+    public Result findWaitFinalJudgeList(String leaderId) {
+        ProjectCategoryExample example = new ProjectCategoryExample();
+        example.createCriteria()
+                .andReviewLeaderIdEqualTo(leaderId);
+        List<ProjectCategory> categoryList = projectCategoryMapper.selectByExample(example);
+        if(categoryList.isEmpty()) {
+            return ResultTool.success("没有待终审项目");
+        }
+        for(ProjectCategory projectCategory : categoryList) {
+            ProjectProgressExample example1 = new ProjectProgressExample();
+            example1.createCriteria()
+                    .andProjectCategoryIdEqualTo(projectCategory.getProjectCategoryId())
+                    .andProjectProcessEqualTo(FINAL_PROGRESS);
+            List<ProjectProgress> progressList = projectProgressMapper.selectByExample(example1);
+            if(progressList.isEmpty()) continue;
+
+
+        }
+
+        return ResultTool.success();
+
     }
 }

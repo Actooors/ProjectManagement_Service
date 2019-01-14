@@ -13,6 +13,12 @@
     <result column="is_finished_concluding_report" property="isFinishedConcludingReport" jdbcType="INTEGER" />
     <result column="concluding_report_failure_reason" property="concludingReportFailureReason" jdbcType="VARCHAR" />
     <result column="project_process" property="projectProcess" jdbcType="INTEGER" />
+    <result column="project_category_id" property="projectCategoryId" jdbcType="INTEGER" />
+    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="upload_address" property="uploadAddress" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -76,7 +82,8 @@
     project_progress_id, user_id, interim_report_upload_address, interim_report_time, 
     is_finished_interim_report, interim_report_failure_reason, concluding_report_upload_address, 
     concluding_report_time, is_finished_concluding_report, concluding_report_failure_reason, 
-    project_process
+    project_process, project_category_id, project_name, description, user_name, department, 
+    upload_address
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectProgressExample" >
     select
@@ -114,13 +121,17 @@
       interim_report_time, is_finished_interim_report, 
       interim_report_failure_reason, concluding_report_upload_address, 
       concluding_report_time, is_finished_concluding_report, 
-      concluding_report_failure_reason, project_process
+      concluding_report_failure_reason, project_process, 
+      project_category_id, project_name, description, 
+      user_name, department, upload_address
       )
     values (#{projectProgressId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{interimReportUploadAddress,jdbcType=VARCHAR}, 
       #{interimReportTime,jdbcType=TIMESTAMP}, #{isFinishedInterimReport,jdbcType=INTEGER}, 
       #{interimReportFailureReason,jdbcType=VARCHAR}, #{concludingReportUploadAddress,jdbcType=VARCHAR}, 
       #{concludingReportTime,jdbcType=TIMESTAMP}, #{isFinishedConcludingReport,jdbcType=INTEGER}, 
-      #{concludingReportFailureReason,jdbcType=VARCHAR}, #{projectProcess,jdbcType=INTEGER}
+      #{concludingReportFailureReason,jdbcType=VARCHAR}, #{projectProcess,jdbcType=INTEGER}, 
+      #{projectCategoryId,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{uploadAddress,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.ProjectProgress" >
@@ -159,6 +170,24 @@
       <if test="projectProcess != null" >
         project_process,
       </if>
+      <if test="projectCategoryId != null" >
+        project_category_id,
+      </if>
+      <if test="projectName != null" >
+        project_name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="department != null" >
+        department,
+      </if>
+      <if test="uploadAddress != null" >
+        upload_address,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="projectProgressId != null" >
@@ -193,6 +222,24 @@
       </if>
       <if test="projectProcess != null" >
         #{projectProcess,jdbcType=INTEGER},
+      </if>
+      <if test="projectCategoryId != null" >
+        #{projectCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadAddress != null" >
+        #{uploadAddress,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -238,6 +285,24 @@
       <if test="record.projectProcess != null" >
         project_process = #{record.projectProcess,jdbcType=INTEGER},
       </if>
+      <if test="record.projectCategoryId != null" >
+        project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectName != null" >
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null" >
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadAddress != null" >
+        upload_address = #{record.uploadAddress,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -255,7 +320,13 @@
       concluding_report_time = #{record.concludingReportTime,jdbcType=TIMESTAMP},
       is_finished_concluding_report = #{record.isFinishedConcludingReport,jdbcType=INTEGER},
       concluding_report_failure_reason = #{record.concludingReportFailureReason,jdbcType=VARCHAR},
-      project_process = #{record.projectProcess,jdbcType=INTEGER}
+      project_process = #{record.projectProcess,jdbcType=INTEGER},
+      project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
+      project_name = #{record.projectName,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      upload_address = #{record.uploadAddress,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -293,6 +364,24 @@
       <if test="projectProcess != null" >
         project_process = #{projectProcess,jdbcType=INTEGER},
       </if>
+      <if test="projectCategoryId != null" >
+        project_category_id = #{projectCategoryId,jdbcType=INTEGER},
+      </if>
+      <if test="projectName != null" >
+        project_name = #{projectName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadAddress != null" >
+        upload_address = #{uploadAddress,jdbcType=VARCHAR},
+      </if>
     </set>
     where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
   </update>
@@ -307,7 +396,13 @@
       concluding_report_time = #{concludingReportTime,jdbcType=TIMESTAMP},
       is_finished_concluding_report = #{isFinishedConcludingReport,jdbcType=INTEGER},
       concluding_report_failure_reason = #{concludingReportFailureReason,jdbcType=VARCHAR},
-      project_process = #{projectProcess,jdbcType=INTEGER}
+      project_process = #{projectProcess,jdbcType=INTEGER},
+      project_category_id = #{projectCategoryId,jdbcType=INTEGER},
+      project_name = #{projectName,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      upload_address = #{uploadAddress,jdbcType=VARCHAR}
     where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
   </update>
 </mapper>

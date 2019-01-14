@@ -67,4 +67,14 @@ public interface LeaderService {
      * @Date: 2019-01-14
      */
     Result judgeFinalReport(LeaderJudgeInfo info);
+
+
+    /**
+     * @Description: 查找所有待领导终审的项目
+     * @Param: [leaderId]
+     * @Return: com.management.model.ov.Result
+     * @Author: 0GGmr0
+     * @Date: 2019-01-14
+     */
+    Result findWaitFinalJudgeList(String leaderId);
 }

@@ -55,31 +55,38 @@ create table tbl_ProjectCategory (
   charset = utf8;
 
 
-create table tbl_ProjectApplication (
-  project_application_id int primary key comment '标识id',
-  project_category_id int not null comment '对应项目大类的id',
-  project_name varchar(32) not null comment '项目名称',
-  project_member varchar(128) comment '项目成员,用|隔开。例如12|35中的12和35是项目成员表的project_member_id',
-  project_description varchar(256) not null comment '项目简介',
-  user_id varchar(8) not null comment '申请人工号',
-  user_name varchar(16) not null comment '申请人姓名',
-  sex varchar(2) comment '申请人性别',
-  department varchar(32) comment '申请人部门(学院)',
-  phone varchar(16) comment '电话',
-  mail varchar(32) comment '邮箱',
-  position varchar(8) comment '职称',
-  major varchar(32) comment '专业',
-  project_application_upload_address varchar(128) comment '项目申请书上传地址',
-  is_meeting int not null comment '是否上会 1上会 2不上会',
-  meeting_review_message varchar(256) comment '会评意见',
-  review_phase int not null default 1 comment '项目申请审核阶段
+-- auto-generated definition
+create table tbl_ProjectApplication
+(
+  project_application_id             int(64) auto_increment comment '标识id'
+    primary key,
+  project_category_id                int                                 not null comment '对应项目大类的id',
+  project_name                       varchar(32)                         not null comment '项目名称',
+  project_member                     varchar(128)                        null comment '项目成员,用|隔开。例如12|35中的12和35是项目成员表的project_member_id',
+  project_description                varchar(256)                        not null comment '项目简介',
+  user_id                            varchar(8)                          not null comment '申请人工号',
+  user_name                          varchar(16)                         not null comment '申请人姓名',
+  sex                                varchar(2)                          null comment '申请人性别',
+  department                         varchar(32)                         null comment '申请人部门(学院)',
+  phone                              varchar(16)                         null comment '电话',
+  mail                               varchar(32)                         null comment '邮箱',
+  position                           varchar(8)                          null comment '职称',
+  major                              varchar(32)                         null comment '专业',
+  project_application_upload_address varchar(128)                        null comment '项目申请书上传地址',
+  is_meeting                         int                                 not null comment '是否上会 1上会 2不上会',
+  meeting_review_message             varchar(256)                        null comment '会评意见',
+  review_phase                       int       default 1                 not null comment '项目申请审核阶段
                             1业务员审核阶段 2评审专家审核阶段 3会评阶段
                             4领导审核阶段 5审核通过 6审核失败',
-  failure_reason varchar(256) comment '申请失败的时候的失败原因',
-  application_time timestamp default current_timestamp comment '申请递交时间'
+  failure_reason                     varchar(256)                        null comment '申请失败的时候的失败原因',
+  application_time                   timestamp default CURRENT_TIMESTAMP not null comment '申请递交时间',
+  application_deadline               timestamp default CURRENT_TIMESTAMP null,
+  middle_deadline                    timestamp default CURRENT_TIMESTAMP null,
+  final_deadline                     timestamp default CURRENT_TIMESTAMP null,
+  project_deadline                   timestamp default CURRENT_TIMESTAMP null
+)
+  comment '项目申请表' charset = utf8;
 
-) comment '项目申请表'
-  charset = utf8;
 
 
 create table tbl_ProjectMember (

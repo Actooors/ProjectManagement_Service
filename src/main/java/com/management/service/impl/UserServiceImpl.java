@@ -546,13 +546,15 @@ public class UserServiceImpl implements UserService {
                 resApplication.getProjectApplicationUploadAddress());
         res.setApplicationId(resApplication.getProjectApplicationId());
         res.setProjectCategoryId(resApplication.getProjectCategoryId());
-        if(resProgress.getIsFinishedInterimReport() == 1) {
-            res.setInterimAddress(ConstCorrespond.downloadAddress +
-                    resProgress.getInterimReportUploadAddress());
-        }
-        if(resProgress.getIsFinishedConcludingReport() == 1) {
-            res.setConcludingAddress(ConstCorrespond.downloadAddress +
-                    resProgress.getConcludingReportUploadAddress());
+        if(resProgress != null) {
+            if (resProgress.getIsFinishedInterimReport() == 1) {
+                res.setInterimAddress(ConstCorrespond.downloadAddress +
+                        resProgress.getInterimReportUploadAddress());
+            }
+            if (resProgress.getIsFinishedConcludingReport() == 1) {
+                res.setConcludingAddress(ConstCorrespond.downloadAddress +
+                        resProgress.getConcludingReportUploadAddress());
+            }
         }
         res.setDescription(resApplication.getProjectDescription());
         res.setProjectName(resApplication.getProjectName());

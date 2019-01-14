@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 public class ExpertOpinionMain {
-    private List<ExpertOpinionInfo> expertOpinion;
+    private List<ExpertOpinionInfo> expertOpinionInfoList;
     private int totalNum;
     private int finishNum;
     private double percentage;

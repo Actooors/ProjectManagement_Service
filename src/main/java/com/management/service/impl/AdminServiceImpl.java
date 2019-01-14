@@ -519,7 +519,7 @@ public class AdminServiceImpl implements AdminService {
             totalNum++;
         }
         ExpertOpinionMain res = new ExpertOpinionMain();
-        res.setExpertOpinion(list);
+        res.setExpertOpinionInfoList(list);
         res.setFinishNum(finishNum);
         res.setTotalNum(totalNum);
         if(totalNum != 0) {

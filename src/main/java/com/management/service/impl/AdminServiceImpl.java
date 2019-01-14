@@ -445,7 +445,7 @@ public class AdminServiceImpl implements AdminService {
     public Result meetingReview(MeetingResult info) {
         ProjectApplication application =projectApplicationMapper
                 .selectByPrimaryKey(info.getApplicationId());
-        if(info.getIsPassed()) {
+        if(info.getJudge()) {
             application.setReviewPhase(LEADER_REVIEW);
             application.setMeetingReviewMessage(info.getMsg());
         } else {
@@ -567,5 +567,7 @@ public class AdminServiceImpl implements AdminService {
         return ResultTool.success(getExpertOpinionList(projectId));
 
     }
+
+
 
 }

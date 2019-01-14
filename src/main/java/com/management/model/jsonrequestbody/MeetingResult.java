@@ -11,6 +11,6 @@ import lombok.Data;
 @Data
 public class MeetingResult {
     private int applicationId;
-    private Boolean isPassed;
+    private Boolean judge;
     private String msg;
 }

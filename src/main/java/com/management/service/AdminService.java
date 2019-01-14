@@ -135,4 +135,6 @@ public interface AdminService {
      */
     Result queryOneProjectCategory(Integer projectCategoryId);
 
+
+//    Result createMiddleReport(ReportMessage reportMessage);
 }

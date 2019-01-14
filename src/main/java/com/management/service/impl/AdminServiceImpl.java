@@ -483,26 +483,17 @@ public class AdminServiceImpl implements AdminService {
                         .getProjectApplicationUploadAddress());
                 res.setProjectName(application.getProjectName());
                 res.setDescription(application.getProjectDescription());
+                if(reviewPhase == EXPERT_REVIEW) {
+                    res.setExpertOpinion(getExpertOpinionList(application.getProjectApplicationId()));
+                }
                 resList.add(res);
             }
         }
         return ResultTool.success(resList);
     }
 
-    /**
-     * @Description: expertOpinionList接口的实现
-     * @Param: [projectId]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-8-1
-     */
-    @Override
-    public Result expertOpinionList(int projectId) {
-        ProjectApplication projectApplication = projectApplicationMapper
-                .selectByPrimaryKey(projectId);
-        if (projectApplication == null) {
-            return ResultTool.error("给予的项目id有误");
-        }
+
+    private List<ExpertOpinionInfo> getExpertOpinionList(int projectId) {
         ReviewExpertExample reviewExpertExample = new ReviewExpertExample();
         reviewExpertExample.createCriteria()
                 .andProjectApplicationIdEqualTo(projectId);
@@ -521,7 +512,21 @@ public class AdminServiceImpl implements AdminService {
             }
             list.add(expertOpinionInfo);
         }
-        return ResultTool.success(list);
+        return list;
+    }
+
+
+    /**
+     * @Description: expertOpinionList接口的实现
+     * @Param: [projectId]
+     * @Return: com.management.model.ov.Result
+     * @Author: ggmr
+     * @Date: 18-8-1
+     */
+    @Override
+    public Result expertOpinionList(int projectId) {
+
+        return ResultTool.success(getExpertOpinionList(projectId));
 
     }
 

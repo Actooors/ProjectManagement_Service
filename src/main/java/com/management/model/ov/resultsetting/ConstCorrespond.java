@@ -54,8 +54,10 @@ public class ConstCorrespond {
             "ROLE_SUPERADMIN"
     };
 
-    public final static int MIDDLE_PROGRESS = 1;
-    public final static int FINAL_PROGRESS = 1;
+    public final static int MIDDLE_PROGRESS = 2;
+    public final static int FINAL_PROGRESS = 3;
+    public final static int FINISH_PROGRESS_FAILED = 5;
+    public final static int FINISH_PROJECT = 4;
 
     public static final String TOKEN_HEAD = "Bearer ";
 }

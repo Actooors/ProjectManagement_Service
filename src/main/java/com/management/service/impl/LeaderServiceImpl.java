@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.management.model.ov.resultsetting.ConstCorrespond.FINISH_PROGRESS_FAILED;
+import static com.management.model.ov.resultsetting.ConstCorrespond.FINISH_PROJECT;
+
 /**
  * @program: management
  * @description: 领导层接口的实现
@@ -185,6 +188,7 @@ public class LeaderServiceImpl implements LeaderService {
                 projectApplication.setReviewPhase(5);
 
                 ProjectProgress projectProgress = new ProjectProgress();
+                projectProgress.setProjectProgressId(projectApplication.getProjectApplicationId());
                 projectProgress.setIsFinishedConcludingReport(2);
                 projectProgress.setIsFinishedInterimReport(2);
                 projectProgress.setProjectProcess(1);
@@ -205,4 +209,17 @@ public class LeaderServiceImpl implements LeaderService {
         }
     }
 
+    @Override
+    public Result judgeFinalReport(LeaderJudgeInfo info) {
+        ProjectProgress projectProgress = projectProgressMapper.selectByPrimaryKey(info.getProjectApplicationId());
+        if(info.getJudge()) {
+            projectProgress.setProjectProcess(FINISH_PROJECT);
+        } else {
+            projectProgress.setProjectProcess(FINISH_PROGRESS_FAILED);
+            projectProgress.setConcludingReportFailureReason(info.getMsg());
+            projectProgress.setIsFinishedConcludingReport(2);
+        }
+        projectProgressMapper.updateByPrimaryKeySelective(projectProgress);
+        return ResultTool.success();
+    }
 }

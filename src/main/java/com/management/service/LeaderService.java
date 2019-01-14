@@ -58,4 +58,13 @@ public interface LeaderService {
      */
     Result judgeProjectApplication(LeaderJudgeInfo leaderJudgeInfo);
 
+
+    /**
+     * @Description: 领导审核结题报告
+     * @Param: [info]
+     * @Return: com.management.model.ov.Result
+     * @Author: 0GGmr0
+     * @Date: 2019-01-14
+     */
+    Result judgeFinalReport(LeaderJudgeInfo info);
 }

@@ -513,27 +513,7 @@ public class UserServiceImpl implements UserService {
         return ResultTool.success(res);
     }
 
-    @Override
-    public Result commitReport(CommitInfo info) {
-        ProjectProgress progress = projectProgressMapper
-                .selectByPrimaryKey(info.getApplicationId());
-        String uploadAddress = info.getUploadAddress();
-        int type = info.getType();
-        if(type == 1) {
-            //中期报告
-            progress.setInterimReportUploadAddress(uploadAddress);
-            progress.setIsFinishedInterimReport(1);
-            progress.setInterimReportTime(new Date());
-            progress.setProjectProcess(FINAL_PROGRESS);
-        } else if(type == 2) {
-            //结题报告
-            progress.setConcludingReportUploadAddress(uploadAddress);
-            progress.setConcludingReportTime(new Date());
-            progress.setIsFinishedConcludingReport(1);
-        }
-        projectProgressMapper.updateByPrimaryKeySelective(progress);
-        return ResultTool.success();
-    }
+
 
     @Override
     public Result findMoreInfo(int applicationId) {
@@ -587,4 +567,28 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    /**
+     * @Description: 用户提交中期报告或者结题报告
+     * @Param: [info]
+     * @Return: com.management.model.ov.Result
+     * @Author: 0GGmr0
+     * @Date: 2019-01-14
+     */
+    @Override
+    public Result commitReport(PostReportInfo info) {
+        ProjectProgress application = projectProgressMapper.selectByPrimaryKey(info.getApplicationId());
+        if(info.getType() == 1) {
+            application.setIsFinishedInterimReport(1);
+            application.setInterimReportUploadAddress(info.getReportAddress());
+            application.setInterimReportTime(new Date());
+            application.setProjectProcess(MIDDLE_PROGRESS);
+        } else {
+            application.setIsFinishedConcludingReport(1);
+            application.setConcludingReportUploadAddress(info.getReportAddress());
+            application.setConcludingReportTime(new Date());
+            application.setProjectProcess(FINAL_PROGRESS);
+        }
+        projectProgressMapper.updateByPrimaryKeySelective(application);
+        return ResultTool.success();
+    }
 }

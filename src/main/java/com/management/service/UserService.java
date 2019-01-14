@@ -140,7 +140,7 @@ public interface UserService {
      * @Author: ggmr
      * @Date: 2018/12/26
      */
-    Result commitReport(CommitInfo info);
+    Result commitReport(PostReportInfo info);
     
     /**
      * @Description: 查看用户项目详情

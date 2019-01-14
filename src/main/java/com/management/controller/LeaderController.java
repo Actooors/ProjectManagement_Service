@@ -63,4 +63,10 @@ public class LeaderController {
     public Result JudgeApplication(@RequestBody LeaderJudgeInfo leaderJudgeInfo){
         return leaderService.judgeProjectApplication(leaderJudgeInfo);
     }
+
+    @PostMapping("/JudgeReport")
+    @ApiOperation(value = "领导审核结题报告")
+    public Result judgeFinalReport(@RequestBody LeaderJudgeInfo leaderJudgeInfo){
+        return leaderService.judgeFinalReport(leaderJudgeInfo);
+    }
 }

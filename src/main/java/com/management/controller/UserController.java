@@ -1,14 +1,13 @@
 package com.management.controller;
 
 import com.management.model.entity.User;
-import com.management.model.jsonrequestbody.CommitInfo;
 import com.management.model.jsonrequestbody.DeleteApplication;
 import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
+import com.management.model.jsonrequestbody.PostReportInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
 import com.management.security.UserContext;
 import com.management.service.UserService;
-import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -120,7 +119,7 @@ public class UserController {
 
     @PostMapping("/commitReport")
     @ApiOperation(value = "用户提交中期报告和结题报告")
-    public Result deleteApplication(@RequestBody CommitInfo info){
+    public Result deleteApplication(@RequestBody PostReportInfo info){
 
         return userService.commitReport(info);
     }
@@ -131,5 +130,7 @@ public class UserController {
 
         return userService.findMoreInfo(applicationId);
     }
+
+
 
 }

@@ -495,15 +495,29 @@ public class UserServiceImpl implements UserService {
             //从项目大类表中查询到相应的时间
             ProjectCategory projectCategory = projectCategoryMapper
                     .selectByPrimaryKey(application.getProjectCategoryId());
+            //获取当前时间,只给用户提供在中期报告和结题报告提交时间段内的项目
+            Date nowTime = new Date();
             if(progress.getProjectProcess() == 2) {
-                info.setTime(timeToString1(projectCategory.getInterimReportEndTime()));
-                middleProject.add(info);
+                Date InterimReportEndTime = projectCategory.getInterimReportEndTime();
+                Date InterimReportStartTime = projectCategory.getInterimReportStartTime();
+                if(InterimReportEndTime.after(nowTime) &&  InterimReportStartTime.before(nowTime)){
+                    info.setTime(timeToString1(InterimReportEndTime));
+                    middleProject.add(info);
+                }
             } else if(progress.getProjectProcess() == 3) {
-                info.setTime(timeToString1(projectCategory.getConcludingReportEndTime()));
-                finalProject.add(info);
+                Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
+                Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();
+                if(ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
+                    info.setTime(timeToString1(ConcludingReportEndTime));
+                    finalProject.add(info);
+                }
             } else if(progress.getProjectProcess() == 4){
-                info.setTime(timeToString1(projectCategory.getProjectEndTime()));
-                finishProject.add(info);
+                Date ProjectStartTime = projectCategory.getProjectStartTime();
+                Date ProjectEndTime = projectCategory.getProjectEndTime();
+                if(ProjectStartTime.before(nowTime) && ProjectEndTime.after(nowTime)){
+                    info.setTime(timeToString1(projectCategory.getProjectEndTime()));
+                    finishProject.add(info);
+                }
             } else {
                 info.setTime(timeToString1(progress.getProjectcreatetime()));
                 buildProject.add(info);

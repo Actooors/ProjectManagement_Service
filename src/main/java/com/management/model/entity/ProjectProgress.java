@@ -35,6 +35,8 @@ public class ProjectProgress {
 
     private String department;
 
+    private Date projectcreatetime;
+
     public Integer getProjectProgressId() {
         return projectProgressId;
     }
@@ -161,5 +163,13 @@ public class ProjectProgress {
 
     public void setDepartment(String department) {
         this.department = department == null ? null : department.trim();
+    }
+
+    public Date getProjectcreatetime() {
+        return projectcreatetime;
+    }
+
+    public void setProjectcreatetime(Date projectcreatetime) {
+        this.projectcreatetime = projectcreatetime;
     }
 }

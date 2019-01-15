@@ -1154,6 +1154,66 @@ public class ProjectProgressExample {
             addCriterion("department not between", value1, value2, "department");
             return (Criteria) this;
         }
+
+        public Criteria andProjectcreatetimeIsNull() {
+            addCriterion("projectCreateTime is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeIsNotNull() {
+            addCriterion("projectCreateTime is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeEqualTo(Date value) {
+            addCriterion("projectCreateTime =", value, "projectcreatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeNotEqualTo(Date value) {
+            addCriterion("projectCreateTime <>", value, "projectcreatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeGreaterThan(Date value) {
+            addCriterion("projectCreateTime >", value, "projectcreatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("projectCreateTime >=", value, "projectcreatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeLessThan(Date value) {
+            addCriterion("projectCreateTime <", value, "projectcreatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeLessThanOrEqualTo(Date value) {
+            addCriterion("projectCreateTime <=", value, "projectcreatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeIn(List<Date> values) {
+            addCriterion("projectCreateTime in", values, "projectcreatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeNotIn(List<Date> values) {
+            addCriterion("projectCreateTime not in", values, "projectcreatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeBetween(Date value1, Date value2) {
+            addCriterion("projectCreateTime between", value1, value2, "projectcreatetime");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectcreatetimeNotBetween(Date value1, Date value2) {
+            addCriterion("projectCreateTime not between", value1, value2, "projectcreatetime");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

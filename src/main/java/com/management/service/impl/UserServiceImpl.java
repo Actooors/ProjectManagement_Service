@@ -492,17 +492,20 @@ public class UserServiceImpl implements UserService {
             info.setProjectName(application.getProjectName());
             info.setReviewPhase(ConstCorrespond
                     .PROJECT_PROGRESS[progress.getProjectProcess()]);
+            //从项目大类表中查询到相应的时间
+            ProjectCategory projectCategory = projectCategoryMapper
+                    .selectByPrimaryKey(application.getProjectCategoryId());
             if(progress.getProjectProcess() == 2) {
-                info.setTime(timeToString1(application.getMiddleDeadline()));
+                info.setTime(timeToString1(projectCategory.getInterimReportEndTime()));
                 middleProject.add(info);
             } else if(progress.getProjectProcess() == 3) {
-                info.setTime(timeToString1(application.getFinalDeadline()));
+                info.setTime(timeToString1(projectCategory.getConcludingReportEndTime()));
                 finalProject.add(info);
             } else if(progress.getProjectProcess() == 4){
-                info.setTime(timeToString1(application.getProjectDeadline()));
+                info.setTime(timeToString1(projectCategory.getProjectEndTime()));
                 finishProject.add(info);
             } else {
-                info.setTime(timeToString1(application.getProjectDeadline()));
+                info.setTime(timeToString1(progress.getProjectcreatetime()));
                 buildProject.add(info);
             }
         }

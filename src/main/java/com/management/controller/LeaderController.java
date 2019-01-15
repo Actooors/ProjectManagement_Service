@@ -53,7 +53,7 @@ public class LeaderController {
 
     @GetMapping("/unjudgeApplicatetion/{type}")
     @ApiOperation(value = "领导查找项目申请")
-    public Result findUnJudgeProjectApplicatetion(@PathVariable(value = "type") int type){
+    public Result findUnJudgeProjectApplication(@PathVariable(value = "type") int type){
         String leaderId = UserContext.getCurrentUser().getUserId();
         return leaderService.findUnJudgeProjectApplication(leaderId,type);
     }

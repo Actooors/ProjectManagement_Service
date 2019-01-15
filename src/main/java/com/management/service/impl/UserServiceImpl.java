@@ -500,14 +500,14 @@ public class UserServiceImpl implements UserService {
             if(progress.getIsFinishedInterimReport() == 2) {
                 Date InterimReportEndTime = projectCategory.getInterimReportEndTime();
                 Date InterimReportStartTime = projectCategory.getInterimReportStartTime();
-                if(InterimReportEndTime.after(nowTime) &&  InterimReportStartTime.before(nowTime)){
+                if(projectCategory.getIsInterimReportActivated()==2 && InterimReportEndTime.after(nowTime) &&  InterimReportStartTime.before(nowTime)){
                     info.setTime(timeToString1(InterimReportEndTime));
                     middleProject.add(info);
                 }
             } else if(progress.getIsFinishedConcludingReport() == 2) {
                 Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
                 Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();
-                if(ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
+                if(projectCategory.getIsConcludingReportActivated()==2 &&ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
                     info.setTime(timeToString1(ConcludingReportEndTime));
                     finalProject.add(info);
                 }

@@ -497,14 +497,14 @@ public class UserServiceImpl implements UserService {
                     .selectByPrimaryKey(application.getProjectCategoryId());
             //获取当前时间,只给用户提供在中期报告和结题报告提交时间段内的项目
             Date nowTime = new Date();
-            if(progress.getProjectProcess() == 2) {
+            if(progress.getIsFinishedInterimReport() == 2) {
                 Date InterimReportEndTime = projectCategory.getInterimReportEndTime();
                 Date InterimReportStartTime = projectCategory.getInterimReportStartTime();
                 if(InterimReportEndTime.after(nowTime) &&  InterimReportStartTime.before(nowTime)){
                     info.setTime(timeToString1(InterimReportEndTime));
                     middleProject.add(info);
                 }
-            } else if(progress.getProjectProcess() == 3) {
+            } else if(progress.getIsFinishedConcludingReport() == 2) {
                 Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
                 Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();
                 if(ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){

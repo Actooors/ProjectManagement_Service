@@ -161,8 +161,7 @@ public class LeaderServiceImpl implements LeaderService {
                 res.setProjectCategoryId(category.getProjectCategoryId());
                 res.setProjectCategoryName(category.getProjectCategoryName());
                 res.setProjectId(application.getProjectApplicationId());
-                res.setProjectApplicationDownloadAddress(application
-                        .getProjectApplicationUploadAddress());
+                res.setProjectApplicationDownloadAddress(application.getProjectApplicationUploadAddress());
                 res.setProjectName(application.getProjectName());
                 res.setDescription(application.getProjectDescription());
                 res.setExpertOpinion(adminService.getExpertOpinionList(application.getProjectApplicationId()));
@@ -256,6 +255,7 @@ public class LeaderServiceImpl implements LeaderService {
                 info.setProjectCategoryId(progress.getProjectCategoryId());
                 info.setProjectCategoryName(progress.getProjectName());
                 info.setProjectName(progress.getProjectName());
+                info.setProjectApplicationDownloadAddress(projectApplicationMapper.selectByPrimaryKey(progress.getProjectProgressId()).getProjectApplicationUploadAddress());
                 info.setConcludingReportEndTime(timetoString(projectCategory.getConcludingReportEndTime()));
                 //info.setReportAddress(progress.getConcludingReportUploadAddress());
                 info.setExpertOpinion(adminService.getExpertOpinionList(progress.getProjectProgressId()));

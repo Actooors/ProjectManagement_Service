@@ -22,7 +22,6 @@ public class FinalReportInfo {
     private String userId;
     private String userName;
     private String department;
-    private String concludingReportStartTime;
     private String concludingReportEndTime;
     private ExpertOpinionMain expertOpinion;
 }

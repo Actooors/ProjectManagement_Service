@@ -49,6 +49,7 @@ public class LeaderServiceImpl implements LeaderService {
 
     private static final int STATE_TWO = 2;
     private static final int STATE_THREE = 3;
+
     /**
      * @Description: isProjectCategoryPassed接口的实现
      * @Param: [info]
@@ -60,11 +61,11 @@ public class LeaderServiceImpl implements LeaderService {
     public Result isProjectCategoryPassed(IsProjectCategoryPassedPostInfo info) {
         Integer projectCategoryId = info.getProjectCategoryId();
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectCategoryId);
-        if(projectCategory == null) {
+        if (projectCategory == null) {
             return ResultTool.error("不存在这个id的项目大类");
         }
         Integer isPassed = info.getIsPassed();
-        if(isPassed == STATE_TWO) {
+        if (isPassed == STATE_TWO) {
             projectCategory.setFailureReason(info.getMessage());
         }
         projectCategory.setIsApproved(isPassed);
@@ -85,11 +86,11 @@ public class LeaderServiceImpl implements LeaderService {
         userExample.createCriteria()
                 .andLeaderIdEqualTo(leaderId);
         List<User> list = userMapper.selectByExample(userExample);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return ResultTool.error("领导并没有业务员下属");
         }
         List<LeaderSubordinateInfo> resList = new LinkedList<>();
-        for(User user : list) {
+        for (User user : list) {
             LeaderSubordinateInfo res = new LeaderSubordinateInfo();
             res.setPhone(user.getPhone());
             res.setUserId(user.getUserId());
@@ -113,11 +114,11 @@ public class LeaderServiceImpl implements LeaderService {
                 .andReviewLeaderIdEqualTo(leaderId)
                 .andIsApprovedEqualTo(STATE_THREE);
         List<ProjectCategory> list = projectCategoryMapper.selectByExample(pExacmple);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return ResultTool.error("当前并没有需要处理的项目大类申请");
         }
         List<WaitJudgeProjectCategoryInfo> resList = new LinkedList<>();
-        for(ProjectCategory projectCategory : list) {
+        for (ProjectCategory projectCategory : list) {
             WaitJudgeProjectCategoryInfo res = new WaitJudgeProjectCategoryInfo();
             res.setAdminId(projectCategory.getPrincipalId());
             res.setAdminName(projectCategory.getPrincipalName());
@@ -130,30 +131,41 @@ public class LeaderServiceImpl implements LeaderService {
     }
 
     /**
-     * @Description: 查找待审核的项目申请信息
+     * @Description: 查找负责的项目申请信息 type=1: 待审核的项目申请 type=2: 审核通过的项目申请 type=3:审核不通过的项目申请
      * @Param: [userId]
      * @Return: com.management.model.ov.Result
      * @Author: xw
      * @Date: 18-12-27
      */
-    public Result findUnJudgeProjectApplication(String userId){
+    public Result findUnJudgeProjectApplication(String userId,int type) {
 
         ProjectCategoryExample example = new ProjectCategoryExample();
         example.createCriteria()
                 .andReviewLeaderIdEqualTo(userId)
                 .andApplicationEndTimeGreaterThan(new Date());
         List<ProjectCategory> list = projectCategoryMapper.selectByExample(example);
-        if(list.isEmpty()) {
+        if (list.isEmpty()) {
             return ResultTool.error("您没有下属业务员创建项目大类");
         }
         List<AdminJudgeTotalInfo> resList = new LinkedList<>();
-        for(ProjectCategory category : list) {
+        for (ProjectCategory category : list) {
             ProjectApplicationExample applicationExample = new ProjectApplicationExample();
-            applicationExample.createCriteria()
-                    .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
-                    .andReviewPhaseEqualTo(4);
-            List<ProjectApplication> applicationList = projectApplicationMapper
-                    .selectByExample(applicationExample);
+            if(type == 1){
+                applicationExample.createCriteria()
+                        .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
+                        .andReviewPhaseEqualTo(4);
+            }
+            if(type == 2){
+                applicationExample.createCriteria()
+                        .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
+                        .andReviewPhaseEqualTo(5);
+            }
+            if(type == 3){
+                applicationExample.createCriteria()
+                        .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
+                        .andReviewPhaseEqualTo(6);
+            }
+            List<ProjectApplication> applicationList = projectApplicationMapper.selectByExample(applicationExample);
             if (applicationList.isEmpty()) continue;
             for (ProjectApplication application : applicationList) {
                 AdminJudgeTotalInfo res = new AdminJudgeTotalInfo();
@@ -169,11 +181,7 @@ public class LeaderServiceImpl implements LeaderService {
             }
         }
         return ResultTool.success(resList);
-
     }
-
-
-
 
     /**
      * @Description: 领导审核待审核的用户项目申请
@@ -183,10 +191,10 @@ public class LeaderServiceImpl implements LeaderService {
      * @Date: 18-12-27
      */
     @Override
-    public Result judgeProjectApplication(LeaderJudgeInfo leaderJudgeInfo){
-        try{
+    public Result judgeProjectApplication(LeaderJudgeInfo leaderJudgeInfo) {
+        try {
             ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(leaderJudgeInfo.getProjectApplicationId());
-            if(leaderJudgeInfo.getJudge()){
+            if (leaderJudgeInfo.getJudge()) {
                 projectApplication.setReviewPhase(5);
 
                 ProjectProgress projectProgress = new ProjectProgress();
@@ -205,13 +213,13 @@ public class LeaderServiceImpl implements LeaderService {
                 } catch (Exception e) {
                     return ResultTool.error("审核通过后创建项目的projectprogress失败，理由为" + e.toString());
                 }
-            }else {
+            } else {
                 projectApplication.setReviewPhase(6);
                 projectApplication.setFailureReason(leaderJudgeInfo.getMsg());
             }
             projectApplicationMapper.updateByPrimaryKey(projectApplication);
             return ResultTool.success();
-        }catch (Exception e){
+        } catch (Exception e) {
             return ResultTool.error("操作失败!");
         }
     }
@@ -219,7 +227,7 @@ public class LeaderServiceImpl implements LeaderService {
     @Override
     public Result judgeFinalReport(LeaderJudgeInfo info) {
         ProjectProgress projectProgress = projectProgressMapper.selectByPrimaryKey(info.getProjectApplicationId());
-        if(info.getJudge()) {
+        if (info.getJudge()) {
             projectProgress.setProjectProcess(FINISH_PROJECT);
         } else {
             projectProgress.setProjectProcess(FINISH_PROGRESS_FAILED);
@@ -236,18 +244,18 @@ public class LeaderServiceImpl implements LeaderService {
         example.createCriteria()
                 .andReviewLeaderIdEqualTo(leaderId);
         List<ProjectCategory> categoryList = projectCategoryMapper.selectByExample(example);
-        if(categoryList.isEmpty()) {
+        if (categoryList.isEmpty()) {
             return ResultTool.success("没有待终审项目");
         }
         List<FinalReportInfo> resList = new LinkedList<>();
-        for(ProjectCategory projectCategory : categoryList) {
+        for (ProjectCategory projectCategory : categoryList) {
             ProjectProgressExample example1 = new ProjectProgressExample();
             example1.createCriteria()
                     .andProjectCategoryIdEqualTo(projectCategory.getProjectCategoryId())
                     .andProjectProcessEqualTo(FINAL_PROGRESS);
             List<ProjectProgress> progressList = projectProgressMapper.selectByExample(example1);
-            if(progressList.isEmpty()) continue;
-            for(ProjectProgress progress : progressList) {
+            if (progressList.isEmpty()) continue;
+            for (ProjectProgress progress : progressList) {
                 FinalReportInfo info = new FinalReportInfo();
                 info.setDepartment(progress.getDepartment());
                 info.setDescription(progress.getDescription());

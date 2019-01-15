@@ -51,11 +51,11 @@ public class LeaderController {
         return leaderService.waitJudgeProjectCategoryList(leaderId);
     }
 
-    @GetMapping("/unjudgeApplicatetion")
-    @ApiOperation(value = "领导查找待审核项目申请")
-    public Result findUnJudgeProjectApplicatetion(){
+    @GetMapping("/unjudgeApplicatetion/{type}")
+    @ApiOperation(value = "领导查找项目申请")
+    public Result findUnJudgeProjectApplicatetion(@PathVariable(value = "type") int type){
         String leaderId = UserContext.getCurrentUser().getUserId();
-        return leaderService.findUnJudgeProjectApplication(leaderId);
+        return leaderService.findUnJudgeProjectApplication(leaderId,type);
     }
 
     @PostMapping("/JudgeApplication")

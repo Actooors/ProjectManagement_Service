@@ -41,13 +41,13 @@ public interface LeaderService {
     Result waitJudgeProjectCategoryList(String leaderId);
 
     /**
-     * @Description: 查找待审核的项目申请信息
+     * @Description: 查找负责的项目申请信息 type=1: 待审核的项目申请 type=2: 审核通过的项目申请 type=3:审核不通过的项目申请
      * @Param: [userId]
      * @Return: com.management.model.ov.Result
      * @Author: xw
      * @Date: 18-12-27
      */
-    Result findUnJudgeProjectApplication(String userId);
+    Result findUnJudgeProjectApplication(String userId,int type);
 
     /**
      * @Description: 领导审核待审核的用户项目申请
@@ -77,4 +77,5 @@ public interface LeaderService {
      * @Date: 2019-01-14
      */
     Result findWaitFinalJudgeList(String leaderId);
+
 }

@@ -16,11 +16,11 @@ public class FinalReportInfo {
     private int projectCategoryId;
     private String projectCategoryName;
 
-    private int projectApplicationId;
+    private int projectId;
     private String projectName;
     private String description;
     private String userId;
     private String userName;
     private String department;
-    private String reportAddress;
+    private ExpertOpinionMain expertOpinion;
 }

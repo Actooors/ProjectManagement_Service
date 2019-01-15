@@ -252,11 +252,12 @@ public class LeaderServiceImpl implements LeaderService {
                 FinalReportInfo info = new FinalReportInfo();
                 info.setDepartment(progress.getDepartment());
                 info.setDescription(progress.getDescription());
-                info.setProjectApplicationId(progress.getProjectProgressId());
+                info.setProjectId(progress.getProjectProgressId());
                 info.setProjectCategoryId(progress.getProjectCategoryId());
                 info.setProjectCategoryName(progress.getProjectName());
                 info.setProjectName(progress.getProjectName());
-                info.setReportAddress(progress.getConcludingReportUploadAddress());
+                //info.setReportAddress(progress.getConcludingReportUploadAddress());
+                info.setExpertOpinion(adminService.getExpertOpinionList(progress.getProjectProgressId()));
                 info.setUserId(progress.getUserId());
                 info.setUserName(progress.getUserName());
                 resList.add(info);

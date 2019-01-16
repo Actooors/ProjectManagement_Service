@@ -599,6 +599,9 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setConcludingReportEndTime(TimeTool.stringToTime(reportMessage.getDeadline()));
         }
         projectCategoryMapper.updateByPrimaryKey(projectCategory);
-        return ResultTool.success();
+        Map<String,String> time = new HashMap<String,String>();
+        time.put("startTime",TimeTool.timetoString(TimeTool.stringToTime(reportMessage.getStartTime())));
+        time.put("endTime",TimeTool.timetoString(TimeTool.stringToTime(reportMessage.getDeadline())));
+        return ResultTool.success(time);
     }
 }

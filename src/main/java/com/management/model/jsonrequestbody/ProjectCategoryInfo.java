@@ -21,7 +21,7 @@ public class ProjectCategoryInfo {
     private List<Integer> applicantType;
     private String maxMoney;
     private String projectApplicationDownloadAddress;
-    private Integer isExistMeetingReview;
+    private Boolean isExistMeetingReview;
     private String applicationStartTime;
     private String applicationEndTime;
     private String projectStartTime;

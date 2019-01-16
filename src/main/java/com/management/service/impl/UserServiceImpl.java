@@ -507,7 +507,7 @@ public class UserServiceImpl implements UserService {
             } else if(progress.getIsFinishedConcludingReport() == 2) {
                 Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
                 Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();
-                if(projectCategory.getIsConcludingReportActivated()==2 &&ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
+                if(projectCategory.getIsConcludingReportActivated()==2 && ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
                     info.setTime(timeToString1(ConcludingReportEndTime));
                     finalProject.add(info);
                 }

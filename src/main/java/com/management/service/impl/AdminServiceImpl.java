@@ -1,9 +1,6 @@
 package com.management.service.impl;
 
-import com.management.dao.ProjectApplicationMapper;
-import com.management.dao.ProjectCategoryMapper;
-import com.management.dao.ReviewExpertMapper;
-import com.management.dao.UserMapper;
+import com.management.dao.*;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.*;
 import com.management.model.jsonrequestbody.ProjectCategoryInfo;
@@ -47,6 +44,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Resource
     private ReviewExpertMapper reviewExpertMapper;
+
+    @Resource
+    private ProjectProgressMapper projectProgressMapper;
 
     private static final int EXPERT_REVIEW = 2;
     private static final int MEETING_REVIEW = 3;
@@ -587,19 +587,34 @@ public class AdminServiceImpl implements AdminService {
     public Result createReport(ReportMessage reportMessage) {
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(reportMessage.getProjectCategoryId());
         //中期报告
+        ProjectProgressExample example = new ProjectProgressExample();
+        example.createCriteria()
+                .andProjectCategoryIdEqualTo(projectCategory.getProjectCategoryId());
+        List<ProjectProgress> projectProgresses = projectProgressMapper.selectByExample(example);
+
         if(reportMessage.getType() == 1) {
             projectCategory.setInterimReportDownloadAddress(reportMessage.getReportAddress());
             projectCategory.setIsInterimReportActivated(1);
             projectCategory.setInterimReportStartTime(TimeTool.stringToTime(reportMessage.getStartTime()));
             projectCategory.setInterimReportEndTime(TimeTool.stringToTime(reportMessage.getDeadline()));
+            // 业务员开通中期报告，所有项目的阶段全部变为中期报告阶段
+            for(ProjectProgress projectProgress : projectProgresses) {
+                projectProgress.setProjectProcess(2);
+                projectProgressMapper.updateByPrimaryKeySelective(projectProgress);
+            }
         } else {
             projectCategory.setConcludingReportDownloadAddress(reportMessage.getReportAddress());
             projectCategory.setIsConcludingReportActivated(1);
             projectCategory.setConcludingReportStartTime(TimeTool.stringToTime(reportMessage.getStartTime()));
             projectCategory.setConcludingReportEndTime(TimeTool.stringToTime(reportMessage.getDeadline()));
+            // 业务员开通结题报告，所有项目的阶段全部变为结题报告阶段
+            for(ProjectProgress projectProgress : projectProgresses) {
+                projectProgress.setProjectProcess(3);
+                projectProgressMapper.updateByPrimaryKeySelective(projectProgress);
+            }
         }
         projectCategoryMapper.updateByPrimaryKey(projectCategory);
-        Map<String,String> time = new HashMap<String,String>();
+        Map<String,String> time = new HashMap<>();
         time.put("startTime",TimeTool.timetoString(TimeTool.stringToTime(reportMessage.getStartTime())));
         time.put("endTime",TimeTool.timetoString(TimeTool.stringToTime(reportMessage.getDeadline())));
         return ResultTool.success(time);

@@ -497,30 +497,48 @@ public class UserServiceImpl implements UserService {
                     .selectByPrimaryKey(application.getProjectCategoryId());
             //获取当前时间,只给用户提供在中期报告和结题报告提交时间段内的项目
             Date nowTime = new Date();
-            if(progress.getIsFinishedInterimReport() == 2) {
-                Date InterimReportEndTime = projectCategory.getInterimReportEndTime();
-                Date InterimReportStartTime = projectCategory.getInterimReportStartTime();
-                if(projectCategory.getIsInterimReportActivated()==2 && InterimReportEndTime.after(nowTime) &&  InterimReportStartTime.before(nowTime)){
-                    info.setTime(timeToString1(InterimReportEndTime));
+            switch (progress.getProjectProcess()) {
+                case 1 : {
+                    info.setTime(timeToString1(progress.getProjectcreatetime()));
+                    info.setIsOverTime(false);
+                    buildProject.add(info);
+                    break;
+                }
+                case 2 : {
+                    Date InterimReportEndTime = projectCategory.getInterimReportEndTime();
+                    Date InterimReportStartTime = projectCategory.getInterimReportStartTime();
+                    if(projectCategory.getIsInterimReportActivated()==2 && InterimReportEndTime.after(nowTime) &&  InterimReportStartTime.before(nowTime)){
+                        info.setTime(timeToString1(InterimReportEndTime));
+                        info.setIsOverTime(false);
+                    } else {
+                        info.setIsOverTime(true);
+                    }
                     middleProject.add(info);
+                    break;
                 }
-            } else if(progress.getIsFinishedConcludingReport() == 2) {
-                Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
-                Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();
-                if(projectCategory.getIsConcludingReportActivated()==2 && ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
-                    info.setTime(timeToString1(ConcludingReportEndTime));
+                case 3 :{
+                    Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
+                    Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();
+                    if(projectCategory.getIsConcludingReportActivated()==2 && ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
+                        info.setTime(timeToString1(ConcludingReportEndTime));
+                        info.setIsOverTime(false);
+                    } else {
+                        info.setIsOverTime(true);
+                    }
                     finalProject.add(info);
+                    break;
                 }
-            } else if(progress.getProjectProcess() == 4){
-                Date ProjectStartTime = projectCategory.getProjectStartTime();
-                Date ProjectEndTime = projectCategory.getProjectEndTime();
-                if(ProjectStartTime.before(nowTime) && ProjectEndTime.after(nowTime)){
-                    info.setTime(timeToString1(projectCategory.getProjectEndTime()));
+                case 4: {
+                    Date ProjectStartTime = projectCategory.getProjectStartTime();
+                    Date ProjectEndTime = projectCategory.getProjectEndTime();
+                    if(ProjectStartTime.before(nowTime) && ProjectEndTime.after(nowTime)){
+                        info.setTime(timeToString1(projectCategory.getProjectEndTime()));
+                        info.setIsOverTime(false);
+                    }
+                    info.setIsOverTime(true);
                     finishProject.add(info);
+                    break;
                 }
-            } else {
-                info.setTime(timeToString1(progress.getProjectcreatetime()));
-                buildProject.add(info);
             }
         }
         res.setBuildProject(buildProject);

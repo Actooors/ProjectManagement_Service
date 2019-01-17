@@ -1,5 +1,6 @@
 package com.management.model.ov.resultsetting;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import io.swagger.models.auth.In;
 import lombok.Data;
 
@@ -18,4 +19,5 @@ public class ProjectTotalInfo {
     private String time;
     private String reviewPhase;
     private String description;
+    private Boolean isOverTime;
 }

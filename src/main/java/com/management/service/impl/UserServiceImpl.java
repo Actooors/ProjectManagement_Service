@@ -507,35 +507,32 @@ public class UserServiceImpl implements UserService {
                 case 2 : {
                     Date InterimReportEndTime = projectCategory.getInterimReportEndTime();
                     Date InterimReportStartTime = projectCategory.getInterimReportStartTime();
-                    if(projectCategory.getIsInterimReportActivated()==2 && InterimReportEndTime.after(nowTime) &&  InterimReportStartTime.before(nowTime)){
-                        info.setTime(timeToString1(InterimReportEndTime));
+                    if(projectCategory.getIsInterimReportActivated()==1 && InterimReportEndTime.after(nowTime) &&  InterimReportStartTime.before(nowTime)){
                         info.setIsOverTime(false);
+                        info.setReportAddress(projectCategory.getInterimReportDownloadAddress());
                     } else {
                         info.setIsOverTime(true);
                     }
+                    info.setTime(timeToString1(InterimReportEndTime));
                     middleProject.add(info);
                     break;
                 }
                 case 3 :{
                     Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
                     Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();
-                    if(projectCategory.getIsConcludingReportActivated()==2 && ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
-                        info.setTime(timeToString1(ConcludingReportEndTime));
+                    if(projectCategory.getIsConcludingReportActivated()==1 && ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
                         info.setIsOverTime(false);
+                        info.setReportAddress(projectCategory.getConcludingReportDownloadAddress());
                     } else {
                         info.setIsOverTime(true);
                     }
+                    info.setTime(timeToString1(ConcludingReportEndTime));
                     finalProject.add(info);
                     break;
                 }
                 case 4: {
-                    Date ProjectStartTime = projectCategory.getProjectStartTime();
-                    Date ProjectEndTime = projectCategory.getProjectEndTime();
-                    if(ProjectStartTime.before(nowTime) && ProjectEndTime.after(nowTime)){
-                        info.setTime(timeToString1(projectCategory.getProjectEndTime()));
-                        info.setIsOverTime(false);
-                    }
-                    info.setIsOverTime(true);
+                    info.setTime(timeToString1(projectCategory.getProjectEndTime()));
+                    info.setIsOverTime(false);
                     finishProject.add(info);
                     break;
                 }

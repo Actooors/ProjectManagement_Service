@@ -15,9 +15,7 @@ public class TimeTool {
         /*将字符串时间格式转化为Date时间类型*/
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         try{
-            Date newTime = new Date();
-            newTime = dateFormat.parse(time);
-            return newTime;
+            return dateFormat.parse(time);
         }catch (ParseException e){
             e.printStackTrace();
             return null;

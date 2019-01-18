@@ -14,6 +14,7 @@ import com.management.tools.TimeTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.awt.image.RescaleOp;
 import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
@@ -610,12 +611,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result commitReport(PostReportInfo info) {
         ProjectProgress application = projectProgressMapper.selectByPrimaryKey(info.getApplicationId());
+        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(application.getProjectCategoryId());
+        Date time = new Date();
         if(info.getType() == 1) {
+            Date timee = projectCategory.getInterimReportEndTime();
+            if(projectCategory.getInterimReportEndTime().before(time)) {
+                return ResultTool.error("已超过提交中期报告的时间");
+            }
             application.setIsFinishedInterimReport(1);
             application.setInterimReportUploadAddress(info.getReportAddress());
             application.setInterimReportTime(new Date());
             application.setProjectProcess(MIDDLE_PROGRESS);
         } else {
+            if(projectCategory.getConcludingReportEndTime().before(time)) {
+                return ResultTool.error("已超过提交结题报告的时间");
+            }
             application.setIsFinishedConcludingReport(1);
             application.setConcludingReportUploadAddress(info.getReportAddress());
             application.setConcludingReportTime(new Date());

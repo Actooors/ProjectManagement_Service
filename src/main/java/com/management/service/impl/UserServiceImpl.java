@@ -22,6 +22,7 @@ import java.util.List;
 import static com.management.model.ov.resultsetting.ConstCorrespond.FINAL_PROGRESS;
 import static com.management.model.ov.resultsetting.ConstCorrespond.MIDDLE_PROGRESS;
 import static com.management.tools.TimeTool.timeToString1;
+import static com.management.tools.TimeTool.timetoString;
 
 /**
  * @program: management
@@ -499,7 +500,7 @@ public class UserServiceImpl implements UserService {
             Date nowTime = new Date();
             switch (progress.getProjectProcess()) {
                 case 1 : {
-                    info.setTime(timeToString1(progress.getProjectcreatetime()));
+                    info.setTime(timetoString(progress.getProjectcreatetime()));
                     info.setIsOverTime(false);
                     buildProject.add(info);
                     break;
@@ -513,7 +514,7 @@ public class UserServiceImpl implements UserService {
                     } else {
                         info.setIsOverTime(true);
                     }
-                    info.setTime(timeToString1(InterimReportEndTime));
+                    info.setTime(timetoString(InterimReportEndTime));
                     middleProject.add(info);
                     break;
                 }
@@ -526,12 +527,12 @@ public class UserServiceImpl implements UserService {
                     } else {
                         info.setIsOverTime(true);
                     }
-                    info.setTime(timeToString1(ConcludingReportEndTime));
+                    info.setTime(timetoString(ConcludingReportEndTime));
                     finalProject.add(info);
                     break;
                 }
                 case 4: {
-                    info.setTime(timeToString1(projectCategory.getProjectEndTime()));
+                    info.setTime(timetoString(projectCategory.getProjectEndTime()));
                     info.setIsOverTime(false);
                     finishProject.add(info);
                     break;

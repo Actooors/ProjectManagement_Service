@@ -107,18 +107,6 @@ public class ExpertServiceImpl implements ExpertService {
             reviewExpert.setFinalOpinion(expertJudgeInfo.getFinalOpinion());
             reviewExpert.setIsFinished(1);
             reviewExpertMapper.updateByPrimaryKey(reviewExpert);
-
-            //审核完毕后将申请状态改为会评或者领导审核状态
-            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(expertJudgeInfo.getProjectApplicationId());
-            if(projectApplication.getIsMeeting()==1){
-                //将申请状态改为会评阶段
-                projectApplication.setReviewPhase(3);
-            }else{
-                //将申请状态改为领导审核阶段
-                projectApplication.setReviewPhase(4);
-            }
-            projectApplicationMapper.updateByPrimaryKey(projectApplication);
-
             return ResultTool.success();
         }catch (Exception e){
             return ResultTool.error("评审失败!");

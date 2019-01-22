@@ -535,6 +535,7 @@ public class AdminServiceImpl implements AdminService {
         List<ExpertOpinionInfo> list = new LinkedList<>();
         int totalNum = 0;
         int finishNum = 0;
+        double ave = 0;
         for (ReviewExpert reviewExpert : reviewExpertList) {
             ExpertOpinionInfo expertOpinionInfo = new ExpertOpinionInfo();
             expertOpinionInfo.setExpertId(reviewExpert.getExpertId());
@@ -545,6 +546,7 @@ public class AdminServiceImpl implements AdminService {
                 expertOpinionInfo.setFinalOpinion(reviewExpert.getFinalOpinion());
                 expertOpinionInfo.setReviewOpinion(reviewExpert.getReviewOpinion());
                 expertOpinionInfo.setScore(reviewExpert.getScore());
+                ave += Double.parseDouble(reviewExpert.getScore());
             }
             list.add(expertOpinionInfo);
             totalNum++;
@@ -557,6 +559,7 @@ public class AdminServiceImpl implements AdminService {
             double percentage = 100.0 * finishNum / totalNum;
             BigDecimal bd = new BigDecimal(percentage);
             res.setPercentage(bd.setScale(1, BigDecimal.ROUND_HALF_UP).doubleValue());
+            res.setAverage(ave / totalNum);
         }
         return res;
     }
@@ -571,7 +574,6 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Result expertOpinionList(int projectId) {
-
         return ResultTool.success(getExpertOpinionList(projectId));
 
     }

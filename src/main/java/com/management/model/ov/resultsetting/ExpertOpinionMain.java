@@ -16,4 +16,5 @@ public class ExpertOpinionMain {
     private int totalNum;
     private int finishNum;
     private double percentage;
+    private double average;
 }

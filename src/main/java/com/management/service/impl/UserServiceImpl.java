@@ -317,7 +317,7 @@ public class UserServiceImpl implements UserService {
                     info.setProjectName(p.getProjectCategoryName());
                     info.setIsMeeting(p.getIsExistMeetingReview() == 1 ? "true":"false");
                     info.setDownLoadAddress(ConstCorrespond.downloadAddress +
-                            p.getProjectCategoryDescriptionAddress());
+                            p.getProjectApplicationDownloadAddress());
                     resList.add(info);
                 } else {
                     break;

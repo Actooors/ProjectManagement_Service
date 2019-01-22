@@ -634,4 +634,20 @@ public class UserServiceImpl implements UserService {
         projectProgressMapper.updateByPrimaryKeySelective(application);
         return ResultTool.success();
     }
+
+    @Override
+    public Result findUserInfo(String userId) {
+        User user = AuthTool.getInfo(userId);
+        //如果返回了newUser，说明操作正常
+        if (user != null) {
+            OtherUserInfo info = new OtherUserInfo();
+            info.setDepartment(user.getDepartment());
+            info.setUserId(user.getUserId());
+            info.setUsername(user.getUserName());
+            return ResultTool.success(info);
+            //如果没有得到newUser，说明验证异常
+        } else {
+            return ResultTool.error("验证过程中发生异常,一般是由于工号/学号无效!");
+        }
+    }
 }

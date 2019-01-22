@@ -150,4 +150,13 @@ public interface UserService {
      * @Date: 2018/12/26
      */
     Result findMoreInfo(int applicationId);
+
+    /**
+     * @Description: 根据工号查询用户的信息
+     * @Param: [userId]
+     * @Return: com.management.model.ov.Result
+     * @Author: 0GGmr0
+     * @Date: 2019-01-22
+     */
+    Result findUserInfo(String userId);
 }

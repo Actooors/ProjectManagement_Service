@@ -132,5 +132,11 @@ public class UserController {
     }
 
 
+    @GetMapping("/userInfoFromId/{userId}")
+    @ApiOperation(value = "查看用户一个项目的详细信息")
+    public Result findUserInfoFromId(@PathVariable(value = "userId") String userId){
+
+        return userService.findUserInfo(userId);
+    }
 
 }

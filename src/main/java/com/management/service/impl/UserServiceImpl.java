@@ -22,8 +22,7 @@ import java.util.List;
 
 import static com.management.model.ov.resultsetting.ConstCorrespond.FINAL_PROGRESS;
 import static com.management.model.ov.resultsetting.ConstCorrespond.MIDDLE_PROGRESS;
-import static com.management.tools.TimeTool.timeToString1;
-import static com.management.tools.TimeTool.timetoString;
+import static com.management.tools.TimeTool.*;
 
 /**
  * @program: management
@@ -396,6 +395,7 @@ public class UserServiceImpl implements UserService {
         res.setMail(mainMember.getMail());
         res.setProjectApplicationUploadAddress(projectApplicationInfo.getUploadAddress());
         res.setReviewPhase(1);
+//        res.setApplicationDeadline(stringToTime(projectApplicationInfo.getApplicationDeadline()));
         //1上会2不上
         res.setIsMeeting(projectApplicationInfo.getIsMeeting() ? 1 : 2);
         try {

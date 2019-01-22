@@ -9,6 +9,7 @@ import com.management.model.ov.resultsetting.*;
 import com.management.service.AdminService;
 import com.management.tools.ResultTool;
 import com.management.tools.TimeTool;
+import lombok.Data;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -105,19 +106,19 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setStatistics(0);
             projectCategory.setIsApproved(1);
             projectCategory.setIsConcludingReportActivated(2);
-            StringBuilder experts = new StringBuilder();
-            List<String> list = projectCategoryInfo.getExpertList();
-            if(list.isEmpty()) {
-                return ResultTool.error("专家列表不能为空");
-            }
-            int len = list.size();
-            for(int i = 0; i < len; i++) {
-                experts.append(list.get(i));
-                if(i < len - 1) {
-                    experts.append("|");
-                }
-            }
-            projectCategory.setExpertList(experts.toString());
+//            StringBuilder experts = new StringBuilder();
+//            List<String> list = projectCategoryInfo.getExpertList();
+//            if(list.isEmpty()) {
+//                return ResultTool.error("专家列表不能为空");
+//            }
+//            int len = list.size();
+//            for(int i = 0; i < len; i++) {
+//                experts.append(list.get(i));
+//                if(i < len - 1) {
+//                    experts.append("|");
+//                }
+//            }
+//            projectCategory.setExpertList(experts.toString());
             projectCategoryMapper.insert(projectCategory);
 
             return ResultTool.success();
@@ -419,12 +420,13 @@ public class AdminServiceImpl implements AdminService {
     public Result oneJudge(OneJudgeInfo info) {
         ProjectApplication res = projectApplicationMapper
                 .selectByPrimaryKey(info.getApplicationId());
-        ProjectCategory category = projectCategoryMapper
-                .selectByPrimaryKey(res.getProjectCategoryId());
         if(info.getJudge()) {
             res.setReviewPhase(EXPERT_REVIEW);
-            String[] experts = category.getExpertList().split("\\|");
-            for(String expertId : experts) {
+            List<String> list = info.getExpertList();
+            if(list.isEmpty()) {
+                return ResultTool.error("专家列表不能为空");
+            }
+            for(String expertId : list) {
                 User user = userMapper.selectByPrimaryKey(expertId);
                 ReviewExpert expert = new ReviewExpert();
                 expert.setExpertId(expertId);

@@ -26,6 +26,6 @@ public class ProjectCategoryInfo {
     private String applicationEndTime;
     private String projectStartTime;
     private String projectEndTime;
-    private List<String> expertList;
+//    private List<String> expertList;
 
 }

@@ -15,5 +15,6 @@ public class OneJudgeInfo {
     private int applicationId;
     private Boolean judge;
     private String msg;
+    private List<String> expertList;
 
 }

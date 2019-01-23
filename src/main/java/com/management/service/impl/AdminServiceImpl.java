@@ -163,19 +163,7 @@ public class AdminServiceImpl implements AdminService {
                 .getProjectStartTime()));
         res.setProjectEndTime(timetoString(projectCategory
                 .getProjectEndTime()));
-        String[] expertArray = projectCategory.getExpertList().split("\\|");
-        List<ExpertListInfo> list = new LinkedList<>();
-        for(String expertId : expertArray) {
-            User user = userMapper.selectByPrimaryKey(expertId);
-            ExpertListInfo info = new ExpertListInfo();
-            info.setUserName(user.getUserName());
-            info.setUserId(user.getUserId());
-            info.setPhone(user.getPhone());
-            info.setMail(user.getMail());
-            info.setDepartment(user.getDepartment());
-            list.add(info);
-        }
-        res.setExpertList(list);
+
         ReportInfo interimInfo = new ReportInfo();
         if(projectCategory.getIsInterimReportActivated() == 1) {
             interimInfo.setDeadline(timetoString(projectCategory

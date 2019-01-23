@@ -26,7 +26,6 @@ public class AdminListInfo {
     private String applicationEndTime;
     private String projectStartTime;
     private String projectEndTime;
-    private List<ExpertListInfo> expertList;
     private ReportInfo interimReport;
     private ReportInfo concludingReport;
 }

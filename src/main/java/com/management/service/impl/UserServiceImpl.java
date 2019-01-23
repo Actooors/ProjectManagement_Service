@@ -49,6 +49,9 @@ public class UserServiceImpl implements UserService {
     private ProjectProgressMapper projectProgressMapper;
 
     @Resource
+    private ReviewExpertMapper reviewExpertMapper;
+
+    @Resource
     private JwtUtil jwtUtil;
 
     private static final int LOGIN_ENABLE = 1;
@@ -595,6 +598,24 @@ public class UserServiceImpl implements UserService {
             resMember.setUserId(member.getUserId());
             resMember.setUserName(member.getUserName());
             resMembers.add(resMember);
+        }
+        ReviewExpertExample expertExample = new ReviewExpertExample();
+        expertExample.createCriteria()
+                .andProjectApplicationIdEqualTo(applicationId);
+        List<ReviewExpert> list = reviewExpertMapper.selectByExample(expertExample);
+        if(!list.isEmpty()) {
+            List<ExpertListInfo> resList = new LinkedList<>();
+            for(ReviewExpert expert : list) {
+                User user = userMapper.selectByPrimaryKey(expert.getExpertId());
+                ExpertListInfo info = new ExpertListInfo();
+                info.setDepartment(user.getDepartment());
+                info.setMail(user.getMail());
+                info.setPhone(user.getPhone());
+                info.setUserId(user.getUserId());
+                info.setUserName(user.getUserName());
+                resList.add(info);
+            }
+            res.setExpertList(resList);
         }
         res.setMembers(resMembers);
         return ResultTool.success(res);

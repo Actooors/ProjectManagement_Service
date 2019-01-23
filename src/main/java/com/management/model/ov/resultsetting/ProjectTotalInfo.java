@@ -19,6 +19,6 @@ public class ProjectTotalInfo {
     private String time;
     private String reviewPhase;
     private String description;
-    private Boolean isOverTime;
+    private Integer status;
     private String reportAddress;
 }

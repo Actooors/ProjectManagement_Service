@@ -505,18 +505,22 @@ public class UserServiceImpl implements UserService {
             switch (progress.getProjectProcess()) {
                 case 1 : {
                     info.setTime(timetoString(progress.getProjectcreatetime()));
-                    info.setIsOverTime(false);
+                    info.setStatus(1);
                     buildProject.add(info);
                     break;
                 }
                 case 2 : {
                     Date InterimReportEndTime = projectCategory.getInterimReportEndTime();
                     Date InterimReportStartTime = projectCategory.getInterimReportStartTime();
-                    if(projectCategory.getIsInterimReportActivated()==1 && InterimReportEndTime.after(nowTime) &&  InterimReportStartTime.before(nowTime)){
-                        info.setIsOverTime(false);
-                        info.setReportAddress(projectCategory.getInterimReportDownloadAddress());
-                    } else {
-                        info.setIsOverTime(true);
+                    if(projectCategory.getIsInterimReportActivated()==1) {
+                        if(!InterimReportStartTime.before(nowTime)) {
+                            info.setStatus(3);
+                        } else if(InterimReportEndTime.after(nowTime)) {
+                            info.setReportAddress(projectCategory.getInterimReportDownloadAddress());
+                            info.setStatus(1);
+                        } else {
+                            info.setStatus(2);
+                        }
                     }
                     info.setTime(timetoString(InterimReportEndTime));
                     middleProject.add(info);
@@ -525,11 +529,15 @@ public class UserServiceImpl implements UserService {
                 case 3 :{
                     Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
                     Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();
-                    if(projectCategory.getIsConcludingReportActivated()==1 && ConcludingReportStartTime.before(nowTime) && ConcludingReportEndTime.after(nowTime)){
-                        info.setIsOverTime(false);
-                        info.setReportAddress(projectCategory.getConcludingReportDownloadAddress());
-                    } else {
-                        info.setIsOverTime(true);
+                    if(projectCategory.getIsConcludingReportActivated() == 1) {
+                        if(!ConcludingReportStartTime.before(nowTime)) {
+                            info.setStatus(3);
+                        } else if(ConcludingReportEndTime.after(nowTime)) {
+                            info.setReportAddress(projectCategory.getConcludingReportDownloadAddress());
+                            info.setStatus(1);
+                        } else {
+                            info.setStatus(2);
+                        }
                     }
                     info.setTime(timetoString(ConcludingReportEndTime));
                     finalProject.add(info);
@@ -537,7 +545,7 @@ public class UserServiceImpl implements UserService {
                 }
                 case 4: {
                     info.setTime(timetoString(projectCategory.getProjectEndTime()));
-                    info.setIsOverTime(false);
+                    info.setStatus(1);
                     finishProject.add(info);
                     break;
                 }

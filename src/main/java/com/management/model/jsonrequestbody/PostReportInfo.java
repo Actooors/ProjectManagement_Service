@@ -14,4 +14,5 @@ public class PostReportInfo {
     // type 1 中期报告  2结题报告
     private int type;
     private String reportAddress;
+    private int status;
 }

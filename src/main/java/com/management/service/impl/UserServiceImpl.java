@@ -640,21 +640,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result commitReport(PostReportInfo info) {
         ProjectProgress application = projectProgressMapper.selectByPrimaryKey(info.getApplicationId());
-        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(application.getProjectCategoryId());
         Date time = new Date();
+        int status = info.getStatus();
+        if(status == 2) {
+            return ResultTool.error("已超过提交报告的时间");
+        } else if(status == 3) {
+            return ResultTool.error("时间未到");
+        }
         if(info.getType() == 1) {
-            Date timee = projectCategory.getInterimReportEndTime();
-            if(projectCategory.getInterimReportEndTime().before(time)) {
-                return ResultTool.error("已超过提交中期报告的时间");
-            }
             application.setIsFinishedInterimReport(1);
             application.setInterimReportUploadAddress(info.getReportAddress());
             application.setInterimReportTime(new Date());
             application.setProjectProcess(MIDDLE_PROGRESS);
         } else {
-            if(projectCategory.getConcludingReportEndTime().before(time)) {
-                return ResultTool.error("已超过提交结题报告的时间");
-            }
             application.setIsFinishedConcludingReport(1);
             application.setConcludingReportUploadAddress(info.getReportAddress());
             application.setConcludingReportTime(new Date());

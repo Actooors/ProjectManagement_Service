@@ -106,8 +106,7 @@ public class ExpertServiceImpl implements ExpertService {
                 //将专家评审信息插入
                 reviewExpert.setScore(expertJudgeInfo.getScore());
                 reviewExpert.setReviewOpinion(expertJudgeInfo.getReviewOpinion());
-                if(expertJudgeInfo.getFinalOPinion().equals("优先支持"))
-                reviewExpert.setFinalOpinion(Integer.parseInt(expertJudgeInfo.getFinalOPinion()));
+                reviewExpert.setFinalOpinion(Integer.parseInt(expertJudgeInfo.getFinalOpinion()));
                 reviewExpert.setIsFinished(IS_FINISHED);
                 reviewExpertMapper.updateByPrimaryKey(reviewExpert);
             }

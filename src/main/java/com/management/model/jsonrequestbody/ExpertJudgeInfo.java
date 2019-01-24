@@ -15,5 +15,5 @@ public class ExpertJudgeInfo {
     private Integer projectApplicationId;
     private String score;
     private String reviewOpinion;
-    private String finalOPinion;
+    private String finalOpinion;
 }

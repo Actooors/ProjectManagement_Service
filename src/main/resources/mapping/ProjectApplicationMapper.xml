@@ -7,6 +7,7 @@
     <result column="project_name" property="projectName" jdbcType="VARCHAR" />
     <result column="project_member" property="projectMember" jdbcType="VARCHAR" />
     <result column="project_description" property="projectDescription" jdbcType="VARCHAR" />
+    <result column="project_index" property="projectIndex" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
@@ -86,9 +87,10 @@
   </sql>
   <sql id="Base_Column_List" >
     project_application_id, project_category_id, project_name, project_member, project_description, 
-    user_id, user_name, sex, department, phone, mail, position, major, project_application_upload_address, 
-    is_meeting, meeting_review_message, review_phase, failure_reason, application_time, 
-    application_deadline, middle_deadline, final_deadline, project_deadline
+    project_index, user_id, user_name, sex, department, phone, mail, position, major, 
+    project_application_upload_address, is_meeting, meeting_review_message, review_phase, 
+    failure_reason, application_time, application_deadline, middle_deadline, final_deadline, 
+    project_deadline
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectApplicationExample" >
     select
@@ -124,20 +126,22 @@
   <insert id="insert" parameterType="com.management.model.entity.ProjectApplication" >
     insert into tbl_ProjectApplication (project_application_id, project_category_id, 
       project_name, project_member, project_description, 
-      user_id, user_name, sex, 
-      department, phone, mail, 
-      position, major, project_application_upload_address, 
-      is_meeting, meeting_review_message, review_phase, 
-      failure_reason, application_time, application_deadline, 
+      project_index, user_id, user_name, 
+      sex, department, phone, 
+      mail, position, major, 
+      project_application_upload_address, is_meeting, 
+      meeting_review_message, review_phase, failure_reason, 
+      application_time, application_deadline, 
       middle_deadline, final_deadline, project_deadline
       )
     values (#{projectApplicationId,jdbcType=INTEGER}, #{projectCategoryId,jdbcType=INTEGER}, 
       #{projectName,jdbcType=VARCHAR}, #{projectMember,jdbcType=VARCHAR}, #{projectDescription,jdbcType=VARCHAR}, 
-      #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
-      #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
-      #{position,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{projectApplicationUploadAddress,jdbcType=VARCHAR}, 
-      #{isMeeting,jdbcType=INTEGER}, #{meetingReviewMessage,jdbcType=VARCHAR}, #{reviewPhase,jdbcType=INTEGER}, 
-      #{failureReason,jdbcType=VARCHAR}, #{applicationTime,jdbcType=TIMESTAMP}, #{applicationDeadline,jdbcType=TIMESTAMP}, 
+      #{projectIndex,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{mail,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, 
+      #{projectApplicationUploadAddress,jdbcType=VARCHAR}, #{isMeeting,jdbcType=INTEGER}, 
+      #{meetingReviewMessage,jdbcType=VARCHAR}, #{reviewPhase,jdbcType=INTEGER}, #{failureReason,jdbcType=VARCHAR}, 
+      #{applicationTime,jdbcType=TIMESTAMP}, #{applicationDeadline,jdbcType=TIMESTAMP}, 
       #{middleDeadline,jdbcType=TIMESTAMP}, #{finalDeadline,jdbcType=TIMESTAMP}, #{projectDeadline,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -158,6 +162,9 @@
       </if>
       <if test="projectDescription != null" >
         project_description,
+      </if>
+      <if test="projectIndex != null" >
+        project_index,
       </if>
       <if test="userId != null" >
         user_id,
@@ -229,6 +236,9 @@
       </if>
       <if test="projectDescription != null" >
         #{projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="projectIndex != null" >
+        #{projectIndex,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
@@ -310,6 +320,9 @@
       <if test="record.projectDescription != null" >
         project_description = #{record.projectDescription,jdbcType=VARCHAR},
       </if>
+      <if test="record.projectIndex != null" >
+        project_index = #{record.projectIndex,jdbcType=VARCHAR},
+      </if>
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
@@ -376,6 +389,7 @@
       project_name = #{record.projectName,jdbcType=VARCHAR},
       project_member = #{record.projectMember,jdbcType=VARCHAR},
       project_description = #{record.projectDescription,jdbcType=VARCHAR},
+      project_index = #{record.projectIndex,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
@@ -412,6 +426,9 @@
       </if>
       <if test="projectDescription != null" >
         project_description = #{projectDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="projectIndex != null" >
+        project_index = #{projectIndex,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},
@@ -476,6 +493,7 @@
       project_name = #{projectName,jdbcType=VARCHAR},
       project_member = #{projectMember,jdbcType=VARCHAR},
       project_description = #{projectDescription,jdbcType=VARCHAR},
+      project_index = #{projectIndex,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},

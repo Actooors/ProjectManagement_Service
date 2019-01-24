@@ -435,6 +435,76 @@ public class ProjectApplicationExample {
             return (Criteria) this;
         }
 
+        public Criteria andProjectIndexIsNull() {
+            addCriterion("project_index is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexIsNotNull() {
+            addCriterion("project_index is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexEqualTo(String value) {
+            addCriterion("project_index =", value, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexNotEqualTo(String value) {
+            addCriterion("project_index <>", value, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexGreaterThan(String value) {
+            addCriterion("project_index >", value, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexGreaterThanOrEqualTo(String value) {
+            addCriterion("project_index >=", value, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexLessThan(String value) {
+            addCriterion("project_index <", value, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexLessThanOrEqualTo(String value) {
+            addCriterion("project_index <=", value, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexLike(String value) {
+            addCriterion("project_index like", value, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexNotLike(String value) {
+            addCriterion("project_index not like", value, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexIn(List<String> values) {
+            addCriterion("project_index in", values, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexNotIn(List<String> values) {
+            addCriterion("project_index not in", values, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexBetween(String value1, String value2) {
+            addCriterion("project_index between", value1, value2, "projectIndex");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectIndexNotBetween(String value1, String value2) {
+            addCriterion("project_index not between", value1, value2, "projectIndex");
+            return (Criteria) this;
+        }
+
         public Criteria andUserIdIsNull() {
             addCriterion("user_id is null");
             return (Criteria) this;

@@ -144,4 +144,13 @@ public interface AdminService {
      * @Date: 2019-01-14
      */
     Result createReport(ReportMessage reportMessage);
+
+    /**
+     * @Description: 我的项目一栏: 业务员查看自己所管理的项目大类的所有项目申请
+     * @Param: list[projectApplication]
+     * @Return:
+     * @Author: xw
+     * @Date: 19-1-24
+     */
+    //Result queryAllProjectApplication(String userId);
 }

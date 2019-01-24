@@ -609,4 +609,16 @@ public class AdminServiceImpl implements AdminService {
         time.put("endTime",TimeTool.timetoString(TimeTool.stringToTime(reportMessage.getDeadline())));
         return ResultTool.success(time);
     }
+
+//    /**
+//     * @Description: 我的项目一栏: 业务员查看自己所管理的项目大类的所有项目申请
+//     * @Param: userId
+//     * @Return: Result
+//     * @Author: xw
+//     * @Date: 19-1-24
+//     */
+//    public Result queryAllProjectApplication(String userId){
+//        //定义一个总列表及7个
+//        List ResultList = new ArrayList();
+//    }
 }

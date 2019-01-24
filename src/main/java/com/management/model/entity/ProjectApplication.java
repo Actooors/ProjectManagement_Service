@@ -13,6 +13,8 @@ public class ProjectApplication {
 
     private String projectDescription;
 
+    private String projectIndex;
+
     private String userId;
 
     private String userName;
@@ -87,6 +89,14 @@ public class ProjectApplication {
 
     public void setProjectDescription(String projectDescription) {
         this.projectDescription = projectDescription == null ? null : projectDescription.trim();
+    }
+
+    public String getProjectIndex() {
+        return projectIndex;
+    }
+
+    public void setProjectIndex(String projectIndex) {
+        this.projectIndex = projectIndex == null ? null : projectIndex.trim();
     }
 
     public String getUserId() {

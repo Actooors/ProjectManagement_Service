@@ -126,12 +126,18 @@ public class AdminController {
         return adminService.secondJudge(info);
     }
 
-
-
     @PostMapping("/createReport")
     @ApiOperation(value = "业务员开通中期报告和结题报告的申报内容")
     public Result createReport(@RequestBody ReportMessage info) {
 
         return adminService.createReport(info);
     }
+
+//    @GetMapping("/allProjectAppliaction")
+//    @ApiOperation(value = "业务员查看自己负责的项目大类下所有项目申请", notes = "按照项目申请状态进行区分")
+//    public Result queryAllProjectApplication(){
+//        String userId = UserContext.getCurrentUser().getUserId();
+//    }
+
+
 }

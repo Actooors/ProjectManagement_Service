@@ -29,8 +29,8 @@ public interface LeaderService {
      * @Date: 18-8-15
      */
     Result findAllSubordinate(String leaderId);
-    
-    
+
+
     /**
      * @Description: 查看一个领导手下现在需要他进行终审的项目大类或项目申请列表
      * @Param: [userId]
@@ -47,7 +47,7 @@ public interface LeaderService {
      * @Author: xw
      * @Date: 18-12-27
      */
-    Result findUnJudgeProjectApplication(String userId,int type);
+    Result findUnJudgeProjectApplication(String userId, int type);
 
     /**
      * @Description: 领导审核待审核的用户项目申请

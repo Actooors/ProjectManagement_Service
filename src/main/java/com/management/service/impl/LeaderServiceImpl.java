@@ -17,6 +17,7 @@ import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -137,7 +138,7 @@ public class LeaderServiceImpl implements LeaderService {
      * @Author: xw
      * @Date: 18-12-27
      */
-    public Result findUnJudgeProjectApplication(String userId,int type) {
+    public Result findUnJudgeProjectApplication(String userId, int type) {
 
         ProjectCategoryExample example = new ProjectCategoryExample();
         example.createCriteria()
@@ -150,17 +151,17 @@ public class LeaderServiceImpl implements LeaderService {
         List<AdminJudgeTotalInfo> resList = new LinkedList<>();
         for (ProjectCategory category : list) {
             ProjectApplicationExample applicationExample = new ProjectApplicationExample();
-            if(type == 1){
+            if (type == 1) {
                 applicationExample.createCriteria()
                         .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
                         .andReviewPhaseEqualTo(4);
             }
-            if(type == 2){
+            if (type == 2) {
                 applicationExample.createCriteria()
                         .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
                         .andReviewPhaseEqualTo(5);
             }
-            if(type == 3){
+            if (type == 3) {
                 applicationExample.createCriteria()
                         .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
                         .andReviewPhaseEqualTo(6);
@@ -273,6 +274,6 @@ public class LeaderServiceImpl implements LeaderService {
             }
         }
         return ResultTool.success(resList);
-
     }
+
 }

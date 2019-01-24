@@ -15,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.awt.image.RescaleOp;
-import java.util.Collections;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static com.management.model.ov.resultsetting.ConstCorrespond.FINAL_PROGRESS;
 import static com.management.model.ov.resultsetting.ConstCorrespond.MIDDLE_PROGRESS;
@@ -676,5 +673,58 @@ public class UserServiceImpl implements UserService {
         } else {
             return ResultTool.error("验证过程中发生异常,一般是由于工号/学号无效!");
         }
+    }
+
+    /**
+     * @Description: 我的项目一栏: 业务员和领导查看自己所管理的项目大类的所有项目申请
+     * @Param: userId
+     * @Return: Result
+     * @Author: xw
+     * @Date: 19-1-24
+     */
+    @Override
+    public Result queryAllProjectApplication(String userId) {
+        try {
+            //定义一个总列表及7个申请状态列表
+            Map<String, List> ResultList = new HashMap<String, List>();
+            List<ProjectApplication> adminCheckList = new ArrayList<ProjectApplication>();
+            List<ProjectApplication> expertCheckList = new ArrayList<ProjectApplication>();
+            List<ProjectApplication> meetingStateList = new ArrayList<ProjectApplication>();
+            List<ProjectApplication> leaderCheckList = new ArrayList<ProjectApplication>();
+            List<ProjectApplication> successProjectList = new ArrayList<ProjectApplication>();
+            List<ProjectApplication> failProjectList = new ArrayList<ProjectApplication>();
+            List<ProjectApplication> projectIndexCheckList = new ArrayList<ProjectApplication>();
+
+            //根据业务员id查询到所管理的项目大类id
+            List<ProjectApplication> projectList = projectApplicationMapper.queryAllProjectApplication(userId);
+            //根据项目申请状态进行分类并add到相应的List
+            for (ProjectApplication projectApplication : projectList) {
+                if (projectApplication.getReviewPhase() == 1)
+                    adminCheckList.add(projectApplication);
+                if (projectApplication.getReviewPhase() == 2)
+                    expertCheckList.add(projectApplication);
+                if (projectApplication.getReviewPhase() == 3)
+                    meetingStateList.add(projectApplication);
+                if (projectApplication.getReviewPhase() == 4)
+                    leaderCheckList.add(projectApplication);
+                if (projectApplication.getReviewPhase() == 5)
+                    successProjectList.add(projectApplication);
+                if (projectApplication.getReviewPhase() == 6)
+                    failProjectList.add(projectApplication);
+                if (projectApplication.getReviewPhase() == 7)
+                    projectIndexCheckList.add(projectApplication);
+            }
+            ResultList.put("adminCheck", adminCheckList);
+            ResultList.put("expertCheck", expertCheckList);
+            ResultList.put("meetingState", meetingStateList);
+            ResultList.put("leaderCheck", leaderCheckList);
+            ResultList.put("successProject", successProjectList);
+            ResultList.put("failProjectList", failProjectList);
+            ResultList.put("projectIndexCheck", projectIndexCheckList);
+            return ResultTool.success(ResultList);
+        } catch (Exception e) {
+            return ResultTool.error("查询失败");
+        }
+
     }
 }

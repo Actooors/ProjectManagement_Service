@@ -159,4 +159,13 @@ public interface UserService {
      * @Date: 2019-01-22
      */
     Result findUserInfo(String userId);
+
+    /**
+     * @Description: 我的项目一栏: 业务员和领导查看自己所管理的项目大类的所有项目申请
+     * @Param: list[projectApplication]
+     * @Return:
+     * @Author: xw
+     * @Date: 19-1-24
+     */
+    Result queryAllProjectApplication(String userId);
 }

@@ -107,12 +107,20 @@
       order by ${orderByClause}
     </if>
   </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_ProjectApplication
     where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
   </select>
+
+  <select id="queryAllProjectApplication" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select a.*
+    from tbl_ProjectApplication as a left join tbl_ProjectCategory as b on a.project_category_id = b.project_category_id
+    where b.principal_id = #{userId,jdbcType=VARCHAR} or b.review_leader_id = #{userId,jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from tbl_ProjectApplication
     where project_application_id = #{projectApplicationId,jdbcType=INTEGER}

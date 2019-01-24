@@ -5,6 +5,7 @@ import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
 import com.management.security.UserContext;
 import com.management.service.AdminService;
+import com.management.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -31,6 +32,10 @@ public class AdminController {
     @Resource
     @ApiParam("和专家相关的业务操作")
     private AdminService adminService;
+
+    @Resource
+    @ApiParam("用户通用的业务")
+    private UserService userService;
 
     @GetMapping("/allProjectCategory")
     @ApiOperation(value = "查一个业务员负责的所有的项目大类", notes = "根据业务员工号查找他负责的所有的项目大类")
@@ -133,11 +138,12 @@ public class AdminController {
         return adminService.createReport(info);
     }
 
-//    @GetMapping("/allProjectAppliaction")
-//    @ApiOperation(value = "业务员查看自己负责的项目大类下所有项目申请", notes = "按照项目申请状态进行区分")
-//    public Result queryAllProjectApplication(){
-//        String userId = UserContext.getCurrentUser().getUserId();
-//    }
+    @GetMapping("/allProjectApplication")
+    @ApiOperation(value = "业务员查看自己负责的项目大类下所有项目申请", notes = "按照项目申请状态进行区分")
+    public Result queryAllProjectApplication(){
+        String userId = UserContext.getCurrentUser().getUserId();
+        return userService.queryAllProjectApplication(userId);
+    }
 
 
 }

@@ -20,6 +20,8 @@ public interface ProjectApplicationMapper {
 
     ProjectApplication selectByPrimaryKey(Integer projectApplicationId);
 
+    List<ProjectApplication> queryAllProjectApplication(String userId);
+
     int updateByExampleSelective(@Param("record") ProjectApplication record, @Param("example") ProjectApplicationExample example);
 
     int updateByExample(@Param("record") ProjectApplication record, @Param("example") ProjectApplicationExample example);

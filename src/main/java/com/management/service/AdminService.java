@@ -98,7 +98,7 @@ public interface AdminService {
      * @Date: 2018/12/27
      */
     Result meetingReview(MeetingResult info);
-    
+
     /**
      * @Description: 查找所有的审核专家
      * @Param: []
@@ -119,7 +119,7 @@ public interface AdminService {
 
     /**
      * @Description: 查找某个审核阶段的所有的待审核项目
-     * @Param: [userId,reviewPhase]
+     * @Param: [userId, reviewPhase]
      * @Return: com.management.model.ov.Result
      * @Author: ggmr
      * @Date: 2018/12/30
@@ -145,12 +145,4 @@ public interface AdminService {
      */
     Result createReport(ReportMessage reportMessage);
 
-    /**
-     * @Description: 我的项目一栏: 业务员查看自己所管理的项目大类的所有项目申请
-     * @Param: list[projectApplication]
-     * @Return:
-     * @Author: xw
-     * @Date: 19-1-24
-     */
-    //Result queryAllProjectApplication(String userId);
 }

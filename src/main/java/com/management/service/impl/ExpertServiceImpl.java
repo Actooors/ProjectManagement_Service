@@ -37,7 +37,8 @@ public class ExpertServiceImpl implements ExpertService {
     @Resource
     private ReviewExpertMapper reviewExpertMapper;
 
-
+    private static final int IS_FINISHED=1;
+    private static final int NOT_FINISHED=2;
 
     /**
      * @Description: findProjectApplication接口的实现
@@ -94,20 +95,24 @@ public class ExpertServiceImpl implements ExpertService {
     @Override
     public Result judgeProjectApplication(String userId, ExpertJudgeInfo expertJudgeInfo) {
         try {
-            //根据专家id和申请id查找到相应对象进行插入信息
+            //根据专家id和申请id查找到相应对象进行插入信息(查找对象并未完成评审)
             ReviewExpertExample example = new ReviewExpertExample();
             example.createCriteria()
                     .andExpertIdEqualTo(userId)
-                    .andProjectApplicationIdEqualTo(expertJudgeInfo.getProjectApplicationId());
+                    .andProjectApplicationIdEqualTo(expertJudgeInfo.getProjectApplicationId())
+                    .andIsFinishedEqualTo(NOT_FINISHED);
             List<ReviewExpert> reviewExpertList = reviewExpertMapper.selectByExample(example);
-            ReviewExpert reviewExpert = reviewExpertList.get(0);
-            //将专家评审信息插入
-            reviewExpert.setScore(expertJudgeInfo.getScore());
-            reviewExpert.setReviewOpinion(expertJudgeInfo.getReviewOpinion());
-            reviewExpert.setFinalOpinion(Integer.parseInt(expertJudgeInfo.getFinalOpinion()));
-            reviewExpert.setIsFinished(1);
-            reviewExpertMapper.updateByPrimaryKey(reviewExpert);
+            for(ReviewExpert reviewExpert: reviewExpertList){
+                //将专家评审信息插入
+                reviewExpert.setScore(expertJudgeInfo.getScore());
+                reviewExpert.setReviewOpinion(expertJudgeInfo.getReviewOpinion());
+                if(expertJudgeInfo.getFinalOPinion().equals("优先支持"))
+                reviewExpert.setFinalOpinion(Integer.parseInt(expertJudgeInfo.getFinalOPinion()));
+                reviewExpert.setIsFinished(IS_FINISHED);
+                reviewExpertMapper.updateByPrimaryKey(reviewExpert);
+            }
             return ResultTool.success();
+
         }catch (Exception e){
             return ResultTool.error("评审失败!");
         }

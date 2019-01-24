@@ -1,22 +1,18 @@
 package com.management.service.impl;
 
 import com.management.dao.ProjectApplicationMapper;
-import com.management.dao.ProjectCategoryExpertMapper;
 import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.ReviewExpertMapper;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.ExpertJudgeInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
-import com.management.model.jsonrequestbody.ProjectCategoryInfo;
 import com.management.model.ov.Result;
-import com.management.model.ov.resultsetting.ExpertOpinionInfo;
 import com.management.service.ExpertService;
 import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

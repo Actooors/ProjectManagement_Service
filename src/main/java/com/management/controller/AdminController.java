@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -37,6 +38,7 @@ public class AdminController {
     @ApiParam("用户通用的业务")
     private UserService userService;
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @GetMapping("/allProjectCategory")
     @ApiOperation(value = "查一个业务员负责的所有的项目大类", notes = "根据业务员工号查找他负责的所有的项目大类")
     public Result findProjectCategoryInfo() {
@@ -45,6 +47,7 @@ public class AdminController {
         return adminService.someoneAllProjectCategory(userId);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @PostMapping("/isMeeting")
     @ApiOperation(value = "业务员选择指定项目上会，另外的项目申请失败", notes = "根据项目号查找项目后更新内容")
     public Result meetingResult(@RequestBody ChooseProjectMeeting info) {
@@ -52,6 +55,7 @@ public class AdminController {
         return adminService.chooseProjectMeeting(info);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @PostMapping("/createProjectCategory")
     @ApiOperation(value = "业务员创建项目类别,默认为待审核")
     public Result insertProjectCategory(@RequestBody ProjectCategoryInfo projectCategoryInfo) {
@@ -59,6 +63,7 @@ public class AdminController {
         return adminService.createProjectCategory(user, projectCategoryInfo);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @PostMapping("/projectCategory/2")
     @ApiOperation(value = "业务员修改项目类别", notes = "根据项目号查找项目后更新内容")
     public Result updateProject(@RequestBody UpdateProjectCategoryInfo updateProjectCategoryInfo) {
@@ -66,6 +71,7 @@ public class AdminController {
         return adminService.updateProjectCategoryInfo(updateProjectCategoryInfo);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @GetMapping("/findMyProjectCategory")
     @ApiOperation(value = "查询业务员负责的项目详细信息", notes = "根据业务员Id查询业务员负责的项目详细信息")
     public Result queryProjectCategoryInfo() {
@@ -82,13 +88,14 @@ public class AdminController {
         return adminService.queryOneProjectCategory(projectCategoryId);
     }
 
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @PostMapping("deleteProjectCategory")
     @ApiOperation(value = "根据项目大类id删除项目大类信息")
     public Result deleteProjectCategory(@RequestBody DeleteProjectCategoryInfo info) {
         return adminService.deleteProjectCategory(info);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @PostMapping("/firstTrial")
     @ApiOperation(value = "业务员初审项目")
     public Result adminFirstTrail(@RequestBody OneJudgeInfo info) {
@@ -96,6 +103,7 @@ public class AdminController {
         return adminService.oneJudge(info);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @PostMapping("/meetingTrial")
     @ApiOperation(value = "对项目会评")
     public Result meetingTrail(@RequestBody MeetingResult info) {
@@ -103,6 +111,7 @@ public class AdminController {
         return adminService.meetingReview(info);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @GetMapping("expertList")
     @ApiOperation(value = "业务员在创建项目大类的时候指定一些审核专家来审核项目")
     public Result getExpertList() {
@@ -110,6 +119,7 @@ public class AdminController {
         return adminService.findExpertList();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @GetMapping("/project/{projectId}")
     @ApiOperation(value = "查找某个项目的全部审核专家的审核意见", notes = "根据项目id查找所有的审核专家的审核意见")
     public Result findProjectCategoryInfo(@PathVariable(value = "projectId") int prId) {
@@ -117,6 +127,7 @@ public class AdminController {
         return adminService.expertOpinionList(prId);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @GetMapping("/reviewPhase/{reviewPhase}")
     @ApiOperation(value = "查找某个审核阶段的项目列表")
     public Result findReviewPhaseInfo(@PathVariable(value = "reviewPhase") int reviewPhase) {
@@ -124,6 +135,7 @@ public class AdminController {
         return adminService.findReviewPhaseList(userId, reviewPhase);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @PostMapping("/expertTrial")
     @ApiOperation(value = "业务员初审项目")
     public Result adminExpertTrail(@RequestBody SecondJudgeInfo info) {
@@ -131,6 +143,7 @@ public class AdminController {
         return adminService.secondJudge(info);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @PostMapping("/createReport")
     @ApiOperation(value = "业务员开通中期报告和结题报告的申报内容")
     public Result createReport(@RequestBody ReportMessage info) {
@@ -138,6 +151,7 @@ public class AdminController {
         return adminService.createReport(info);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @GetMapping("/MyProject")
     @ApiOperation(value = "业务员查看负责的所有立项的项目及其状态",notes = "业务员我的项目一栏")
     public Result queryAdminMyProject(){

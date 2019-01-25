@@ -14,7 +14,6 @@ import com.management.tools.TimeTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.awt.image.RescaleOp;
 import java.util.*;
 
 import static com.management.model.ov.resultsetting.ConstCorrespond.FINAL_PROGRESS;
@@ -55,6 +54,7 @@ public class UserServiceImpl implements UserService {
     private static final int STATE_TWO = 2;
     private static final int REVIEW_FAILED = 6;
     private static final int REVIEW_LAST_PHASE = 5;
+    private static final int REVIEW_PROJECT_INDEX = 7;//待提交任务书阶段
     /**
      * @Description: 根据参数生成登录返回需要的信息
      * @Param: [userId, identity, userName]
@@ -438,7 +438,8 @@ public class UserServiceImpl implements UserService {
         }
         List<ProjectTotalInfo> resList = new LinkedList<>();
         for(ProjectApplication application : findList) {
-            if(application.getReviewPhase() < REVIEW_LAST_PHASE) {
+            //查询立项之前的项目申请
+            if(application.getReviewPhase() == 7 || application.getReviewPhase() < REVIEW_LAST_PHASE || application.getReviewPhase() == 8) {
                 ProjectTotalInfo res = new ProjectTotalInfo();
                 res.setTime(TimeTool.timeToString1(application.getApplicationTime()));
                 res.setProjectApplicationId(application.getProjectApplicationId());
@@ -469,7 +470,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result findProgressProject(String userId) {
-
+        //找到已经立项的项目申请
         ProjectApplicationExample applicationExample = new ProjectApplicationExample();
         applicationExample.createCriteria()
                 .andUserIdEqualTo(userId)
@@ -484,7 +485,7 @@ public class UserServiceImpl implements UserService {
         List<ProjectTotalInfo> finalProject = new LinkedList<>();
         List<ProjectTotalInfo> finishProject = new LinkedList<>();
 
-        FindProgressProjectInfo res = new FindProgressProjectInfo();
+        FindProjectInfo res = new FindProjectInfo();
         for(ProjectApplication application : resBigList) {
             ProjectProgress progress = projectProgressMapper
                     .selectByPrimaryKey(application.getProjectApplicationId());
@@ -675,56 +676,30 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+
     /**
-     * @Description: 我的项目一栏: 业务员和领导查看自己所管理的项目大类的所有项目申请
+     * @Description: 用户查找所有待提交任务书阶段的项目申请
      * @Param: userId
      * @Return: Result
      * @Author: xw
-     * @Date: 19-1-24
+     * @Date: 19-1-25
      */
-    @Override
-    public Result queryAllProjectApplication(String userId) {
-        try {
-            //定义一个总列表及7个申请状态列表
-            Map<String, List> ResultList = new HashMap<String, List>();
-            List<ProjectApplication> adminCheckList = new ArrayList<ProjectApplication>();
-            List<ProjectApplication> expertCheckList = new ArrayList<ProjectApplication>();
-            List<ProjectApplication> meetingStateList = new ArrayList<ProjectApplication>();
-            List<ProjectApplication> leaderCheckList = new ArrayList<ProjectApplication>();
-            List<ProjectApplication> successProjectList = new ArrayList<ProjectApplication>();
-            List<ProjectApplication> failProjectList = new ArrayList<ProjectApplication>();
-            List<ProjectApplication> projectIndexCheckList = new ArrayList<ProjectApplication>();
-
-            //根据业务员id查询到所管理的项目大类id
-            List<ProjectApplication> projectList = projectApplicationMapper.queryAllProjectApplication(userId);
-            //根据项目申请状态进行分类并add到相应的List
-            for (ProjectApplication projectApplication : projectList) {
-                if (projectApplication.getReviewPhase() == 1)
-                    adminCheckList.add(projectApplication);
-                if (projectApplication.getReviewPhase() == 2)
-                    expertCheckList.add(projectApplication);
-                if (projectApplication.getReviewPhase() == 3)
-                    meetingStateList.add(projectApplication);
-                if (projectApplication.getReviewPhase() == 4)
-                    leaderCheckList.add(projectApplication);
-                if (projectApplication.getReviewPhase() == 5)
-                    successProjectList.add(projectApplication);
-                if (projectApplication.getReviewPhase() == 6)
-                    failProjectList.add(projectApplication);
-                if (projectApplication.getReviewPhase() == 7)
-                    projectIndexCheckList.add(projectApplication);
+    public Result findAllTaskManualApplication(String userId){
+        try{
+            //查询任务书待审核阶段的项目申请(reviewPhase=7)
+            ProjectApplicationExample example = new ProjectApplicationExample();
+            example.createCriteria()
+                    .andUserIdEqualTo(userId)
+                    .andReviewPhaseEqualTo(REVIEW_PROJECT_INDEX);
+            List<ProjectApplication> applicationList = projectApplicationMapper
+                    .selectByExample(example);
+            if(applicationList.size()!=0){
+                return ResultTool.success(applicationList);
+            } else{
+                return ResultTool.success("没有待提交任务书的项目申请");
             }
-            ResultList.put("adminCheck", adminCheckList);
-            ResultList.put("expertCheck", expertCheckList);
-            ResultList.put("meetingState", meetingStateList);
-            ResultList.put("leaderCheck", leaderCheckList);
-            ResultList.put("successProject", successProjectList);
-            ResultList.put("failProjectList", failProjectList);
-            ResultList.put("projectIndexCheck", projectIndexCheckList);
-            return ResultTool.success(ResultList);
-        } catch (Exception e) {
-            return ResultTool.error("查询失败");
+        }catch (Exception e){
+            return ResultTool.error("查询失败!");
         }
-
     }
 }

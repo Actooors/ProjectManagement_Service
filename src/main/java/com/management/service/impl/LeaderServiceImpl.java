@@ -304,6 +304,7 @@ public class LeaderServiceImpl implements LeaderService {
             ProjectCategory projectCategory = projectCategoryMapper
                     .selectByPrimaryKey(application.getProjectCategoryId());
             info.setProjectCategory(projectCategory.getProjectCategoryName());
+            info.setProjectCategoryId(projectCategory.getProjectCategoryId());
             info.setAdminName(projectCategory.getPrincipalName());
             //处理已经立项的项目
             if(application.getReviewPhase().equals(5)){

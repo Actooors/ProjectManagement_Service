@@ -55,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
     private static final int EXPERT_NOT_FINISH = 2;
     private static final int EXPERT_IDENTITY = 3;
     private static final int FINISH_APPLICATION = 5;
-
+    private static final int ADMIN_INDEX = 8;
     /**
      * @Description: 创建项目类别
      * @Param: projectCategoryInfo
@@ -509,6 +509,9 @@ public class AdminServiceImpl implements AdminService {
                 res.setDescription(application.getProjectDescription());
                 if (reviewPhase == EXPERT_REVIEW) {
                     res.setExpertOpinion(getExpertOpinionList(application.getProjectApplicationId()));
+                }
+                if(reviewPhase == ADMIN_INDEX) {
+                    res.setIndexContent(application.getProjectIndex());
                 }
                 resList.add(res);
             }

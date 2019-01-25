@@ -82,10 +82,5 @@ public class LeaderController {
         return leaderService.findWaitFinalJudgeList(leaderId);
     }
 
-    @GetMapping("/allProjectApplication")
-    @ApiOperation(value = "领导根据Id查询自己负责的项目大类对应的所有项目申请")
-    public Result queryLeaderProjectApplication(){
-        String leaderId = UserContext.getCurrentUser().getUserId();
-        return userService.queryAllProjectApplication(leaderId);
-    }
+
 }

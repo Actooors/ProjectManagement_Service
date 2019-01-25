@@ -16,9 +16,12 @@ import java.util.Date;
 public class ProjectTotalInfo {
     private Integer projectApplicationId;
     private String projectName;
+    private String projectCategory;
     private String time;
     private String reviewPhase;
     private String description;
     private Integer status;
     private String reportAddress;
+    private String adminName;
+    private String failMessage;
 }

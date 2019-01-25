@@ -50,6 +50,8 @@ public class LeaderServiceImpl implements LeaderService {
 
     private static final int STATE_TWO = 2;
     private static final int STATE_THREE = 3;
+    private static final int PROJECT_INDEX_STATE = 7; //待提交任务书阶段
+    private static final int FAIL_CHACK_PROJECT = 6;//项目申请审核失败阶段
 
     /**
      * @Description: isProjectCategoryPassed接口的实现
@@ -196,9 +198,11 @@ public class LeaderServiceImpl implements LeaderService {
         try {
             ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(leaderJudgeInfo.getProjectApplicationId());
             if (leaderJudgeInfo.getJudge()) {
-                projectApplication.setReviewPhase(5);
+                //领导审核通过后进入待提交任务书
+                projectApplication.setReviewPhase(PROJECT_INDEX_STATE);
 
-                ProjectProgress projectProgress = new ProjectProgress();
+                //加入1任务书阶段后,在业务员审核通过任务书阶段才进行在立项表中添加记录
+               /* ProjectProgress projectProgress = new ProjectProgress();
                 projectProgress.setProjectProgressId(projectApplication.getProjectApplicationId());
                 projectProgress.setIsFinishedConcludingReport(2);
                 projectProgress.setIsFinishedInterimReport(2);
@@ -213,9 +217,9 @@ public class LeaderServiceImpl implements LeaderService {
                     projectProgressMapper.insert(projectProgress);
                 } catch (Exception e) {
                     return ResultTool.error("审核通过后创建项目的projectprogress失败，理由为" + e.toString());
-                }
+                }*/
             } else {
-                projectApplication.setReviewPhase(6);
+                projectApplication.setReviewPhase(FAIL_CHACK_PROJECT);
                 projectApplication.setFailureReason(leaderJudgeInfo.getMsg());
             }
             projectApplicationMapper.updateByPrimaryKey(projectApplication);

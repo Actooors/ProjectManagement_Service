@@ -111,7 +111,7 @@ public class UserController {
     }
 
     @GetMapping("/progressProject")
-    @ApiOperation(value = "查找用户正r在进行的项目")
+    @ApiOperation(value = "查找用户正在进行的项目")
     public Result findProgressProject(){
         String userId = UserContext.getCurrentUser().getUserId();
         return userService.findProgressProject(userId);
@@ -133,10 +133,23 @@ public class UserController {
 
 
     @GetMapping("/userInfoFromId/{userId}")
-    @ApiOperation(value = "查看用户一个项目的详细信息")
+    @ApiOperation(value = "查看用户的详细信息")
     public Result findUserInfoFromId(@PathVariable(value = "userId") String userId){
 
         return userService.findUserInfo(userId);
     }
+
+    @GetMapping("/projectTaskManual")
+    @ApiOperation(value = "查询所有待提交任务书的项目申请")
+    public Result findTaskManualState(){
+        String userId = UserContext.getCurrentUser().getUserId();
+        return userService.findAllTaskManualApplication(userId);
+    }
+
+//    @PostMapping("/commitTaskManual")
+//    @ApiOperation(value = "用户提交任务书")
+//    public Result commitTaskManual(){
+//
+//    }
 
 }

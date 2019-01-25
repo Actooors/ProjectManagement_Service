@@ -435,73 +435,73 @@ public class ProjectApplicationExample {
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexIsNull() {
+        public Criteria andTaskManualIsNull() {
             addCriterion("project_index is null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexIsNotNull() {
+        public Criteria andTaskManualIsNotNull() {
             addCriterion("project_index is not null");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexEqualTo(String value) {
-            addCriterion("project_index =", value, "projectIndex");
+        public Criteria andTaskManualEqualTo(String value) {
+            addCriterion("project_index =", value, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexNotEqualTo(String value) {
-            addCriterion("project_index <>", value, "projectIndex");
+        public Criteria andTaskManualNotEqualTo(String value) {
+            addCriterion("project_index <>", value, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexGreaterThan(String value) {
-            addCriterion("project_index >", value, "projectIndex");
+        public Criteria andTaskManualGreaterThan(String value) {
+            addCriterion("project_index >", value, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexGreaterThanOrEqualTo(String value) {
-            addCriterion("project_index >=", value, "projectIndex");
+        public Criteria andTaskManualGreaterThanOrEqualTo(String value) {
+            addCriterion("project_index >=", value, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexLessThan(String value) {
-            addCriterion("project_index <", value, "projectIndex");
+        public Criteria andTaskManualLessThan(String value) {
+            addCriterion("project_index <", value, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexLessThanOrEqualTo(String value) {
-            addCriterion("project_index <=", value, "projectIndex");
+        public Criteria andTaskManualLessThanOrEqualTo(String value) {
+            addCriterion("project_index <=", value, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexLike(String value) {
-            addCriterion("project_index like", value, "projectIndex");
+        public Criteria andTaskManualLike(String value) {
+            addCriterion("project_index like", value, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexNotLike(String value) {
-            addCriterion("project_index not like", value, "projectIndex");
+        public Criteria andTaskManualNotLike(String value) {
+            addCriterion("project_index not like", value, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexIn(List<String> values) {
-            addCriterion("project_index in", values, "projectIndex");
+        public Criteria andTaskManualIn(List<String> values) {
+            addCriterion("project_index in", values, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexNotIn(List<String> values) {
-            addCriterion("project_index not in", values, "projectIndex");
+        public Criteria andTaskManualNotIn(List<String> values) {
+            addCriterion("project_index not in", values, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexBetween(String value1, String value2) {
-            addCriterion("project_index between", value1, value2, "projectIndex");
+        public Criteria andTaskManualBetween(String value1, String value2) {
+            addCriterion("project_index between", value1, value2, "TaskManual");
             return (Criteria) this;
         }
 
-        public Criteria andProjectIndexNotBetween(String value1, String value2) {
-            addCriterion("project_index not between", value1, value2, "projectIndex");
+        public Criteria andTaskManualNotBetween(String value1, String value2) {
+            addCriterion("project_index not between", value1, value2, "TaskManual");
             return (Criteria) this;
         }
 

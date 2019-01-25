@@ -145,4 +145,12 @@ public interface AdminService {
      */
     Result createReport(ReportMessage reportMessage);
 
+    /**
+     * @Description: 业务员我的项目一栏: 业务员查询自己负责的立项的项目
+     * @Param: [userId]
+     * @Return: Result
+     * @Author: xw
+     * @Date: 19-1-25
+     */
+    Result AdminQueryProgressProject(String userId);
 }

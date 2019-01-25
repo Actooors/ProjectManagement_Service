@@ -31,8 +31,10 @@ public class ConstCorrespond {
             "评审专家审核阶段",
             "会评阶段",
             "领导审核阶段",
-            "审核通过"
-
+            "项目申请审核通过",
+            "项目申请审核失败",
+            "待提交任务书阶段",
+            "任务书审核阶段",
     };
 
     public final static String downloadAddress = "http://129.204.71.113:8888/api/file/download?fileAddress=";
@@ -42,7 +44,8 @@ public class ConstCorrespond {
             "立项",
             "中期报告审核阶段",
             "结题报告审核阶段",
-            "项目完成"
+            "项目结项",
+            "结题报告审核失败"
     };
 
     public final static String[] USER_AUTHORIZATION = {

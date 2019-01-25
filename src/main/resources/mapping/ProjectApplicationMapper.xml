@@ -7,7 +7,7 @@
     <result column="project_name" property="projectName" jdbcType="VARCHAR" />
     <result column="project_member" property="projectMember" jdbcType="VARCHAR" />
     <result column="project_description" property="projectDescription" jdbcType="VARCHAR" />
-    <result column="project_index" property="projectIndex" jdbcType="VARCHAR" />
+    <result column="project_index" property="TaskManual" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
@@ -115,10 +115,10 @@
     where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
   </select>
 
-  <select id="queryAllProjectApplication" resultMap="BaseResultMap" parameterType="java.lang.String">
+  <select id="queryAllProgressAndFailProject" resultMap="BaseResultMap" parameterType="java.lang.String">
     select a.*
     from tbl_ProjectApplication as a left join tbl_ProjectCategory as b on a.project_category_id = b.project_category_id
-    where b.principal_id = #{userId,jdbcType=VARCHAR} or b.review_leader_id = #{userId,jdbcType=VARCHAR}
+    where (a.review_phase = 5 or a.review_phase = 6) and (b.principal_id = #{userId,jdbcType=VARCHAR} or b.review_leader_id = #{userId,jdbcType=VARCHAR})
   </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
@@ -144,7 +144,7 @@
       )
     values (#{projectApplicationId,jdbcType=INTEGER}, #{projectCategoryId,jdbcType=INTEGER}, 
       #{projectName,jdbcType=VARCHAR}, #{projectMember,jdbcType=VARCHAR}, #{projectDescription,jdbcType=VARCHAR}, 
-      #{projectIndex,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{TaskManual,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
       #{sex,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{mail,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, 
       #{projectApplicationUploadAddress,jdbcType=VARCHAR}, #{isMeeting,jdbcType=INTEGER}, 
@@ -171,7 +171,7 @@
       <if test="projectDescription != null" >
         project_description,
       </if>
-      <if test="projectIndex != null" >
+      <if test="TaskManual != null" >
         project_index,
       </if>
       <if test="userId != null" >
@@ -245,8 +245,8 @@
       <if test="projectDescription != null" >
         #{projectDescription,jdbcType=VARCHAR},
       </if>
-      <if test="projectIndex != null" >
-        #{projectIndex,jdbcType=VARCHAR},
+      <if test="TaskManual != null" >
+        #{TaskManual,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
@@ -328,8 +328,8 @@
       <if test="record.projectDescription != null" >
         project_description = #{record.projectDescription,jdbcType=VARCHAR},
       </if>
-      <if test="record.projectIndex != null" >
-        project_index = #{record.projectIndex,jdbcType=VARCHAR},
+      <if test="record.TaskManual != null" >
+        project_index = #{record.TaskManual,jdbcType=VARCHAR},
       </if>
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=VARCHAR},
@@ -397,7 +397,7 @@
       project_name = #{record.projectName,jdbcType=VARCHAR},
       project_member = #{record.projectMember,jdbcType=VARCHAR},
       project_description = #{record.projectDescription,jdbcType=VARCHAR},
-      project_index = #{record.projectIndex,jdbcType=VARCHAR},
+      project_index = #{record.TaskManual,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
@@ -435,8 +435,8 @@
       <if test="projectDescription != null" >
         project_description = #{projectDescription,jdbcType=VARCHAR},
       </if>
-      <if test="projectIndex != null" >
-        project_index = #{projectIndex,jdbcType=VARCHAR},
+      <if test="TaskManual != null" >
+        project_index = #{TaskManual,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         user_id = #{userId,jdbcType=VARCHAR},
@@ -501,7 +501,7 @@
       project_name = #{projectName,jdbcType=VARCHAR},
       project_member = #{projectMember,jdbcType=VARCHAR},
       project_description = #{projectDescription,jdbcType=VARCHAR},
-      project_index = #{projectIndex,jdbcType=VARCHAR},
+      project_index = #{TaskManual,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       user_name = #{userName,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},

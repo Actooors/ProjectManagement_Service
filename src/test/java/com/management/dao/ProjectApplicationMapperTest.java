@@ -17,5 +17,6 @@ public class ProjectApplicationMapperTest {
 
     @Test
     public void queryAdminProjectApplication() {
+       // System.out.print(projectApplicationMapper.queryAllProgressProject("16122131"));
     }
 }

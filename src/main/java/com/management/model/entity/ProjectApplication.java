@@ -13,7 +13,7 @@ public class ProjectApplication {
 
     private String projectDescription;
 
-    private String projectIndex;
+    private String TaskManual;
 
     private String userId;
 
@@ -91,12 +91,12 @@ public class ProjectApplication {
         this.projectDescription = projectDescription == null ? null : projectDescription.trim();
     }
 
-    public String getProjectIndex() {
-        return projectIndex;
+    public String getTaskManual() {
+        return TaskManual;
     }
 
-    public void setProjectIndex(String projectIndex) {
-        this.projectIndex = projectIndex == null ? null : projectIndex.trim();
+    public void setTaskManual(String TaskManual) {
+        this.TaskManual = TaskManual == null ? null : TaskManual.trim();
     }
 
     public String getUserId() {

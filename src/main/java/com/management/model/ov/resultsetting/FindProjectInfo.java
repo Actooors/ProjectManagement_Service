@@ -1,5 +1,6 @@
 package com.management.model.ov.resultsetting;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.util.List;
@@ -10,10 +11,13 @@ import java.util.List;
  * @author: ggmr
  * @create: 2018-12-25 21:56
  */
+
 @Data
-public class FindProgressProjectInfo {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class FindProjectInfo {
     private List<ProjectTotalInfo> buildProject;
     private List<ProjectTotalInfo> middleProject;
     private List<ProjectTotalInfo> finalProject;
     private List<ProjectTotalInfo> finishProject;
+    private List<ProjectTotalInfo> failProject;
 }

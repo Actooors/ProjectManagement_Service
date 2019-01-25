@@ -138,11 +138,10 @@ public class AdminController {
         return adminService.createReport(info);
     }
 
-    @GetMapping("/allProjectApplication")
-    @ApiOperation(value = "业务员查看自己负责的项目大类下所有项目申请", notes = "按照项目申请状态进行区分")
-    public Result queryAllProjectApplication(){
-        String userId = UserContext.getCurrentUser().getUserId();
-        return userService.queryAllProjectApplication(userId);
+    @GetMapping("/adminMyProject")
+    @ApiOperation(value = "业务员查看负责的所有立项的项目及其状态",notes = "业务员我的项目一栏")
+    public Result queryAdminMyProject(){
+        return null;
     }
 
 

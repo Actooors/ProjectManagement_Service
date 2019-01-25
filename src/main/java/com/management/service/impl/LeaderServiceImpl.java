@@ -46,7 +46,7 @@ public class LeaderServiceImpl implements LeaderService {
 
     private static final int STATE_TWO = 2;
     private static final int STATE_THREE = 3;
-    private static final int PROJECT_INDEX_STATE = 7; //待提交任务书阶段
+    static final int PROJECT_INDEX_STATE = 7; //待提交任务书阶段
     private static final int FAIL_CHACK_PROJECT = 6;//项目申请审核失败阶段
 
     /**

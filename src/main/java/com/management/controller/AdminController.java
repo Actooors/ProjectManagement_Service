@@ -160,4 +160,11 @@ public class AdminController {
     }
 
 
+    @PostMapping("/indexState")
+    @ApiOperation(value = "业务员审核任务书")
+    public Result judgeIndex(@RequestBody MeetingResult info) {
+
+        return adminService.judgeMission(info);
+    }
+
 }

@@ -153,4 +153,14 @@ public interface AdminService {
      * @Date: 19-1-25
      */
     Result AdminQueryProject(String userId);
+
+
+    /**
+     * @Description: 任务书审核
+     * @Param: []
+     * @Return: com.management.model.ov.Result
+     * @Author: 0GGmr0
+     * @Date: 2019-01-25
+     */
+    Result judgeMission(MeetingResult info);
 }

@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.*;
 
+import static com.management.service.impl.LeaderServiceImpl.PROJECT_INDEX_STATE;
 import static com.management.tools.TimeTool.timetoString;
 
 /**
@@ -53,6 +54,7 @@ public class AdminServiceImpl implements AdminService {
     private static final int LEADER_REVIEW = 4;
     private static final int EXPERT_NOT_FINISH = 2;
     private static final int EXPERT_IDENTITY = 3;
+    private static final int FINISH_APPLICATION = 5;
 
     /**
      * @Description: 创建项目类别
@@ -713,4 +715,40 @@ public class AdminServiceImpl implements AdminService {
         return ResultTool.success(res);
     }
 
+
+    @Override
+    public Result judgeMission(MeetingResult info) {
+        ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(info.getApplicationId());
+        if(info.getJudge()) {
+            projectApplication.setReviewPhase(FINISH_APPLICATION);
+            projectApplication.setProjectIndexState(true);
+
+            ProjectProgress projectProgress = new ProjectProgress();
+            projectProgress.setProjectProgressId(projectApplication.getProjectApplicationId());
+            projectProgress.setIsFinishedConcludingReport(2);
+            projectProgress.setIsFinishedInterimReport(2);
+            projectProgress.setProjectProcess(1);
+            projectProgress.setProjectCategoryId(projectApplication.getProjectCategoryId());
+            projectProgress.setUserId(projectApplication.getUserId());
+            projectProgress.setProjectName(projectApplication.getProjectName());
+            projectProgress.setDescription(projectApplication.getProjectDescription());
+            projectProgress.setUserName(projectApplication.getUserName());
+            projectProgress.setDepartment(projectApplication.getDepartment());
+            try {
+                projectProgressMapper.insert(projectProgress);
+            } catch (Exception e) {
+                return ResultTool.error("审核通过后创建项目的projectprogress失败，理由为" + e.toString());
+            }
+        } else {
+            projectApplication.setProjectIndexState(false);
+            projectApplication.setFailureReason(info.getMsg());
+            projectApplication.setReviewPhase(PROJECT_INDEX_STATE);
+        }
+        try {
+            projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
+        }catch (Exception e) {
+            return ResultTool.error("在审核任务书通过后更新数据库出错，报错信息为" + e.toString());
+        }
+        return ResultTool.success();
+    }
 }

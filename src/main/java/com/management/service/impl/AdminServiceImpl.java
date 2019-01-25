@@ -641,6 +641,7 @@ public class AdminServiceImpl implements AdminService {
             ProjectCategory projectCategory = projectCategoryMapper
                     .selectByPrimaryKey(application.getProjectCategoryId());
             info.setProjectCategory(projectCategory.getProjectCategoryName());
+            info.setProjectCategoryId(projectCategory.getProjectCategoryId());
             //处理已经立项的项目
             if(application.getReviewPhase().equals(5)){
                 info.setReviewPhase(ConstCorrespond

@@ -82,5 +82,12 @@ public class LeaderController {
         return leaderService.findWaitFinalJudgeList(leaderId);
     }
 
+    @GetMapping("/MyProject")
+    @ApiOperation(value = "领导查询负责的已立项和审核失败的项目", notes = "对应领导我的项目一栏")
+    public Result queryLeaderMyProject(){
+        String leaderId = UserContext.getCurrentUser().getUserId();
+        return leaderService.leaderQueryMyProject(leaderId);
+    }
+
 
 }

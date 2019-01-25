@@ -78,4 +78,12 @@ public interface LeaderService {
      */
     Result findWaitFinalJudgeList(String leaderId);
 
+    /**
+     * @Description: 领导查询负责的已立项和审核失败的项目
+     * @Param: leaderId
+     * @Return: Result
+     * @Author: xw
+     * @Date: 19-1-25
+     */
+    Result leaderQueryMyProject(String leaderId);
 }

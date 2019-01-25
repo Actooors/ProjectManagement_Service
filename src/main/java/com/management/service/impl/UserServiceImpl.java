@@ -438,6 +438,9 @@ public class UserServiceImpl implements UserService {
         }
         List<ProjectTotalInfo> resList = new LinkedList<>();
         for(ProjectApplication application : findList) {
+            //查询到相应的项目大类
+            ProjectCategory projectCategory = projectCategoryMapper
+                    .selectByPrimaryKey(application.getProjectCategoryId());
             //查询立项之前的项目申请
             if(application.getReviewPhase() == 7 || application.getReviewPhase() < REVIEW_LAST_PHASE || application.getReviewPhase() == 8) {
                 ProjectTotalInfo res = new ProjectTotalInfo();
@@ -447,6 +450,7 @@ public class UserServiceImpl implements UserService {
                 res.setReviewPhase(ConstCorrespond
                         .reviewPhrase[application.getReviewPhase()]);
                 res.setDescription(application.getProjectDescription());
+                res.setProjectCategoryId(projectCategory.getProjectCategoryId());
                 resList.add(res);
             }
         }

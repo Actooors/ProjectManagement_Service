@@ -8,10 +8,7 @@ import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
 import com.management.model.jsonrequestbody.LeaderJudgeInfo;
 import com.management.model.ov.Result;
-import com.management.model.ov.resultsetting.AdminJudgeTotalInfo;
-import com.management.model.ov.resultsetting.FinalReportInfo;
-import com.management.model.ov.resultsetting.LeaderSubordinateInfo;
-import com.management.model.ov.resultsetting.WaitJudgeProjectCategoryInfo;
+import com.management.model.ov.resultsetting.*;
 import com.management.service.LeaderService;
 import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
@@ -278,6 +275,109 @@ public class LeaderServiceImpl implements LeaderService {
             }
         }
         return ResultTool.success(resList);
+    }
+
+    /**
+     * @Description: 领导查询负责的已立项和审核失败的项目
+     * @Param: leaderId
+     * @Return: Result
+     * @Author: xw
+     * @Date: 19-1-25
+     */
+    public Result leaderQueryMyProject(String leaderId){
+        List<ProjectTotalInfo> buildProject = new LinkedList<>();
+        List<ProjectTotalInfo> middleProject = new LinkedList<>();
+        List<ProjectTotalInfo> finalProject = new LinkedList<>();
+        List<ProjectTotalInfo> finishProject = new LinkedList<>();
+        List<ProjectTotalInfo> failedProject = new LinkedList<>();
+        //查找到业务员负责的项目申请信息列表
+        List<ProjectApplication> applicationList = projectApplicationMapper
+                .queryAllProgressAndFailProject(leaderId);
+
+        for(ProjectApplication application : applicationList){
+            ProjectProgress progress = projectProgressMapper
+                    .selectByPrimaryKey(application.getProjectApplicationId());
+            ProjectTotalInfo info = new ProjectTotalInfo();
+            info.setDescription(application.getProjectDescription());
+            info.setProjectApplicationId(application.getProjectApplicationId());
+            info.setProjectName(application.getProjectName());
+            //查询到相应的项目大类
+            ProjectCategory projectCategory = projectCategoryMapper
+                    .selectByPrimaryKey(application.getProjectCategoryId());
+            info.setProjectCategory(projectCategory.getProjectCategoryName());
+            info.setAdminName(projectCategory.getPrincipalName());
+            //处理已经立项的项目
+            if(application.getReviewPhase().equals(5)){
+                info.setReviewPhase(ConstCorrespond
+                        .PROJECT_PROGRESS[progress.getProjectProcess()]);
+                //获取当前时间,只给用户提供在中期报告和结题报告提交时间段内的项目
+                Date nowTime = new Date();
+                switch (progress.getProjectProcess()) {
+                    case 1 : {
+                        info.setTime(timetoString(progress.getProjectcreatetime()));
+                        info.setStatus(1);
+                        buildProject.add(info);
+                        break;
+                    }
+                    case 2 : {
+                        Date InterimReportEndTime = projectCategory.getInterimReportEndTime();
+                        Date InterimReportStartTime = projectCategory.getInterimReportStartTime();
+                        if(projectCategory.getIsInterimReportActivated()==1) {
+                            if(!InterimReportStartTime.before(nowTime)) {
+                                info.setStatus(3);
+                            } else if(InterimReportEndTime.after(nowTime)) {
+                                info.setReportAddress(projectCategory.getInterimReportDownloadAddress());
+                                info.setStatus(1);
+                            } else {
+                                info.setStatus(2);
+                            }
+                        }
+                        info.setTime(timetoString(InterimReportEndTime));
+                        middleProject.add(info);
+                        break;
+                    }
+                    case 3 :{
+                        Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
+                        Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();
+                        if(projectCategory.getIsConcludingReportActivated() == 1) {
+                            if(!ConcludingReportStartTime.before(nowTime)) {
+                                info.setStatus(3);
+                            } else if(ConcludingReportEndTime.after(nowTime)) {
+                                info.setReportAddress(projectCategory.getConcludingReportDownloadAddress());
+                                info.setStatus(1);
+                            } else {
+                                info.setStatus(2);
+                            }
+                        }
+                        info.setTime(timetoString(ConcludingReportEndTime));
+                        finalProject.add(info);
+                        break;
+                    }
+                    case 4: {
+                        info.setTime(timetoString(projectCategory.getProjectEndTime()));
+                        info.setStatus(1);
+                        finishProject.add(info);
+                        break;
+                    }
+                    case 5: {
+                        info.setFailMessage(progress.getConcludingReportFailureReason());
+                        failedProject.add(info);
+                    }
+                }
+            }
+
+            if(application.getReviewPhase().equals(6)){
+                info.setFailMessage(application.getFailureReason());
+                failedProject.add(info);
+            }
+        }
+        FindProjectInfo res = new FindProjectInfo();
+        res.setBuildProject(buildProject);
+        res.setMiddleProject(middleProject);
+        res.setFinalProject(finalProject);
+        res.setFinishProject(finishProject);
+        res.setFailProject(failedProject);
+        return ResultTool.success(res);
     }
 
 }

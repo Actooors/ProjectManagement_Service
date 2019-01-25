@@ -141,7 +141,8 @@ public class AdminController {
     @GetMapping("/adminMyProject")
     @ApiOperation(value = "业务员查看负责的所有立项的项目及其状态",notes = "业务员我的项目一栏")
     public Result queryAdminMyProject(){
-        return null;
+        String userId = UserContext.getCurrentUser().getUserId();
+        return adminService.AdminQueryProject(userId);
     }
 
 

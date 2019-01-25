@@ -618,7 +618,7 @@ public class AdminServiceImpl implements AdminService {
      * @Author: xw
      * @Date: 19-1-25
      */
-    public Result AdminQueryProgressProject(String userId){
+    public Result AdminQueryProject(String userId){
         List<ProjectTotalInfo> buildProject = new LinkedList<>();
         List<ProjectTotalInfo> middleProject = new LinkedList<>();
         List<ProjectTotalInfo> finalProject = new LinkedList<>();

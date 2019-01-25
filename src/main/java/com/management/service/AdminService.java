@@ -152,5 +152,5 @@ public interface AdminService {
      * @Author: xw
      * @Date: 19-1-25
      */
-    Result AdminQueryProgressProject(String userId);
+    Result AdminQueryProject(String userId);
 }

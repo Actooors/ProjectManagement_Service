@@ -1,6 +1,5 @@
 package com.management.service.impl;
 
-import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.ProjectProgressMapper;
 import com.management.dao.UserMapper;
@@ -14,7 +13,6 @@ import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;

@@ -13,7 +13,9 @@ public class ProjectApplication {
 
     private String projectDescription;
 
-    private String TaskManual;
+    private String projectIndex;
+
+    private Boolean projectIndexState;
 
     private String userId;
 
@@ -91,12 +93,20 @@ public class ProjectApplication {
         this.projectDescription = projectDescription == null ? null : projectDescription.trim();
     }
 
-    public String getTaskManual() {
-        return TaskManual;
+    public String getProjectIndex() {
+        return projectIndex;
     }
 
-    public void setTaskManual(String TaskManual) {
-        this.TaskManual = TaskManual == null ? null : TaskManual.trim();
+    public void setProjectIndex(String projectIndex) {
+        this.projectIndex = projectIndex == null ? null : projectIndex.trim();
+    }
+
+    public Boolean getProjectIndexState() {
+        return projectIndexState;
+    }
+
+    public void setProjectIndexState(Boolean projectIndexState) {
+        this.projectIndexState = projectIndexState;
     }
 
     public String getUserId() {

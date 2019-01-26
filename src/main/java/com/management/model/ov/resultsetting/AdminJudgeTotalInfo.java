@@ -19,5 +19,6 @@ public class AdminJudgeTotalInfo {
     private String projectName;
     private String projectApplicationDownloadAddress;
     private String description;
+    private String indexContent;
     private ExpertOpinionMain expertOpinion;
 }

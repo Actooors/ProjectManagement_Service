@@ -1,10 +1,7 @@
 package com.management.controller;
 
 import com.management.model.entity.User;
-import com.management.model.jsonrequestbody.DeleteApplication;
-import com.management.model.jsonrequestbody.IsProjectPassedPostInfo;
-import com.management.model.jsonrequestbody.PostReportInfo;
-import com.management.model.jsonrequestbody.ProjectApplicationInfo;
+import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
 import com.management.security.UserContext;
 import com.management.service.UserService;
@@ -139,17 +136,11 @@ public class UserController {
         return userService.findUserInfo(userId);
     }
 
-    @GetMapping("/projectTaskManual")
-    @ApiOperation(value = "查询所有待提交任务书的项目申请")
-    public Result findTaskManualState(){
-        String userId = UserContext.getCurrentUser().getUserId();
-        return userService.findAllTaskManualApplication(userId);
-    }
 
-//    @PostMapping("/commitTaskManual")
-//    @ApiOperation(value = "用户提交任务书")
-//    public Result commitTaskManual(){
-//
-//    }
+    @PostMapping("/commitTaskManual")
+    @ApiOperation(value = "用户提交任务书")
+    public Result commitTaskManual(@RequestBody ProjectIndex projectIndex){
+        return userService.commitProjectIndex(projectIndex);
+    }
 
 }

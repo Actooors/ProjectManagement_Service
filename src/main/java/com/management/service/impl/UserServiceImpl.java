@@ -680,30 +680,26 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
     /**
-     * @Description: 用户查找所有待提交任务书阶段的项目申请
-     * @Param: userId
+     * @Description: 用户提交任务书
+     * @Param: [ProjectIndex]
      * @Return: Result
      * @Author: xw
-     * @Date: 19-1-25
+     * @Date: 19-1-26
      */
-    public Result findAllTaskManualApplication(String userId){
+    @Override
+    public Result commitProjectIndex(ProjectIndex projectIndex){
         try{
-            //查询任务书待审核阶段的项目申请(reviewPhase=7)
-            ProjectApplicationExample example = new ProjectApplicationExample();
-            example.createCriteria()
-                    .andUserIdEqualTo(userId)
-                    .andReviewPhaseEqualTo(REVIEW_PROJECT_INDEX);
-            List<ProjectApplication> applicationList = projectApplicationMapper
-                    .selectByExample(example);
-            if(applicationList.size()!=0){
-                return ResultTool.success(applicationList);
-            } else{
-                return ResultTool.success("没有待提交任务书的项目申请");
+            ProjectApplication projectApplication = projectApplicationMapper
+                    .selectByPrimaryKey(projectIndex.getProjectApplicationId());
+            projectApplication.setProjectIndex(projectIndex.getProjectIndex());
+            if(projectApplication.getProjectMoney()!=null){
+                projectApplication.setProjectMoney(projectIndex.getProjectMoney());
             }
+            projectApplicationMapper.updateByPrimaryKey(projectApplication);
+            return ResultTool.success();
         }catch (Exception e){
-            return ResultTool.error("查询失败!");
+            return ResultTool.error("提交失败");
         }
     }
 }

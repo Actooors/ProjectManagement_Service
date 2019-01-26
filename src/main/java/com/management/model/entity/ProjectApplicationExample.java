@@ -565,6 +565,66 @@ public class ProjectApplicationExample {
             return (Criteria) this;
         }
 
+        public Criteria andProjectMoneyIsNull() {
+            addCriterion("project_money is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyIsNotNull() {
+            addCriterion("project_money is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyEqualTo(Integer value) {
+            addCriterion("project_money =", value, "projectMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyNotEqualTo(Integer value) {
+            addCriterion("project_money <>", value, "projectMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyGreaterThan(Integer value) {
+            addCriterion("project_money >", value, "projectMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyGreaterThanOrEqualTo(Integer value) {
+            addCriterion("project_money >=", value, "projectMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyLessThan(Integer value) {
+            addCriterion("project_money <", value, "projectMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyLessThanOrEqualTo(Integer value) {
+            addCriterion("project_money <=", value, "projectMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyIn(List<Integer> values) {
+            addCriterion("project_money in", values, "projectMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyNotIn(List<Integer> values) {
+            addCriterion("project_money not in", values, "projectMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyBetween(Integer value1, Integer value2) {
+            addCriterion("project_money between", value1, value2, "projectMoney");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectMoneyNotBetween(Integer value1, Integer value2) {
+            addCriterion("project_money not between", value1, value2, "projectMoney");
+            return (Criteria) this;
+        }
+
         public Criteria andUserIdIsNull() {
             addCriterion("user_id is null");
             return (Criteria) this;

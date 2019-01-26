@@ -17,6 +17,8 @@ public class ProjectApplication {
 
     private Boolean projectIndexState;
 
+    private Integer projectMoney;
+
     private String userId;
 
     private String userName;
@@ -107,6 +109,14 @@ public class ProjectApplication {
 
     public void setProjectIndexState(Boolean projectIndexState) {
         this.projectIndexState = projectIndexState;
+    }
+
+    public Integer getProjectMoney() {
+        return projectMoney;
+    }
+
+    public void setProjectMoney(Integer projectMoney) {
+        this.projectMoney = projectMoney;
     }
 
     public String getUserId() {

@@ -161,13 +161,14 @@ public interface UserService {
     Result findUserInfo(String userId);
 
 
+
     /**
-     * @Description: 用户查找所有待提交任务书阶段的项目申请
-     * @Param: userId
+     * @Description: 用户提交任务书
+     * @Param: [ProjectIndex]
      * @Return: Result
      * @Author: xw
-     * @Date: 19-1-25
+     * @Date: 19-1-26
      */
-    Result findAllTaskManualApplication(String userId);
+    Result commitProjectIndex(ProjectIndex projectIndex);
 
 }

@@ -66,6 +66,7 @@ public class ExpertServiceImpl implements ExpertService {
                     projectInfo.setProjectApplicationId(projectApplication.getProjectApplicationId());
                     projectInfo.setDescription(projectApplication.getProjectDescription());
                     projectInfo.setDepartment(projectApplication.getDepartment());
+                    projectInfo.setProjectMoney(projectApplication.getProjectMoney());
                     projectInfo.setUploadAddress(projectApplication.getProjectApplicationUploadAddress());
                     if (projectApplication.getIsMeeting() == 1) {
                         projectInfo.setIsMeeting(true);

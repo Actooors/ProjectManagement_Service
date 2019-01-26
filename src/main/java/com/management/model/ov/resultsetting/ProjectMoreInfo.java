@@ -21,5 +21,6 @@ public class ProjectMoreInfo {
     private String applicationAddress;
     private String interimAddress;
     private String concludingAddress;
+    private Integer projectMoney;
     private List<ExpertListInfo> expertList;
 }

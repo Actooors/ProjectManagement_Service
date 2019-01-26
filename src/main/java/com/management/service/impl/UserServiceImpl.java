@@ -587,6 +587,7 @@ public class UserServiceImpl implements UserService {
         }
         res.setDescription(resApplication.getProjectDescription());
         res.setProjectName(resApplication.getProjectName());
+        res.setProjectMoney(resApplication.getProjectMoney());
         ProjectMemberExample example = new ProjectMemberExample();
         example.createCriteria()
                 .andProjectNameEqualTo(resApplication.getProjectName())

@@ -1,11 +1,7 @@
 package com.management.model.ov.resultsetting;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-import io.swagger.models.auth.In;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * @program: management

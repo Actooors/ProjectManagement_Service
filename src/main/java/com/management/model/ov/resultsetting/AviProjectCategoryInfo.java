@@ -18,4 +18,5 @@ public class AviProjectCategoryInfo {
     private String introduce;
     private String isMeeting;
     private String downLoadAddress;
+    private String projectMaxMoney;
 }

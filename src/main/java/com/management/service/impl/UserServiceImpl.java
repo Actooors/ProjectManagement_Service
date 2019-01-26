@@ -318,6 +318,7 @@ public class UserServiceImpl implements UserService {
                     info.setIsMeeting(p.getIsExistMeetingReview() == 1 ? "true":"false");
                     info.setDownLoadAddress(ConstCorrespond.downloadAddress +
                             p.getProjectApplicationDownloadAddress());
+                    info.setProjectMaxMoney(p.getMaxMoney());
                     resList.add(info);
                 } else {
                     break;

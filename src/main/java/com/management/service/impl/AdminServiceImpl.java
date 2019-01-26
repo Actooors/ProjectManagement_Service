@@ -447,6 +447,9 @@ public class AdminServiceImpl implements AdminService {
         if (info.getJudge()) {
             application.setReviewPhase(LEADER_REVIEW);
             application.setMeetingReviewMessage(info.getMsg());
+            if(info.getProjectMoney() != null){
+                application.setProjectMoney(info.getProjectMoney());
+            }
         } else {
             application.setReviewPhase(REVIEW_FAILED);
             application.setFailureReason(info.getMsg());

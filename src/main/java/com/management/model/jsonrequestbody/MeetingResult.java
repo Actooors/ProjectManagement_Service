@@ -13,4 +13,5 @@ public class MeetingResult {
     private int applicationId;
     private Boolean judge;
     private String msg;
+    private Integer projectMoney;
 }

@@ -527,6 +527,11 @@ public class UserServiceImpl implements UserService {
                         }
                     }
                     info.setTime(timetoString(InterimReportEndTime));
+                    if(progress.getIsFinishedInterimReport() == 1) {
+                        info.setIsFinished(true);
+                    } else {
+                        info.setIsFinished(false);
+                    }
                     middleProject.add(info);
                     break;
                 }
@@ -544,6 +549,11 @@ public class UserServiceImpl implements UserService {
                         }
                     }
                     info.setTime(timetoString(ConcludingReportEndTime));
+                    if(progress.getIsFinishedConcludingReport() == 1) {
+                        info.setIsFinished(true);
+                    } else {
+                        info.setIsFinished(false);
+                    }
                     finalProject.add(info);
                     break;
                 }

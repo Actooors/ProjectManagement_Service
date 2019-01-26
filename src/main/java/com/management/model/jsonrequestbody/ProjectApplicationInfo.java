@@ -26,6 +26,7 @@ public class ProjectApplicationInfo {
     private String phone;
     private String mail;
     private String uploadAddress;
+    private Integer projectMoney;
     private Boolean isMeeting;
     private String applicationDeadline;
 }

@@ -395,6 +395,7 @@ public class UserServiceImpl implements UserService {
         res.setMail(mainMember.getMail());
         res.setProjectApplicationUploadAddress(projectApplicationInfo.getUploadAddress());
         res.setReviewPhase(1);
+        res.setProjectMoney(projectApplicationInfo.getProjectMoney());
 //        res.setApplicationDeadline(stringToTime(projectApplicationInfo.getApplicationDeadline()));
         //1上会2不上
         res.setIsMeeting(projectApplicationInfo.getIsMeeting() ? 1 : 2);
@@ -696,6 +697,7 @@ public class UserServiceImpl implements UserService {
             if(projectApplication.getProjectMoney()!=null){
                 projectApplication.setProjectMoney(projectIndex.getProjectMoney());
             }
+            projectApplication.setReviewPhase(8);
             projectApplicationMapper.updateByPrimaryKey(projectApplication);
             return ResultTool.success();
         }catch (Exception e){

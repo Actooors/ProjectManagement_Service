@@ -536,6 +536,9 @@ public class UserServiceImpl implements UserService {
                     middleProject.add(info);
                     break;
                 }
+                case 5 : {
+
+                }
                 case 3 :{
                     Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
                     Date ConcludingReportStartTime = projectCategory.getConcludingReportStartTime();

@@ -167,4 +167,11 @@ public class AdminController {
         return adminService.judgeMission(info);
     }
 
+
+    @PostMapping("/finalReport")
+    @ApiOperation(value = "业务员审核项目结题报告")
+    public Result judgeFinalReport(@RequestBody MeetingResult info) {
+
+        return adminService.judgeFinalReport(info);
+    }
 }

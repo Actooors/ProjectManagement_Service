@@ -143,4 +143,6 @@ public class UserController {
         return userService.commitProjectIndex(projectIndex);
     }
 
+    //@GetMapping("/failProjectApplication")
+
 }

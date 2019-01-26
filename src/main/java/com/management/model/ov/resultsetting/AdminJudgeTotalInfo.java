@@ -21,4 +21,6 @@ public class AdminJudgeTotalInfo {
     private String description;
     private String indexContent;
     private ExpertOpinionMain expertOpinion;
+    private String projectMaxMoney;
+    private Integer projectMoney;
 }

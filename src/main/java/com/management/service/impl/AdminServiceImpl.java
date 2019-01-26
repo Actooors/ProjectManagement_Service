@@ -510,6 +510,8 @@ public class AdminServiceImpl implements AdminService {
                         .getProjectApplicationUploadAddress());
                 res.setProjectName(application.getProjectName());
                 res.setDescription(application.getProjectDescription());
+                res.setProjectMaxMoney(category.getMaxMoney());
+                res.setProjectMoney(application.getProjectMoney());
                 if (reviewPhase == EXPERT_REVIEW) {
                     res.setExpertOpinion(getExpertOpinionList(application.getProjectApplicationId()));
                 }

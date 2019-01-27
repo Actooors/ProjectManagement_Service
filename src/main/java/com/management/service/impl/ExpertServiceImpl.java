@@ -103,7 +103,7 @@ public class ExpertServiceImpl implements ExpertService {
                 //将专家评审信息插入
                 reviewExpert.setScore(expertJudgeInfo.getScore());
                 reviewExpert.setReviewOpinion(expertJudgeInfo.getReviewOpinion());
-                reviewExpert.setFinalOpinion(Integer.parseInt(expertJudgeInfo.getFinalOpinion()));
+                reviewExpert.setFinalOpinion(Integer.parseInt(expertJudgeInfo.getFinalOPinion()));
                 reviewExpert.setIsFinished(IS_FINISHED);
                 reviewExpertMapper.updateByPrimaryKey(reviewExpert);
             }

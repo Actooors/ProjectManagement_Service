@@ -172,7 +172,7 @@ public class LeaderServiceImpl implements LeaderService {
                 res.setProjectCategoryId(category.getProjectCategoryId());
                 res.setProjectCategoryName(category.getProjectCategoryName());
                 res.setProjectId(application.getProjectApplicationId());
-                res.setProjectApplicationDownloadAddress(application.getProjectApplicationUploadAddress());
+                res.setProjectDownloadAddress(application.getProjectApplicationUploadAddress());
                 res.setProjectName(application.getProjectName());
                 res.setDescription(application.getProjectDescription());
                 res.setExpertOpinion(adminService.getExpertOpinionList(application.getProjectApplicationId()));

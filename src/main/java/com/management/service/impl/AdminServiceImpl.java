@@ -493,34 +493,58 @@ public class AdminServiceImpl implements AdminService {
         }
         List<AdminJudgeTotalInfo> resList = new LinkedList<>();
         for (ProjectCategory category : list) {
-            ProjectApplicationExample applicationExample = new ProjectApplicationExample();
-            applicationExample.createCriteria()
-                    .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
-                    .andReviewPhaseEqualTo(reviewPhase);
-            List<ProjectApplication> applicationList = projectApplicationMapper
-                    .selectByExample(applicationExample);
-            if (applicationList.isEmpty()) continue;
-            for (ProjectApplication application : applicationList) {
-                AdminJudgeTotalInfo res = new AdminJudgeTotalInfo();
-                res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
-                res.setProjectCategoryId(category.getProjectCategoryId());
-                res.setProjectCategoryName(category.getProjectCategoryName());
-                res.setProjectId(application.getProjectApplicationId());
-                res.setProjectApplicationDownloadAddress(application
-                        .getProjectApplicationUploadAddress());
-                res.setProjectName(application.getProjectName());
-                res.setDescription(application.getProjectDescription());
-                res.setProjectMaxMoney(category.getMaxMoney());
-                res.setProjectMoney(application.getProjectMoney());
-                if (reviewPhase == EXPERT_REVIEW) {
-                    res.setExpertOpinion(getExpertOpinionList(application.getProjectApplicationId()));
+            if(reviewPhase != 9) {
+                ProjectApplicationExample applicationExample = new ProjectApplicationExample();
+                applicationExample.createCriteria()
+                        .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
+                        .andReviewPhaseEqualTo(reviewPhase);
+                List<ProjectApplication> applicationList = projectApplicationMapper
+                        .selectByExample(applicationExample);
+                if (applicationList.isEmpty()) continue;
+                for (ProjectApplication application : applicationList) {
+                    AdminJudgeTotalInfo res = new AdminJudgeTotalInfo();
+                    res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
+                    res.setProjectCategoryId(category.getProjectCategoryId());
+                    res.setProjectCategoryName(category.getProjectCategoryName());
+                    res.setProjectId(application.getProjectApplicationId());
+                    res.setProjectDownloadAddress(application
+                            .getProjectApplicationUploadAddress());
+                    res.setProjectName(application.getProjectName());
+                    res.setDescription(application.getProjectDescription());
+                    res.setProjectMaxMoney(category.getMaxMoney());
+                    res.setProjectMoney(application.getProjectMoney());
+                    if (reviewPhase == EXPERT_REVIEW) {
+                        res.setExpertOpinion(getExpertOpinionList(application.getProjectApplicationId()));
+                    }
+                    if (reviewPhase == ADMIN_INDEX) {
+                        res.setIndexContent(application.getProjectIndex());
+                    }
+                    resList.add(res);
                 }
-                if(reviewPhase == ADMIN_INDEX) {
-                    res.setIndexContent(application.getProjectIndex());
+            }else{
+                    ProjectProgressExample progressExample = new ProjectProgressExample();
+                    progressExample.createCriteria()
+                            .andProjectCategoryIdEqualTo(category.getProjectCategoryId())
+                            .andProjectProcessEqualTo(3)
+                            .andIsFinishedConcludingReportEqualTo(1);
+                    List<ProjectProgress> projectProgressList = projectProgressMapper.selectByExample(progressExample);
+                    for(ProjectProgress projectProgress : projectProgressList){
+                        ProjectApplication application = projectApplicationMapper.selectByPrimaryKey(projectProgress.getProjectProgressId());
+                        AdminJudgeTotalInfo res = new AdminJudgeTotalInfo();
+                        res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
+                        res.setProjectCategoryId(category.getProjectCategoryId());
+                        res.setProjectCategoryName(category.getProjectCategoryName());
+                        res.setProjectId(application.getProjectApplicationId());
+                        res.setProjectDownloadAddress(projectProgress.getConcludingReportUploadAddress());
+                        res.setProjectName(application.getProjectName());
+                        res.setDescription(application.getProjectDescription());
+                        res.setProjectMaxMoney(category.getMaxMoney());
+                        res.setProjectMoney(application.getProjectMoney());
+                        resList.add(res);
+                    }
                 }
-                resList.add(res);
             }
-        }
+
         return ResultTool.success(resList);
     }
 

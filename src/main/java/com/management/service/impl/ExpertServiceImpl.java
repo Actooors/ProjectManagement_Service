@@ -101,9 +101,8 @@ public class ExpertServiceImpl implements ExpertService {
             List<ReviewExpert> reviewExpertList = reviewExpertMapper.selectByExample(example);
             for(ReviewExpert reviewExpert: reviewExpertList){
                 //将专家评审信息插入
-                reviewExpert.setScore(expertJudgeInfo.getStbl_ReviewExpertcore());
+                reviewExpert.setScore(expertJudgeInfo.getScore());
                 reviewExpert.setReviewOpinion(expertJudgeInfo.getReviewOpinion());
-                int aaa = Integer.parseInt(expertJudgeInfo.getFinalOPinion());
                 reviewExpert.setFinalOpinion(Integer.parseInt(expertJudgeInfo.getFinalOPinion()));
                 reviewExpert.setIsFinished(IS_FINISHED);
                 reviewExpertMapper.updateByPrimaryKey(reviewExpert);

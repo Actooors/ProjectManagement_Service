@@ -42,7 +42,7 @@ public class ConstCorrespond {
     public final static String[] PROJECT_PROGRESS = {
             "",
             "立项",
-            "中期报告审核阶段",
+            "中期报告阶段",
             "结题报告审核阶段",
             "项目结项",
             "结题报告审核失败"

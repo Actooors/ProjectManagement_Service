@@ -171,4 +171,12 @@ public interface UserService {
      */
     Result commitProjectIndex(ProjectIndex projectIndex);
 
+    /**
+     * @Description: 用户查询所有被驳回的项目申请,包括未立项和已经立项的项目
+     * @Param: [userId]
+     * @Return: Result
+     * @Author: xw
+     * @Date: 19-1-26
+     */
+    Result queryFailProject(String userId);
 }

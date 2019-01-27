@@ -82,48 +82,48 @@ public class UserController {
 
     @PostMapping("/userInfo/2")
     @ApiOperation(value = "用户修改更新个人信息", notes = "此接口适用于所有用户")
-    public Result updateUserInfo(@RequestBody User user){
+    public Result updateUserInfo(@RequestBody User user) {
         return userService.updateUserInfo(user);
     }
 
     @PostMapping("/applyProject")
     @ApiOperation(value = "用户申请一个项目")
-    public Result applyProject(@RequestBody ProjectApplicationInfo info){
+    public Result applyProject(@RequestBody ProjectApplicationInfo info) {
         return userService.applyProject(info);
     }
 
 
     @GetMapping("/inTheApplicationList")
     @ApiOperation(value = "查找用户正在申报中的项目")
-    public Result inTheApplicationList(){
+    public Result inTheApplicationList() {
         String userId = UserContext.getCurrentUser().getUserId();
         return userService.findMyApplication(userId);
     }
 
     @PostMapping("/deleteApplication")
     @ApiOperation(value = "用户撤销申报中的项目")
-    public Result deleteApplication(@RequestBody DeleteApplication info){
+    public Result deleteApplication(@RequestBody DeleteApplication info) {
         String userId = UserContext.getCurrentUser().getUserId();
-        return userService.deleteApplication(info,userId);
+        return userService.deleteApplication(info, userId);
     }
 
     @GetMapping("/progressProject")
     @ApiOperation(value = "查找用户正在进行的项目")
-    public Result findProgressProject(){
+    public Result findProgressProject() {
         String userId = UserContext.getCurrentUser().getUserId();
         return userService.findProgressProject(userId);
     }
 
     @PostMapping("/commitReport")
     @ApiOperation(value = "用户提交中期报告和结题报告")
-    public Result deleteApplication(@RequestBody PostReportInfo info){
+    public Result deleteApplication(@RequestBody PostReportInfo info) {
 
         return userService.commitReport(info);
     }
 
     @GetMapping("/projectMoreInfo")
     @ApiOperation(value = "查看用户一个项目的详细信息")
-    public Result findProjectMoreInfo(@RequestParam(value = "applicationId") int applicationId){
+    public Result findProjectMoreInfo(@RequestParam(value = "applicationId") int applicationId) {
 
         return userService.findMoreInfo(applicationId);
     }
@@ -131,7 +131,7 @@ public class UserController {
 
     @GetMapping("/userInfoFromId/{userId}")
     @ApiOperation(value = "查看用户的详细信息")
-    public Result findUserInfoFromId(@PathVariable(value = "userId") String userId){
+    public Result findUserInfoFromId(@PathVariable(value = "userId") String userId) {
 
         return userService.findUserInfo(userId);
     }
@@ -139,10 +139,16 @@ public class UserController {
 
     @PostMapping("/commitTaskManual")
     @ApiOperation(value = "用户提交任务书")
-    public Result commitTaskManual(@RequestBody ProjectIndex projectIndex){
+    public Result commitTaskManual(@RequestBody ProjectIndex projectIndex) {
         return userService.commitProjectIndex(projectIndex);
     }
 
-    //@GetMapping("/failProjectApplication")
+    @GetMapping("/failProject")
+    @ApiOperation(value = "用户查询被驳回的项目", notes = "包括未立项的项目和已经立项的项目")
+    public Result queryFailProject() {
+
+        String userId = UserContext.getCurrentUser().getUserId();
+        return userService.queryFailProject(userId);
+    }
 
 }

@@ -19,6 +19,7 @@ import java.util.*;
 import static com.management.model.ov.resultsetting.ConstCorrespond.FINAL_PROGRESS;
 import static com.management.model.ov.resultsetting.ConstCorrespond.MIDDLE_PROGRESS;
 import static com.management.tools.TimeTool.*;
+import static com.management.tools.TimeTool.timetoString;
 
 /**
  * @program: management
@@ -704,6 +705,60 @@ public class UserServiceImpl implements UserService {
             return ResultTool.success();
         }catch (Exception e){
             return ResultTool.error("提交失败");
+        }
+    }
+
+    /**
+     * @Description: 用户查询所有被驳回的项目申请,包括未立项和已经立项的项目
+     * @Param: [userId]
+     * @Return: Result
+     * @Author: xw
+     * @Date: 19-1-26
+     */
+    @Override
+    public Result queryFailProject(String userId){
+        UserFailProjectList userFailProjectList = new UserFailProjectList();
+        List<UserFailProject> failApplicationProjects = new ArrayList<>();
+        List<UserFailProject> failProgressProjects = new ArrayList<>();
+        try{
+            //查找到被驳回的项目申请
+            ProjectApplicationExample example = new ProjectApplicationExample();
+            example.createCriteria()
+                    .andUserIdEqualTo(userId)
+                    .andReviewPhaseEqualTo(6);
+            List<ProjectApplication> applicationList = projectApplicationMapper.selectByExample(example);
+            for(ProjectApplication application: applicationList){
+                UserFailProject userFailProject = new UserFailProject();
+                userFailProject.setProjectName(application.getProjectName());
+                userFailProject.setTime(timetoString(application.getApplicationTime()));
+                userFailProject.setDescription(application.getProjectDescription());
+                userFailProject.setReviewPhase(ConstCorrespond.reviewPhrase[application.getReviewPhase()]);
+                userFailProject.setFailMessage(application.getFailureReason());
+                failApplicationProjects.add(userFailProject);
+            }
+
+            //查找到已经立项的被驳回的项目
+            ProjectProgressExample example1= new ProjectProgressExample();
+            example1.createCriteria()
+                    .andUserIdEqualTo(userId)
+                    .andIsFinishedConcludingReportEqualTo(4);
+            List<ProjectProgress> projectProgressList = projectProgressMapper.selectByExample(example1);
+            for(ProjectProgress projectProgress: projectProgressList){
+                UserFailProject userFailProject = new UserFailProject();
+                ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(projectProgress.getProjectProgressId());
+                userFailProject.setProjectName(projectApplication.getProjectName());
+                userFailProject.setTime(timetoString(projectProgress.getProjectcreatetime()));
+                userFailProject.setDescription(projectApplication.getProjectDescription());
+                userFailProject.setReviewPhase(ConstCorrespond.PROJECT_PROGRESS[projectProgress.getProjectProcess()]);
+                userFailProject.setFailMessage(projectProgress.getConcludingReportFailureReason());
+                failProgressProjects.add(userFailProject);
+            }
+
+            userFailProjectList.setFailApplicationProjects(failApplicationProjects);
+            userFailProjectList.setFailProgressProjects(failProgressProjects);
+            return ResultTool.success(userFailProjectList);
+        }catch (Exception e){
+            return ResultTool.error("查询失败");
         }
     }
 }

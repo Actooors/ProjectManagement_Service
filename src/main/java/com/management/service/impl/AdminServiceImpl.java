@@ -760,4 +760,19 @@ public class AdminServiceImpl implements AdminService {
         }
         return ResultTool.success();
     }
+
+
+    @Override
+    public Result judgeFinalReport(MeetingResult info) {
+        ProjectProgress projectProgress  = projectProgressMapper.selectByPrimaryKey(info.getApplicationId());
+        if(info.getJudge()) {
+            projectProgress.setProjectProcess(4);
+        } else {
+            projectProgress.setConcludingReportFailureReason(info.getMsg());
+            projectProgress.setIsFinishedConcludingReport(2);
+            projectProgress.setProjectProcess(5);
+        }
+        projectProgressMapper.updateByPrimaryKeySelective(projectProgress);
+        return ResultTool.success();
+    }
 }

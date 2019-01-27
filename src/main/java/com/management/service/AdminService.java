@@ -163,4 +163,14 @@ public interface AdminService {
      * @Date: 2019-01-25
      */
     Result judgeMission(MeetingResult info);
+
+
+    /**
+     * @Description: 业务员审核结题报告
+     * @Param: [info]
+     * @Return: com.management.model.ov.Result
+     * @Author: 0GGmr0
+     * @Date: 2019-01-26
+     */
+    Result judgeFinalReport(MeetingResult info);
 }

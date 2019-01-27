@@ -528,8 +528,17 @@ public class UserServiceImpl implements UserService {
                         }
                     }
                     info.setTime(timetoString(InterimReportEndTime));
+                    if(progress.getIsFinishedInterimReport() == 1) {
+                        info.setIsFinished(true);
+                        info.setMyAddress(progress.getInterimReportUploadAddress());
+                    } else {
+                        info.setIsFinished(false);
+                    }
                     middleProject.add(info);
                     break;
+                }
+                case 5 : {
+
                 }
                 case 3 :{
                     Date ConcludingReportEndTime = projectCategory.getConcludingReportEndTime();
@@ -545,6 +554,12 @@ public class UserServiceImpl implements UserService {
                         }
                     }
                     info.setTime(timetoString(ConcludingReportEndTime));
+                    if(progress.getIsFinishedConcludingReport() == 1) {
+                        info.setIsFinished(true);
+                        info.setMyAddress(progress.getConcludingReportUploadAddress());
+                    } else {
+                        info.setIsFinished(false);
+                    }
                     finalProject.add(info);
                     break;
                 }
@@ -646,7 +661,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result commitReport(PostReportInfo info) {
         ProjectProgress application = projectProgressMapper.selectByPrimaryKey(info.getApplicationId());
-        Date time = new Date();
         int status = info.getStatus();
         if(status == 2) {
             return ResultTool.error("已超过提交报告的时间");
@@ -655,12 +669,12 @@ public class UserServiceImpl implements UserService {
         }
         if(info.getType() == 1) {
             application.setIsFinishedInterimReport(1);
-            application.setInterimReportUploadAddress(info.getReportAddress());
+            application.setInterimReportUploadAddress(info.getUploadAddress());
             application.setInterimReportTime(new Date());
             application.setProjectProcess(MIDDLE_PROGRESS);
         } else {
             application.setIsFinishedConcludingReport(1);
-            application.setConcludingReportUploadAddress(info.getReportAddress());
+            application.setConcludingReportUploadAddress(info.getUploadAddress());
             application.setConcludingReportTime(new Date());
             application.setProjectProcess(FINAL_PROGRESS);
         }

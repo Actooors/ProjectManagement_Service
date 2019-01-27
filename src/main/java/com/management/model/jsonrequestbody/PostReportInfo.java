@@ -13,6 +13,6 @@ public class PostReportInfo {
     private int applicationId;
     // type 1 中期报告  2结题报告
     private int type;
-    private String reportAddress;
+    private String uploadAddress;
     private int status;
 }

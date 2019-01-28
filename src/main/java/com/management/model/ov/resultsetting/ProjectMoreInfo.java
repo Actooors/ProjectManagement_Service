@@ -13,7 +13,6 @@ import java.util.List;
  * @create: 2018-12-26 18:43
  */
 @Data
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProjectMoreInfo {
     private int applicationId;
     private int projectCategoryId;

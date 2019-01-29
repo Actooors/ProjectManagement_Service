@@ -500,6 +500,7 @@ public class UserServiceImpl implements UserService {
             info.setDescription(application.getProjectDescription());
             info.setProjectApplicationId(application.getProjectApplicationId());
             info.setProjectName(application.getProjectName());
+            info.setProjectCategoryId(application.getProjectCategoryId());
             info.setReviewPhase(ConstCorrespond
                     .PROJECT_PROGRESS[progress.getProjectProcess()]);
             //从项目大类表中查询到相应的时间

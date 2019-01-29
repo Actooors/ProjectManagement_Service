@@ -485,8 +485,8 @@ public class AdminServiceImpl implements AdminService {
     public Result findReviewPhaseList(String userId, int reviewPhase) {
         ProjectCategoryExample example = new ProjectCategoryExample();
         example.createCriteria()
-                .andPrincipalIdEqualTo(userId)
-                .andApplicationEndTimeGreaterThan(new Date());
+                .andPrincipalIdEqualTo(userId);
+//                .andApplicationEndTimeGreaterThan(new Date());
         List<ProjectCategory> list = projectCategoryMapper.selectByExample(example);
         if (list.isEmpty()) {
             return ResultTool.error("你没有创建任何的项目大类");

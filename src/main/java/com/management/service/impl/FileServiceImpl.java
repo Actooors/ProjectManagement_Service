@@ -3,6 +3,8 @@ import com.management.model.ov.Result;
 import com.management.tools.ChangeCharset;
 import com.management.tools.ResultTool;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.management.service.FileService;
@@ -25,12 +27,14 @@ public class FileServiceImpl implements FileService {
     @Value("${upload.path}")
     private String directory;
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Override
     public Result uploadFile(MultipartFile file) throws UnsupportedEncodingException {
-
         if (file.isEmpty()) {
             return ResultTool.error("上传文件为空");
         }
+        System.setProperty("sun.jnu.encoding","utf-8");
         //文件存放的id名
         String fileId = UUID.randomUUID().toString();
         //源文件名

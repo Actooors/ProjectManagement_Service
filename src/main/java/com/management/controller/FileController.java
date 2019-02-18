@@ -2,13 +2,15 @@ package com.management.controller;
 
 import com.management.model.ov.Result;
 import com.management.service.FileService;
-import com.management.tools.JwtUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -29,10 +31,17 @@ public class FileController {
     @Resource
     private FileService fileService;
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @PostMapping("upload")
     @ApiOperation(value = "上传文件", notes = "输入参数为文件和httpRequest")
-    public Result upload(@RequestBody MultipartFile file) throws UnsupportedEncodingException {
+    public Result upload(ServletRequest request, @RequestBody MultipartFile file) throws UnsupportedEncodingException {
 
+        if (request.getCharacterEncoding() == null) {
+
+            request.setCharacterEncoding("UTF-8");
+        }
+        logger.info(request.getCharacterEncoding());
         return fileService.uploadFile(file);
     }
 

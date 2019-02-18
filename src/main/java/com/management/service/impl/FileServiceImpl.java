@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 /**
@@ -64,9 +65,9 @@ public class FileServiceImpl implements FileService {
             response.setContentType("application/octet-stream");
             String headerKey = "Content-Disposition";
             String fileName = downloadFile.getName().split("---")[1];
-            String headerValue = "attachment; filename=" + fileName;
+            String headerValue = "attachment; filename=" + new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
             response.setHeader(headerKey, headerValue);
-            response.setContentLength((int) downloadFile.length());
+            response.setContentLength((int) downloadFile.length()
             try {
                 InputStream myStream = new FileInputStream(fileAddress);
                 OutputStream toClient = response.getOutputStream();

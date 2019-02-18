@@ -1,7 +1,5 @@
 package com.management.tools;
 
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -12,17 +10,17 @@ import java.nio.charset.StandardCharsets;
  */
 public class ChangeCharset {
 
-    private static String changeCharset(String str, Charset charset) throws UnsupportedEncodingException {
+    private static String changeCharset(String str)  {
         if(str != null) {
             //用默认字符编码解码字符串。与系统相关，中文windows默认为GB2312
             byte[] bs = str.getBytes();
             //用新的字符编码生成字符串
-            return new String(bs, charset);
+            return new String(bs, StandardCharsets.UTF_8);
         }
         return null;
     }
 
-    public static String toUtf8(String str) throws UnsupportedEncodingException {
-        return changeCharset(str, StandardCharsets.UTF_8);
+    public static String toUtf8(String str)  {
+        return changeCharset(str);
     }
 }

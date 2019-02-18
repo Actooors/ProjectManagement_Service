@@ -35,13 +35,8 @@ public class FileController {
 
     @PostMapping("upload")
     @ApiOperation(value = "上传文件", notes = "输入参数为文件和httpRequest")
-    public Result upload(ServletRequest request, @RequestBody MultipartFile file) throws UnsupportedEncodingException {
+    public Result upload(@RequestBody MultipartFile file) throws UnsupportedEncodingException {
 
-        if (request.getCharacterEncoding() == null) {
-
-            request.setCharacterEncoding("UTF-8");
-        }
-        logger.info(request.getCharacterEncoding());
         return fileService.uploadFile(file);
     }
 

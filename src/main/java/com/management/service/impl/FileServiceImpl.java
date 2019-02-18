@@ -67,7 +67,7 @@ public class FileServiceImpl implements FileService {
             String fileName = downloadFile.getName().split("---")[1];
             String headerValue = "attachment; filename=" + new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
             response.setHeader(headerKey, headerValue);
-            response.setContentLength((int) downloadFile.length()
+            response.setContentLength((int) downloadFile.length());
             try {
                 InputStream myStream = new FileInputStream(fileAddress);
                 OutputStream toClient = response.getOutputStream();

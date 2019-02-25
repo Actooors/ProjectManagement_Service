@@ -56,6 +56,7 @@ public class ExpertServiceImpl implements ExpertService {
             for (ReviewExpert reviewExpert : ReviewExpertList) {
                 //根据projectApplicationId找到属于此大类的项目申请信息
                 ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(reviewExpert.getProjectApplicationId());
+                int sss = projectApplication.getReviewPhase();
                 if (projectApplication.getReviewPhase() == 2) {
                     ProjectApplicationInfo projectInfo = new ProjectApplicationInfo();
                     projectInfo.setUserId(projectApplication.getUserId());

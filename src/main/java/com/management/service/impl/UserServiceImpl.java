@@ -501,6 +501,7 @@ public class UserServiceImpl implements UserService {
             info.setDescription(application.getProjectDescription());
             info.setProjectApplicationId(application.getProjectApplicationId());
             info.setProjectName(application.getProjectName());
+            info.setProjectCategoryId(application.getProjectCategoryId());
             info.setReviewPhase(ConstCorrespond
                     .PROJECT_PROGRESS[progress.getProjectProcess()]);
             //从项目大类表中查询到相应的时间
@@ -740,11 +741,7 @@ public class UserServiceImpl implements UserService {
         List<UserFailProject> failProgressProjects = new ArrayList<>();
         try{
             //查找到被驳回的项目申请
-            ProjectApplicationExample example = new ProjectApplicationExample();
-            example.createCriteria()
-                    .andUserIdEqualTo(userId)
-                    .andReviewPhaseEqualTo(6);
-            List<ProjectApplication> applicationList = projectApplicationMapper.selectByExample(example);
+            List<ProjectApplication> applicationList = projectApplicationMapper.selectFailProjectApplication(userId);
             for(ProjectApplication application: applicationList){
                 UserFailProject userFailProject = new UserFailProject();
                 userFailProject.setProjectName(application.getProjectName());
@@ -755,11 +752,11 @@ public class UserServiceImpl implements UserService {
                 failApplicationProjects.add(userFailProject);
             }
 
-            //查找到已经立项的被驳回的项目
+            //查找到已经立项的被驳回的项目(结题报告审核失败)
             ProjectProgressExample example1= new ProjectProgressExample();
             example1.createCriteria()
                     .andUserIdEqualTo(userId)
-                    .andIsFinishedConcludingReportEqualTo(4);
+                    .andProjectProcessEqualTo(5);
             List<ProjectProgress> projectProgressList = projectProgressMapper.selectByExample(example1);
             for(ProjectProgress projectProgress: projectProgressList){
                 UserFailProject userFailProject = new UserFailProject();

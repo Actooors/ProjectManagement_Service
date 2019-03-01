@@ -115,6 +115,10 @@
     from tbl_ProjectApplication
     where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
   </select>
+  <select id="selectFailProjectApplication" resultMap="BaseResultMap" parameterType="java.lang.String">
+  select * from tbl_ProjectApplication as a
+  where a.review_phase=6 or a.project_index_state=false
+  </select>
   <select id="queryAllProgressAndFailProject" resultMap="BaseResultMap" parameterType="java.lang.String">
   select a.*
   from tbl_ProjectApplication as a left join tbl_ProjectCategory as b on a.project_category_id = b.project_category_id

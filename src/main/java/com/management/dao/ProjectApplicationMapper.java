@@ -20,6 +20,9 @@ public interface ProjectApplicationMapper {
 
     ProjectApplication selectByPrimaryKey(Integer projectApplicationId);
 
+    //包含任务书阶段被驳回和其他任何申请阶段被驳回的项目
+    List<ProjectApplication> selectFailProjectApplication(String userId);
+
     List<ProjectApplication> queryAllProgressAndFailProject(String userId);
 
     int updateByExampleSelective(@Param("record") ProjectApplication record, @Param("example") ProjectApplicationExample example);

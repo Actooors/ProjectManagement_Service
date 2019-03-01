@@ -177,22 +177,3 @@ create table tbl_ProjectModification (
 ) comment '项目修改表'
   charset = utf8;
 
-
-create table tbl_Notice (
-  notice_id int primary key comment '标识id',
-  principal_id varchar(8) not null comment '发布公告的业务员id',
-  title varchar(32) not null comment '公告标题',
-  content varchar(1024) not null comment '公告内容',
-  publish_time timestamp default current_timestamp comment '发布公告时间'
-) comment '公告表'
-  charset = utf8;
-
-
-create table tbl_News (
-  news_id int primary key comment '标识id',
-  principal_id varchar(8) not null comment '发布新闻的业务员id',
-  title varchar(32) not null comment '新闻标题',
-  content varchar(4096) not null comment '新闻内容',
-  publish_time timestamp default current_timestamp comment '新闻发布时间'
-) comment '新闻表'
-  charset = utf8;

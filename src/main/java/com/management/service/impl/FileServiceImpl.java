@@ -3,6 +3,8 @@ import com.management.model.ov.Result;
 import com.management.tools.ChangeCharset;
 import com.management.tools.ResultTool;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import com.management.service.FileService;
@@ -10,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
 /**
@@ -25,9 +28,10 @@ public class FileServiceImpl implements FileService {
     @Value("${upload.path}")
     private String directory;
 
-    @Override
-    public Result uploadFile(MultipartFile file) throws UnsupportedEncodingException {
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Override
+    public Result uploadFile(MultipartFile file)  {
         if (file.isEmpty()) {
             return ResultTool.error("上传文件为空");
         }
@@ -36,7 +40,8 @@ public class FileServiceImpl implements FileService {
         //源文件名
         String originalFileName = ChangeCharset.toUtf8(file.getOriginalFilename());
         //在指定的目录位置下存放文件
-        String absolutePath = directory + File.separator + fileId + "---" + originalFileName;
+        String absolutePath = ChangeCharset.toUtf8(directory + File.separator + fileId + "---" + originalFileName);
+        logger.info(absolutePath);
         //如果存放文件的文件夹不存在，就创建文件夹
         File destDirectory = new File(directory);
         if (!destDirectory.exists()) {
@@ -60,7 +65,7 @@ public class FileServiceImpl implements FileService {
             response.setContentType("application/octet-stream");
             String headerKey = "Content-Disposition";
             String fileName = downloadFile.getName().split("---")[1];
-            String headerValue = "attachment; filename=" + fileName;
+            String headerValue = "attachment; filename=" + new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1);
             response.setHeader(headerKey, headerValue);
             response.setContentLength((int) downloadFile.length());
             try {

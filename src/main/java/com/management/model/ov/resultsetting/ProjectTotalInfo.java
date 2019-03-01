@@ -16,7 +16,7 @@ public class ProjectTotalInfo {
     private String projectName;
     private String projectCategory;
     private Integer projectCategoryId;
-    private Integer type;
+    private String type;
     private String time;
     private String reviewPhase;
     private String description;

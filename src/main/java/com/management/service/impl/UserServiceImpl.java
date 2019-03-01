@@ -455,6 +455,7 @@ public class UserServiceImpl implements UserService {
                         .reviewPhrase[application.getReviewPhase()]);
                 res.setDescription(application.getProjectDescription());
                 res.setProjectCategoryId(projectCategory.getProjectCategoryId());
+                res.setType(projectCategory.getProjectType());
                 resList.add(res);
             }
         }

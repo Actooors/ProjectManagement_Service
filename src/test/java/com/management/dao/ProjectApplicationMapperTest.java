@@ -1,5 +1,6 @@
 package com.management.dao;
 
+import com.management.tools.MD5Tool;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,6 +18,6 @@ public class ProjectApplicationMapperTest {
 
     @Test
     public void queryAdminProjectApplication() {
-       // System.out.print(projectApplicationMapper.queryAllProgressProject("16122131"));
+        System.out.print(MD5Tool.getMD5("123456"));
     }
 }

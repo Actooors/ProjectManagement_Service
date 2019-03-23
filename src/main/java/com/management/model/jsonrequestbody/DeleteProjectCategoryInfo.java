@@ -10,5 +10,5 @@ import lombok.Data;
  */
 @Data
 public class DeleteProjectCategoryInfo {
-    private int projectCategoryId;
+    private String projectCategoryId;//new
 }

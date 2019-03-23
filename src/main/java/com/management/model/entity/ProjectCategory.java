@@ -2,8 +2,8 @@ package com.management.model.entity;
 
 import java.util.Date;
 
-public class ProjectCategory implements Comparable<ProjectCategory>{
-    private Integer projectCategoryId;
+public class ProjectCategory {
+    private String projectCategoryId;
 
     private String projectCategoryName;
 
@@ -15,8 +15,6 @@ public class ProjectCategory implements Comparable<ProjectCategory>{
 
     private String principalId;
 
-    private String principalName;
-
     private String principalPhone;
 
     private String applicantType;
@@ -24,8 +22,6 @@ public class ProjectCategory implements Comparable<ProjectCategory>{
     private String maxMoney;
 
     private String reviewLeaderId;
-
-    private String reviewLeaderName;
 
     private Integer isExistMeetingReview;
 
@@ -61,21 +57,14 @@ public class ProjectCategory implements Comparable<ProjectCategory>{
 
     private String failureReason;
 
-    private String reviewExpertId;
+    private Integer modifyFrequency;
 
-    private String expertList;
-
-    @Override
-    public int compareTo(ProjectCategory o) {
-        return o.projectType.compareTo(this.projectType);
-    }
-
-    public Integer getProjectCategoryId() {
+    public String getProjectCategoryId() {
         return projectCategoryId;
     }
 
-    public void setProjectCategoryId(Integer projectCategoryId) {
-        this.projectCategoryId = projectCategoryId;
+    public void setProjectCategoryId(String projectCategoryId) {
+        this.projectCategoryId = projectCategoryId == null ? null : projectCategoryId.trim();
     }
 
     public String getProjectCategoryName() {
@@ -118,14 +107,6 @@ public class ProjectCategory implements Comparable<ProjectCategory>{
         this.principalId = principalId == null ? null : principalId.trim();
     }
 
-    public String getPrincipalName() {
-        return principalName;
-    }
-
-    public void setPrincipalName(String principalName) {
-        this.principalName = principalName == null ? null : principalName.trim();
-    }
-
     public String getPrincipalPhone() {
         return principalPhone;
     }
@@ -156,14 +137,6 @@ public class ProjectCategory implements Comparable<ProjectCategory>{
 
     public void setReviewLeaderId(String reviewLeaderId) {
         this.reviewLeaderId = reviewLeaderId == null ? null : reviewLeaderId.trim();
-    }
-
-    public String getReviewLeaderName() {
-        return reviewLeaderName;
-    }
-
-    public void setReviewLeaderName(String reviewLeaderName) {
-        this.reviewLeaderName = reviewLeaderName == null ? null : reviewLeaderName.trim();
     }
 
     public Integer getIsExistMeetingReview() {
@@ -302,19 +275,11 @@ public class ProjectCategory implements Comparable<ProjectCategory>{
         this.failureReason = failureReason == null ? null : failureReason.trim();
     }
 
-    public String getReviewExpertId() {
-        return reviewExpertId;
+    public Integer getModifyFrequency() {
+        return modifyFrequency;
     }
 
-    public void setReviewExpertId(String reviewExpertId) {
-        this.reviewExpertId = reviewExpertId == null ? null : reviewExpertId.trim();
-    }
-
-    public String getExpertList() {
-        return expertList;
-    }
-
-    public void setExpertList(String expertList) {
-        this.expertList = expertList == null ? null : expertList.trim();
+    public void setModifyFrequency(Integer modifyFrequency) {
+        this.modifyFrequency = modifyFrequency;
     }
 }

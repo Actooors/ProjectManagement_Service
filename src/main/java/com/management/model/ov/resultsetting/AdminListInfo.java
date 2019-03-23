@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Data
 public class AdminListInfo {
-    private Integer projectCategoryId;
+    private String projectCategoryId;//new
     private String projectName;
     private String projectDescription;
     private String projectDescriptionAddress;

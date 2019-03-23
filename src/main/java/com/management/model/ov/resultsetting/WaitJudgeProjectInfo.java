@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class WaitJudgeProjectInfo {
-    private Integer projectId;
+    private String projectId;//new
     private String projectName;
     private String description;
 }

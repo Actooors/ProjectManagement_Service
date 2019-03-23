@@ -3,6 +3,7 @@ package com.management.service.impl;
 import com.management.dao.ProjectApplicationMapper;
 import com.management.dao.ProjectCategoryMapper;
 import com.management.dao.ReviewExpertMapper;
+import com.management.dao.UserMapper;
 import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.ExpertJudgeInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
@@ -31,6 +32,9 @@ public class ExpertServiceImpl implements ExpertService {
     private ProjectCategoryMapper projectCategoryMapper;
 
     @Resource
+    private UserMapper userMapper;
+
+    @Resource
     private ReviewExpertMapper reviewExpertMapper;
 
     private static final int IS_FINISHED=1;
@@ -55,18 +59,19 @@ public class ExpertServiceImpl implements ExpertService {
             List<ReviewExpert> ReviewExpertList = reviewExpertMapper.selectByExample(example);
             for (ReviewExpert reviewExpert : ReviewExpertList) {
                 //根据projectApplicationId找到属于此大类的项目申请信息
-                ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(reviewExpert.getProjectApplicationId());
-                int sss = projectApplication.getReviewPhase();
+                ProjectApplication projectApplication = projectApplicationMapper
+                        .selectByPrimaryKey(reviewExpert.getProjectApplicationId());
+                UserBaseInfo userBaseInfo = userMapper.selectUserInfoByUserId(projectApplication.getUserId());
                 if (projectApplication.getReviewPhase() == 2) {
                     ProjectApplicationInfo projectInfo = new ProjectApplicationInfo();
                     projectInfo.setUserId(projectApplication.getUserId());
-                    projectInfo.setUserName(projectApplication.getUserName());
+                    projectInfo.setUserName(userBaseInfo.getUserName());
                     ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectApplication.getProjectCategoryId());
                     projectInfo.setProjectCategoryName(projectCategory.getProjectCategoryName());
                     projectInfo.setProjectName(projectApplication.getProjectName());
                     projectInfo.setProjectApplicationId(projectApplication.getProjectApplicationId());
                     projectInfo.setDescription(projectApplication.getProjectDescription());
-                    projectInfo.setDepartment(projectApplication.getDepartment());
+                    projectInfo.setDepartment(userBaseInfo.getDepartment());
                     projectInfo.setProjectMoney(projectApplication.getProjectMoney());
                     projectInfo.setUploadAddress(projectApplication.getProjectApplicationUploadAddress());
                     if (projectApplication.getIsMeeting() == 1) {

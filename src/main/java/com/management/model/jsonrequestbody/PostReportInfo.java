@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class PostReportInfo {
-    private int applicationId;
+    private String applicationId;//new
     // type 1 中期报告  2结题报告
     private int type;
     private String uploadAddress;

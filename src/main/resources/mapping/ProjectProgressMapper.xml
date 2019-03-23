@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.management.dao.ProjectProgressMapper" >
   <resultMap id="BaseResultMap" type="com.management.model.entity.ProjectProgress" >
-    <id column="project_progress_id" property="projectProgressId" jdbcType="INTEGER" />
+    <id column="project_progress_id" property="projectProgressId" jdbcType="VARCHAR" />
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="interim_report_upload_address" property="interimReportUploadAddress" jdbcType="VARCHAR" />
     <result column="interim_report_time" property="interimReportTime" jdbcType="TIMESTAMP" />
@@ -13,11 +13,7 @@
     <result column="is_finished_concluding_report" property="isFinishedConcludingReport" jdbcType="INTEGER" />
     <result column="concluding_report_failure_reason" property="concludingReportFailureReason" jdbcType="VARCHAR" />
     <result column="project_process" property="projectProcess" jdbcType="INTEGER" />
-    <result column="project_category_id" property="projectCategoryId" jdbcType="INTEGER" />
-    <result column="project_name" property="projectName" jdbcType="VARCHAR" />
-    <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="user_name" property="userName" jdbcType="VARCHAR" />
-    <result column="department" property="department" jdbcType="VARCHAR" />
+    <result column="project_category_id" property="projectCategoryId" jdbcType="VARCHAR" />
     <result column="projectCreateTime" property="projectcreatetime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -82,8 +78,7 @@
     project_progress_id, user_id, interim_report_upload_address, interim_report_time, 
     is_finished_interim_report, interim_report_failure_reason, concluding_report_upload_address, 
     concluding_report_time, is_finished_concluding_report, concluding_report_failure_reason, 
-    project_process, project_category_id, project_name, description, user_name, department, 
-    projectCreateTime
+    project_process, project_category_id, projectCreateTime
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectProgressExample" >
     select
@@ -100,15 +95,21 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from tbl_ProjectProgress
-    where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
+    where project_progress_id = #{projectProgressId,jdbcType=VARCHAR}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <select id="selectFailProgress" resultMap="BasResultMap">
+    select <include refid="Base_Column_List" />
+    from tbl_ProjectProgress
+    where user_id=#{userId,jdbcType=VARCHAR}
+    AND project_process=#{state,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tbl_ProjectProgress
-    where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
+    where project_progress_id = #{projectProgressId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.management.model.entity.ProjectProgressExample" >
     delete from tbl_ProjectProgress
@@ -122,17 +123,13 @@
       interim_report_failure_reason, concluding_report_upload_address, 
       concluding_report_time, is_finished_concluding_report, 
       concluding_report_failure_reason, project_process, 
-      project_category_id, project_name, description, 
-      user_name, department, projectCreateTime
-      )
-    values (#{projectProgressId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{interimReportUploadAddress,jdbcType=VARCHAR}, 
+      project_category_id, projectCreateTime)
+    values (#{projectProgressId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{interimReportUploadAddress,jdbcType=VARCHAR}, 
       #{interimReportTime,jdbcType=TIMESTAMP}, #{isFinishedInterimReport,jdbcType=INTEGER}, 
       #{interimReportFailureReason,jdbcType=VARCHAR}, #{concludingReportUploadAddress,jdbcType=VARCHAR}, 
       #{concludingReportTime,jdbcType=TIMESTAMP}, #{isFinishedConcludingReport,jdbcType=INTEGER}, 
       #{concludingReportFailureReason,jdbcType=VARCHAR}, #{projectProcess,jdbcType=INTEGER}, 
-      #{projectCategoryId,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{userName,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{projectcreatetime,jdbcType=TIMESTAMP}
-      )
+      #{projectCategoryId,jdbcType=VARCHAR}, #{projectcreatetime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.ProjectProgress" >
     insert into tbl_ProjectProgress
@@ -173,25 +170,13 @@
       <if test="projectCategoryId != null" >
         project_category_id,
       </if>
-      <if test="projectName != null" >
-        project_name,
-      </if>
-      <if test="description != null" >
-        description,
-      </if>
-      <if test="userName != null" >
-        user_name,
-      </if>
-      <if test="department != null" >
-        department,
-      </if>
       <if test="projectcreatetime != null" >
         projectCreateTime,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="projectProgressId != null" >
-        #{projectProgressId,jdbcType=INTEGER},
+        #{projectProgressId,jdbcType=VARCHAR},
       </if>
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
@@ -224,19 +209,7 @@
         #{projectProcess,jdbcType=INTEGER},
       </if>
       <if test="projectCategoryId != null" >
-        #{projectCategoryId,jdbcType=INTEGER},
-      </if>
-      <if test="projectName != null" >
-        #{projectName,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null" >
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null" >
-        #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="department != null" >
-        #{department,jdbcType=VARCHAR},
+        #{projectCategoryId,jdbcType=VARCHAR},
       </if>
       <if test="projectcreatetime != null" >
         #{projectcreatetime,jdbcType=TIMESTAMP},
@@ -253,7 +226,7 @@
     update tbl_ProjectProgress
     <set >
       <if test="record.projectProgressId != null" >
-        project_progress_id = #{record.projectProgressId,jdbcType=INTEGER},
+        project_progress_id = #{record.projectProgressId,jdbcType=VARCHAR},
       </if>
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=VARCHAR},
@@ -286,19 +259,7 @@
         project_process = #{record.projectProcess,jdbcType=INTEGER},
       </if>
       <if test="record.projectCategoryId != null" >
-        project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
-      </if>
-      <if test="record.projectName != null" >
-        project_name = #{record.projectName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.description != null" >
-        description = #{record.description,jdbcType=VARCHAR},
-      </if>
-      <if test="record.userName != null" >
-        user_name = #{record.userName,jdbcType=VARCHAR},
-      </if>
-      <if test="record.department != null" >
-        department = #{record.department,jdbcType=VARCHAR},
+        project_category_id = #{record.projectCategoryId,jdbcType=VARCHAR},
       </if>
       <if test="record.projectcreatetime != null" >
         projectCreateTime = #{record.projectcreatetime,jdbcType=TIMESTAMP},
@@ -310,7 +271,7 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tbl_ProjectProgress
-    set project_progress_id = #{record.projectProgressId,jdbcType=INTEGER},
+    set project_progress_id = #{record.projectProgressId,jdbcType=VARCHAR},
       user_id = #{record.userId,jdbcType=VARCHAR},
       interim_report_upload_address = #{record.interimReportUploadAddress,jdbcType=VARCHAR},
       interim_report_time = #{record.interimReportTime,jdbcType=TIMESTAMP},
@@ -321,11 +282,7 @@
       is_finished_concluding_report = #{record.isFinishedConcludingReport,jdbcType=INTEGER},
       concluding_report_failure_reason = #{record.concludingReportFailureReason,jdbcType=VARCHAR},
       project_process = #{record.projectProcess,jdbcType=INTEGER},
-      project_category_id = #{record.projectCategoryId,jdbcType=INTEGER},
-      project_name = #{record.projectName,jdbcType=VARCHAR},
-      description = #{record.description,jdbcType=VARCHAR},
-      user_name = #{record.userName,jdbcType=VARCHAR},
-      department = #{record.department,jdbcType=VARCHAR},
+      project_category_id = #{record.projectCategoryId,jdbcType=VARCHAR},
       projectCreateTime = #{record.projectcreatetime,jdbcType=TIMESTAMP}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -365,25 +322,13 @@
         project_process = #{projectProcess,jdbcType=INTEGER},
       </if>
       <if test="projectCategoryId != null" >
-        project_category_id = #{projectCategoryId,jdbcType=INTEGER},
-      </if>
-      <if test="projectName != null" >
-        project_name = #{projectName,jdbcType=VARCHAR},
-      </if>
-      <if test="description != null" >
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="userName != null" >
-        user_name = #{userName,jdbcType=VARCHAR},
-      </if>
-      <if test="department != null" >
-        department = #{department,jdbcType=VARCHAR},
+        project_category_id = #{projectCategoryId,jdbcType=VARCHAR},
       </if>
       <if test="projectcreatetime != null" >
         projectCreateTime = #{projectcreatetime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
+    where project_progress_id = #{projectProgressId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.management.model.entity.ProjectProgress" >
     update tbl_ProjectProgress
@@ -397,12 +342,8 @@
       is_finished_concluding_report = #{isFinishedConcludingReport,jdbcType=INTEGER},
       concluding_report_failure_reason = #{concludingReportFailureReason,jdbcType=VARCHAR},
       project_process = #{projectProcess,jdbcType=INTEGER},
-      project_category_id = #{projectCategoryId,jdbcType=INTEGER},
-      project_name = #{projectName,jdbcType=VARCHAR},
-      description = #{description,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
-      department = #{department,jdbcType=VARCHAR},
+      project_category_id = #{projectCategoryId,jdbcType=VARCHAR},
       projectCreateTime = #{projectcreatetime,jdbcType=TIMESTAMP}
-    where project_progress_id = #{projectProgressId,jdbcType=INTEGER}
+    where project_progress_id = #{projectProgressId,jdbcType=VARCHAR}
   </update>
 </mapper>

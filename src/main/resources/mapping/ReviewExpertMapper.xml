@@ -2,14 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.management.dao.ReviewExpertMapper" >
   <resultMap id="BaseResultMap" type="com.management.model.entity.ReviewExpert" >
-    <id column="review_expert_id" property="reviewExpertId" jdbcType="INTEGER" />
-    <result column="expert_id" property="expertId" jdbcType="VARCHAR" />
-    <result column="expert_name" property="expertName" jdbcType="VARCHAR" />
+    <id column="expert_id" property="expertId" jdbcType="VARCHAR" />
+    <id column="project_application_id" property="projectApplicationId" jdbcType="VARCHAR" />
     <result column="score" property="score" jdbcType="VARCHAR" />
     <result column="review_opinion" property="reviewOpinion" jdbcType="VARCHAR" />
     <result column="final_opinion" property="finalOpinion" jdbcType="INTEGER" />
     <result column="is_finished" property="isFinished" jdbcType="INTEGER" />
-    <result column="project_application_id" property="projectApplicationId" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -70,8 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    review_expert_id, expert_id, expert_name, score, review_opinion, final_opinion, is_finished, 
-    project_application_id
+    expert_id, project_application_id, score, review_opinion, final_opinion, is_finished
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ReviewExpertExample" >
     select
@@ -88,21 +85,17 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.management.model.entity.ReviewExpertKey" >
     select 
     <include refid="Base_Column_List" />
     from tbl_ReviewExpert
-    where review_expert_id = #{reviewExpertId,jdbcType=INTEGER}
+    where expert_id = #{expertId,jdbcType=VARCHAR}
+      and project_application_id = #{projectApplicationId,jdbcType=VARCHAR}
   </select>
-  <select id="selectByProjectApplicationId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select
-    <include refid="Base_Column_List" />
-    from tbl_ReviewExpert
-    where project_application_id = #{projectApplicationId,jdbcType=INTEGER}
-  </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="com.management.model.entity.ReviewExpertKey" >
     delete from tbl_ReviewExpert
-    where review_expert_id = #{reviewExpertId,jdbcType=INTEGER}
+    where expert_id = #{expertId,jdbcType=VARCHAR}
+      and project_application_id = #{projectApplicationId,jdbcType=VARCHAR}
   </delete>
   <delete id="deleteByExample" parameterType="com.management.model.entity.ReviewExpertExample" >
     delete from tbl_ReviewExpert
@@ -111,24 +104,21 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.management.model.entity.ReviewExpert" >
-    insert into tbl_ReviewExpert (review_expert_id, expert_id, expert_name, 
-      score, review_opinion, final_opinion, 
-      is_finished, project_application_id)
-    values (#{reviewExpertId,jdbcType=INTEGER}, #{expertId,jdbcType=VARCHAR}, #{expertName,jdbcType=VARCHAR}, 
-      #{score,jdbcType=VARCHAR}, #{reviewOpinion,jdbcType=VARCHAR}, #{finalOpinion,jdbcType=INTEGER}, 
-      #{isFinished,jdbcType=INTEGER}, #{projectApplicationId,jdbcType=INTEGER})
+    insert into tbl_ReviewExpert (expert_id, project_application_id, score, 
+      review_opinion, final_opinion, is_finished
+      )
+    values (#{expertId,jdbcType=VARCHAR}, #{projectApplicationId,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, 
+      #{reviewOpinion,jdbcType=VARCHAR}, #{finalOpinion,jdbcType=INTEGER}, #{isFinished,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.ReviewExpert" >
     insert into tbl_ReviewExpert
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="reviewExpertId != null" >
-        review_expert_id,
-      </if>
       <if test="expertId != null" >
         expert_id,
       </if>
-      <if test="expertName != null" >
-        expert_name,
+      <if test="projectApplicationId != null" >
+        project_application_id,
       </if>
       <if test="score != null" >
         score,
@@ -142,19 +132,13 @@
       <if test="isFinished != null" >
         is_finished,
       </if>
-      <if test="projectApplicationId != null" >
-        project_application_id,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="reviewExpertId != null" >
-        #{reviewExpertId,jdbcType=INTEGER},
-      </if>
       <if test="expertId != null" >
         #{expertId,jdbcType=VARCHAR},
       </if>
-      <if test="expertName != null" >
-        #{expertName,jdbcType=VARCHAR},
+      <if test="projectApplicationId != null" >
+        #{projectApplicationId,jdbcType=VARCHAR},
       </if>
       <if test="score != null" >
         #{score,jdbcType=VARCHAR},
@@ -168,9 +152,6 @@
       <if test="isFinished != null" >
         #{isFinished,jdbcType=INTEGER},
       </if>
-      <if test="projectApplicationId != null" >
-        #{projectApplicationId,jdbcType=INTEGER},
-      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.management.model.entity.ReviewExpertExample" resultType="java.lang.Integer" >
@@ -182,14 +163,11 @@
   <update id="updateByExampleSelective" parameterType="map" >
     update tbl_ReviewExpert
     <set >
-      <if test="record.reviewExpertId != null" >
-        review_expert_id = #{record.reviewExpertId,jdbcType=INTEGER},
-      </if>
       <if test="record.expertId != null" >
         expert_id = #{record.expertId,jdbcType=VARCHAR},
       </if>
-      <if test="record.expertName != null" >
-        expert_name = #{record.expertName,jdbcType=VARCHAR},
+      <if test="record.projectApplicationId != null" >
+        project_application_id = #{record.projectApplicationId,jdbcType=VARCHAR},
       </if>
       <if test="record.score != null" >
         score = #{record.score,jdbcType=VARCHAR},
@@ -203,9 +181,6 @@
       <if test="record.isFinished != null" >
         is_finished = #{record.isFinished,jdbcType=INTEGER},
       </if>
-      <if test="record.projectApplicationId != null" >
-        project_application_id = #{record.projectApplicationId,jdbcType=INTEGER},
-      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -213,14 +188,12 @@
   </update>
   <update id="updateByExample" parameterType="map" >
     update tbl_ReviewExpert
-    set review_expert_id = #{record.reviewExpertId,jdbcType=INTEGER},
-      expert_id = #{record.expertId,jdbcType=VARCHAR},
-      expert_name = #{record.expertName,jdbcType=VARCHAR},
+    set expert_id = #{record.expertId,jdbcType=VARCHAR},
+      project_application_id = #{record.projectApplicationId,jdbcType=VARCHAR},
       score = #{record.score,jdbcType=VARCHAR},
       review_opinion = #{record.reviewOpinion,jdbcType=VARCHAR},
       final_opinion = #{record.finalOpinion,jdbcType=INTEGER},
-      is_finished = #{record.isFinished,jdbcType=INTEGER},
-      project_application_id = #{record.projectApplicationId,jdbcType=INTEGER}
+      is_finished = #{record.isFinished,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -228,12 +201,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.management.model.entity.ReviewExpert" >
     update tbl_ReviewExpert
     <set >
-      <if test="expertId != null" >
-        expert_id = #{expertId,jdbcType=VARCHAR},
-      </if>
-      <if test="expertName != null" >
-        expert_name = #{expertName,jdbcType=VARCHAR},
-      </if>
       <if test="score != null" >
         score = #{score,jdbcType=VARCHAR},
       </if>
@@ -246,21 +213,17 @@
       <if test="isFinished != null" >
         is_finished = #{isFinished,jdbcType=INTEGER},
       </if>
-      <if test="projectApplicationId != null" >
-        project_application_id = #{projectApplicationId,jdbcType=INTEGER},
-      </if>
     </set>
-    where review_expert_id = #{reviewExpertId,jdbcType=INTEGER}
+    where expert_id = #{expertId,jdbcType=VARCHAR}
+      and project_application_id = #{projectApplicationId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.management.model.entity.ReviewExpert" >
     update tbl_ReviewExpert
-    set expert_id = #{expertId,jdbcType=VARCHAR},
-      expert_name = #{expertName,jdbcType=VARCHAR},
-      score = #{score,jdbcType=VARCHAR},
+    set score = #{score,jdbcType=VARCHAR},
       review_opinion = #{reviewOpinion,jdbcType=VARCHAR},
       final_opinion = #{finalOpinion,jdbcType=INTEGER},
-      is_finished = #{isFinished,jdbcType=INTEGER},
-      project_application_id = #{projectApplicationId,jdbcType=INTEGER}
-    where review_expert_id = #{reviewExpertId,jdbcType=INTEGER}
+      is_finished = #{isFinished,jdbcType=INTEGER}
+    where expert_id = #{expertId,jdbcType=VARCHAR}
+      and project_application_id = #{projectApplicationId,jdbcType=VARCHAR}
   </update>
 </mapper>

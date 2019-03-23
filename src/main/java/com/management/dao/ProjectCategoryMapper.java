@@ -2,6 +2,8 @@ package com.management.dao;
 
 import com.management.model.entity.ProjectCategory;
 import com.management.model.entity.ProjectCategoryExample;
+
+import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,7 +12,7 @@ public interface ProjectCategoryMapper {
 
     int deleteByExample(ProjectCategoryExample example);
 
-    int deleteByPrimaryKey(Integer projectCategoryId);
+    int deleteByPrimaryKey(String projectCategoryId);
 
     int insert(ProjectCategory record);
 
@@ -18,7 +20,7 @@ public interface ProjectCategoryMapper {
 
     List<ProjectCategory> selectByExample(ProjectCategoryExample example);
 
-    ProjectCategory selectByPrimaryKey(Integer projectCategoryId);
+    ProjectCategory selectByPrimaryKey(String projectCategoryId);
 
     int updateByExampleSelective(@Param("record") ProjectCategory record, @Param("example") ProjectCategoryExample example);
 
@@ -27,4 +29,7 @@ public interface ProjectCategoryMapper {
     int updateByPrimaryKeySelective(ProjectCategory record);
 
     int updateByPrimaryKey(ProjectCategory record);
+
+    //获取可申报项目ApplicationEndTime>NowTime
+    List<ProjectCategory> selectCanProjectCategory(Date time);
 }

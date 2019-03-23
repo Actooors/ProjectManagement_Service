@@ -1,18 +1,18 @@
 package com.management.model.entity;
 
-public class ProjectMember extends ProjectMemberKey {
+/**
+ * @program: management
+ * @description: 用户基本信息
+ * @author: xw
+ * @create: 2019-03-23 00:40
+ */
+public class UserBaseInfo {
     private String userName;
-
     private String sex;
-
     private String department;
-
     private String phone;
-
     private String mail;
-
     private String position;
-
     private String major;
 
     public String getUserName() {
@@ -20,7 +20,7 @@ public class ProjectMember extends ProjectMemberKey {
     }
 
     public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+        this.userName = userName;
     }
 
     public String getSex() {
@@ -28,7 +28,7 @@ public class ProjectMember extends ProjectMemberKey {
     }
 
     public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
+        this.sex = sex;
     }
 
     public String getDepartment() {
@@ -36,7 +36,7 @@ public class ProjectMember extends ProjectMemberKey {
     }
 
     public void setDepartment(String department) {
-        this.department = department == null ? null : department.trim();
+        this.department = department;
     }
 
     public String getPhone() {
@@ -44,7 +44,7 @@ public class ProjectMember extends ProjectMemberKey {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
+        this.phone = phone;
     }
 
     public String getMail() {
@@ -52,7 +52,7 @@ public class ProjectMember extends ProjectMemberKey {
     }
 
     public void setMail(String mail) {
-        this.mail = mail == null ? null : mail.trim();
+        this.mail = mail;
     }
 
     public String getPosition() {
@@ -60,7 +60,7 @@ public class ProjectMember extends ProjectMemberKey {
     }
 
     public void setPosition(String position) {
-        this.position = position == null ? null : position.trim();
+        this.position = position;
     }
 
     public String getMajor() {
@@ -68,6 +68,6 @@ public class ProjectMember extends ProjectMemberKey {
     }
 
     public void setMajor(String major) {
-        this.major = major == null ? null : major.trim();
+        this.major = major;
     }
 }

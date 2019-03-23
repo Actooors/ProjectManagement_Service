@@ -10,7 +10,7 @@ public interface ProjectApplicationMapper {
 
     int deleteByExample(ProjectApplicationExample example);
 
-    int deleteByPrimaryKey(Integer projectApplicationId);
+    int deleteByPrimaryKey(String projectApplicationId);
 
     int insert(ProjectApplication record);
 
@@ -18,12 +18,7 @@ public interface ProjectApplicationMapper {
 
     List<ProjectApplication> selectByExample(ProjectApplicationExample example);
 
-    ProjectApplication selectByPrimaryKey(Integer projectApplicationId);
-
-    //包含任务书阶段被驳回和其他任何申请阶段被驳回的项目
-    List<ProjectApplication> selectFailProjectApplication(String userId);
-
-    List<ProjectApplication> queryAllProgressAndFailProject(String userId);
+    ProjectApplication selectByPrimaryKey(String projectApplicationId);
 
     int updateByExampleSelective(@Param("record") ProjectApplication record, @Param("example") ProjectApplicationExample example);
 
@@ -32,4 +27,9 @@ public interface ProjectApplicationMapper {
     int updateByPrimaryKeySelective(ProjectApplication record);
 
     int updateByPrimaryKey(ProjectApplication record);
+
+    //包含任务书阶段被驳回和其他任何申请阶段被驳回的项目
+    List<ProjectApplication> selectFailProjectApplication(String userId);
+
+    List<ProjectApplication> queryAllProgressAndFailProject(String userId);
 }

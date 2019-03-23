@@ -1,12 +1,6 @@
 package com.management.model.entity;
 
-public class ReviewExpert {
-    private Integer reviewExpertId;
-
-    private String expertId;
-
-    private String expertName;
-
+public class ReviewExpert extends ReviewExpertKey {
     private String score;
 
     private String reviewOpinion;
@@ -14,32 +8,6 @@ public class ReviewExpert {
     private Integer finalOpinion;
 
     private Integer isFinished;
-
-    private Integer projectApplicationId;
-
-    public Integer getReviewExpertId() {
-        return reviewExpertId;
-    }
-
-    public void setReviewExpertId(Integer reviewExpertId) {
-        this.reviewExpertId = reviewExpertId;
-    }
-
-    public String getExpertId() {
-        return expertId;
-    }
-
-    public void setExpertId(String expertId) {
-        this.expertId = expertId == null ? null : expertId.trim();
-    }
-
-    public String getExpertName() {
-        return expertName;
-    }
-
-    public void setExpertName(String expertName) {
-        this.expertName = expertName == null ? null : expertName.trim();
-    }
 
     public String getScore() {
         return score;
@@ -71,13 +39,5 @@ public class ReviewExpert {
 
     public void setIsFinished(Integer isFinished) {
         this.isFinished = isFinished;
-    }
-
-    public Integer getProjectApplicationId() {
-        return projectApplicationId;
-    }
-
-    public void setProjectApplicationId(Integer projectApplicationId) {
-        this.projectApplicationId = projectApplicationId;
     }
 }

@@ -3,7 +3,7 @@ package com.management.model.entity;
 import java.util.Date;
 
 public class ProjectProgress {
-    private Integer projectProgressId;
+    private String projectProgressId;
 
     private String userId;
 
@@ -25,24 +25,16 @@ public class ProjectProgress {
 
     private Integer projectProcess;
 
-    private Integer projectCategoryId;
-
-    private String projectName;
-
-    private String description;
-
-    private String userName;
-
-    private String department;
+    private String projectCategoryId;
 
     private Date projectcreatetime;
 
-    public Integer getProjectProgressId() {
+    public String getProjectProgressId() {
         return projectProgressId;
     }
 
-    public void setProjectProgressId(Integer projectProgressId) {
-        this.projectProgressId = projectProgressId;
+    public void setProjectProgressId(String projectProgressId) {
+        this.projectProgressId = projectProgressId == null ? null : projectProgressId.trim();
     }
 
     public String getUserId() {
@@ -125,44 +117,12 @@ public class ProjectProgress {
         this.projectProcess = projectProcess;
     }
 
-    public Integer getProjectCategoryId() {
+    public String getProjectCategoryId() {
         return projectCategoryId;
     }
 
-    public void setProjectCategoryId(Integer projectCategoryId) {
-        this.projectCategoryId = projectCategoryId;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName == null ? null : projectName.trim();
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department == null ? null : department.trim();
+    public void setProjectCategoryId(String projectCategoryId) {
+        this.projectCategoryId = projectCategoryId == null ? null : projectCategoryId.trim();
     }
 
     public Date getProjectcreatetime() {

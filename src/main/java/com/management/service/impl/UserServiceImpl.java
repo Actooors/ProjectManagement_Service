@@ -53,6 +53,8 @@ public class UserServiceImpl implements UserService {
     private static final int REVIEW_FAILED = 6;
     private static final int REVIEW_LAST_PHASE = 5;
     private static final int REVIEW_PROJECT_INDEX = 7;//待提交任务书阶段
+    private static final int FAIL_PROGRESS_PROJECT = 5;//立项阶段审核被驳回的项目
+    private static final int SUCCESS_PROGRESS_PROJECT = 4;//成功结项的项目
     /**
      * @Description: 根据参数生成登录返回需要的信息
      * @Param: [userId, identity, userName]
@@ -128,108 +130,6 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * @Description: isTimeOut接口的实现
-     * @Param: [projectCategoryId, type]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-7-31
-     */
-    @Override
-    public Result isTimeOut(Integer projectCategoryId, Integer type) {
-        ProjectCategory projectCategory = projectCategoryMapper
-                .selectByPrimaryKey(projectCategoryId);
-        if (projectCategory == null) {
-            return ResultTool.error("不存在这个id的项目大类");
-        } else {
-            int isTimeOut = 1;
-            Date cur = new Date(),
-                    compareTime;
-            switch (type) {
-                case 1:
-                    compareTime = projectCategory.getApplicationEndTime();
-                    break;
-                case 2:
-                    compareTime = projectCategory.getInterimReportEndTime();
-                    break;
-                case 3:
-                    compareTime = projectCategory.getConcludingReportEndTime();
-                    break;
-                case 4:
-                    compareTime = projectCategory.getProjectEndTime();
-                    break;
-                default:
-                    return ResultTool.error("给予的type类型有误");
-            }
-            if (cur.before(compareTime)) {
-                isTimeOut = 2;
-            }
-            return ResultTool.success(new IsTimeOutInfo(isTimeOut));
-        }
-    }
-
-    /**
-     * @Description: findAllProjectCategory接口的实现
-     * @Param: [projectCategoryType]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-7-31
-     */
-    @Override
-    public Result findAllProjectCategory(Integer projectCategoryType) {
-        ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
-        projectCategoryExample.createCriteria()
-                .andProjectTypeEqualTo(projectCategoryType)
-                .andApplicationEndTimeGreaterThan(new Date())
-                .andIsApprovedEqualTo(1);
-        List<ProjectCategory> projectCategoryList = projectCategoryMapper
-                .selectByExample(projectCategoryExample);
-        if (projectCategoryList.isEmpty()) {
-            return ResultTool.error("该类别没有可申报项目");
-        }
-        List<ProjectCategoryListInfo> list = new LinkedList<>();
-
-        for (ProjectCategory projectCategory : projectCategoryList) {
-            ProjectCategoryListInfo projectCategoryListInfo = new ProjectCategoryListInfo();
-            projectCategoryListInfo.setApplicantType(projectCategory.getApplicantType());
-            projectCategoryListInfo.setApplicationDeadline(TimeTool.timetoString(projectCategory.getApplicationEndTime()));
-            projectCategoryListInfo.setProjectCategoryName(projectCategory.getProjectCategoryName());
-            list.add(projectCategoryListInfo);
-        }
-        return ResultTool.success(list);
-    }
-
-    /**
-     * @Description: findProjectCategoryInfo接口的实现
-     * @Param: [projectCategoryId]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-7-31
-     */
-    @Override
-    public Result findProjectCategoryInfo(Integer projectCategoryId) {
-        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectCategoryId);
-        if (projectCategory == null) {
-            return ResultTool.error("不存在这个Id的项目大类");
-        }
-        ProjectCategoryInfo projectCategoryInfo = new ProjectCategoryInfo();
-        projectCategoryInfo.setProjectCategoryName(projectCategory.getProjectCategoryName());
-        projectCategoryInfo.setApplicantType(projectCategory.getApplicantType());
-        projectCategoryInfo.setProjectCategoryDescription(projectCategory.getProjectCategoryDescription());
-        projectCategoryInfo.setProjectCategoryDescriptionAddress(projectCategory.getProjectCategoryDescriptionAddress());
-        projectCategoryInfo.setProjectType(projectCategory.getProjectType());
-        projectCategoryInfo.setPrincipalId(projectCategory.getPrincipalId());
-        projectCategoryInfo.setPrincipalName(projectCategory.getPrincipalName());
-        projectCategoryInfo.setMaxMoney(projectCategory.getMaxMoney());
-        projectCategoryInfo.setReviewLeaderName(projectCategory.getReviewLeaderName());
-        projectCategoryInfo.setProjectApplicationDownloadAddress(projectCategory.getProjectApplicationDownloadAddress());
-        projectCategoryInfo.setApplicationStartTime(TimeTool.timetoString(projectCategory.getApplicationStartTime()));
-        projectCategoryInfo.setApplicationDeadLine(TimeTool.timetoString(projectCategory.getApplicationEndTime()));
-        projectCategoryInfo.setProjectStartTime(TimeTool.timetoString(projectCategory.getProjectStartTime()));
-        projectCategoryInfo.setProjectDeadline(TimeTool.timetoString(projectCategory.getProjectEndTime()));
-        return ResultTool.success(projectCategoryInfo);
-    }
-
-    /**
      * @Description: waitJudgeProjectList接口的实现
      * @Param: [leaderId]
      * @Return: com.management.model.ov.Result
@@ -237,7 +137,7 @@ public class UserServiceImpl implements UserService {
      * @Date: 18-8-15
      */
     @Override
-    public Result waitJudgeProjectList(Integer projectCategoryId, Integer type) {
+    public Result waitJudgeProjectList(String projectCategoryId, Integer type) {
         ProjectApplicationExample pExample = new ProjectApplicationExample();
         pExample.createCriteria()
                 .andProjectCategoryIdEqualTo(projectCategoryId)
@@ -292,16 +192,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public Result getAllAviProject() {
 
-        ProjectCategoryExample example = new ProjectCategoryExample();
-        example.createCriteria()
-                .andApplicationEndTimeGreaterThan(new Date());
         List<ProjectCategory> projectCategoryList = projectCategoryMapper
-                .selectByExample(example);
+                .selectCanProjectCategory(new Date());
         if (projectCategoryList.isEmpty()) {
             return ResultTool.success(new LinkedList<AviProjectCategoryInfo>());
         }
-        //根据项目类别的int值排序
-        Collections.sort(projectCategoryList);
         //获取到最大的项目类别
         int maxType = projectCategoryList.get(0).getProjectType();
         //根据排序好的结果，先遍历的创建包含这些type的内容，
@@ -387,19 +282,16 @@ public class UserServiceImpl implements UserService {
             return ResultTool.error("没有申报人");
         }
         ProjectApplication res = new ProjectApplication();
+        String uuid = UUID.randomUUID().toString();
+        res.setProjectApplicationId(uuid);
         res.setProjectCategoryId(projectApplicationInfo.getProjectCategoryId());
         res.setProjectName(projectApplicationInfo.getProjectName());
         res.setProjectDescription(projectApplicationInfo.getDescription());
         ProjectMembers mainMember = membersList.get(0);
         res.setUserId(mainMember.getUserId());
-        res.setUserName(mainMember.getUserName());
-        res.setDepartment(mainMember.getDepartment());
-        res.setPhone(mainMember.getPhone());
-        res.setMail(mainMember.getMail());
         res.setProjectApplicationUploadAddress(projectApplicationInfo.getUploadAddress());
         res.setReviewPhase(1);
         res.setProjectMoney(projectApplicationInfo.getProjectMoney());
-//        res.setApplicationDeadline(stringToTime(projectApplicationInfo.getApplicationDeadline()));
         //1上会2不上
         res.setIsMeeting(projectApplicationInfo.getIsMeeting() ? 1 : 2);
         try {
@@ -418,9 +310,8 @@ public class UserServiceImpl implements UserService {
             member.setDepartment(projectMembers.getDepartment());
             member.setPhone(projectMembers.getPhone());
             member.setMail(projectMembers.getMail());
-            member.setProjectName(projectApplicationInfo.getProjectName());
-            member.setType(1);
-            member.setProjectUserId(mainMember.getUserId());
+            member.setProjectApplicationId(uuid);
+
             try {
                 projectMemberMapper.insert(member);
             } catch (Exception e) {
@@ -465,13 +356,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result deleteApplication(DeleteApplication info,String userId) {
-        ProjectMemberExample example = new ProjectMemberExample();
-        example.createCriteria()
-                .andProjectUserIdEqualTo(userId)
-                .andProjectNameEqualTo(info.getApplicationName());
         try {
             projectApplicationMapper.deleteByPrimaryKey(info.getApplicationId());
-            projectMemberMapper.deleteByExample(example);
+            projectMemberMapper.deleteByApplication(info.getApplicationId());
         } catch (Exception e) {
             return ResultTool.error(e.toString());
         }
@@ -585,7 +472,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public Result findMoreInfo(int applicationId) {
+    public Result findMoreInfo(String applicationId) {
         ProjectApplication resApplication = projectApplicationMapper
                 .selectByPrimaryKey(applicationId);
         ProjectProgress resProgress = projectProgressMapper
@@ -611,20 +498,17 @@ public class UserServiceImpl implements UserService {
         if(resApplication.getProjectIndex() != null){
             res.setProjectIndex(resApplication.getProjectIndex());
         }
-        ProjectMemberExample example = new ProjectMemberExample();
-        example.createCriteria()
-                .andProjectNameEqualTo(resApplication.getProjectName())
-                .andProjectUserIdEqualTo(resApplication.getUserId());
-        List<ProjectMember> members = projectMemberMapper
-                .selectByExample(example);
+        //根据ProjectApplicationId找到项目人员
+        List<ProjectMember> members = projectMemberMapper.selectByApplicationId(resApplication.getProjectApplicationId());
         List<ProjectMembers> resMembers = new LinkedList<>();
         //先添加负责人的信息
+        UserBaseInfo userBaseInfo = userMapper.selectUserInfoByUserId(resApplication.getUserId());
         ProjectMembers firstMember = new ProjectMembers();
-        firstMember.setDepartment(resApplication.getDepartment());
-        firstMember.setMail(resApplication.getMail());
-        firstMember.setPhone(resApplication.getPhone());
+        firstMember.setDepartment(userBaseInfo.getDepartment());
+        firstMember.setMail(userBaseInfo.getMail());
+        firstMember.setPhone(userBaseInfo.getPhone());
         firstMember.setUserId(resApplication.getUserId());
-        firstMember.setUserName(resApplication.getUserName());
+        firstMember.setUserName(userBaseInfo.getUserName());
         resMembers.add(firstMember);
         for(ProjectMember member : members) {
             ProjectMembers resMember = new ProjectMembers();
@@ -755,11 +639,7 @@ public class UserServiceImpl implements UserService {
             }
 
             //查找到已经立项的被驳回的项目(结题报告审核失败)
-            ProjectProgressExample example1= new ProjectProgressExample();
-            example1.createCriteria()
-                    .andUserIdEqualTo(userId)
-                    .andProjectProcessEqualTo(5);
-            List<ProjectProgress> projectProgressList = projectProgressMapper.selectByExample(example1);
+            List<ProjectProgress> projectProgressList = projectProgressMapper.selectFailProgress(userId,FAIL_PROGRESS_PROJECT);
             for(ProjectProgress projectProgress: projectProgressList){
                 UserFailProject userFailProject = new UserFailProject();
                 ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(projectProgress.getProjectProgressId());

@@ -10,7 +10,7 @@ public interface ProjectProgressMapper {
 
     int deleteByExample(ProjectProgressExample example);
 
-    int deleteByPrimaryKey(Integer projectProgressId);
+    int deleteByPrimaryKey(String projectProgressId);
 
     int insert(ProjectProgress record);
 
@@ -18,7 +18,7 @@ public interface ProjectProgressMapper {
 
     List<ProjectProgress> selectByExample(ProjectProgressExample example);
 
-    ProjectProgress selectByPrimaryKey(Integer projectProgressId);
+    ProjectProgress selectByPrimaryKey(String projectProgressId);
 
     int updateByExampleSelective(@Param("record") ProjectProgress record, @Param("example") ProjectProgressExample example);
 
@@ -27,4 +27,7 @@ public interface ProjectProgressMapper {
     int updateByPrimaryKeySelective(ProjectProgress record);
 
     int updateByPrimaryKey(ProjectProgress record);
+
+    //查找到已经立项各个阶段的项目(结题报告审核失败)
+    List<ProjectProgress> selectFailProgress(String userId,int state);
 }

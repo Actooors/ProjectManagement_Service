@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class IsProjectPassedPostInfo {
-    private Integer projectId;
+    private String projectId;//new
     private Integer isPassed;
     private String message;
 }

@@ -11,26 +11,23 @@ create table tbl_User (
                                  1普通用户 2业务员 3审核专家
                                  4领导 5系统管理员',
   is_able_login int not null default 1 comment '是否可以登录
-                                                1可以登录 2不可登录'
+                                                1可以登录 2不可登录',
   leader_id varchar(8) comment '业务员对应的领导的id',
   primary key(user_id)
 ) comment '用户表'
   charset = utf8;
 
 create table tbl_ProjectCategory (
-  project_category_id int primary key comment '标识id',
+  project_category_id varchar(64) primary key comment '标识id',
   project_category_name varchar(32) not null comment '项目大类的名字',
   project_category_description varchar(4096) comment '项目大类的简介
                   业务员可以选择填写简介也可以选择上传包含介绍文件的ｚｉｐ文件',
   project_category_description_address varchar(128) comment '项目大类介绍的ｚｉｐ文件',
   project_type int not null comment '项目类别 1 2 3 4对应不同项目，日后更新',
   principal_id varchar(8) not null comment '项目业务员id',
-  principal_name varchar(16) not null comment '业务员姓名',
-  principal_phone varchar(16) comment '业务员联系方式',
   applicant_type varchar(64) not null comment '此项目允许的申请人类别，1234对应不同学院 不同学院用|分割，日后更新',
   max_money varchar(16) comment '项目经费预算上限',
   review_leader_id varchar(8) comment '审核领导id',
-  review_leader_name varchar(16) comment '审核领导名字',
   is_exist_meeting_review int not null comment '是否存在会评
                                        1存在 2不存在',
   project_application_download_address varchar(128) comment '项目申报书地址',
@@ -56,39 +53,32 @@ create table tbl_ProjectCategory (
   charset = utf8;
 
 
--- auto-generated definition
 create table tbl_ProjectApplication
 (
-  project_application_id int(64) auto_increment comment '标识id'primary key,
-  project_category_id                int                                 not null comment '对应项目大类的id',
-  project_name                       varchar(32)                         not null comment '项目名称',
-  project_member                     varchar(128)                        null comment '项目成员,用|隔开。例如12|35中的12和35是项目成员表的project_member_id',
-  project_description                varchar(256)                        not null comment '项目简介',
-  user_id                            varchar(8)                          not null comment '申请人工号',
-  user_name                          varchar(16)                         not null comment '申请人姓名',
-  sex                                varchar(2)                          null comment '申请人性别',
-  department                         varchar(32)                         null comment '申请人部门(学院)',
-  phone                              varchar(16)                         null comment '电话',
-  mail                               varchar(32)                         null comment '邮箱',
-  position                           varchar(8)                          null comment '职称',
-  major                              varchar(32)                         null comment '专业',
-  project_application_upload_address varchar(128)                        null comment '项目申请书上传地址',
-  is_meeting                         int                                 not null comment '是否上会 1上会 2不上会',
-  meeting_review_message             varchar(256)                        null comment '会评意见',
-  review_phase                       int       default 1                 not null comment '项目申请审核阶段
+  project_application_id varchar(64) auto_increment comment '标识id'primary key,
+  project_category_id varchar(64) not null comment '对应项目大类的id',
+  project_name varchar(32) not null comment '项目名称',
+  project_description varchar(256) not null comment '项目简介',
+  project_index varchar (1024) comment '项目指标',
+  project_index_state int(2) comment '任务书审核状态',
+  project_money int(11) comment '项目经费',
+  user_id varchar(8) not null comment '申请人工号',
+  review_principal_id varchar(8) not null comment '审核业务员工号',
+  review_leader_id varchar(8) not null comment '审核领导工号',
+  project_application_upload_address varchar(128) null comment '项目申请书上传地址',
+  is_meeting int not null comment '是否上会 1上会 2不上会',
+  meeting_review_message varchar(256) null comment '会评意见',
+  review_phase int default 1  not null comment '项目申请审核阶段
                             1业务员审核阶段 2评审专家审核阶段 3会评阶段
                             4领导审核阶段 5审核通过 6审核失败',
-  failure_reason                     varchar(256)                        null comment '申请失败的时候的失败原因',
-  application_time                   timestamp default CURRENT_TIMESTAMP not null comment '申请递交时间'
+  failure_reason varchar(256) null comment '申请失败的时候的失败原因',
+  application_time timestamp default CURRENT_TIMESTAMP not null comment '申请递交时间'
 )
   comment '项目申请表' charset = utf8;
 
 
 
 create table tbl_ProjectMember (
-  project_member_id int  primary key comment '标识id',
-  type int not null comment '判断是修改申请表修改的member还是项目申请表的member
-                            1是项目申请表 2是项目修改申请表',
   user_id varchar(8) not null comment '用户工号',
   user_name varchar(16) not null comment '用户姓名',
   sex varchar(2) comment '性别',
@@ -96,15 +86,18 @@ create table tbl_ProjectMember (
   phone varchar(16) comment '电话',
   mail varchar(32) comment '邮箱',
   position varchar(8) comment '职称',
-  major varchar(32) comment '专业'
+  major varchar(32) comment '专业',
+  project_application_id varchar(64)  comment '项目申请Id',
+  primary key (user_id,project_application_id)
 ) comment '项目成员表'
   charset = utf8;
 
 
 create table tbl_ProjectProgress (
-  project_progress_id int primary key comment '标识id',
-  user_id varchar(8) not null comment '申请人工号',
-  project_application_id int not null  comment '对应的项目id',
+  project_progress_id varchar(64) primary key comment '标识id',
+  project_application_id varchar(64) not null  comment '对应的项目id',
+  project_category_id varchar(64) comment '对应的项目大类Id',
+  user_id varchar(64) comment '申请人Id',
   interim_report_upload_address varchar(128) comment '上传中期报告文档的地址',
   interim_report_time timestamp default current_timestamp comment '中期报告上传时间',
   is_finished_interim_report int default 2 comment '是否完成中期报告
@@ -123,21 +116,20 @@ create table tbl_ProjectProgress (
 
 
 create table tbl_ReviewExpert (
-  review_expert_id int primary key comment '标识id',
   expert_id varchar(8) not null comment '专家id',
-  expert_name varchar(16) not null comment '专家姓名',
-  project_application_id int not null comment '对应项目申请书的id',
+  project_application_id varchar(64) not null comment '对应项目申请书的id',
   score varchar(4) comment '专家打分',
   review_opinion varchar(256) comment '评审意见',
   final_opinion int comment '最终意见
                             1优先支持 2支持 3反对',
-  is_finished int not null default 2 comment '是否完成评审 1完成 2未完成'
+  is_finished int not null default 2 comment '是否完成评审 1完成 2未完成',
+  primary key (expert_id,project_application_id)
 ) comment '专家表'
   charset = utf8;
 
 
 create table tbl_ProjectModificationApplication (
-  project_modification_application_id int primary key comment '标识id',
+  project_modification_application_id varchar(64) primary key comment '标识id',
   user_id varchar(8) not null comment '申请人工号',
   modification_reason varchar(256) not null comment '申请修改的理由',
   project_application_id int not null comment '对应的项目id',
@@ -172,4 +164,3 @@ create table tbl_ProjectModification (
                         6电话 7邮箱 8职称 9专业 10项目申请书上传地址'
 ) comment '项目修改表'
   charset = utf8;
-

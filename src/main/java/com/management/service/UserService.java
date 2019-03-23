@@ -22,36 +22,6 @@ public interface UserService {
     Result login(LoginInfo loginInfo);
 
     /**
-     * @Description: 判断是否超过截止时间的接口，超过返回１未超过返回２
-     * 项目申报时间的结束时间，项目中期报告提交的结束时间和项目结题报告提交的结束时间
-     * 以及项目结束的时间，这四个情况分别对应数字1 2 3 4
-     * @Param: [projectCategoryId, type]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-7-31
-     */
-    Result isTimeOut(Integer projectCategoryId, Integer type);
-
-    /**
-     * @Description: 根据项目大类的种类查找对应类别的所有的项目大类，项目类别按照１２３４分类
-     * 只能看到没有超过申请时间deadline的项目
-     * @Param: [projectCategoryType]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-7-31
-     */
-    Result findAllProjectCategory(Integer projectCategoryType);
-
-    /**
-     * @Description: 根据项目大类Id查找一个具体的项目大类的信息
-     * @Param: [projectCategoryId]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-7-31
-     */
-    Result findProjectCategoryInfo(Integer projectCategoryId);
-
-    /**
      * @Description: 查找某个项目大类的所有待审项目申请,
      * type为1业务员审核阶段 2评审专家审核阶段 3会评阶段 4领导审核阶段
      * @Param: [leaderId]
@@ -59,7 +29,7 @@ public interface UserService {
      * @Author: ggmr
      * @Date: 18-8-15
      */
-    Result waitJudgeProjectList(Integer projectCategoryId, Integer type);
+    Result waitJudgeProjectList(String projectCategoryId, Integer type);
 
     /**
      * @Description: 审核一个项目的进行情况，如果通过那么项目的阶段++，如果已经到了第四阶段并且已经通过，那么结束
@@ -149,7 +119,7 @@ public interface UserService {
      * @Author: ggmr
      * @Date: 2018/12/26
      */
-    Result findMoreInfo(int applicationId);
+    Result findMoreInfo(String applicationId);
 
     /**
      * @Description: 根据工号查询用户的信息
@@ -179,4 +149,12 @@ public interface UserService {
      * @Date: 19-1-26
      */
     Result queryFailProject(String userId);
+    
+    /**
+     * @Description: 用户提价修改申请书
+     * @Param: 
+     * @Return: 
+     * @Author: xw
+     * @Date: 19-3-22
+     */
 }

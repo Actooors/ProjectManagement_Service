@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Data
 public class ReportMessage {
-    private int projectCategoryId;
+    private String projectCategoryId;//new
     // type 1 中期报告  2结题报告
     private int type;
     private String reportAddress;

@@ -11,6 +11,6 @@ import lombok.Data;
 @Data
 public class ProjectMeetingInfo {
     private Boolean isMeeting;
-    private int applicationId;
+    private String applicationId;//new
     private String msg;
 }

@@ -115,7 +115,7 @@ public interface AdminService {
      * @Author: ggmr
      * @Date: 18-8-1
      */
-    Result expertOpinionList(int projectId);
+    Result expertOpinionList(String projectId);
 
     /**
      * @Description: 查找某个审核阶段的所有的待审核项目
@@ -133,7 +133,7 @@ public interface AdminService {
      * @Author: 0GGmr0
      * @Date: 2019-01-12
      */
-    Result queryOneProjectCategory(Integer projectCategoryId);
+    Result queryOneProjectCategory(String projectCategoryId);
 
 
     /**

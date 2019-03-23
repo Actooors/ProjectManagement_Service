@@ -14,8 +14,8 @@ import java.util.List;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdminJudgeTotalInfo {
-    private int projectId;
-    private int projectCategoryId;
+    private String projectId;//new
+    private String projectCategoryId;//new
     private String projectCategoryName;
     private String applicationDeadLine;
     private String projectName;

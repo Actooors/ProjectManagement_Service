@@ -13,7 +13,7 @@ import lombok.Data;
 public class UpdateProjectCategoryInfo {
 
     @JsonProperty("pid")
-    private Integer projectCategoryId;
+    private String projectCategoryId;//new
 
     @JsonProperty("info")
     private ProjectCategoryInfo projectCategoryInfo;

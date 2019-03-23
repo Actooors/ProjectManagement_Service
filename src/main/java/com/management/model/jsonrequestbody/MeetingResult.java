@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class MeetingResult {
-    private int applicationId;
+    private String applicationId;//new
     private Boolean judge;
     private String msg;
     private Integer projectMoney;

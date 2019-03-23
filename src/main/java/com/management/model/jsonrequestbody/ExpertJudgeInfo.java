@@ -12,7 +12,7 @@ import lombok.Data;
 @Data
 public class ExpertJudgeInfo {
     @JsonProperty("applicationId")
-    private Integer projectApplicationId;
+    private String projectApplicationId;//new
     private String score;
     private String reviewOpinion;
     private String finalOPinion;

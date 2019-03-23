@@ -3,6 +3,7 @@ package com.management.model.ov.resultsetting;
 import com.management.model.jsonrequestbody.ProjectMembers;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,10 +14,10 @@ import java.util.List;
  */
 @Data
 public class FinalReportInfo {
-    private int projectCategoryId;
+    private String projectCategoryId;//new
     private String projectCategoryName;
-
-    private int projectId;
+    private String projectProgressId;
+    private String projectId;//new
     private String projectName;
     private String description;
     private String userId;
@@ -24,5 +25,6 @@ public class FinalReportInfo {
     private String department;
     private String projectApplicationDownloadAddress;
     private String concludingReportEndTime;
+    private Date endTime;
     private ExpertOpinionMain expertOpinion;
 }

@@ -70,17 +70,16 @@ public class AdminServiceImpl implements AdminService {
         Date applicationEndTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationEndTime());
         Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
         Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
-
+        String uuid = UUID.randomUUID().toString();
         /*根据业务员id查询到业务员的信息及专家的id*/
         ProjectCategory projectCategory = new ProjectCategory();
         try {
+            projectCategory.setProjectCategoryId(uuid);
             projectCategory.setReviewLeaderId(adminUser.getLeaderId());
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
             projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
             projectCategory.setPrincipalId(adminUser.getUserId());
-            projectCategory.setPrincipalName(adminUser.getUserName());
-            projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
             projectCategory.setProjectType(projectCategoryInfo.getProjectType());
             StringBuilder applicantType = new StringBuilder();
             List<Integer> applicantList = projectCategoryInfo.getApplicantType();
@@ -107,19 +106,6 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setStatistics(0);
             projectCategory.setIsApproved(1);
             projectCategory.setIsConcludingReportActivated(2);
-//            StringBuilder experts = new StringBuilder();
-//            List<String> list = projectCategoryInfo.getExpertList();
-//            if(list.isEmpty()) {
-//                return ResultTool.error("专家列表不能为空");
-//            }
-//            int len = list.size();
-//            for(int i = 0; i < len; i++) {
-//                experts.append(list.get(i));
-//                if(i < len - 1) {
-//                    experts.append("|");
-//                }
-//            }
-//            projectCategory.setExpertList(experts.toString());
             projectCategoryMapper.insert(projectCategory);
 
             return ResultTool.success();
@@ -208,7 +194,7 @@ public class AdminServiceImpl implements AdminService {
      * @Date: 2019-01-12
      */
     @Override
-    public Result queryOneProjectCategory(Integer projectCategoryId) {
+    public Result queryOneProjectCategory(String projectCategoryId) {
         ProjectCategory projectCategory = projectCategoryMapper
                 .selectByPrimaryKey(projectCategoryId);
         return ResultTool.success(addInfoToAdminListInfo(projectCategory));
@@ -226,7 +212,8 @@ public class AdminServiceImpl implements AdminService {
         ProjectCategoryExample projectCategoryExample = new ProjectCategoryExample();
         projectCategoryExample.createCriteria()
                 .andPrincipalIdEqualTo(userId);
-        List<ProjectCategory> projectCategoryList = projectCategoryMapper.selectByExample(projectCategoryExample);
+        List<ProjectCategory> projectCategoryList = projectCategoryMapper
+                .selectByExample(projectCategoryExample);
         if (projectCategoryList.isEmpty()) {
             return ResultTool.error("您没有开通任何的项目大类");
         }
@@ -248,7 +235,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Result updateProjectCategoryInfo(UpdateProjectCategoryInfo updateProjectCategoryInfo) {
 
-        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(updateProjectCategoryInfo.getProjectCategoryId());
+        ProjectCategory projectCategory = projectCategoryMapper
+                .selectByPrimaryKey(updateProjectCategoryInfo.getProjectCategoryId());
         ProjectCategoryInfo projectCategoryInfo = updateProjectCategoryInfo.getProjectCategoryInfo();
         /*将字符串时间格式转化为Date时间类型*/
         Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
@@ -294,7 +282,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Result deleteProjectCategory(DeleteProjectCategoryInfo info) {
-        int projectCategoryId = info.getProjectCategoryId();
+        String projectCategoryId = info.getProjectCategoryId();
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectCategoryId);
         try {
             if (projectCategory != null) {
@@ -416,10 +404,8 @@ public class AdminServiceImpl implements AdminService {
                 return ResultTool.error("专家列表不能为空");
             }
             for (String expertId : list) {
-                User user = userMapper.selectByPrimaryKey(expertId);
                 ReviewExpert expert = new ReviewExpert();
                 expert.setExpertId(expertId);
-                expert.setExpertName(user.getUserName());
                 expert.setProjectApplicationId(info.getApplicationId());
                 expert.setIsFinished(EXPERT_NOT_FINISH);
                 try {
@@ -549,7 +535,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-    ExpertOpinionMain getExpertOpinionList(int projectId) {
+    ExpertOpinionMain getExpertOpinionList(String projectId) {
         ReviewExpertExample reviewExpertExample = new ReviewExpertExample();
         reviewExpertExample.createCriteria()
                 .andProjectApplicationIdEqualTo(projectId);
@@ -560,9 +546,10 @@ public class AdminServiceImpl implements AdminService {
         int finishNum = 0;
         double ave = 0;
         for (ReviewExpert reviewExpert : reviewExpertList) {
+            UserBaseInfo userBaseInfo = userMapper.selectUserInfoByUserId(reviewExpert.getExpertId());
             ExpertOpinionInfo expertOpinionInfo = new ExpertOpinionInfo();
             expertOpinionInfo.setExpertId(reviewExpert.getExpertId());
-            expertOpinionInfo.setExpertName(reviewExpert.getExpertName());
+            expertOpinionInfo.setExpertName(userBaseInfo.getUserName());
             expertOpinionInfo.setIsFinished(reviewExpert.getIsFinished());
             if (reviewExpert.getIsFinished() == 1) {
                 finishNum++;
@@ -596,7 +583,7 @@ public class AdminServiceImpl implements AdminService {
      * @Date: 18-8-1
      */
     @Override
-    public Result expertOpinionList(int projectId) {
+    public Result expertOpinionList(String projectId) {
         return ResultTool.success(getExpertOpinionList(projectId));
 
     }
@@ -610,7 +597,8 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Result createReport(ReportMessage reportMessage) {
-        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(reportMessage.getProjectCategoryId());
+        ProjectCategory projectCategory = projectCategoryMapper
+                .selectByPrimaryKey(reportMessage.getProjectCategoryId());
         //中期报告
         ProjectProgressExample example = new ProjectProgressExample();
         example.createCriteria()
@@ -754,26 +742,22 @@ public class AdminServiceImpl implements AdminService {
         ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(info.getApplicationId());
         if(info.getJudge()) {
             projectApplication.setReviewPhase(FINISH_APPLICATION);
-            projectApplication.setProjectIndexState(true);
-
+            projectApplication.setProjectIndexState(1);
             ProjectProgress projectProgress = new ProjectProgress();
+
             projectProgress.setProjectProgressId(projectApplication.getProjectApplicationId());
             projectProgress.setIsFinishedConcludingReport(2);
             projectProgress.setIsFinishedInterimReport(2);
             projectProgress.setProjectProcess(1);
             projectProgress.setProjectCategoryId(projectApplication.getProjectCategoryId());
             projectProgress.setUserId(projectApplication.getUserId());
-            projectProgress.setProjectName(projectApplication.getProjectName());
-            projectProgress.setDescription(projectApplication.getProjectDescription());
-            projectProgress.setUserName(projectApplication.getUserName());
-            projectProgress.setDepartment(projectApplication.getDepartment());
             try {
                 projectProgressMapper.insert(projectProgress);
             } catch (Exception e) {
                 return ResultTool.error("审核通过后创建项目的projectprogress失败，理由为" + e.toString());
             }
         } else {
-            projectApplication.setProjectIndexState(false);
+            projectApplication.setProjectIndexState(0);
             projectApplication.setFailureReason(info.getMsg());
             projectApplication.setReviewPhase(PROJECT_INDEX_STATE);
         }
@@ -788,7 +772,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result judgeFinalReport(MeetingResult info) {
-        ProjectProgress projectProgress  = projectProgressMapper.selectByPrimaryKey(info.getApplicationId());
+        ProjectProgress projectProgress  = projectProgressMapper
+                .selectByPrimaryKey(info.getApplicationId());
         if(info.getJudge()) {
             projectProgress.setProjectProcess(4);
         } else {

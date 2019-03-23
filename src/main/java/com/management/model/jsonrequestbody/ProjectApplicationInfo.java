@@ -13,9 +13,9 @@ import java.util.List;
  */
 @Data
 public class ProjectApplicationInfo {
-    private int projectCategoryId;
+    private String projectCategoryId;//new
     private String projectCategoryName;
-    private int projectApplicationId;
+    private String projectApplicationId;//new
     private String projectName;
     private List<ProjectMembers> members;
     private String description;

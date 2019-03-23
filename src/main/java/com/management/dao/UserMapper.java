@@ -1,8 +1,11 @@
 package com.management.dao;
 
 import com.management.model.entity.User;
+import com.management.model.entity.UserBaseInfo;
 import com.management.model.entity.UserExample;
 import java.util.List;
+
+import com.management.model.ov.resultsetting.FinalReportInfo;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
@@ -27,4 +30,11 @@ public interface UserMapper {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    //根据UserId得到用户基本信息
+    UserBaseInfo selectUserInfoByUserId(String userId);
+
+    //查找所有待领导终审的项目
+    List<FinalReportInfo> selectFinalProgressByLeaderId(String leader);
+
 }

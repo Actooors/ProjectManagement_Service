@@ -2,6 +2,7 @@ package com.management.dao;
 
 import com.management.model.entity.ReviewExpert;
 import com.management.model.entity.ReviewExpertExample;
+import com.management.model.entity.ReviewExpertKey;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,7 +11,7 @@ public interface ReviewExpertMapper {
 
     int deleteByExample(ReviewExpertExample example);
 
-    int deleteByPrimaryKey(Integer reviewExpertId);
+    int deleteByPrimaryKey(ReviewExpertKey key);
 
     int insert(ReviewExpert record);
 
@@ -18,9 +19,7 @@ public interface ReviewExpertMapper {
 
     List<ReviewExpert> selectByExample(ReviewExpertExample example);
 
-    ReviewExpert selectByPrimaryKey(Integer reviewExpertId);
-
-    ReviewExpert selectByProjectApplicationId(Integer projectApplicationId);
+    ReviewExpert selectByPrimaryKey(ReviewExpertKey key);
 
     int updateByExampleSelective(@Param("record") ReviewExpert record, @Param("example") ReviewExpertExample example);
 

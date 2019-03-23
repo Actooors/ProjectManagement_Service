@@ -58,8 +58,9 @@ public class LeaderServiceImpl implements LeaderService {
      */
     @Override
     public Result isProjectCategoryPassed(IsProjectCategoryPassedPostInfo info) {
-        Integer projectCategoryId = info.getProjectCategoryId();
-        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectCategoryId);
+        String projectCategoryId = info.getProjectCategoryId();
+        ProjectCategory projectCategory = projectCategoryMapper
+                .selectByPrimaryKey(projectCategoryId);
         if (projectCategory == null) {
             return ResultTool.error("不存在这个id的项目大类");
         }
@@ -119,8 +120,10 @@ public class LeaderServiceImpl implements LeaderService {
         List<WaitJudgeProjectCategoryInfo> resList = new LinkedList<>();
         for (ProjectCategory projectCategory : list) {
             WaitJudgeProjectCategoryInfo res = new WaitJudgeProjectCategoryInfo();
+            UserBaseInfo userBaseInfo = userMapper
+                    .selectUserInfoByUserId(projectCategory.getPrincipalId());
             res.setAdminId(projectCategory.getPrincipalId());
-            res.setAdminName(projectCategory.getPrincipalName());
+            res.setAdminName(userBaseInfo.getUserName());
             res.setProjectCategoryId(projectCategory.getProjectCategoryId());
             res.setProjectCategoryName(projectCategory.getProjectCategoryName());
             res.setType(projectCategory.getProjectType());
@@ -192,28 +195,11 @@ public class LeaderServiceImpl implements LeaderService {
     @Override
     public Result judgeProjectApplication(LeaderJudgeInfo leaderJudgeInfo) {
         try {
-            ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(leaderJudgeInfo.getProjectApplicationId());
+            ProjectApplication projectApplication = projectApplicationMapper
+                    .selectByPrimaryKey(leaderJudgeInfo.getProjectApplicationId());
             if (leaderJudgeInfo.getJudge()) {
                 //领导审核通过后进入待提交任务书
                 projectApplication.setReviewPhase(PROJECT_INDEX_STATE);
-
-                //加入1任务书阶段后,在业务员审核通过任务书阶段才进行在立项表中添加记录
-               /* ProjectProgress projectProgress = new ProjectProgress();
-                projectProgress.setProjectProgressId(projectApplication.getProjectApplicationId());
-                projectProgress.setIsFinishedConcludingReport(2);
-                projectProgress.setIsFinishedInterimReport(2);
-                projectProgress.setProjectProcess(1);
-                projectProgress.setProjectCategoryId(projectApplication.getProjectCategoryId());
-                projectProgress.setUserId(projectApplication.getUserId());
-                projectProgress.setProjectName(projectApplication.getProjectName());
-                projectProgress.setDescription(projectApplication.getProjectDescription());
-                projectProgress.setUserName(projectApplication.getUserName());
-                projectProgress.setDepartment(projectApplication.getDepartment());
-                try {
-                    projectProgressMapper.insert(projectProgress);
-                } catch (Exception e) {
-                    return ResultTool.error("审核通过后创建项目的projectprogress失败，理由为" + e.toString());
-                }*/
             } else {
                 projectApplication.setReviewPhase(FAIL_CHACK_PROJECT);
                 projectApplication.setFailureReason(leaderJudgeInfo.getMsg());
@@ -227,7 +213,8 @@ public class LeaderServiceImpl implements LeaderService {
 
     @Override
     public Result judgeFinalReport(LeaderJudgeInfo info) {
-        ProjectProgress projectProgress = projectProgressMapper.selectByPrimaryKey(info.getProjectApplicationId());
+        ProjectProgress projectProgress = projectProgressMapper
+                .selectByPrimaryKey(info.getProjectApplicationId());
         if (info.getJudge()) {
             projectProgress.setProjectProcess(FINISH_PROJECT);
         } else {
@@ -241,37 +228,16 @@ public class LeaderServiceImpl implements LeaderService {
 
     @Override
     public Result findWaitFinalJudgeList(String leaderId) {
-        ProjectCategoryExample example = new ProjectCategoryExample();
-        example.createCriteria()
-                .andReviewLeaderIdEqualTo(leaderId);
-        List<ProjectCategory> categoryList = projectCategoryMapper.selectByExample(example);
-        if (categoryList.isEmpty()) {
+
+
+        List<FinalReportInfo> resList = userMapper
+                .selectFinalProgressByLeaderId(leaderId);
+        if (resList.isEmpty()) {
             return ResultTool.success("没有待终审项目");
         }
-        List<FinalReportInfo> resList = new LinkedList<>();
-        for (ProjectCategory projectCategory : categoryList) {
-            ProjectProgressExample example1 = new ProjectProgressExample();
-            example1.createCriteria()
-                    .andProjectCategoryIdEqualTo(projectCategory.getProjectCategoryId())
-                    .andProjectProcessEqualTo(FINAL_PROGRESS);
-            List<ProjectProgress> progressList = projectProgressMapper.selectByExample(example1);
-            if (progressList.isEmpty()) continue;
-            for (ProjectProgress progress : progressList) {
-                FinalReportInfo info = new FinalReportInfo();
-                info.setDepartment(progress.getDepartment());
-                info.setDescription(progress.getDescription());
-                info.setProjectId(progress.getProjectProgressId());
-                info.setProjectCategoryId(progress.getProjectCategoryId());
-                info.setProjectCategoryName(progress.getProjectName());
-                info.setProjectName(progress.getProjectName());
-                info.setProjectApplicationDownloadAddress(projectApplicationMapper.selectByPrimaryKey(progress.getProjectProgressId()).getProjectApplicationUploadAddress());
-                info.setConcludingReportEndTime(timetoString(projectCategory.getConcludingReportEndTime()));
-                //info.setReportAddress(progress.getConcludingReportUploadAddress());
-                info.setExpertOpinion(adminService.getExpertOpinionList(progress.getProjectProgressId()));
-                info.setUserId(progress.getUserId());
-                info.setUserName(progress.getUserName());
-                resList.add(info);
-            }
+        for(FinalReportInfo reportInfo: resList){
+            reportInfo.setConcludingReportEndTime(timetoString(reportInfo.getEndTime()));
+            reportInfo.setExpertOpinion(adminService.getExpertOpinionList(reportInfo.getProjectProgressId()));
         }
         return ResultTool.success(resList);
     }
@@ -305,7 +271,9 @@ public class LeaderServiceImpl implements LeaderService {
                     .selectByPrimaryKey(application.getProjectCategoryId());
             info.setProjectCategory(projectCategory.getProjectCategoryName());
             info.setProjectCategoryId(projectCategory.getProjectCategoryId());
-            info.setAdminName(projectCategory.getPrincipalName());
+            UserBaseInfo userBaseInfo = userMapper
+                    .selectUserInfoByUserId(projectCategory.getPrincipalId());
+            info.setAdminName(userBaseInfo.getUserName());
             //处理已经立项的项目
             if(application.getReviewPhase().equals(5)){
                 info.setReviewPhase(ConstCorrespond

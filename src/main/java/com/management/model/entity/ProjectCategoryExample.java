@@ -115,52 +115,62 @@ public class ProjectCategoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdEqualTo(Integer value) {
+        public Criteria andProjectCategoryIdEqualTo(String value) {
             addCriterion("project_category_id =", value, "projectCategoryId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdNotEqualTo(Integer value) {
+        public Criteria andProjectCategoryIdNotEqualTo(String value) {
             addCriterion("project_category_id <>", value, "projectCategoryId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdGreaterThan(Integer value) {
+        public Criteria andProjectCategoryIdGreaterThan(String value) {
             addCriterion("project_category_id >", value, "projectCategoryId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andProjectCategoryIdGreaterThanOrEqualTo(String value) {
             addCriterion("project_category_id >=", value, "projectCategoryId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdLessThan(Integer value) {
+        public Criteria andProjectCategoryIdLessThan(String value) {
             addCriterion("project_category_id <", value, "projectCategoryId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdLessThanOrEqualTo(Integer value) {
+        public Criteria andProjectCategoryIdLessThanOrEqualTo(String value) {
             addCriterion("project_category_id <=", value, "projectCategoryId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdIn(List<Integer> values) {
+        public Criteria andProjectCategoryIdLike(String value) {
+            addCriterion("project_category_id like", value, "projectCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryIdNotLike(String value) {
+            addCriterion("project_category_id not like", value, "projectCategoryId");
+            return (Criteria) this;
+        }
+
+        public Criteria andProjectCategoryIdIn(List<String> values) {
             addCriterion("project_category_id in", values, "projectCategoryId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdNotIn(List<Integer> values) {
+        public Criteria andProjectCategoryIdNotIn(List<String> values) {
             addCriterion("project_category_id not in", values, "projectCategoryId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdBetween(Integer value1, Integer value2) {
+        public Criteria andProjectCategoryIdBetween(String value1, String value2) {
             addCriterion("project_category_id between", value1, value2, "projectCategoryId");
             return (Criteria) this;
         }
 
-        public Criteria andProjectCategoryIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andProjectCategoryIdNotBetween(String value1, String value2) {
             addCriterion("project_category_id not between", value1, value2, "projectCategoryId");
             return (Criteria) this;
         }
@@ -505,76 +515,6 @@ public class ProjectCategoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andPrincipalNameIsNull() {
-            addCriterion("principal_name is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameIsNotNull() {
-            addCriterion("principal_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameEqualTo(String value) {
-            addCriterion("principal_name =", value, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameNotEqualTo(String value) {
-            addCriterion("principal_name <>", value, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameGreaterThan(String value) {
-            addCriterion("principal_name >", value, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameGreaterThanOrEqualTo(String value) {
-            addCriterion("principal_name >=", value, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameLessThan(String value) {
-            addCriterion("principal_name <", value, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameLessThanOrEqualTo(String value) {
-            addCriterion("principal_name <=", value, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameLike(String value) {
-            addCriterion("principal_name like", value, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameNotLike(String value) {
-            addCriterion("principal_name not like", value, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameIn(List<String> values) {
-            addCriterion("principal_name in", values, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameNotIn(List<String> values) {
-            addCriterion("principal_name not in", values, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameBetween(String value1, String value2) {
-            addCriterion("principal_name between", value1, value2, "principalName");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrincipalNameNotBetween(String value1, String value2) {
-            addCriterion("principal_name not between", value1, value2, "principalName");
-            return (Criteria) this;
-        }
-
         public Criteria andPrincipalPhoneIsNull() {
             addCriterion("principal_phone is null");
             return (Criteria) this;
@@ -852,76 +792,6 @@ public class ProjectCategoryExample {
 
         public Criteria andReviewLeaderIdNotBetween(String value1, String value2) {
             addCriterion("review_leader_id not between", value1, value2, "reviewLeaderId");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameIsNull() {
-            addCriterion("review_leader_name is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameIsNotNull() {
-            addCriterion("review_leader_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameEqualTo(String value) {
-            addCriterion("review_leader_name =", value, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameNotEqualTo(String value) {
-            addCriterion("review_leader_name <>", value, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameGreaterThan(String value) {
-            addCriterion("review_leader_name >", value, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameGreaterThanOrEqualTo(String value) {
-            addCriterion("review_leader_name >=", value, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameLessThan(String value) {
-            addCriterion("review_leader_name <", value, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameLessThanOrEqualTo(String value) {
-            addCriterion("review_leader_name <=", value, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameLike(String value) {
-            addCriterion("review_leader_name like", value, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameNotLike(String value) {
-            addCriterion("review_leader_name not like", value, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameIn(List<String> values) {
-            addCriterion("review_leader_name in", values, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameNotIn(List<String> values) {
-            addCriterion("review_leader_name not in", values, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameBetween(String value1, String value2) {
-            addCriterion("review_leader_name between", value1, value2, "reviewLeaderName");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewLeaderNameNotBetween(String value1, String value2) {
-            addCriterion("review_leader_name not between", value1, value2, "reviewLeaderName");
             return (Criteria) this;
         }
 
@@ -1985,143 +1855,63 @@ public class ProjectCategoryExample {
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdIsNull() {
-            addCriterion("review_expert_id is null");
+        public Criteria andModifyFrequencyIsNull() {
+            addCriterion("modify_frequency is null");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdIsNotNull() {
-            addCriterion("review_expert_id is not null");
+        public Criteria andModifyFrequencyIsNotNull() {
+            addCriterion("modify_frequency is not null");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdEqualTo(String value) {
-            addCriterion("review_expert_id =", value, "reviewExpertId");
+        public Criteria andModifyFrequencyEqualTo(Integer value) {
+            addCriterion("modify_frequency =", value, "modifyFrequency");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdNotEqualTo(String value) {
-            addCriterion("review_expert_id <>", value, "reviewExpertId");
+        public Criteria andModifyFrequencyNotEqualTo(Integer value) {
+            addCriterion("modify_frequency <>", value, "modifyFrequency");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdGreaterThan(String value) {
-            addCriterion("review_expert_id >", value, "reviewExpertId");
+        public Criteria andModifyFrequencyGreaterThan(Integer value) {
+            addCriterion("modify_frequency >", value, "modifyFrequency");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdGreaterThanOrEqualTo(String value) {
-            addCriterion("review_expert_id >=", value, "reviewExpertId");
+        public Criteria andModifyFrequencyGreaterThanOrEqualTo(Integer value) {
+            addCriterion("modify_frequency >=", value, "modifyFrequency");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdLessThan(String value) {
-            addCriterion("review_expert_id <", value, "reviewExpertId");
+        public Criteria andModifyFrequencyLessThan(Integer value) {
+            addCriterion("modify_frequency <", value, "modifyFrequency");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdLessThanOrEqualTo(String value) {
-            addCriterion("review_expert_id <=", value, "reviewExpertId");
+        public Criteria andModifyFrequencyLessThanOrEqualTo(Integer value) {
+            addCriterion("modify_frequency <=", value, "modifyFrequency");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdLike(String value) {
-            addCriterion("review_expert_id like", value, "reviewExpertId");
+        public Criteria andModifyFrequencyIn(List<Integer> values) {
+            addCriterion("modify_frequency in", values, "modifyFrequency");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdNotLike(String value) {
-            addCriterion("review_expert_id not like", value, "reviewExpertId");
+        public Criteria andModifyFrequencyNotIn(List<Integer> values) {
+            addCriterion("modify_frequency not in", values, "modifyFrequency");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdIn(List<String> values) {
-            addCriterion("review_expert_id in", values, "reviewExpertId");
+        public Criteria andModifyFrequencyBetween(Integer value1, Integer value2) {
+            addCriterion("modify_frequency between", value1, value2, "modifyFrequency");
             return (Criteria) this;
         }
 
-        public Criteria andReviewExpertIdNotIn(List<String> values) {
-            addCriterion("review_expert_id not in", values, "reviewExpertId");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewExpertIdBetween(String value1, String value2) {
-            addCriterion("review_expert_id between", value1, value2, "reviewExpertId");
-            return (Criteria) this;
-        }
-
-        public Criteria andReviewExpertIdNotBetween(String value1, String value2) {
-            addCriterion("review_expert_id not between", value1, value2, "reviewExpertId");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListIsNull() {
-            addCriterion("expert_list is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListIsNotNull() {
-            addCriterion("expert_list is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListEqualTo(String value) {
-            addCriterion("expert_list =", value, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListNotEqualTo(String value) {
-            addCriterion("expert_list <>", value, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListGreaterThan(String value) {
-            addCriterion("expert_list >", value, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListGreaterThanOrEqualTo(String value) {
-            addCriterion("expert_list >=", value, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListLessThan(String value) {
-            addCriterion("expert_list <", value, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListLessThanOrEqualTo(String value) {
-            addCriterion("expert_list <=", value, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListLike(String value) {
-            addCriterion("expert_list like", value, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListNotLike(String value) {
-            addCriterion("expert_list not like", value, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListIn(List<String> values) {
-            addCriterion("expert_list in", values, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListNotIn(List<String> values) {
-            addCriterion("expert_list not in", values, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListBetween(String value1, String value2) {
-            addCriterion("expert_list between", value1, value2, "expertList");
-            return (Criteria) this;
-        }
-
-        public Criteria andExpertListNotBetween(String value1, String value2) {
-            addCriterion("expert_list not between", value1, value2, "expertList");
+        public Criteria andModifyFrequencyNotBetween(Integer value1, Integer value2) {
+            addCriterion("modify_frequency not between", value1, value2, "modifyFrequency");
             return (Criteria) this;
         }
     }

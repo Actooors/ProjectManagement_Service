@@ -11,6 +11,6 @@ import lombok.Data;
  */
 @Data
 public class DeleteApplication {
-    private Integer applicationId;
+    private String applicationId;//new
     private String applicationName;
 }

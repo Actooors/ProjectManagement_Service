@@ -3,37 +3,25 @@ package com.management.model.entity;
 import java.util.Date;
 
 public class ProjectApplication {
-    private Integer projectApplicationId;
+    private String projectApplicationId;
 
-    private Integer projectCategoryId;
+    private String projectCategoryId;
 
     private String projectName;
-
-    private String projectMember;
 
     private String projectDescription;
 
     private String projectIndex;
 
-    private Boolean projectIndexState;
+    private Integer projectIndexState;
 
     private Integer projectMoney;
 
     private String userId;
 
-    private String userName;
+    private String reviewPrincipalId;
 
-    private String sex;
-
-    private String department;
-
-    private String phone;
-
-    private String mail;
-
-    private String position;
-
-    private String major;
+    private String reviewLeaderId;
 
     private String projectApplicationUploadAddress;
 
@@ -47,28 +35,20 @@ public class ProjectApplication {
 
     private Date applicationTime;
 
-    private Date applicationDeadline;
-
-    private Date middleDeadline;
-
-    private Date finalDeadline;
-
-    private Date projectDeadline;
-
-    public Integer getProjectApplicationId() {
+    public String getProjectApplicationId() {
         return projectApplicationId;
     }
 
-    public void setProjectApplicationId(Integer projectApplicationId) {
-        this.projectApplicationId = projectApplicationId;
+    public void setProjectApplicationId(String projectApplicationId) {
+        this.projectApplicationId = projectApplicationId == null ? null : projectApplicationId.trim();
     }
 
-    public Integer getProjectCategoryId() {
+    public String getProjectCategoryId() {
         return projectCategoryId;
     }
 
-    public void setProjectCategoryId(Integer projectCategoryId) {
-        this.projectCategoryId = projectCategoryId;
+    public void setProjectCategoryId(String projectCategoryId) {
+        this.projectCategoryId = projectCategoryId == null ? null : projectCategoryId.trim();
     }
 
     public String getProjectName() {
@@ -77,14 +57,6 @@ public class ProjectApplication {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName == null ? null : projectName.trim();
-    }
-
-    public String getProjectMember() {
-        return projectMember;
-    }
-
-    public void setProjectMember(String projectMember) {
-        this.projectMember = projectMember == null ? null : projectMember.trim();
     }
 
     public String getProjectDescription() {
@@ -103,11 +75,11 @@ public class ProjectApplication {
         this.projectIndex = projectIndex == null ? null : projectIndex.trim();
     }
 
-    public Boolean getProjectIndexState() {
+    public Integer getProjectIndexState() {
         return projectIndexState;
     }
 
-    public void setProjectIndexState(Boolean projectIndexState) {
+    public void setProjectIndexState(Integer projectIndexState) {
         this.projectIndexState = projectIndexState;
     }
 
@@ -127,60 +99,20 @@ public class ProjectApplication {
         this.userId = userId == null ? null : userId.trim();
     }
 
-    public String getUserName() {
-        return userName;
+    public String getReviewPrincipalId() {
+        return reviewPrincipalId;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setReviewPrincipalId(String reviewPrincipalId) {
+        this.reviewPrincipalId = reviewPrincipalId == null ? null : reviewPrincipalId.trim();
     }
 
-    public String getSex() {
-        return sex;
+    public String getReviewLeaderId() {
+        return reviewLeaderId;
     }
 
-    public void setSex(String sex) {
-        this.sex = sex == null ? null : sex.trim();
-    }
-
-    public String getDepartment() {
-        return department;
-    }
-
-    public void setDepartment(String department) {
-        this.department = department == null ? null : department.trim();
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone == null ? null : phone.trim();
-    }
-
-    public String getMail() {
-        return mail;
-    }
-
-    public void setMail(String mail) {
-        this.mail = mail == null ? null : mail.trim();
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position == null ? null : position.trim();
-    }
-
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major == null ? null : major.trim();
+    public void setReviewLeaderId(String reviewLeaderId) {
+        this.reviewLeaderId = reviewLeaderId == null ? null : reviewLeaderId.trim();
     }
 
     public String getProjectApplicationUploadAddress() {
@@ -229,37 +161,5 @@ public class ProjectApplication {
 
     public void setApplicationTime(Date applicationTime) {
         this.applicationTime = applicationTime;
-    }
-
-    public Date getApplicationDeadline() {
-        return applicationDeadline;
-    }
-
-    public void setApplicationDeadline(Date applicationDeadline) {
-        this.applicationDeadline = applicationDeadline;
-    }
-
-    public Date getMiddleDeadline() {
-        return middleDeadline;
-    }
-
-    public void setMiddleDeadline(Date middleDeadline) {
-        this.middleDeadline = middleDeadline;
-    }
-
-    public Date getFinalDeadline() {
-        return finalDeadline;
-    }
-
-    public void setFinalDeadline(Date finalDeadline) {
-        this.finalDeadline = finalDeadline;
-    }
-
-    public Date getProjectDeadline() {
-        return projectDeadline;
-    }
-
-    public void setProjectDeadline(Date projectDeadline) {
-        this.projectDeadline = projectDeadline;
     }
 }

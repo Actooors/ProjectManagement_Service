@@ -27,32 +27,10 @@ public class UserController {
     @ApiParam("和用户相关的业务操作")
     private UserService userService;
 
-    @GetMapping("/time/{projectIdCategoryId}/{type}")
-    @ApiOperation(value = "检查是否超过截止时间", notes = "根据项目大类id和时间种类来判断是判断哪个时间")
-    public Result isTimeOut(@PathVariable(value = "projectIdCategoryId") int prId,
-                            @PathVariable(value = "type") int type) {
-
-        return userService.isTimeOut(prId, type);
-    }
-
-    @GetMapping("/projectCategoryList/{projectIdCategoryType}")
-    @ApiOperation(value = "查找指定类别的项目大类", notes = "根据类别type查找项目大类")
-    public Result isTimeOut(@PathVariable(value = "projectIdCategoryType") int prType) {
-
-        return userService.findAllProjectCategory(prType);
-    }
-
-
-    @GetMapping("projectCategory/{id}")
-    @ApiOperation(value = "返回某个项目大类的具体信息", notes = "根据项目大类id查找项目大类")
-    public Result findProjectCategoryInfo(@PathVariable(value = "id") int prId) {
-
-        return userService.findProjectCategoryInfo(prId);
-    }
 
     @GetMapping("/projectCategory/{projectCategoryId}/{type}")
     @ApiOperation(value = "查找某个项目大类列表的所有待审项目", notes = "根据项目大类id查找所有审核阶段为type的项目")
-    public Result findUnJudgeProjectCategory(@PathVariable(value = "projectCategoryId") int prCId,
+    public Result findUnJudgeProjectCategory(@PathVariable(value = "projectCategoryId") String prCId,
                                              @PathVariable(value = "type") int type) {
 
         return userService.waitJudgeProjectList(prCId, type);
@@ -123,7 +101,7 @@ public class UserController {
 
     @GetMapping("/projectMoreInfo")
     @ApiOperation(value = "查看用户一个项目的详细信息")
-    public Result findProjectMoreInfo(@RequestParam(value = "applicationId") int applicationId) {
+    public Result findProjectMoreInfo(@RequestParam(value = "applicationId") String applicationId) {
 
         return userService.findMoreInfo(applicationId);
     }

@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class ProjectIndex {
-    private Integer projectApplicationId;
+    private String projectApplicationId;//new
     private String projectIndex;
     private Integer projectMoney;
 }

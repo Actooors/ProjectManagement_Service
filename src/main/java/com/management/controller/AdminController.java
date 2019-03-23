@@ -83,7 +83,7 @@ public class AdminController {
 
     @GetMapping("/category/{id}")
     @ApiOperation(value = "根据id查找某一个项目大类的具体信息")
-    public Result queryOneProjectCategoryInfo(@PathVariable("id") Integer projectCategoryId) {
+    public Result queryOneProjectCategoryInfo(@PathVariable("id") String projectCategoryId) {
 
         return adminService.queryOneProjectCategory(projectCategoryId);
     }
@@ -122,7 +122,7 @@ public class AdminController {
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @GetMapping("/project/{projectId}")
     @ApiOperation(value = "查找某个项目的全部审核专家的审核意见", notes = "根据项目id查找所有的审核专家的审核意见")
-    public Result findProjectCategoryInfo(@PathVariable(value = "projectId") int prId) {
+    public Result findProjectCategoryInfo(@PathVariable(value = "projectId") String prId) {
 
         return adminService.expertOpinionList(prId);
     }

@@ -12,10 +12,10 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ProjectTotalInfo {
-    private Integer projectApplicationId;
+    private String projectApplicationId;//new
     private String projectName;
     private String projectCategory;
-    private Integer projectCategoryId;
+    private String projectCategoryId;
     private String type;
     private String time;
     private String reviewPhase;

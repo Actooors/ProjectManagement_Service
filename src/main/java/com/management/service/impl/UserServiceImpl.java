@@ -87,6 +87,7 @@ public class UserServiceImpl implements UserService {
             return ResultTool.error("账号或密码不能为空");
         }
         User existedUser = userMapper.selectByPrimaryKey(loginUser.getUserId());
+
         //如果该账户在数据库已经存在
         if (existedUser != null) {
             //如果该账户的账号密码验证正确并且可以登录

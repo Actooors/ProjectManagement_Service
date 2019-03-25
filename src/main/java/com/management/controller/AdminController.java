@@ -34,10 +34,6 @@ public class AdminController {
     @ApiParam("和专家相关的业务操作")
     private AdminService adminService;
 
-    @Resource
-    @ApiParam("用户通用的业务")
-    private UserService userService;
-
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @GetMapping("/allProjectCategory")
     @ApiOperation(value = "查一个业务员负责的所有的项目大类", notes = "根据业务员工号查找他负责的所有的项目大类")

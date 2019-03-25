@@ -101,7 +101,7 @@
     from tbl_ProjectProgress
     where project_progress_id = #{projectProgressId,jdbcType=VARCHAR}
   </select>
-  <select id="selectFailProgress" resultMap="BasResultMap">
+  <select id="selectFailProgress" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from tbl_ProjectProgress
     where user_id=#{userId,jdbcType=VARCHAR}

@@ -36,9 +36,6 @@ import java.net.ResponseCache;
 @Api(value = "登录controller")
 @Slf4j
 public class LoginController {
-//    @Resource
-//    @ApiParam("和用户相关的业务操作")
-//    private UserService userService;
 
     @Resource
     private UserService userService;

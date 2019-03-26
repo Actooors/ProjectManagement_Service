@@ -101,7 +101,7 @@
     is_able_login, leader_id
   </sql>
   <sql id="User_Info_List">
-    ser_name, sex, department, phone, mail, position, major
+    user_name, sex, department, phone, mail, position, major
   </sql>
   <sql id="Final_Progress_List">
     project_category_id,project_category_name,
@@ -131,8 +131,9 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </select>
   <select id="selectUserInfoByUserId" resultMap="UserInfoMap" parameterType="java.lang.String">
-    select  <include refid="User_Info_List"/>
-    from tbl_ProjectMember
+    select
+    <include refid="User_Info_List"/>
+    from tbl_User
     where user_id = #{userId,jdbcType=VARCHAR}
   </select>
   <select id="selectFinalProgressByLeaderId" resultMap="FinalProgressInfo" parameterType="java.lang.String">

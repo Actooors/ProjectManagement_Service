@@ -203,12 +203,10 @@ public class UserServiceImpl implements UserService {
         //根据排序好的结果，先遍历的创建包含这些type的内容，
         // 然后去遍历projectCategoryList内容找到符合当前条件的加进去
         List<AviProjectCategoryInfo> resList = new LinkedList<>();
-        for (int i = maxType, count = 0, len = projectCategoryList.size(); i >= 1; i--) {
-            for (; count < len; count++) {
-                if (projectCategoryList.get(count).getProjectType() == i) {
+        for (int i = maxType, count = 0; i >= 1; i--) {
                     AviProjectCategoryInfo info = new AviProjectCategoryInfo();
                     ProjectCategory p = projectCategoryList.get(count);
-                    info.setType(ConstCorrespond.PROJECT_TYPE[i]);
+                    info.setType(ConstCorrespond.PROJECT_TYPE[p.getProjectType()]);
                     info.setDeadLine(timeToString1(p.getApplicationEndTime()));
                     info.setIntroduce(p.getProjectCategoryDescription());
                     info.setProjectId(p.getProjectCategoryId());
@@ -217,11 +215,8 @@ public class UserServiceImpl implements UserService {
                     info.setDownLoadAddress(ConstCorrespond.downloadAddress +
                             p.getProjectApplicationDownloadAddress());
                     info.setProjectMaxMoney(p.getMaxMoney());
+                    count++;
                     resList.add(info);
-                } else {
-                    break;
-                }
-            }
         }
         return ResultTool.success(resList);
     }
@@ -293,6 +288,9 @@ public class UserServiceImpl implements UserService {
         res.setProjectApplicationUploadAddress(projectApplicationInfo.getUploadAddress());
         res.setReviewPhase(1);
         res.setProjectMoney(projectApplicationInfo.getProjectMoney());
+        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectApplicationInfo.getProjectCategoryId());
+        res.setReviewPrincipalId(projectCategory.getPrincipalId());
+        res.setReviewLeaderId(projectCategory.getReviewLeaderId());
         //1上会2不上
         res.setIsMeeting(projectApplicationInfo.getIsMeeting() ? 1 : 2);
         try {

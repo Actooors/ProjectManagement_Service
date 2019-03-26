@@ -80,6 +80,7 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
             projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
             projectCategory.setPrincipalId(adminUser.getUserId());
+            projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
             projectCategory.setProjectType(projectCategoryInfo.getProjectType());
             StringBuilder applicantType = new StringBuilder();
             List<Integer> applicantList = projectCategoryInfo.getApplicantType();
@@ -744,7 +745,6 @@ public class AdminServiceImpl implements AdminService {
             projectApplication.setReviewPhase(FINISH_APPLICATION);
             projectApplication.setProjectIndexState(1);
             ProjectProgress projectProgress = new ProjectProgress();
-
             projectProgress.setProjectProgressId(projectApplication.getProjectApplicationId());
             projectProgress.setIsFinishedConcludingReport(2);
             projectProgress.setIsFinishedInterimReport(2);

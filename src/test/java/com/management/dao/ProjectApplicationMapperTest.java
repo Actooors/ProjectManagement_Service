@@ -15,9 +15,11 @@ import static org.junit.Assert.*;
 public class ProjectApplicationMapperTest {
     @Resource
     private ProjectApplicationMapper projectApplicationMapper;
+    @Resource
+    private UserMapper userMapper;
 
     @Test
     public void queryAdminProjectApplication() {
-        System.out.print(MD5Tool.getMD5("123456"));
+        System.out.print(userMapper.selectUserInfoByUserId("user1"));
     }
 }

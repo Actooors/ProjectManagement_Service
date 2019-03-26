@@ -1,5 +1,6 @@
 create table tbl_User (
   user_id varchar(8) comment '用户工号',
+  password varchar (256),
   user_name varchar(8) comment '用户姓名',
   sex varchar(2) comment '性别',
   department varchar(32) comment '部门(学院)',
@@ -48,7 +49,9 @@ create table tbl_ProjectCategory (
   statistics int not null default 0 comment '此类别的项目完结成功的项目总数 默认为0',
   is_approved int comment '项目是否通过审核
                           1通过 2未通过',
-  failure_reason varchar(256) comment '申请失败的时候的失败原因'
+  failure_reason varchar(256) comment '申请失败的时候的失败原因',
+  modify_frequency int(11)
+
 ) comment '业务员开通项目大类表'
   charset = utf8;
 
@@ -95,7 +98,6 @@ create table tbl_ProjectMember (
 
 create table tbl_ProjectProgress (
   project_progress_id varchar(64) primary key comment '标识id',
-  project_application_id varchar(64) not null  comment '对应的项目id',
   project_category_id varchar(64) comment '对应的项目大类Id',
   user_id varchar(64) comment '申请人Id',
   interim_report_upload_address varchar(128) comment '上传中期报告文档的地址',
@@ -110,7 +112,8 @@ create table tbl_ProjectProgress (
   concluding_report_failure_reason varchar(256) comment '结题报告审核失败的原因',
   project_process int default 1 not null comment '项目的整体进度
                             1立项 2中期报告审核阶段 3中期报告通过
-                            4结题报告审核阶段 5项目完成'
+                            4结题报告审核阶段 5项目完成',
+  projectCreateTime timestamp default current_timestamp
 ) comment '项目进度表'
   charset = utf8;
 

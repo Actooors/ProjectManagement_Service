@@ -29,10 +29,6 @@ public class LeaderController {
     @ApiParam("和领导相关的业务操作")
     private LeaderService leaderService;
 
-    @Resource
-    private UserService userService;
-
-
     @PostMapping("/judgeProjectCategory")
     @ApiOperation(value = "领导层一个项目大类的创建", notes = "根据给予的判断信息和理由更新数据库中的项目大类的情况")
     public Result findProjectCategoryInfo(@RequestBody IsProjectCategoryPassedPostInfo info) {
@@ -95,8 +91,5 @@ public class LeaderController {
         String leaderId = UserContext.getCurrentUser().getUserId();
         return leaderService.leaderDataStatistics(leaderId);
     }
-
-
-
 
 }

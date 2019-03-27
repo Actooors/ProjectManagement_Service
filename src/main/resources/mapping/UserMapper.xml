@@ -370,4 +370,44 @@
       leader_id = #{leaderId,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
+
+  <select id="countJudgePassProject" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*)
+    from tbl_ProjectApplication as a,tbl_ProjectProgress as b
+    where review_leader_id = #{leaderId,jdbcType=VARCHAR}
+          and a.project_application_id = b.project_progress_id
+          and (review_phase = 5 or project_process = 4)
+  </select>
+
+  <select id="countJudgeFailProject" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*)
+    from tbl_ProjectApplication as a,tbl_ProjectProgress as b
+    where review_leader_id = #{leaderId,jdbcType=VARCHAR}
+          and a.project_application_id = b.project_progress_id
+          and (review_phase = 6 or project_process = 5)
+  </select>
+
+  <select id="countOneJudgeProject" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*)
+    from tbl_ProjectApplication
+    where review_leader_id = #{leaderId,jdbcType=VARCHAR}
+          and review_phase = 4
+  </select>
+
+  <select id="countFinalJudgeProject" resultType="java.lang.Integer" parameterType="java.lang.String">
+    select count(*)
+    from tbl_ProjectCategory as a,tbl_ProjectProgress as b
+    where a.review_leader_id = #{leaderId,jdbcType=VARCHAR}
+          and a.project_category_id = b.project_category_id
+          and b.project_process = 4
+  </select>
+
+  <select id="countByProjectType" resultType="java.lang.Integer">
+    select count(*)
+    from tbl_ProjectCategory as a,tbl_ProjectApplication as b
+    where a.project_category_id = b.project_category_id
+          and a.review_leader_id = #{leaderId,jdbcType=VARCHAR}
+          and a.project_type = #{type,jdbcType=INTEGER}
+  </select>
+
 </mapper>

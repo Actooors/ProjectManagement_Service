@@ -73,7 +73,8 @@ create table tbl_ProjectApplication
   meeting_review_message varchar(256) null comment '会评意见',
   review_phase int default 1  not null comment '项目申请审核阶段
                             1业务员审核阶段 2评审专家审核阶段 3会评阶段
-                            4领导审核阶段 5审核通过 6审核失败',
+                            4领导审核阶段 5审核通过 6审核失败  7待提交任务书阶段
+                            8任务书审核阶段',
   failure_reason varchar(256) null comment '申请失败的时候的失败原因',
   application_time timestamp default CURRENT_TIMESTAMP not null comment '申请递交时间'
 )
@@ -111,8 +112,7 @@ create table tbl_ProjectProgress (
                                     1 完成 2未完成 3审核中 4审核未通过',
   concluding_report_failure_reason varchar(256) comment '结题报告审核失败的原因',
   project_process int default 1 not null comment '项目的整体进度
-                            1立项 2中期报告审核阶段 3中期报告通过
-                            4结题报告审核阶段 5项目完成',
+                            1立项 2中期报告审核阶段 3结题报告审核阶段 4项目结项 5结题报告审核失败',
   projectCreateTime timestamp default current_timestamp
 ) comment '项目进度表'
   charset = utf8;

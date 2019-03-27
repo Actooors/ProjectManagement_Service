@@ -37,4 +37,19 @@ public interface UserMapper {
     //查找所有待领导终审的项目
     List<FinalReportInfo> selectFinalProgressByLeaderId(String leader);
 
+    //领导统计已通过项目数
+    Integer countJudgePassProject(String leaderId);
+
+    //领导统计未通过项目数
+    Integer countJudgeFailProject(String leaderId);
+
+    //领导统计待初审项目数
+    Integer countOneJudgeProject(String leaderId);
+
+    //领导统计待终审项目数
+    Integer countFinalJudgeProject(String leaderId);
+
+    //统计各个大类的项目数
+    Integer countByProjectType(@Param("leaderId")String leaderId,@Param("type")Integer type);
+
 }

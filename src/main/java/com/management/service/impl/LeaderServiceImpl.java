@@ -11,12 +11,11 @@ import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.*;
 import com.management.service.LeaderService;
 import com.management.tools.ResultTool;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 import static com.management.model.ov.resultsetting.ConstCorrespond.*;
 import static com.management.tools.TimeTool.timetoString;
@@ -346,6 +345,50 @@ public class LeaderServiceImpl implements LeaderService {
         res.setFinishProject(finishProject);
         res.setFailProject(failedProject);
         return ResultTool.success(res);
+    }
+
+    /**
+     * @Description: 给领导返回数据统计分析
+     * @Param:
+     * @Return:
+     * @Author: xw
+     * @Date: 19-3-27
+     */
+    public Result leaderDataStatistics(String leaderId){
+        DataStatistics dataStatistics = new DataStatistics();
+        List<projectStatistic> projectStatisticList = new ArrayList<>();
+        List<projectTypeStatistic> projectTypeStatisticList = new ArrayList<>();
+
+        projectStatistic JudgePassProject = new projectStatistic();
+        projectStatistic JudgeFailProject = new projectStatistic();
+        projectStatistic JudgeOneJudgeProject = new projectStatistic();
+        projectStatistic JudgeFinalJudgeProject = new projectStatistic();
+
+        JudgePassProject.setValue(userMapper.countJudgePassProject(leaderId));
+        JudgePassProject.setName("已通过");
+        projectStatisticList.add(JudgePassProject);
+        JudgeFailProject.setValue(userMapper.countJudgeFailProject(leaderId));
+        JudgeFailProject.setName("已驳回");
+        projectStatisticList.add(JudgeFailProject);
+        JudgeOneJudgeProject.setValue(userMapper.countOneJudgeProject(leaderId));
+        JudgeOneJudgeProject.setName("待初审");
+        projectStatisticList.add(JudgeOneJudgeProject);
+        JudgeFinalJudgeProject.setValue(userMapper.countFinalJudgeProject(leaderId));
+        JudgeFinalJudgeProject.setName("待终审");
+        projectStatisticList.add(JudgeFinalJudgeProject);
+        dataStatistics.setProjectStatistic(projectStatisticList);
+
+        Integer maxNum = ConstCorrespond.PROJECT_TYPE.length;
+        for(int i = maxNum;i>=2;i--){
+            projectTypeStatistic typeStatistic = new projectTypeStatistic();
+            typeStatistic.setType(ConstCorrespond.PROJECT_TYPE[i-1]);
+            typeStatistic.setNum(userMapper.countByProjectType(leaderId,i));
+            projectTypeStatisticList.add(typeStatistic);
+        }
+        dataStatistics.setProjectTypeList(projectTypeStatisticList);
+
+        return ResultTool.success(dataStatistics);
+
     }
 
 }

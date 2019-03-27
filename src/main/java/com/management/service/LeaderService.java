@@ -86,4 +86,13 @@ public interface LeaderService {
      * @Date: 19-1-25
      */
     Result leaderQueryMyProject(String leaderId);
+
+    /**
+     * @Description: 给领导返回数据统计分析
+     * @Param:
+     * @Return:
+     * @Author: xw
+     * @Date: 19-3-27
+     */
+    Result leaderDataStatistics(String leaderId);
 }

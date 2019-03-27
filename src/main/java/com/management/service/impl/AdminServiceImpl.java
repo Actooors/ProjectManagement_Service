@@ -249,10 +249,11 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
             projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
-//            projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
+//            List applicationTypeList = projectCategoryInfo.getApplicantType();
+//            projectCategory.setApplicantType(String.join('|',projectCategoryInfo.getApplicantType()));
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
-            if (projectCategoryInfo.getIsExistMeetingReview().equals(true)) {
+            if (projectCategoryInfo.getIsExistMeetingReview().equals(1)) {
                 projectCategory.setIsExistMeetingReview(1);
             } else {
                 projectCategory.setIsExistMeetingReview(2);

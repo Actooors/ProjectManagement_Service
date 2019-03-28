@@ -104,8 +104,8 @@
   <select id="selectFailProgress" resultMap="BaseResultMap">
     select <include refid="Base_Column_List" />
     from tbl_ProjectProgress
-    where user_id=#{userId,jdbcType=VARCHAR}
-    AND project_process=#{state,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=VARCHAR}
+    AND project_process = #{state,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tbl_ProjectProgress

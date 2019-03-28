@@ -247,7 +247,7 @@ public class AdminServiceImpl implements AdminService {
         try {
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
-            projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
+            //projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
 //            List applicationTypeList = projectCategoryInfo.getApplicantType();
 //            projectCategory.setApplicantType(String.join('|',projectCategoryInfo.getApplicantType()));

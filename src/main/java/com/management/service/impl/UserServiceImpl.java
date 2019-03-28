@@ -198,24 +198,21 @@ public class UserServiceImpl implements UserService {
         if (projectCategoryList.isEmpty()) {
             return ResultTool.success(new LinkedList<AviProjectCategoryInfo>());
         }
-        //获取到最大的项目类别
-        int maxType = projectCategoryList.get(0).getProjectType();
+
         //根据排序好的结果，先遍历的创建包含这些type的内容，
         // 然后去遍历projectCategoryList内容找到符合当前条件的加进去
         List<AviProjectCategoryInfo> resList = new LinkedList<>();
-        for (int i = maxType, count = 0; i >= 1; i--) {
+        for (ProjectCategory projectCategory : projectCategoryList) {
                     AviProjectCategoryInfo info = new AviProjectCategoryInfo();
-                    ProjectCategory p = projectCategoryList.get(count);
-                    info.setType(ConstCorrespond.PROJECT_TYPE[p.getProjectType()]);
-                    info.setDeadLine(timeToString1(p.getApplicationEndTime()));
-                    info.setIntroduce(p.getProjectCategoryDescription());
-                    info.setProjectId(p.getProjectCategoryId());
-                    info.setProjectName(p.getProjectCategoryName());
-                    info.setIsMeeting(p.getIsExistMeetingReview() == 1 ? "true":"false");
+                    info.setType(ConstCorrespond.PROJECT_TYPE[projectCategory.getProjectType()]);
+                    info.setDeadLine(timeToString1(projectCategory.getApplicationEndTime()));
+                    info.setIntroduce(projectCategory.getProjectCategoryDescription());
+                    info.setProjectId(projectCategory.getProjectCategoryId());
+                    info.setProjectName(projectCategory.getProjectCategoryName());
+                    info.setIsMeeting(projectCategory.getIsExistMeetingReview() == 1 ? "true":"false");
                     info.setDownLoadAddress(ConstCorrespond.downloadAddress +
-                            p.getProjectApplicationDownloadAddress());
-                    info.setProjectMaxMoney(p.getMaxMoney());
-                    count++;
+                            projectCategory.getProjectApplicationDownloadAddress());
+                    info.setProjectMaxMoney(projectCategory.getMaxMoney());
                     resList.add(info);
         }
         return ResultTool.success(resList);

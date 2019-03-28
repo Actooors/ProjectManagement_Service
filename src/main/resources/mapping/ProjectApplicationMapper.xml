@@ -104,6 +104,13 @@
     from tbl_ProjectApplication
     where project_application_id = #{projectApplicationId,jdbcType=VARCHAR}
   </select>
+  <select id="selectMyApplication" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_ProjectApplication as a
+    where a.user_id=#{userId,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectFailProjectApplication" resultMap="BaseResultMap" parameterType="java.lang.String">
   select * from tbl_ProjectApplication as a
   where a.review_phase=6 or a.project_index_state=false

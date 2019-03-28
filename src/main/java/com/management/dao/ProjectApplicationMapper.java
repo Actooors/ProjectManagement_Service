@@ -28,6 +28,9 @@ public interface ProjectApplicationMapper {
 
     int updateByPrimaryKey(ProjectApplication record);
 
+    //用户查找已经申请的项目
+    List<ProjectApplication> selectMyApplication(String userId);
+
     //包含任务书阶段被驳回和其他任何申请阶段被驳回的项目
     List<ProjectApplication> selectFailProjectApplication(String userId);
 

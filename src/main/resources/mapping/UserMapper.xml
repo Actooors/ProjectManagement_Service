@@ -103,12 +103,6 @@
   <sql id="User_Info_List">
     user_name, sex, department, phone, mail, position, major
   </sql>
-  <sql id="Final_Progress_List">
-    project_category_id,project_category_name,
-    project_application_id,project_name,project_description,
-    user_id,user_name,department
-    project_application_upload_address,concluding_report_end_time
-  </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.UserExample" >
     select
     <if test="distinct" >
@@ -137,7 +131,10 @@
     where user_id = #{userId,jdbcType=VARCHAR}
   </select>
   <select id="selectFinalProgressByLeaderId" resultMap="FinalProgressInfo" parameterType="java.lang.String">
-    select <include refid="Final_Progress_List"/>
+    select b.project_category_id,project_category_name,
+    project_application_id,project_name,project_description,
+    a.user_id,user_name,department,project_progress_id,
+    project_application_upload_address,concluding_report_end_time
     from tbl_User as a,tbl_ProjectApplication as b,
          tbl_ProjectProgress as c,tbl_ProjectCategory as d
     where c.project_progress_id = b.project_application_id

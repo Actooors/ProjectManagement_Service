@@ -60,7 +60,7 @@ public class AdminController {
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
-    @PostMapping("/projectCategory/2")
+    @PostMapping("/projectCategory/update")
     @ApiOperation(value = "业务员修改项目类别", notes = "根据项目号查找项目后更新内容")
     public Result updateProject(@RequestBody UpdateProjectCategoryInfo updateProjectCategoryInfo) {
 

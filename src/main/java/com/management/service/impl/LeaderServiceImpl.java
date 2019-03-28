@@ -236,7 +236,8 @@ public class LeaderServiceImpl implements LeaderService {
         }
         for(FinalReportInfo reportInfo: resList){
             reportInfo.setConcludingReportEndTime(timetoString(reportInfo.getEndTime()));
-            reportInfo.setExpertOpinion(adminService.getExpertOpinionList(reportInfo.getProjectProgressId()));
+            String id = reportInfo.getProjectProgressId();
+            reportInfo.setExpertOpinion(adminService.getExpertOpinionList(id));
         }
         return ResultTool.success(resList);
     }

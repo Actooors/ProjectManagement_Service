@@ -247,16 +247,16 @@ public class AdminServiceImpl implements AdminService {
         try {
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
-            projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
+            //projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
-//            projectCategory.setApplicantType(projectCategoryInfo.getApplicantType());
+//            List applicationTypeList = projectCategoryInfo.getApplicantType();
+//            projectCategory.setApplicantType(String.join('|',projectCategoryInfo.getApplicantType()));
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
-            if (projectCategoryInfo.getIsExistMeetingReview().equals(true)) {
+            if(projectCategoryInfo.getIsExistMeetingReview().equals(true))
                 projectCategory.setIsExistMeetingReview(1);
-            } else {
+            else
                 projectCategory.setIsExistMeetingReview(2);
-            }
             projectCategory.setApplicationStartTime(applicationStartTime);
             projectCategory.setApplicationEndTime(applicationEndTime);
             projectCategory.setProjectStartTime(projectStartTime);

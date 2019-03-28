@@ -23,7 +23,6 @@ public class ProjectCategoryInfo {
     private String maxMoney;
     private String projectApplicationDownloadAddress;
     private Boolean isExistMeetingReview;
-    private Integer isMeetingReviewNum;
     private String applicationStartTime;
     private String applicationEndTime;
     private String projectStartTime;

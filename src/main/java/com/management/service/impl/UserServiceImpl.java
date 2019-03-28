@@ -319,11 +319,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result findMyApplication(String userId) {
-        ProjectApplicationExample example = new ProjectApplicationExample();
-        example.createCriteria()
-                .andUserIdEqualTo(userId);
-        List<ProjectApplication> findList = projectApplicationMapper
-                                                .selectByExample(example);
+        List<ProjectApplication> findList = projectApplicationMapper.selectMyApplication(userId);
         if(findList.isEmpty()) {
             return ResultTool.error("你目前没有正在申请中的项目");
         }

@@ -19,7 +19,7 @@ public class User {
 
     private String major;
 
-    private Integer identity;
+    private String identity;
 
     private Integer isAbleLogin;
 
@@ -97,12 +97,12 @@ public class User {
         this.major = major == null ? null : major.trim();
     }
 
-    public Integer getIdentity() {
+    public String getIdentity() {
         return identity;
     }
 
-    public void setIdentity(Integer identity) {
-        this.identity = identity;
+    public void setIdentity(String identity) {
+        this.identity = identity == null ? null : identity.trim();
     }
 
     public Integer getIsAbleLogin() {

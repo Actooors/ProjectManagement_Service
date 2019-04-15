@@ -1,6 +1,9 @@
 package com.management.tools;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
 
@@ -10,9 +13,8 @@ public class TimeToolTest {
 
     @Test
     public void stringToTime() {
-        TimeTool timeTool = new TimeTool();
-        String time = "2018-05-06 20:00";
-        System.out.print(TimeTool.stringToTime(time));
+        JwtUtil jwtUtil = new JwtUtil();
+        System.out.print(jwtUtil.getIdentity("1|2|3"));
     }
 
     @Test

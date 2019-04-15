@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
      * @Author: ggmr
      * @Date: 18-7-29
      */
-    private LoginResponse setLoginResponse(String userId, Integer identity,
+    private LoginResponse setLoginResponse(String userId, String identity,
                                            String userName) {
         LoginResponse response = new LoginResponse();
         response.setToken(jwtUtil.createJwt(userId, identity));
@@ -111,13 +111,13 @@ public class UserServiceImpl implements UserService {
                 String pwd = loginUser.getPassword();
                 //如果返回了newUser，说明操作正常
                 if (newUser != null) {
-                    newUser.setIdentity(1);
+                    newUser.setIdentity("1");
                     newUser.setIsAbleLogin(1);
                     newUser.setPassword(MD5Tool.getMD5(pwd));
                     userMapper.insert(newUser);
 
                     return ResultTool.success(setLoginResponse(loginUser.getUserId(),
-                            1, newUser.getUserName()));
+                            "1", newUser.getUserName()));
                     //如果没有得到newUser，说明验证异常
                 } else {
                     return ResultTool.error("验证过程中发生异常,一般是由于工号/学号无效!");

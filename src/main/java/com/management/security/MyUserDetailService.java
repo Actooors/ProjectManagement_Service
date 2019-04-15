@@ -3,6 +3,7 @@ package com.management.security;
 import com.management.dao.UserMapper;
 import com.management.model.entity.User;
 import com.management.model.ov.resultsetting.ConstCorrespond;
+import com.management.tools.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,10 +51,13 @@ public class MyUserDetailService implements UserDetailsService {
         }
 
         //获取用户的身份
-        String identity = ConstCorrespond.USER_AUTHORIZATION[user.getIdentity()];
+        // TODO
+        String identity = JwtUtil.getIdentity(user.getIdentity());
         Set<GrantedAuthority> grantedAuths = new HashSet<>();
-        grantedAuths.add( new SimpleGrantedAuthority(identity) );
-
+        String[] identityTypeArray = identity.split("\\|");
+        for(String identityType: identityTypeArray){
+            grantedAuths.add( new SimpleGrantedAuthority(identityType));
+        }
         return new JwtUser(user.getUserId(), user.getPassword(), user.getIdentity(), grantedAuths);
     }
 

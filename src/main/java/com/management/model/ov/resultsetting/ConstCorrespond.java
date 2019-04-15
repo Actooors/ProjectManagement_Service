@@ -57,6 +57,15 @@ public class ConstCorrespond {
             "ROLE_SUPERADMIN"
     };
 
+//    public final static String[] USER_IDENTITY = {
+//            "",
+//            "user",
+//            "principal",
+//            "expert",
+//            "leader",
+//            "superAdmin"
+//    };
+
     public final static int MIDDLE_PROGRESS = 2;
     public final static int FINAL_PROGRESS = 3;
     public final static int FINISH_PROGRESS_FAILED = 5;

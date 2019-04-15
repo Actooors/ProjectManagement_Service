@@ -53,7 +53,6 @@ public class AdminServiceImpl implements AdminService {
     private static final int REVIEW_FAILED = 6;
     private static final int LEADER_REVIEW = 4;
     private static final int EXPERT_NOT_FINISH = 2;
-    private static final int EXPERT_IDENTITY = 3;
     private static final int FINISH_APPLICATION = 5;
     private static final int ADMIN_INDEX = 8;
     /**
@@ -451,10 +450,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result findExpertList() {
-        UserExample example = new UserExample();
-        example.createCriteria()
-                .andIdentityEqualTo(EXPERT_IDENTITY);
-        List<User> list = userMapper.selectByExample(example);
+        //调用usermapper方法查询到专家列表
+        List<User> list = userMapper.selectExpertInfoList("3");
         List<ExpertListInfo> resList = new LinkedList<>();
         for (User user : list) {
             ExpertListInfo res = new ExpertListInfo();

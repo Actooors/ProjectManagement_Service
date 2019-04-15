@@ -31,6 +31,9 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
+    //查找到专家列表
+    List<User> selectExpertInfoList(String identityId);
+
     //根据UserId得到用户基本信息
     UserBaseInfo selectUserInfoByUserId(String userId);
 
@@ -51,5 +54,4 @@ public interface UserMapper {
 
     //统计各个大类的项目数
     Integer countByProjectType(@Param("leaderId")String leaderId,@Param("type")Integer type);
-
 }

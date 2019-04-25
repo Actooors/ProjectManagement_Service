@@ -26,6 +26,7 @@ create table tbl_ProjectCategory (
   project_category_description_address varchar(128) comment '项目大类介绍的ｚｉｐ文件',
   project_type int not null comment '项目类别 1 2 3 4对应不同项目，日后更新',
   principal_id varchar(8) not null comment '项目业务员id',
+  principal_phone varchar(15) not null comment '业务员联系方式',
   applicant_type varchar(64) not null comment '此项目允许的申请人类别，1234对应不同学院 不同学院用|分割，日后更新',
   max_money varchar(16) comment '项目经费预算上限',
   review_leader_id varchar(8) comment '审核领导id',
@@ -58,7 +59,7 @@ create table tbl_ProjectCategory (
 
 create table tbl_ProjectApplication
 (
-  project_application_id varchar(64) auto_increment comment '标识id'primary key,
+  project_application_id varchar(64) comment '标识id'primary key,
   project_category_id varchar(64) not null comment '对应项目大类的id',
   project_name varchar(32) not null comment '项目名称',
   project_description varchar(256) not null comment '项目简介',

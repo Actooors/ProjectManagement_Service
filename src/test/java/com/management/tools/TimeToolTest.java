@@ -13,8 +13,8 @@ public class TimeToolTest {
 
     @Test
     public void stringToTime() {
-        JwtUtil jwtUtil = new JwtUtil();
-        System.out.print(jwtUtil.getIdentity("1|2|3"));
+        MD5Tool md5Tool = new MD5Tool();
+        System.out.print(md5Tool.getMD5("123456"));
     }
 
     @Test

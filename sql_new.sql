@@ -33,19 +33,19 @@ create table tbl_ProjectCategory (
   is_exist_meeting_review int not null comment '是否存在会评
                                        1存在 2不存在',
   project_application_download_address varchar(128) comment '项目申报书地址',
-  application_start_time timestamp default current_timestamp comment '项目申请开始时间',
-  application_end_time timestamp default current_timestamp comment '项目申请结束时间',
-  project_start_time timestamp default current_timestamp comment '项目开始时间',
-  project_end_time timestamp default current_timestamp comment '项目结束时间',
+  application_start_time datetime comment '项目申请开始时间',
+  application_end_time datetime  comment '项目申请结束时间',
+  project_start_time datetime  comment '项目开始时间',
+  project_end_time datetime  comment '项目结束时间',
   is_interim_report_activated int not null default 2 comment '中期报告是否启动
                                                               1启动 2未启动 默认为2',
-  interim_report_start_time timestamp default current_timestamp comment '中期报告开始时间',
-  interim_report_end_time timestamp default current_timestamp comment '中期报告结束时间',
+  interim_report_start_time datetime comment '中期报告开始时间',
+  interim_report_end_time datetime  comment '中期报告结束时间',
   interim_report_download_address varchar(128) comment '中期报告模板地址',
   is_concluding_report_activated int not null default 2 comment '结题报告是否启动
                                                               1启动 2未启动 默认为2',
-  concluding_report_start_time timestamp default current_timestamp comment '结题报告开始时间',
-  concluding_report_end_time timestamp default current_timestamp comment '结题报告结束时间',
+  concluding_report_start_time datetime  comment '结题报告开始时间',
+  concluding_report_end_time datetime  comment '结题报告结束时间',
   concluding_report_download_address varchar(128) comment '结题报告模板地址',
   statistics int not null default 0 comment '此类别的项目完结成功的项目总数 默认为0',
   is_approved int comment '项目是否通过审核

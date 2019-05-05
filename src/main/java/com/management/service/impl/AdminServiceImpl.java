@@ -65,10 +65,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Result createProjectCategory(User adminUser, ProjectCategoryInfo projectCategoryInfo) {
         /*将字符串时间格式转化为Date时间类型*/
-        Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
-        Date applicationEndTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationEndTime());
-        Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
-        Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
+        Date applicationStartTime = TimeTool.stringToTime1(projectCategoryInfo.getApplicationStartTime());
+        Date applicationEndTime = TimeTool.stringToTime1(projectCategoryInfo.getApplicationEndTime());
+        Date projectStartTime = TimeTool.stringToTime1(projectCategoryInfo.getProjectStartTime());
+        Date projectEndTime = TimeTool.stringToTime1(projectCategoryInfo.getProjectEndTime());
         String uuid = UUID.randomUUID().toString();
         /*根据业务员id查询到业务员的信息及专家的id*/
         ProjectCategory projectCategory = new ProjectCategory();

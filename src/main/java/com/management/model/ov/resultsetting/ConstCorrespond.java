@@ -37,7 +37,7 @@ public class ConstCorrespond {
             "任务书审核阶段",
     };
 
-    public final static String downloadAddress = "http://129.204.71.113:8888/api/file/download?fileAddress=";
+    public final static String downloadAddress = "http://118.25.130.89:8081/api/file/download?fileAddress=";
 
     public final static String[] PROJECT_PROGRESS = {
             "",

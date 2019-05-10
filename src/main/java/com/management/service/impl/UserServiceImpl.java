@@ -86,7 +86,14 @@ public class UserServiceImpl implements UserService {
                 || "".equals(loginUser.getPassword()) || loginUser.getPassword() == null) {
             return ResultTool.error("账号或密码不能为空");
         }
-        User existedUser = userMapper.selectByPrimaryKey(loginUser.getUserId());
+
+        User existedUser = new User();
+        try{
+            existedUser = userMapper.selectByPrimaryKey(loginUser.getUserId());
+        }catch(Exception e){
+            existedUser = null;
+        }
+
 
         //如果该账户在数据库已经存在
         if (existedUser != null) {
@@ -128,58 +135,6 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-    }
-
-    /**
-     * @Description: waitJudgeProjectList接口的实现
-     * @Param: [leaderId]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-8-15
-     */
-    @Override
-    public Result waitJudgeProjectList(String projectCategoryId, Integer type) {
-        ProjectApplicationExample pExample = new ProjectApplicationExample();
-        pExample.createCriteria()
-                .andProjectCategoryIdEqualTo(projectCategoryId)
-                .andReviewPhaseEqualTo(type);
-        List<ProjectApplication> list = projectApplicationMapper.selectByExample(pExample);
-        if (list.isEmpty()) {
-            return ResultTool.error("当前并没有需要审核的项目");
-        }
-        List<WaitJudgeProjectInfo> resList = new LinkedList<>();
-        for (ProjectApplication projectApplication : list) {
-            WaitJudgeProjectInfo res = new WaitJudgeProjectInfo();
-            res.setDescription(projectApplication.getProjectDescription());
-            res.setProjectId(projectApplication.getProjectApplicationId());
-            res.setProjectName(projectApplication.getProjectName());
-            resList.add(res);
-        }
-        return ResultTool.success(resList);
-    }
-
-    /**
-     * @Description: projectJudgeResult接口的实现
-     * @Param: [projectId, info]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-8-15
-     */
-    @Override
-    public Result projectJudgeResult(IsProjectPassedPostInfo info) {
-        ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(info.getProjectId());
-        if (projectApplication == null) {
-            return ResultTool.error("不存在这个id的项目");
-        }
-        int judge = info.getIsPassed();
-        if (judge == STATE_TWO) {
-            projectApplication.setFailureReason(info.getMessage());
-            projectApplication.setReviewPhase(REVIEW_FAILED);
-        } else {
-            projectApplication.setReviewPhase(projectApplication.getReviewPhase() + 1);
-        }
-        projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
-        return ResultTool.success();
     }
 
 
@@ -650,4 +605,6 @@ public class UserServiceImpl implements UserService {
             return ResultTool.error("查询失败");
         }
     }
+
+
 }

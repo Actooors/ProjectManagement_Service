@@ -246,22 +246,13 @@ public class AdminServiceImpl implements AdminService {
         try {
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
-            //projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
-//            List applicationTypeList = projectCategoryInfo.getApplicantType();
-//            projectCategory.setApplicantType(String.join('|',projectCategoryInfo.getApplicantType()));
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
-            projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
-            if(projectCategoryInfo.getIsExistMeetingReview().equals(true))
-                projectCategory.setIsExistMeetingReview(1);
-            else
-                projectCategory.setIsExistMeetingReview(2);
             projectCategory.setApplicationStartTime(applicationStartTime);
             projectCategory.setApplicationEndTime(applicationEndTime);
             projectCategory.setProjectStartTime(projectStartTime);
             projectCategory.setProjectEndTime(projectEndTime);
             projectCategoryMapper.updateByPrimaryKey(projectCategory);
-
             Result result = ResultTool.success();
             result.setMessage("成功");
             return result;

@@ -56,7 +56,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
                     UserBaseInfo leader = userMapper.selectUserInfoByUserId(userBaseInfo.getLeaderId());
                     userBaseInfo.setLeaderName(leader.getUserName());
                 }else{
-                    userBaseInfo.setLeaderName("无");
+                    userBaseInfo.setLeaderName(null);
                 }
                 resultList.add(userBaseInfo);
             }

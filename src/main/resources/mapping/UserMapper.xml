@@ -15,6 +15,11 @@
     <result column="is_able_login" property="isAbleLogin" jdbcType="INTEGER" />
     <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
   </resultMap>
+    <resultMap id="LeaderMap" type="com.management.model.entity.LeaderInfo">
+        <id column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+    </resultMap>
   <resultMap id="UserInfoMap" type="com.management.model.entity.UserBaseInfo" >
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -24,6 +29,9 @@
     <result column="mail" property="mail" jdbcType="VARCHAR" />
     <result column="position" property="position" jdbcType="VARCHAR" />
     <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="is_able_login" property="status" jdbcType="INTEGER"/>
+    <result column="identity" property="identity" jdbcType="VARCHAR" />
+    <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="FinalProgressInfo" type="com.management.model.ov.resultsetting.FinalReportInfo">
     <result column="project_category_id" property="projectCategoryId" jdbcType="VARCHAR" />
@@ -101,8 +109,11 @@
     is_able_login, leader_id
   </sql>
   <sql id="User_Info_List">
-    user_name, sex, department, phone, mail, position, major
+    user_name, sex, department, phone, mail, position, major,is_able_login,identity,leader_id
   </sql>
+    <sql id="Leader_Info_List">
+        user_id,user_name,department
+    </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.UserExample" >
     select
     <if test="distinct" >
@@ -350,13 +361,25 @@
   <select id="selectExpertInfoList" resultMap="BaseResultMap" parameterType="java.lang.String">
     select <include refid="Base_Column_List"/>
     from tbl_User
-    where CHARINDEX('3',rtrim(identity)) > 0;
+    where instr('3',rtrim(identity)) > 0
   </select>
+    <select id="selectLeaderInfoList" resultMap="LeaderMap" parameterType="java.lang.String">
+        select <include refid="Leader_Info_List"/>
+        from tbl_User
+        where instr('4',rtrim(identity)) > 0
+    </select>
   <select id="selectUserInfoByUserId" resultMap="UserInfoMap" parameterType="java.lang.String">
     select
     <include refid="User_Info_List"/>
     from tbl_User
     where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllUserInfo" resultMap="UserInfoMap" parameterType="java.lang.Integer">
+    select
+    <include refid="User_Info_List"/>
+    from tbl_User
+    where user_id is not null
+    limit #{page},10
   </select>
   <select id="selectFinalProgressByLeaderId" resultMap="FinalProgressInfo" parameterType="java.lang.String">
     select b.project_category_id,project_category_name,
@@ -372,7 +395,6 @@
           and d.review_leader_id = #{leaderId,jdbcType=VARCHAR}
           and c.project_process = 3
   </select>
-
   <select id="countJudgePassProject" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from tbl_ProjectApplication as a,tbl_ProjectProgress as b
@@ -380,7 +402,6 @@
           and a.project_application_id = b.project_progress_id
           and (review_phase = 5 or project_process = 4)
   </select>
-
   <select id="countJudgeFailProject" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from tbl_ProjectApplication as a,tbl_ProjectProgress as b
@@ -388,14 +409,12 @@
           and a.project_application_id = b.project_progress_id
           and (review_phase = 6 or project_process = 5)
   </select>
-
   <select id="countOneJudgeProject" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from tbl_ProjectApplication
     where review_leader_id = #{leaderId,jdbcType=VARCHAR}
           and review_phase = 4
   </select>
-
   <select id="countFinalJudgeProject" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from tbl_ProjectCategory as a,tbl_ProjectProgress as b
@@ -403,7 +422,6 @@
           and a.project_category_id = b.project_category_id
           and b.project_process = 4
   </select>
-
   <select id="countByProjectType" resultType="java.lang.Integer">
     select count(*)
     from tbl_ProjectCategory as a,tbl_ProjectApplication as b

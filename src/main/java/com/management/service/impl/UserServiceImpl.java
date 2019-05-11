@@ -90,6 +90,9 @@ public class UserServiceImpl implements UserService {
         User existedUser = new User();
         try{
             existedUser = userMapper.selectByPrimaryKey(loginUser.getUserId());
+            if(existedUser.getIsAbleLogin() == 2){
+                return ResultTool.error("您的账号已经冻结,请联系管理员!");
+            }
         }catch(Exception e){
             existedUser = null;
         }
@@ -603,6 +606,24 @@ public class UserServiceImpl implements UserService {
             return ResultTool.success(userFailProjectList);
         }catch (Exception e){
             return ResultTool.error("查询失败");
+        }
+    }
+
+    /**
+     * @Description: 用户修改密码
+     * @Param:
+     * @Return:
+     * @Author: xw
+     * @Date: 19-3-22
+     */
+    public Result updatePassword(UpdateOrInsertUser updateOrInsertUser){
+        try {
+            User user = userMapper.selectByPrimaryKey(updateOrInsertUser.getUserId());
+            user.setPassword(MD5Tool.getMD5(updateOrInsertUser.getPassword()));
+            userMapper.updateByPrimaryKey(user);
+            return ResultTool.success();
+        }catch (Exception e){
+            return ResultTool.error("修改失败!请联系开发人员!");
         }
     }
 

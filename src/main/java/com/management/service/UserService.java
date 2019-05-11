@@ -133,10 +133,11 @@ public interface UserService {
     Result queryFailProject(String userId);
     
     /**
-     * @Description: 用户提价修改申请书
+     * @Description: 修改密码
      * @Param: 
      * @Return: 
      * @Author: xw
      * @Date: 19-3-22
      */
+    Result updatePassword(UpdateOrInsertUser updateOrInsertUser);
 }

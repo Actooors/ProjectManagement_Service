@@ -57,14 +57,14 @@ public class ConstCorrespond {
             "ROLE_SUPERADMIN"
     };
 
-//    public final static String[] USER_IDENTITY = {
-//            "",
-//            "user",
-//            "principal",
-//            "expert",
-//            "leader",
-//            "superAdmin"
-//    };
+    public final static String[] USER_IDENTITY = {
+            "",
+            "用户",
+            "业务员",
+            "专家",
+            "领导",
+            "系统管理员"
+    };
 
     public final static int MIDDLE_PROGRESS = 2;
     public final static int FINAL_PROGRESS = 3;

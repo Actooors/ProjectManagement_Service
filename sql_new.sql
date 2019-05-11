@@ -8,7 +8,7 @@ create table tbl_User (
   mail varchar(32) comment '邮箱',
   position varchar(8) comment '职称',
   major varchar(32) comment '专业',
-  identity int not null default 1 comment '用户身份
+  identity varchar(16) not null default 1 comment '用户身份
                                  1普通用户 2业务员 3审核专家
                                  4领导 5系统管理员',
   is_able_login int not null default 1 comment '是否可以登录

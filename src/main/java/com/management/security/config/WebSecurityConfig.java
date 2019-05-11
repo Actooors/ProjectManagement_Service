@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/admin/**").access("hasAnyAuthority('ROLE_ADMIN','ROLE_LEADER','ROLE_USER')")
                     .antMatchers("/leader/**").access("hasAuthority('ROLE_LEADER')")
                     .antMatchers("/expert/**").access("hasAuthority('ROLE_EXPERT')")
-                    .antMatchers("/user/**").access("hasAnyAuthority('ROLE_ADMIN','ROLE_EXPERT','ROLE_LEADER','ROLE_USER')");
+                    .antMatchers("/user/**").access("hasAnyAuthority('ROLE_ADMIN','ROLE_EXPERT','ROLE_LEADER','ROLE_USER','ROLE_SUPERADMIN')");
 
         http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 

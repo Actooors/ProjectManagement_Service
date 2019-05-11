@@ -361,12 +361,12 @@
   <select id="selectExpertInfoList" resultMap="BaseResultMap" parameterType="java.lang.String">
     select <include refid="Base_Column_List"/>
     from tbl_User
-    where instr('3',rtrim(identity)) > 0
+    where instr('3',rtrim(identity)) > 0 and is_able_login = 1
   </select>
     <select id="selectLeaderInfoList" resultMap="LeaderMap" parameterType="java.lang.String">
         select <include refid="Leader_Info_List"/>
         from tbl_User
-        where instr('4',rtrim(identity)) > 0
+        where instr('4',rtrim(identity)) > 0 and is_able_login = 1
     </select>
   <select id="selectUserInfoByUserId" resultMap="UserInfoMap" parameterType="java.lang.String">
     select

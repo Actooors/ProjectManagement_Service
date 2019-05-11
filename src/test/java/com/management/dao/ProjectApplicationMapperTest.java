@@ -29,7 +29,7 @@ public class ProjectApplicationMapperTest {
 
     @Test
     public void queryAdminProjectApplication() {
-        System.out.print(userMapper.selectAllUserInfo((1-1)*10));
+        //System.out.print(userMapper.selectAllUserInfo((1-1)*10));
         //System.out.print(superAdminService.getUserInfo());
 //        List<String> identity = new ArrayList<>(Arrays.asList("user","leader"));
 //        UpdateOrInsertUser updateOrInsertUser = new UpdateOrInsertUser();
@@ -38,6 +38,6 @@ public class ProjectApplicationMapperTest {
 //        updateOrInsertUser.setPassword("11111");
 //        updateOrInsertUser.setIdentity(identity);
 //        System.out.print(superAdminService.insertUser(updateOrInsertUser));
-        //System.out.print(superAdminService.getAllLeaderInfo());
+        System.out.print(superAdminService.getAllLeaderInfo());
     }
 }

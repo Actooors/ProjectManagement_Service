@@ -6,7 +6,6 @@ import com.management.model.entity.User;
 import com.management.model.entity.UserBaseInfo;
 import com.management.model.entity.UserExample;
 import com.management.model.jsonrequestbody.DeleteUserRequest;
-import com.management.model.jsonrequestbody.LoginInfo;
 import com.management.model.jsonrequestbody.UpdateOrInsertUser;
 import com.management.model.jsonrequestbody.UserStatus;
 import com.management.model.ov.Result;
@@ -66,7 +65,7 @@ public class SuperAdminServiceImpl implements SuperAdminService {
             userExample.createCriteria()
                     .andUserIdIsNotNull();
             int userNum = userMapper.countByExample(userExample);
-            allUserInfo.setTotalPage(userNum / 10 + 1);
+            allUserInfo.setTotalPage(userNum);
             allUserInfo.setUserData(resultList);
             return ResultTool.success(allUserInfo);
         }catch (Exception e){

@@ -109,7 +109,7 @@
     is_able_login, leader_id
   </sql>
   <sql id="User_Info_List">
-    user_name, sex, department, phone, mail, position, major,is_able_login,identity,leader_id
+    user_id, user_name, sex, department, phone, mail, position, major,is_able_login,identity,leader_id
   </sql>
     <sql id="Leader_Info_List">
         user_id,user_name,department

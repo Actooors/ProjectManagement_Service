@@ -7,6 +7,7 @@ package com.management.model.entity;
  * @create: 2019-03-23 00:40
  */
 public class UserBaseInfo {
+    private String userId;
     private String userName;
     private String sex;
     private String department;
@@ -18,6 +19,14 @@ public class UserBaseInfo {
     private String identity;
     private String leaderId;
     private String leaderName;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getLeaderName() {
         return leaderName;

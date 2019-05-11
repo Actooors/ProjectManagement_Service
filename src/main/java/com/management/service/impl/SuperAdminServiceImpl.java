@@ -4,11 +4,13 @@ import com.management.dao.UserMapper;
 import com.management.model.entity.LeaderInfo;
 import com.management.model.entity.User;
 import com.management.model.entity.UserBaseInfo;
+import com.management.model.entity.UserExample;
 import com.management.model.jsonrequestbody.DeleteUserRequest;
 import com.management.model.jsonrequestbody.LoginInfo;
 import com.management.model.jsonrequestbody.UpdateOrInsertUser;
 import com.management.model.jsonrequestbody.UserStatus;
 import com.management.model.ov.Result;
+import com.management.model.ov.resultsetting.AllUserInfo;
 import com.management.model.ov.resultsetting.ConstCorrespond;
 import com.management.service.SuperAdminService;
 import com.management.tools.MD5Tool;
@@ -59,7 +61,14 @@ public class SuperAdminServiceImpl implements SuperAdminService {
                 }
                 resultList.add(userBaseInfo);
             }
-            return ResultTool.success(resultList);
+            AllUserInfo allUserInfo  = new AllUserInfo();
+            UserExample userExample = new UserExample();
+            userExample.createCriteria()
+                    .andUserIdIsNotNull();
+            int userNum = userMapper.countByExample(userExample);
+            allUserInfo.setTotalPage(userNum / 10 + 1);
+            allUserInfo.setUserData(resultList);
+            return ResultTool.success(allUserInfo);
         }catch (Exception e){
             return ResultTool.error("操作失败!请联系开发人员!");
         }

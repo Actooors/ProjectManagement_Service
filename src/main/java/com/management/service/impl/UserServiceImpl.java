@@ -286,20 +286,17 @@ public class UserServiceImpl implements UserService {
             //查询到相应的项目大类
             ProjectCategory projectCategory = projectCategoryMapper
                     .selectByPrimaryKey(application.getProjectCategoryId());
-            //查询立项之前的项目申请
-            if(application.getReviewPhase() == 7 || application.getReviewPhase() < REVIEW_LAST_PHASE || application.getReviewPhase() == 8) {
-                ProjectTotalInfo res = new ProjectTotalInfo();
-                res.setTime(TimeTool.timeToString1(application.getApplicationTime()));
-                res.setProjectApplicationId(application.getProjectApplicationId());
-                res.setProjectName(application.getProjectName());
-                res.setReviewPhase(ConstCorrespond
-                        .reviewPhrase[application.getReviewPhase()]);
-                res.setDescription(application.getProjectDescription());
-                res.setProjectCategoryId(projectCategory.getProjectCategoryId());
-                res.setType(ConstCorrespond
-                        .PROJECT_TYPE[projectCategory.getProjectType()]);
-                resList.add(res);
-            }
+            ProjectTotalInfo res = new ProjectTotalInfo();
+            res.setTime(TimeTool.timeToString1(application.getApplicationTime()));
+            res.setProjectApplicationId(application.getProjectApplicationId());
+            res.setProjectName(application.getProjectName());
+            res.setReviewPhase(ConstCorrespond
+                    .reviewPhrase[application.getReviewPhase()]);
+            res.setDescription(application.getProjectDescription());
+            res.setProjectCategoryId(projectCategory.getProjectCategoryId());
+            res.setType(ConstCorrespond
+                    .PROJECT_TYPE[projectCategory.getProjectType()]);
+            resList.add(res);
         }
         return ResultTool.success(resList);
     }

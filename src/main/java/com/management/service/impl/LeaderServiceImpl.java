@@ -379,9 +379,9 @@ public class LeaderServiceImpl implements LeaderService {
         dataStatistics.setProjectStatistic(projectStatisticList);
 
         Integer maxNum = ConstCorrespond.PROJECT_TYPE.length;
-        for(int i = maxNum;i>=2;i--){
+        for(int i = maxNum-1;i>=1;i--){
             projectTypeStatistic typeStatistic = new projectTypeStatistic();
-            typeStatistic.setType(ConstCorrespond.PROJECT_TYPE[i-1]);
+            typeStatistic.setType(ConstCorrespond.PROJECT_TYPE[i]);
             typeStatistic.setNum(userMapper.countByProjectType(leaderId,i));
             projectTypeStatisticList.add(typeStatistic);
         }

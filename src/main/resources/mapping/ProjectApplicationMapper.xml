@@ -107,8 +107,9 @@
   <select id="selectMyApplication" resultMap="BaseResultMap" parameterType="java.lang.String">
     select
     <include refid="Base_Column_List" />
-    from tbl_ProjectApplication as a
-    where a.user_id=#{userId,jdbcType=VARCHAR}
+    from tbl_ProjectApplication
+    where user_id=#{userId,jdbcType=VARCHAR}
+          and ((review_phase = 7) or (review_phase between 1 and 5) or (review_phase = 8))
   </select>
 
   <select id="selectFailProjectApplication" resultMap="BaseResultMap" parameterType="java.lang.String">

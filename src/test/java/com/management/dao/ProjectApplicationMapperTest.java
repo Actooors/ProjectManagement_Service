@@ -38,6 +38,6 @@ public class ProjectApplicationMapperTest {
 //        updateOrInsertUser.setPassword("11111");
 //        updateOrInsertUser.setIdentity(identity);
 //        System.out.print(superAdminService.insertUser(updateOrInsertUser));
-        System.out.print(superAdminService.getAllLeaderInfo());
+        System.out.print(projectApplicationMapper.selectMyApplication("user1"));
     }
 }

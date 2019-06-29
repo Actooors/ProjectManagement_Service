@@ -29,5 +29,5 @@ public interface ProjectProgressMapper {
     int updateByPrimaryKey(ProjectProgress record);
 
     //查找到已经立项各个阶段的项目(结题报告审核失败)
-    List<ProjectProgress> selectFailProgress(String userId,int state);
+    List<ProjectProgress> selectFailProgress(@Param("userId")String userId,@Param("state")int state);
 }

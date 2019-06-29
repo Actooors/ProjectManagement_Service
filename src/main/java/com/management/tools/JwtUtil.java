@@ -37,19 +37,20 @@ public class JwtUtil {
     private Clock clock = DefaultClock.INSTANCE;
     private static JWTVerifier jwtVerifier;
 
-    public String createJwt(String subject, Integer identity) {
+    public String createJwt(String subject, String identityId) {
         Date currentDate = new Date();
         // 过期时间5天
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DATE, 36500);
         Algorithm algorithm = Algorithm.HMAC512(ENCODE_KEY);
 
-
+        String identity = getIdentity(identityId);
         String token = JWT.create()
                 .withIssuedAt(currentDate)
                 .withExpiresAt(calendar.getTime())
                 .withSubject(subject)
-                .withClaim("identity", ConstCorrespond.USER_AUTHORIZATION[identity])
+                // TODO
+                .withClaim("identity", identity)
                 .sign(algorithm);
 
         return TOKEN_PREFIX + token;
@@ -99,5 +100,18 @@ public class JwtUtil {
                 .setSigningKey(ENCODE_KEY)
                 .parseClaimsJws(token)
                 .getBody();
+    }
+
+    //此方法用于Security方法里
+    public static String getIdentity(String identityId){
+        String[] identityTypeArray = identityId.split("\\|");
+        String identity = ConstCorrespond
+                .USER_AUTHORIZATION[Integer.parseInt(identityTypeArray[0])];
+        int num = identityTypeArray.length;
+        for (int i = 1;i<num;i++) {
+            identity  = identity + "|" + ConstCorrespond
+                    .USER_AUTHORIZATION[Integer.parseInt(identityTypeArray[i])];
+        }
+        return identity;
     }
 }

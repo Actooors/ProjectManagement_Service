@@ -18,5 +18,5 @@ public class LoginResponse {
     @JsonProperty("uid")
     private String userId;
     @JsonProperty("identity")
-    private Integer identity;
+    private String identity;
 }

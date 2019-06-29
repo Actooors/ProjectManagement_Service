@@ -21,24 +21,6 @@ public interface UserService {
      */
     Result login(LoginInfo loginInfo);
 
-    /**
-     * @Description: 查找某个项目大类的所有待审项目申请,
-     * type为1业务员审核阶段 2评审专家审核阶段 3会评阶段 4领导审核阶段
-     * @Param: [leaderId]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-8-15
-     */
-    Result waitJudgeProjectList(String projectCategoryId, Integer type);
-
-    /**
-     * @Description: 审核一个项目的进行情况，如果通过那么项目的阶段++，如果已经到了第四阶段并且已经通过，那么结束
-     * @Param: [projectId, info]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-8-15
-     */
-    Result projectJudgeResult(IsProjectPassedPostInfo info);
 
     /**
      * @Description: 获取普通用户的全部的可申报项目
@@ -151,10 +133,11 @@ public interface UserService {
     Result queryFailProject(String userId);
     
     /**
-     * @Description: 用户提价修改申请书
+     * @Description: 修改密码
      * @Param: 
      * @Return: 
      * @Author: xw
      * @Date: 19-3-22
      */
+    Result updatePassword(UpdateOrInsertUser updateOrInsertUser);
 }

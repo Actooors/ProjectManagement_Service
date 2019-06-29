@@ -8,7 +8,7 @@ create table tbl_User (
   mail varchar(32) comment '邮箱',
   position varchar(8) comment '职称',
   major varchar(32) comment '专业',
-  identity int not null default 1 comment '用户身份
+  identity varchar(16) not null default 1 comment '用户身份
                                  1普通用户 2业务员 3审核专家
                                  4领导 5系统管理员',
   is_able_login int not null default 1 comment '是否可以登录
@@ -26,25 +26,26 @@ create table tbl_ProjectCategory (
   project_category_description_address varchar(128) comment '项目大类介绍的ｚｉｐ文件',
   project_type int not null comment '项目类别 1 2 3 4对应不同项目，日后更新',
   principal_id varchar(8) not null comment '项目业务员id',
+  principal_phone varchar(15) not null comment '业务员联系方式',
   applicant_type varchar(64) not null comment '此项目允许的申请人类别，1234对应不同学院 不同学院用|分割，日后更新',
   max_money varchar(16) comment '项目经费预算上限',
   review_leader_id varchar(8) comment '审核领导id',
   is_exist_meeting_review int not null comment '是否存在会评
                                        1存在 2不存在',
   project_application_download_address varchar(128) comment '项目申报书地址',
-  application_start_time timestamp default current_timestamp comment '项目申请开始时间',
-  application_end_time timestamp default current_timestamp comment '项目申请结束时间',
-  project_start_time timestamp default current_timestamp comment '项目开始时间',
-  project_end_time timestamp default current_timestamp comment '项目结束时间',
+  application_start_time datetime comment '项目申请开始时间',
+  application_end_time datetime  comment '项目申请结束时间',
+  project_start_time datetime  comment '项目开始时间',
+  project_end_time datetime  comment '项目结束时间',
   is_interim_report_activated int not null default 2 comment '中期报告是否启动
                                                               1启动 2未启动 默认为2',
-  interim_report_start_time timestamp default current_timestamp comment '中期报告开始时间',
-  interim_report_end_time timestamp default current_timestamp comment '中期报告结束时间',
+  interim_report_start_time datetime comment '中期报告开始时间',
+  interim_report_end_time datetime  comment '中期报告结束时间',
   interim_report_download_address varchar(128) comment '中期报告模板地址',
   is_concluding_report_activated int not null default 2 comment '结题报告是否启动
                                                               1启动 2未启动 默认为2',
-  concluding_report_start_time timestamp default current_timestamp comment '结题报告开始时间',
-  concluding_report_end_time timestamp default current_timestamp comment '结题报告结束时间',
+  concluding_report_start_time datetime  comment '结题报告开始时间',
+  concluding_report_end_time datetime  comment '结题报告结束时间',
   concluding_report_download_address varchar(128) comment '结题报告模板地址',
   statistics int not null default 0 comment '此类别的项目完结成功的项目总数 默认为0',
   is_approved int comment '项目是否通过审核
@@ -58,7 +59,7 @@ create table tbl_ProjectCategory (
 
 create table tbl_ProjectApplication
 (
-  project_application_id varchar(64) auto_increment comment '标识id'primary key,
+  project_application_id varchar(64) comment '标识id'primary key,
   project_category_id varchar(64) not null comment '对应项目大类的id',
   project_name varchar(32) not null comment '项目名称',
   project_description varchar(256) not null comment '项目简介',

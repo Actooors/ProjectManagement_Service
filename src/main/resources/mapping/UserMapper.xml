@@ -11,10 +11,15 @@
     <result column="mail" property="mail" jdbcType="VARCHAR" />
     <result column="position" property="position" jdbcType="VARCHAR" />
     <result column="major" property="major" jdbcType="VARCHAR" />
-    <result column="identity" property="identity" jdbcType="INTEGER" />
+    <result column="identity" property="identity" jdbcType="VARCHAR" />
     <result column="is_able_login" property="isAbleLogin" jdbcType="INTEGER" />
     <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
   </resultMap>
+    <resultMap id="LeaderMap" type="com.management.model.entity.LeaderInfo">
+        <id column="user_id" property="userId" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+    </resultMap>
   <resultMap id="UserInfoMap" type="com.management.model.entity.UserBaseInfo" >
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -24,6 +29,9 @@
     <result column="mail" property="mail" jdbcType="VARCHAR" />
     <result column="position" property="position" jdbcType="VARCHAR" />
     <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="is_able_login" property="status" jdbcType="INTEGER"/>
+    <result column="identity" property="identity" jdbcType="VARCHAR" />
+    <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
   </resultMap>
   <resultMap id="FinalProgressInfo" type="com.management.model.ov.resultsetting.FinalReportInfo">
     <result column="project_category_id" property="projectCategoryId" jdbcType="VARCHAR" />
@@ -101,8 +109,11 @@
     is_able_login, leader_id
   </sql>
   <sql id="User_Info_List">
-    user_name, sex, department, phone, mail, position, major
+    user_id, user_name, sex, department, phone, mail, position, major,is_able_login,identity,leader_id
   </sql>
+    <sql id="Leader_Info_List">
+        user_id,user_name,department
+    </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.UserExample" >
     select
     <if test="distinct" >
@@ -124,26 +135,6 @@
     from tbl_User
     where user_id = #{userId,jdbcType=VARCHAR}
   </select>
-  <select id="selectUserInfoByUserId" resultMap="UserInfoMap" parameterType="java.lang.String">
-    select
-    <include refid="User_Info_List"/>
-    from tbl_User
-    where user_id = #{userId,jdbcType=VARCHAR}
-  </select>
-  <select id="selectFinalProgressByLeaderId" resultMap="FinalProgressInfo" parameterType="java.lang.String">
-    select b.project_category_id,project_category_name,
-    project_application_id,project_name,project_description,
-    a.user_id,user_name,department,project_progress_id,
-    project_application_upload_address,concluding_report_end_time
-    from tbl_User as a,tbl_ProjectApplication as b,
-         tbl_ProjectProgress as c,tbl_ProjectCategory as d
-    where c.project_progress_id = b.project_application_id
-          and a.user_id = b.user_id
-          and a.user_id = c.user_id
-          and d.project_category_id = b.project_category_id
-          and d.review_leader_id = #{leaderId,jdbcType=VARCHAR}
-          and c.project_process = 3
-  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tbl_User
     where user_id = #{userId,jdbcType=VARCHAR}
@@ -163,7 +154,7 @@
     values (#{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
       #{sex,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{mail,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, 
-      #{identity,jdbcType=INTEGER}, #{isAbleLogin,jdbcType=INTEGER}, #{leaderId,jdbcType=VARCHAR}
+      #{identity,jdbcType=VARCHAR}, #{isAbleLogin,jdbcType=INTEGER}, #{leaderId,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.User" >
@@ -235,7 +226,7 @@
         #{major,jdbcType=VARCHAR},
       </if>
       <if test="identity != null" >
-        #{identity,jdbcType=INTEGER},
+        #{identity,jdbcType=VARCHAR},
       </if>
       <if test="isAbleLogin != null" >
         #{isAbleLogin,jdbcType=INTEGER},
@@ -282,7 +273,7 @@
         major = #{record.major,jdbcType=VARCHAR},
       </if>
       <if test="record.identity != null" >
-        identity = #{record.identity,jdbcType=INTEGER},
+        identity = #{record.identity,jdbcType=VARCHAR},
       </if>
       <if test="record.isAbleLogin != null" >
         is_able_login = #{record.isAbleLogin,jdbcType=INTEGER},
@@ -306,7 +297,7 @@
       mail = #{record.mail,jdbcType=VARCHAR},
       position = #{record.position,jdbcType=VARCHAR},
       major = #{record.major,jdbcType=VARCHAR},
-      identity = #{record.identity,jdbcType=INTEGER},
+      identity = #{record.identity,jdbcType=VARCHAR},
       is_able_login = #{record.isAbleLogin,jdbcType=INTEGER},
       leader_id = #{record.leaderId,jdbcType=VARCHAR}
     <if test="_parameter != null" >
@@ -341,7 +332,7 @@
         major = #{major,jdbcType=VARCHAR},
       </if>
       <if test="identity != null" >
-        identity = #{identity,jdbcType=INTEGER},
+        identity = #{identity,jdbcType=VARCHAR},
       </if>
       <if test="isAbleLogin != null" >
         is_able_login = #{isAbleLogin,jdbcType=INTEGER},
@@ -362,12 +353,48 @@
       mail = #{mail,jdbcType=VARCHAR},
       position = #{position,jdbcType=VARCHAR},
       major = #{major,jdbcType=VARCHAR},
-      identity = #{identity,jdbcType=INTEGER},
+      identity = #{identity,jdbcType=VARCHAR},
       is_able_login = #{isAbleLogin,jdbcType=INTEGER},
       leader_id = #{leaderId,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
-
+  <select id="selectExpertInfoList" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select <include refid="Base_Column_List"/>
+    from tbl_User
+    where instr('3',rtrim(identity)) > 0 and is_able_login = 1
+  </select>
+    <select id="selectLeaderInfoList" resultMap="LeaderMap" parameterType="java.lang.String">
+        select <include refid="Leader_Info_List"/>
+        from tbl_User
+        where instr('4',rtrim(identity)) > 0 and is_able_login = 1
+    </select>
+  <select id="selectUserInfoByUserId" resultMap="UserInfoMap" parameterType="java.lang.String">
+    select
+    <include refid="User_Info_List"/>
+    from tbl_User
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAllUserInfo" resultMap="UserInfoMap" parameterType="java.lang.Integer">
+    select
+    <include refid="User_Info_List"/>
+    from tbl_User
+    where user_id is not null
+    limit #{page},10
+  </select>
+  <select id="selectFinalProgressByLeaderId" resultMap="FinalProgressInfo" parameterType="java.lang.String">
+    select b.project_category_id,project_category_name,
+    project_application_id,project_name,project_description,
+    a.user_id,user_name,department,project_progress_id,
+    project_application_upload_address,concluding_report_end_time
+    from tbl_User as a,tbl_ProjectApplication as b,
+         tbl_ProjectProgress as c,tbl_ProjectCategory as d
+    where c.project_progress_id = b.project_application_id
+          and a.user_id = b.user_id
+          and a.user_id = c.user_id
+          and d.project_category_id = b.project_category_id
+          and d.review_leader_id = #{leaderId,jdbcType=VARCHAR}
+          and c.project_process = 3
+  </select>
   <select id="countJudgePassProject" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from tbl_ProjectApplication as a,tbl_ProjectProgress as b
@@ -375,7 +402,6 @@
           and a.project_application_id = b.project_progress_id
           and (review_phase = 5 or project_process = 4)
   </select>
-
   <select id="countJudgeFailProject" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from tbl_ProjectApplication as a,tbl_ProjectProgress as b
@@ -383,14 +409,12 @@
           and a.project_application_id = b.project_progress_id
           and (review_phase = 6 or project_process = 5)
   </select>
-
   <select id="countOneJudgeProject" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from tbl_ProjectApplication
     where review_leader_id = #{leaderId,jdbcType=VARCHAR}
           and review_phase = 4
   </select>
-
   <select id="countFinalJudgeProject" resultType="java.lang.Integer" parameterType="java.lang.String">
     select count(*)
     from tbl_ProjectCategory as a,tbl_ProjectProgress as b
@@ -398,7 +422,6 @@
           and a.project_category_id = b.project_category_id
           and b.project_process = 4
   </select>
-
   <select id="countByProjectType" resultType="java.lang.Integer">
     select count(*)
     from tbl_ProjectCategory as a,tbl_ProjectApplication as b
@@ -406,5 +429,4 @@
           and a.review_leader_id = #{leaderId,jdbcType=VARCHAR}
           and a.project_type = #{type,jdbcType=INTEGER}
   </select>
-
 </mapper>

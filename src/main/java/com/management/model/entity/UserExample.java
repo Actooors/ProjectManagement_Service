@@ -744,52 +744,62 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdentityEqualTo(Integer value) {
+        public Criteria andIdentityEqualTo(String value) {
             addCriterion("identity =", value, "identity");
             return (Criteria) this;
         }
 
-        public Criteria andIdentityNotEqualTo(Integer value) {
+        public Criteria andIdentityNotEqualTo(String value) {
             addCriterion("identity <>", value, "identity");
             return (Criteria) this;
         }
 
-        public Criteria andIdentityGreaterThan(Integer value) {
+        public Criteria andIdentityGreaterThan(String value) {
             addCriterion("identity >", value, "identity");
             return (Criteria) this;
         }
 
-        public Criteria andIdentityGreaterThanOrEqualTo(Integer value) {
+        public Criteria andIdentityGreaterThanOrEqualTo(String value) {
             addCriterion("identity >=", value, "identity");
             return (Criteria) this;
         }
 
-        public Criteria andIdentityLessThan(Integer value) {
+        public Criteria andIdentityLessThan(String value) {
             addCriterion("identity <", value, "identity");
             return (Criteria) this;
         }
 
-        public Criteria andIdentityLessThanOrEqualTo(Integer value) {
+        public Criteria andIdentityLessThanOrEqualTo(String value) {
             addCriterion("identity <=", value, "identity");
             return (Criteria) this;
         }
 
-        public Criteria andIdentityIn(List<Integer> values) {
+        public Criteria andIdentityLike(String value) {
+            addCriterion("identity like", value, "identity");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentityNotLike(String value) {
+            addCriterion("identity not like", value, "identity");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdentityIn(List<String> values) {
             addCriterion("identity in", values, "identity");
             return (Criteria) this;
         }
 
-        public Criteria andIdentityNotIn(List<Integer> values) {
+        public Criteria andIdentityNotIn(List<String> values) {
             addCriterion("identity not in", values, "identity");
             return (Criteria) this;
         }
 
-        public Criteria andIdentityBetween(Integer value1, Integer value2) {
+        public Criteria andIdentityBetween(String value1, String value2) {
             addCriterion("identity between", value1, value2, "identity");
             return (Criteria) this;
         }
 
-        public Criteria andIdentityNotBetween(Integer value1, Integer value2) {
+        public Criteria andIdentityNotBetween(String value1, String value2) {
             addCriterion("identity not between", value1, value2, "identity");
             return (Criteria) this;
         }

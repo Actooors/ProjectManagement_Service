@@ -53,7 +53,6 @@ public class AdminServiceImpl implements AdminService {
     private static final int REVIEW_FAILED = 6;
     private static final int LEADER_REVIEW = 4;
     private static final int EXPERT_NOT_FINISH = 2;
-    private static final int EXPERT_IDENTITY = 3;
     private static final int FINISH_APPLICATION = 5;
     private static final int ADMIN_INDEX = 8;
     /**
@@ -66,10 +65,10 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Result createProjectCategory(User adminUser, ProjectCategoryInfo projectCategoryInfo) {
         /*将字符串时间格式转化为Date时间类型*/
-        Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
-        Date applicationEndTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationEndTime());
-        Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
-        Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
+        Date applicationStartTime = TimeTool.stringToTime1(projectCategoryInfo.getApplicationStartTime());
+        Date applicationEndTime = TimeTool.stringToTime1(projectCategoryInfo.getApplicationEndTime());
+        Date projectStartTime = TimeTool.stringToTime1(projectCategoryInfo.getProjectStartTime());
+        Date projectEndTime = TimeTool.stringToTime1(projectCategoryInfo.getProjectEndTime());
         String uuid = UUID.randomUUID().toString();
         /*根据业务员id查询到业务员的信息及专家的id*/
         ProjectCategory projectCategory = new ProjectCategory();
@@ -247,22 +246,13 @@ public class AdminServiceImpl implements AdminService {
         try {
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
-            //projectCategory.setProjectApplicationDownloadAddress(projectCategoryInfo.getProjectApplicationDownloadAddress());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
-//            List applicationTypeList = projectCategoryInfo.getApplicantType();
-//            projectCategory.setApplicantType(String.join('|',projectCategoryInfo.getApplicantType()));
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
-            projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
-            if(projectCategoryInfo.getIsExistMeetingReview().equals(true))
-                projectCategory.setIsExistMeetingReview(1);
-            else
-                projectCategory.setIsExistMeetingReview(2);
             projectCategory.setApplicationStartTime(applicationStartTime);
             projectCategory.setApplicationEndTime(applicationEndTime);
             projectCategory.setProjectStartTime(projectStartTime);
             projectCategory.setProjectEndTime(projectEndTime);
             projectCategoryMapper.updateByPrimaryKey(projectCategory);
-
             Result result = ResultTool.success();
             result.setMessage("成功");
             return result;
@@ -451,10 +441,8 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Result findExpertList() {
-        UserExample example = new UserExample();
-        example.createCriteria()
-                .andIdentityEqualTo(EXPERT_IDENTITY);
-        List<User> list = userMapper.selectByExample(example);
+        //调用usermapper方法查询到专家列表
+        List<User> list = userMapper.selectExpertInfoList("3");
         List<ExpertListInfo> resList = new LinkedList<>();
         for (User user : list) {
             ExpertListInfo res = new ExpertListInfo();

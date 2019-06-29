@@ -62,7 +62,7 @@ public class UserServiceImpl implements UserService {
      * @Author: ggmr
      * @Date: 18-7-29
      */
-    private LoginResponse setLoginResponse(String userId, Integer identity,
+    private LoginResponse setLoginResponse(String userId, String identity,
                                            String userName) {
         LoginResponse response = new LoginResponse();
         response.setToken(jwtUtil.createJwt(userId, identity));
@@ -86,7 +86,17 @@ public class UserServiceImpl implements UserService {
                 || "".equals(loginUser.getPassword()) || loginUser.getPassword() == null) {
             return ResultTool.error("账号或密码不能为空");
         }
-        User existedUser = userMapper.selectByPrimaryKey(loginUser.getUserId());
+
+        User existedUser = new User();
+        try{
+            existedUser = userMapper.selectByPrimaryKey(loginUser.getUserId());
+            if(existedUser.getIsAbleLogin() == 2){
+                return ResultTool.error("您的账号已经冻结,请联系管理员!");
+            }
+        }catch(Exception e){
+            existedUser = null;
+        }
+
 
         //如果该账户在数据库已经存在
         if (existedUser != null) {
@@ -111,13 +121,13 @@ public class UserServiceImpl implements UserService {
                 String pwd = loginUser.getPassword();
                 //如果返回了newUser，说明操作正常
                 if (newUser != null) {
-                    newUser.setIdentity(1);
+                    newUser.setIdentity("1");
                     newUser.setIsAbleLogin(1);
                     newUser.setPassword(MD5Tool.getMD5(pwd));
                     userMapper.insert(newUser);
 
                     return ResultTool.success(setLoginResponse(loginUser.getUserId(),
-                            1, newUser.getUserName()));
+                            "1", newUser.getUserName()));
                     //如果没有得到newUser，说明验证异常
                 } else {
                     return ResultTool.error("验证过程中发生异常,一般是由于工号/学号无效!");
@@ -128,58 +138,6 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-    }
-
-    /**
-     * @Description: waitJudgeProjectList接口的实现
-     * @Param: [leaderId]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-8-15
-     */
-    @Override
-    public Result waitJudgeProjectList(String projectCategoryId, Integer type) {
-        ProjectApplicationExample pExample = new ProjectApplicationExample();
-        pExample.createCriteria()
-                .andProjectCategoryIdEqualTo(projectCategoryId)
-                .andReviewPhaseEqualTo(type);
-        List<ProjectApplication> list = projectApplicationMapper.selectByExample(pExample);
-        if (list.isEmpty()) {
-            return ResultTool.error("当前并没有需要审核的项目");
-        }
-        List<WaitJudgeProjectInfo> resList = new LinkedList<>();
-        for (ProjectApplication projectApplication : list) {
-            WaitJudgeProjectInfo res = new WaitJudgeProjectInfo();
-            res.setDescription(projectApplication.getProjectDescription());
-            res.setProjectId(projectApplication.getProjectApplicationId());
-            res.setProjectName(projectApplication.getProjectName());
-            resList.add(res);
-        }
-        return ResultTool.success(resList);
-    }
-
-    /**
-     * @Description: projectJudgeResult接口的实现
-     * @Param: [projectId, info]
-     * @Return: com.management.model.ov.Result
-     * @Author: ggmr
-     * @Date: 18-8-15
-     */
-    @Override
-    public Result projectJudgeResult(IsProjectPassedPostInfo info) {
-        ProjectApplication projectApplication = projectApplicationMapper.selectByPrimaryKey(info.getProjectId());
-        if (projectApplication == null) {
-            return ResultTool.error("不存在这个id的项目");
-        }
-        int judge = info.getIsPassed();
-        if (judge == STATE_TWO) {
-            projectApplication.setFailureReason(info.getMessage());
-            projectApplication.setReviewPhase(REVIEW_FAILED);
-        } else {
-            projectApplication.setReviewPhase(projectApplication.getReviewPhase() + 1);
-        }
-        projectApplicationMapper.updateByPrimaryKeySelective(projectApplication);
-        return ResultTool.success();
     }
 
 
@@ -328,20 +286,17 @@ public class UserServiceImpl implements UserService {
             //查询到相应的项目大类
             ProjectCategory projectCategory = projectCategoryMapper
                     .selectByPrimaryKey(application.getProjectCategoryId());
-            //查询立项之前的项目申请
-            if(application.getReviewPhase() == 7 || application.getReviewPhase() < REVIEW_LAST_PHASE || application.getReviewPhase() == 8) {
-                ProjectTotalInfo res = new ProjectTotalInfo();
-                res.setTime(TimeTool.timeToString1(application.getApplicationTime()));
-                res.setProjectApplicationId(application.getProjectApplicationId());
-                res.setProjectName(application.getProjectName());
-                res.setReviewPhase(ConstCorrespond
-                        .reviewPhrase[application.getReviewPhase()]);
-                res.setDescription(application.getProjectDescription());
-                res.setProjectCategoryId(projectCategory.getProjectCategoryId());
-                res.setType(ConstCorrespond
-                        .PROJECT_TYPE[projectCategory.getProjectType()]);
-                resList.add(res);
-            }
+            ProjectTotalInfo res = new ProjectTotalInfo();
+            res.setTime(TimeTool.timeToString1(application.getApplicationTime()));
+            res.setProjectApplicationId(application.getProjectApplicationId());
+            res.setProjectName(application.getProjectName());
+            res.setReviewPhase(ConstCorrespond
+                    .reviewPhrase[application.getReviewPhase()]);
+            res.setDescription(application.getProjectDescription());
+            res.setProjectCategoryId(projectCategory.getProjectCategoryId());
+            res.setType(ConstCorrespond
+                    .PROJECT_TYPE[projectCategory.getProjectType()]);
+            resList.add(res);
         }
         return ResultTool.success(resList);
     }
@@ -650,4 +605,24 @@ public class UserServiceImpl implements UserService {
             return ResultTool.error("查询失败");
         }
     }
+
+    /**
+     * @Description: 用户修改密码
+     * @Param:
+     * @Return:
+     * @Author: xw
+     * @Date: 19-3-22
+     */
+    public Result updatePassword(UpdateOrInsertUser updateOrInsertUser){
+        try {
+            User user = userMapper.selectByPrimaryKey(updateOrInsertUser.getUserId());
+            user.setPassword(MD5Tool.getMD5(updateOrInsertUser.getPassword()));
+            userMapper.updateByPrimaryKey(user);
+            return ResultTool.success();
+        }catch (Exception e){
+            return ResultTool.error("修改失败!请联系开发人员!");
+        }
+    }
+
+
 }

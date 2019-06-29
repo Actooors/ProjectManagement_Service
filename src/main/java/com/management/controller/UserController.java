@@ -129,4 +129,12 @@ public class UserController {
         return userService.queryFailProject(userId);
     }
 
+    @PostMapping("/updatePassword")
+    @ApiOperation(value = "用户修改密码")
+    public Result updatePassword(@RequestBody UpdateOrInsertUser updateOrInsertUser){
+        return userService.updatePassword(updateOrInsertUser);
+    }
+
+
+
 }

@@ -18,14 +18,14 @@ public class JwtUser implements UserDetails {
 
     private String userId; // 用户工号
     private String password; // 用户密码
-    private Integer identity; //用户身份的数字
+    private String identity; //用户身份的数字
     private final Collection<? extends GrantedAuthority> authorities;  //用户角色权限
     private final Boolean isAccountNonExpired;       //账号是否过期
     private final Boolean isAccountNonLocked;        //账户是否锁定
     private final Boolean isCredentialsNonExpired;   //密码是否过期
     private final Boolean enabled;                   //是否激活
 
-    JwtUser(String userId, String password, Integer identity,
+    JwtUser(String userId, String password, String identity,
             Collection<? extends GrantedAuthority> authorities) {
 
         this.userId = userId;

@@ -15,11 +15,11 @@
     <result column="is_able_login" property="isAbleLogin" jdbcType="INTEGER" />
     <result column="leader_id" property="leaderId" jdbcType="VARCHAR" />
   </resultMap>
-    <resultMap id="LeaderMap" type="com.management.model.entity.LeaderInfo">
-        <id column="user_id" property="userId" jdbcType="VARCHAR" />
-        <result column="user_name" property="userName" jdbcType="VARCHAR" />
-        <result column="department" property="department" jdbcType="VARCHAR" />
-    </resultMap>
+  <resultMap id="LeaderMap" type="com.management.model.entity.LeaderInfo">
+    <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="department" property="department" jdbcType="VARCHAR" />
+  </resultMap>
   <resultMap id="UserInfoMap" type="com.management.model.entity.UserBaseInfo" >
     <result column="user_id" property="userId" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
@@ -111,9 +111,9 @@
   <sql id="User_Info_List">
     user_id, user_name, sex, department, phone, mail, position, major,is_able_login,identity,leader_id
   </sql>
-    <sql id="Leader_Info_List">
-        user_id,user_name,department
-    </sql>
+  <sql id="Leader_Info_List">
+      user_id,user_name,department
+  </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.UserExample" >
     select
     <if test="distinct" >
@@ -361,13 +361,13 @@
   <select id="selectExpertInfoList" resultMap="BaseResultMap" parameterType="java.lang.String">
     select <include refid="Base_Column_List"/>
     from tbl_User
-    where instr('3',rtrim(identity)) > 0 and is_able_login = 1
+    where identity like "%3%" and is_able_login = 1
   </select>
-    <select id="selectLeaderInfoList" resultMap="LeaderMap" parameterType="java.lang.String">
-        select <include refid="Leader_Info_List"/>
-        from tbl_User
-        where instr('4',rtrim(identity)) > 0 and is_able_login = 1
-    </select>
+  <select id="selectLeaderInfoList" resultMap="LeaderMap" parameterType="java.lang.String">
+      select <include refid="Leader_Info_List"/>
+      from tbl_User
+      where identity like "%4%" and is_able_login = 1
+  </select>
   <select id="selectUserInfoByUserId" resultMap="UserInfoMap" parameterType="java.lang.String">
     select
     <include refid="User_Info_List"/>

@@ -128,8 +128,10 @@ public class SuperAdminServiceImpl implements SuperAdminService {
                 identity = identity + "|" + getIdentity(updateOrInsertUser.getIdentity().get(i));
             }
             user.setIdentity(identity);
-            user.setLeaderId(updateOrInsertUser.getLeader());
-            userMapper.updateByPrimaryKey(user);
+            if(user.getLeaderId() != null) {
+                user.setLeaderId(updateOrInsertUser.getLeader());
+            }
+            userMapper.updateByPrimaryKeySelective(user);
             return ResultTool.success();
         }catch (Exception e){
             return ResultTool.error("操作失败!请联系开发人员!");

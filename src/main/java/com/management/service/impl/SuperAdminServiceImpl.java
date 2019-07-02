@@ -14,6 +14,7 @@ import com.management.model.ov.resultsetting.ConstCorrespond;
 import com.management.service.SuperAdminService;
 import com.management.tools.MD5Tool;
 import com.management.tools.ResultTool;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +28,7 @@ import java.util.List;
  * @create: 2019-05-11 00:17
  */
 @Service
+@Slf4j
 public class SuperAdminServiceImpl implements SuperAdminService {
 
     @Resource
@@ -128,7 +130,8 @@ public class SuperAdminServiceImpl implements SuperAdminService {
                 identity = identity + "|" + getIdentity(updateOrInsertUser.getIdentity().get(i));
             }
             user.setIdentity(identity);
-            if(user.getLeaderId() != null) {
+//            log.info(updateOrInsertUser.getLeader());
+            if(updateOrInsertUser.getLeader() != null) {
                 user.setLeaderId(updateOrInsertUser.getLeader());
             }
             userMapper.updateByPrimaryKeySelective(user);

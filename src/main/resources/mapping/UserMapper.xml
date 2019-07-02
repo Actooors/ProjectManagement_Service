@@ -3,7 +3,6 @@
 <mapper namespace="com.management.dao.UserMapper" >
   <resultMap id="BaseResultMap" type="com.management.model.entity.User" >
     <id column="user_id" property="userId" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="department" property="department" jdbcType="VARCHAR" />
@@ -105,7 +104,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, password, user_name, sex, department, phone, mail, position, major, identity, 
+    user_id, user_name, sex, department, phone, mail, position, major, identity,
     is_able_login, leader_id
   </sql>
   <sql id="User_Info_List">
@@ -146,12 +145,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.management.model.entity.User" >
-    insert into tbl_User (user_id, password, user_name, 
+    insert into tbl_User (user_id, user_name,
       sex, department, phone, 
       mail, position, major, 
       identity, is_able_login, leader_id
       )
-    values (#{userId,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR},
       #{sex,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
       #{mail,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, 
       #{identity,jdbcType=VARCHAR}, #{isAbleLogin,jdbcType=INTEGER}, #{leaderId,jdbcType=VARCHAR}
@@ -162,9 +161,6 @@
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
         user_id,
-      </if>
-      <if test="password != null" >
-        password,
       </if>
       <if test="userName != null" >
         user_name,
@@ -200,9 +196,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
         #{userId,jdbcType=VARCHAR},
-      </if>
-      <if test="password != null" >
-        #{password,jdbcType=VARCHAR},
       </if>
       <if test="userName != null" >
         #{userName,jdbcType=VARCHAR},
@@ -248,9 +241,6 @@
       <if test="record.userId != null" >
         user_id = #{record.userId,jdbcType=VARCHAR},
       </if>
-      <if test="record.password != null" >
-        password = #{record.password,jdbcType=VARCHAR},
-      </if>
       <if test="record.userName != null" >
         user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
@@ -289,7 +279,6 @@
   <update id="updateByExample" parameterType="map" >
     update tbl_User
     set user_id = #{record.userId,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
       sex = #{record.sex,jdbcType=VARCHAR},
       department = #{record.department,jdbcType=VARCHAR},
@@ -307,9 +296,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.management.model.entity.User" >
     update tbl_User
     <set >
-      <if test="password != null" >
-        password = #{password,jdbcType=VARCHAR},
-      </if>
       <if test="userName != null" >
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
@@ -345,8 +331,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.management.model.entity.User" >
     update tbl_User
-    set password = #{password,jdbcType=VARCHAR},
-      user_name = #{userName,jdbcType=VARCHAR},
+    set user_name = #{userName,jdbcType=VARCHAR},
       sex = #{sex,jdbcType=VARCHAR},
       department = #{department,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},

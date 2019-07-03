@@ -354,12 +354,12 @@ public class UserServiceImpl implements UserService {
                         if(!InterimReportStartTime.before(nowTime)) {
                             info.setStatus(3);
                         } else if(InterimReportEndTime.after(nowTime)) {
-                            info.setReportAddress(projectCategory.getInterimReportDownloadAddress());
                             info.setStatus(1);
                         } else {
                             info.setStatus(2);
                         }
                     }
+                    info.setReportAddress(projectCategory.getInterimReportDownloadAddress());
                     info.setTime(timetoString(InterimReportEndTime));
                     if(progress.getIsFinishedInterimReport() == 1) {
                         info.setIsFinished(true);
@@ -380,12 +380,12 @@ public class UserServiceImpl implements UserService {
                         if(!ConcludingReportStartTime.before(nowTime)) {
                             info.setStatus(3);
                         } else if(ConcludingReportEndTime.after(nowTime)) {
-                            info.setReportAddress(projectCategory.getConcludingReportDownloadAddress());
                             info.setStatus(1);
                         } else {
                             info.setStatus(2);
                         }
                     }
+                    info.setReportAddress(projectCategory.getConcludingReportDownloadAddress());
                     info.setTime(timetoString(ConcludingReportEndTime));
                     if(progress.getIsFinishedConcludingReport() == 1) {
                         info.setIsFinished(true);

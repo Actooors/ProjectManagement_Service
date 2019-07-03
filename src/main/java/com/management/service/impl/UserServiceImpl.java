@@ -6,6 +6,7 @@ import com.management.model.jsonrequestbody.*;
 import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.*;
 import com.management.model.ov.resultsetting.ProjectCategoryInfo;
+import com.management.security.UserContext;
 import com.management.service.UserService;
 import com.management.tools.*;
 import org.springframework.stereotype.Service;
@@ -227,6 +228,13 @@ public class UserServiceImpl implements UserService {
         if(membersList.isEmpty()) {
             return ResultTool.error("没有申报人");
         }
+        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectApplicationInfo.getProjectCategoryId());
+        String userId = UserContext.getCurrentUser().getUserId();
+        // 1老师 2学生
+        if(projectCategory.getApplicantType().equals("1") && !userId.startsWith("1000")
+                || projectCategory.getApplicantType().equals("2") && userId.startsWith("1000")) {
+            return ResultTool.error("您不能申请这个项目");
+        }
         ProjectApplication res = new ProjectApplication();
         String uuid = UUID.randomUUID().toString();
         res.setProjectApplicationId(uuid);
@@ -238,7 +246,6 @@ public class UserServiceImpl implements UserService {
         res.setProjectApplicationUploadAddress(projectApplicationInfo.getUploadAddress());
         res.setReviewPhase(1);
         res.setProjectMoney(projectApplicationInfo.getProjectMoney());
-        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(projectApplicationInfo.getProjectCategoryId());
         res.setReviewPrincipalId(projectCategory.getPrincipalId());
         res.setReviewLeaderId(projectCategory.getReviewLeaderId());
         //1上会2不上

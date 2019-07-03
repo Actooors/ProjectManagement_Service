@@ -63,7 +63,7 @@ public class AdminServiceImpl implements AdminService {
      * @Date: 18-7-30d
      */
     @Override
-    public Result createProjectCategory(User adminUser, ProjectCategoryInfo projectCategoryInfo) {
+    public Result createProjectCategory(User  adminUser, ProjectCategoryInfo projectCategoryInfo) {
         /*将字符串时间格式转化为Date时间类型*/
         Date applicationStartTime = TimeTool.stringToTime1(projectCategoryInfo.getApplicationStartTime());
         Date applicationEndTime = TimeTool.stringToTime1(projectCategoryInfo.getApplicationEndTime());
@@ -84,6 +84,7 @@ public class AdminServiceImpl implements AdminService {
             StringBuilder applicantType = new StringBuilder();
             List<Integer> applicantList = projectCategoryInfo.getApplicantType();
             int cou = applicantList.size();
+            // 学生和老师
             for (int i = 0; i < cou; i++) {
                 applicantType.append(applicantList.get(i));
                 if (i != cou - 1) {

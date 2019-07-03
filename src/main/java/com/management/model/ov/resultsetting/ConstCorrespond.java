@@ -10,19 +10,14 @@ public class ConstCorrespond {
     //这个第一个为空是有说法的，请勿删除
     public final static String[] PROJECT_TYPE = {
             "",
-            "经济管理类",
-            "人文哲学类",
-            "计算科学类",
-            "生物化学类"
+            "信息化开放课题(仅老师)",
+            "信息技术研究项目(仅学生)"
     };
 
     public final static String[] APPLICAN_TYPE = {
             "",
-            "本科生",
-            "研究生",
-            "博士生",
-            "研究员",
-            "教授"
+            "老师",
+            "学生"
     };
 
     public final static String[] reviewPhrase = {

@@ -141,7 +141,7 @@ public class AdminServiceImpl implements AdminService {
                 Arrays.asList(applicantTypeArray));
         res.setApplicantType(applicantTypeTrueList);
         res.setMaxMoney(projectCategory.getMaxMoney());
-        res.setProjectApplicationDownloadAddress(projectCategory
+        res.setProjectApplicationDownloadAddress(ConstCorrespond.downloadAddress + projectCategory
                 .getProjectApplicationDownloadAddress());
         res.setIsExistMeetingReview(projectCategory.getIsExistMeetingReview());
         res.setApplicationStartTime(timetoString(projectCategory
@@ -160,7 +160,7 @@ public class AdminServiceImpl implements AdminService {
             interimInfo.setIsReportActivated(true);
             interimInfo.setStartTime(timetoString(projectCategory
                     .getInterimReportStartTime()));
-            interimInfo.setReportTemplateAddress(projectCategory
+            interimInfo.setReportTemplateAddress(ConstCorrespond.downloadAddress + projectCategory
                     .getInterimReportDownloadAddress());
             res.setInterimReport(interimInfo);
         } else {
@@ -175,7 +175,7 @@ public class AdminServiceImpl implements AdminService {
             concludingInfo.setIsReportActivated(true);
             concludingInfo.setStartTime(timetoString(projectCategory
                     .getConcludingReportStartTime()));
-            concludingInfo.setReportTemplateAddress(projectCategory
+            concludingInfo.setReportTemplateAddress(ConstCorrespond.downloadAddress + projectCategory
                     .getConcludingReportDownloadAddress());
             res.setConcludingReport(concludingInfo);
         } else {

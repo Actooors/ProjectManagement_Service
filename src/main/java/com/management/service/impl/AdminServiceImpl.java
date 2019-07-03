@@ -245,10 +245,10 @@ public class AdminServiceImpl implements AdminService {
         Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
         Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
         try {
-            projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
+//            projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
-            projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
+//            projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setApplicationStartTime(applicationStartTime);
             projectCategory.setApplicationEndTime(applicationEndTime);
             projectCategory.setProjectStartTime(projectStartTime);

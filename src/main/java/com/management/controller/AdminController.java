@@ -132,7 +132,7 @@ public class AdminController {
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LEADER')")
     @PostMapping("/expertTrial")
-    @ApiOperation(value = "业务员初审项目")
+    @ApiOperation(value = "业务员通过评审专家审核")
     public Result adminExpertTrail(@RequestBody SecondJudgeInfo info) {
 
         return adminService.secondJudge(info);

@@ -13,4 +13,5 @@ public class SecondJudgeInfo {
     private String applicationId;//new
     private Boolean judge;
     private String msg;
+    private Integer projectMoney;
 }

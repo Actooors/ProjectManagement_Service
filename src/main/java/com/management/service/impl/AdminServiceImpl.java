@@ -373,6 +373,9 @@ public class AdminServiceImpl implements AdminService {
             if (res.getIsMeeting() == 1) {
                 res.setReviewPhase(MEETING_REVIEW);
             } else {
+                if(info.getProjectMoney() != null){
+                    res.setProjectMoney(info.getProjectMoney());
+                }
                 res.setReviewPhase(LEADER_REVIEW);
             }
         } else {

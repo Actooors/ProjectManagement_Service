@@ -50,6 +50,7 @@ create table tbl_ProjectCategory (
   is_approved int comment '项目是否通过审核
                           1通过 2未通过',
   failure_reason varchar(256) comment '申请失败的时候的失败原因',
+  mission_address varchar(256) comment '任务书下载地址'
   modify_frequency int(11)
 
 ) comment '业务员开通项目大类表'

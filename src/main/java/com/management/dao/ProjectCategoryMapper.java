@@ -30,6 +30,7 @@ public interface ProjectCategoryMapper {
 
     int updateByPrimaryKey(ProjectCategory record);
 
+
     //获取可申报项目ApplicationEndTime>NowTime
     List<ProjectCategory> selectCanProjectCategory(Date time);
 }

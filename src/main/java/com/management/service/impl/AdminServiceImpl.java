@@ -73,6 +73,8 @@ public class AdminServiceImpl implements AdminService {
         /*根据业务员id查询到业务员的信息及专家的id*/
         ProjectCategory projectCategory = new ProjectCategory();
         try {
+            // 新增任务书模板
+            projectCategory.setMissionAddress(projectCategoryInfo.getProjectIndex());
             projectCategory.setProjectCategoryId(uuid);
             projectCategory.setReviewLeaderId(adminUser.getLeaderId());
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
@@ -479,6 +481,7 @@ public class AdminServiceImpl implements AdminService {
                 if (applicationList.isEmpty()) continue;
                 for (ProjectApplication application : applicationList) {
                     AdminJudgeTotalInfo res = new AdminJudgeTotalInfo();
+                    res.setHasMeeting(category.getIsExistMeetingReview() == 1);
                     res.setApplicationDeadLine(timetoString(category.getApplicationEndTime()));
                     res.setProjectCategoryId(category.getProjectCategoryId());
                     res.setProjectCategoryName(category.getProjectCategoryName());

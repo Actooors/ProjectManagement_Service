@@ -12,5 +12,4 @@ import lombok.Data;
 public class ProjectIndex {
     private String projectApplicationId;//new
     private String projectIndex;
-    private Integer projectMoney;
 }

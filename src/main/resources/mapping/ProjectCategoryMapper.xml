@@ -29,6 +29,7 @@
     <result column="statistics" property="statistics" jdbcType="INTEGER" />
     <result column="is_approved" property="isApproved" jdbcType="INTEGER" />
     <result column="failure_reason" property="failureReason" jdbcType="VARCHAR" />
+    <result column="mission_address" property="missionAddress" jdbcType="VARCHAR" />
     <result column="modify_frequency" property="modifyFrequency" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
@@ -96,7 +97,8 @@
     application_end_time, project_start_time, project_end_time, is_interim_report_activated, 
     interim_report_start_time, interim_report_end_time, interim_report_download_address, 
     is_concluding_report_activated, concluding_report_start_time, concluding_report_end_time, 
-    concluding_report_download_address, statistics, is_approved, failure_reason, modify_frequency
+    concluding_report_download_address, statistics, is_approved, failure_reason, mission_address, 
+    modify_frequency
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.management.model.entity.ProjectCategoryExample" >
     select
@@ -109,20 +111,15 @@
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
-    order by project_type
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from tbl_ProjectCategory
     where project_category_id = #{projectCategoryId,jdbcType=VARCHAR}
-  </select>
-  <select id="selectCanProjectCategory" resultMap="BaseResultMap" parameterType="java.util.Date">
-    select
-    <include refid="Base_Column_List" />
-    from tbl_ProjectCategory
-    where application_end_time >= #{time,jdbcType=TIMESTAMP}
-    ORDER BY project_type
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tbl_ProjectCategory
@@ -146,8 +143,8 @@
       interim_report_download_address, is_concluding_report_activated, 
       concluding_report_start_time, concluding_report_end_time, 
       concluding_report_download_address, statistics, 
-      is_approved, failure_reason, modify_frequency
-      )
+      is_approved, failure_reason, mission_address, 
+      modify_frequency)
     values (#{projectCategoryId,jdbcType=VARCHAR}, #{projectCategoryName,jdbcType=VARCHAR}, 
       #{projectCategoryDescription,jdbcType=VARCHAR}, #{projectCategoryDescriptionAddress,jdbcType=VARCHAR}, 
       #{projectType,jdbcType=INTEGER}, #{principalId,jdbcType=VARCHAR}, #{principalPhone,jdbcType=VARCHAR}, 
@@ -159,8 +156,8 @@
       #{interimReportDownloadAddress,jdbcType=VARCHAR}, #{isConcludingReportActivated,jdbcType=INTEGER}, 
       #{concludingReportStartTime,jdbcType=TIMESTAMP}, #{concludingReportEndTime,jdbcType=TIMESTAMP}, 
       #{concludingReportDownloadAddress,jdbcType=VARCHAR}, #{statistics,jdbcType=INTEGER}, 
-      #{isApproved,jdbcType=INTEGER}, #{failureReason,jdbcType=VARCHAR}, #{modifyFrequency,jdbcType=INTEGER}
-      )
+      #{isApproved,jdbcType=INTEGER}, #{failureReason,jdbcType=VARCHAR}, #{missionAddress,jdbcType=VARCHAR}, 
+      #{modifyFrequency,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.management.model.entity.ProjectCategory" >
     insert into tbl_ProjectCategory
@@ -245,6 +242,9 @@
       </if>
       <if test="failureReason != null" >
         failure_reason,
+      </if>
+      <if test="missionAddress != null" >
+        mission_address,
       </if>
       <if test="modifyFrequency != null" >
         modify_frequency,
@@ -332,6 +332,9 @@
       <if test="failureReason != null" >
         #{failureReason,jdbcType=VARCHAR},
       </if>
+      <if test="missionAddress != null" >
+        #{missionAddress,jdbcType=VARCHAR},
+      </if>
       <if test="modifyFrequency != null" >
         #{modifyFrequency,jdbcType=INTEGER},
       </if>
@@ -343,7 +346,18 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+
+
+  <select id="selectCanProjectCategory" resultMap="BaseResultMap" parameterType="java.util.Date">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_ProjectCategory
+    where application_end_time >= #{time,jdbcType=TIMESTAMP}
+    ORDER BY project_type
+  </select>
+
+
+    <update id="updateByExampleSelective" parameterType="map" >
     update tbl_ProjectCategory
     <set >
       <if test="record.projectCategoryId != null" >
@@ -427,6 +441,9 @@
       <if test="record.failureReason != null" >
         failure_reason = #{record.failureReason,jdbcType=VARCHAR},
       </if>
+      <if test="record.missionAddress != null" >
+        mission_address = #{record.missionAddress,jdbcType=VARCHAR},
+      </if>
       <if test="record.modifyFrequency != null" >
         modify_frequency = #{record.modifyFrequency,jdbcType=INTEGER},
       </if>
@@ -464,6 +481,7 @@
       statistics = #{record.statistics,jdbcType=INTEGER},
       is_approved = #{record.isApproved,jdbcType=INTEGER},
       failure_reason = #{record.failureReason,jdbcType=VARCHAR},
+      mission_address = #{record.missionAddress,jdbcType=VARCHAR},
       modify_frequency = #{record.modifyFrequency,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -550,6 +568,9 @@
       <if test="failureReason != null" >
         failure_reason = #{failureReason,jdbcType=VARCHAR},
       </if>
+      <if test="missionAddress != null" >
+        mission_address = #{missionAddress,jdbcType=VARCHAR},
+      </if>
       <if test="modifyFrequency != null" >
         modify_frequency = #{modifyFrequency,jdbcType=INTEGER},
       </if>
@@ -584,6 +605,7 @@
       statistics = #{statistics,jdbcType=INTEGER},
       is_approved = #{isApproved,jdbcType=INTEGER},
       failure_reason = #{failureReason,jdbcType=VARCHAR},
+      mission_address = #{missionAddress,jdbcType=VARCHAR},
       modify_frequency = #{modifyFrequency,jdbcType=INTEGER}
     where project_category_id = #{projectCategoryId,jdbcType=VARCHAR}
   </update>

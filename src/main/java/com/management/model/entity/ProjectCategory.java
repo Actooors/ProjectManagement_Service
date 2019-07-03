@@ -57,6 +57,8 @@ public class ProjectCategory {
 
     private String failureReason;
 
+    private String missionAddress;
+
     private Integer modifyFrequency;
 
     public String getProjectCategoryId() {
@@ -273,6 +275,14 @@ public class ProjectCategory {
 
     public void setFailureReason(String failureReason) {
         this.failureReason = failureReason == null ? null : failureReason.trim();
+    }
+
+    public String getMissionAddress() {
+        return missionAddress;
+    }
+
+    public void setMissionAddress(String missionAddress) {
+        this.missionAddress = missionAddress == null ? null : missionAddress.trim();
     }
 
     public Integer getModifyFrequency() {

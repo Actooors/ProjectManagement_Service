@@ -1855,6 +1855,76 @@ public class ProjectCategoryExample {
             return (Criteria) this;
         }
 
+        public Criteria andMissionAddressIsNull() {
+            addCriterion("mission_address is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressIsNotNull() {
+            addCriterion("mission_address is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressEqualTo(String value) {
+            addCriterion("mission_address =", value, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressNotEqualTo(String value) {
+            addCriterion("mission_address <>", value, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressGreaterThan(String value) {
+            addCriterion("mission_address >", value, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressGreaterThanOrEqualTo(String value) {
+            addCriterion("mission_address >=", value, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressLessThan(String value) {
+            addCriterion("mission_address <", value, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressLessThanOrEqualTo(String value) {
+            addCriterion("mission_address <=", value, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressLike(String value) {
+            addCriterion("mission_address like", value, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressNotLike(String value) {
+            addCriterion("mission_address not like", value, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressIn(List<String> values) {
+            addCriterion("mission_address in", values, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressNotIn(List<String> values) {
+            addCriterion("mission_address not in", values, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressBetween(String value1, String value2) {
+            addCriterion("mission_address between", value1, value2, "missionAddress");
+            return (Criteria) this;
+        }
+
+        public Criteria andMissionAddressNotBetween(String value1, String value2) {
+            addCriterion("mission_address not between", value1, value2, "missionAddress");
+            return (Criteria) this;
+        }
+
         public Criteria andModifyFrequencyIsNull() {
             addCriterion("modify_frequency is null");
             return (Criteria) this;

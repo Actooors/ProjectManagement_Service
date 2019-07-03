@@ -25,4 +25,5 @@ public class AdminJudgeTotalInfo {
     private ExpertOpinionMain expertOpinion;
     private String projectMaxMoney;
     private Integer projectMoney;
+    private Boolean hasMeeting;
 }

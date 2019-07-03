@@ -551,9 +551,9 @@ public class UserServiceImpl implements UserService {
             ProjectApplication projectApplication = projectApplicationMapper
                     .selectByPrimaryKey(projectIndex.getProjectApplicationId());
             projectApplication.setProjectIndex(projectIndex.getProjectIndex());
-            if(projectApplication.getProjectMoney()!=null){
-                projectApplication.setProjectMoney(projectIndex.getProjectMoney());
-            }
+//            if(projectApplication.getProjectMoney() != null){
+//                projectApplication.setProjectMoney(projectIndex.getProjectMoney());
+//            }
             projectApplication.setReviewPhase(8);
             projectApplicationMapper.updateByPrimaryKey(projectApplication);
             return ResultTool.success();

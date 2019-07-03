@@ -294,6 +294,7 @@ public class UserServiceImpl implements UserService {
             res.setProjectName(application.getProjectName());
             res.setReviewPhase(ConstCorrespond
                     .reviewPhrase[application.getReviewPhase()]);
+            res.setMissionAddress(projectCategory.getMissionAddress());
             res.setDescription(application.getProjectDescription());
             res.setProjectCategoryId(projectCategory.getProjectCategoryId());
             res.setType(ConstCorrespond

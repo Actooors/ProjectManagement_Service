@@ -26,4 +26,5 @@ public class ProjectTotalInfo {
     private String failMessage;
     private Boolean isFinished;
     private String myAddress;
+    private String missionAddress;
 }

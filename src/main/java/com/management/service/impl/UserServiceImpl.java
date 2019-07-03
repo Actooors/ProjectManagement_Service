@@ -428,6 +428,11 @@ public class UserServiceImpl implements UserService {
         ProjectProgress resProgress = projectProgressMapper
                 .selectByPrimaryKey(applicationId);
         ProjectMoreInfo res = new ProjectMoreInfo();
+
+        ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(resApplication.getProjectCategoryId());
+        if(resApplication.getReviewPhase() == 8) {
+            res.setProjectIndex(projectCategory.getMissionAddress());
+        }
         res.setApplicationAddress(ConstCorrespond.downloadAddress +
                 resApplication.getProjectApplicationUploadAddress());
         res.setApplicationId(resApplication.getProjectApplicationId());
@@ -445,9 +450,9 @@ public class UserServiceImpl implements UserService {
         res.setDescription(resApplication.getProjectDescription());
         res.setProjectName(resApplication.getProjectName());
         res.setProjectMoney(resApplication.getProjectMoney());
-        if(resApplication.getProjectIndex() != null){
-            res.setProjectIndex(resApplication.getProjectIndex());
-        }
+//        if(resApplication.getProjectIndex() != null){
+//            res.setProjectIndex(resApplication.getProjectIndex());
+//        }
         //根据ProjectApplicationId找到项目人员
         List<ProjectMember> members = projectMemberMapper.selectByApplicationId(resApplication.getProjectApplicationId());
         List<ProjectMembers> resMembers = new LinkedList<>();

@@ -239,10 +239,10 @@ public class AdminServiceImpl implements AdminService {
                 .selectByPrimaryKey(updateProjectCategoryInfo.getProjectCategoryId());
         ProjectCategoryInfo projectCategoryInfo = updateProjectCategoryInfo.getProjectCategoryInfo();
         /*将字符串时间格式转化为Date时间类型*/
-        Date applicationStartTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationStartTime());
-        Date applicationEndTime = TimeTool.stringToTime(projectCategoryInfo.getApplicationEndTime());
-        Date projectStartTime = TimeTool.stringToTime(projectCategoryInfo.getProjectStartTime());
-        Date projectEndTime = TimeTool.stringToTime(projectCategoryInfo.getProjectEndTime());
+        Date applicationStartTime = TimeTool.stringToTime1(projectCategoryInfo.getApplicationStartTime());
+        Date applicationEndTime = TimeTool.stringToTime1(projectCategoryInfo.getApplicationEndTime());
+        Date projectStartTime = TimeTool.stringToTime1(projectCategoryInfo.getProjectStartTime());
+        Date projectEndTime = TimeTool.stringToTime1(projectCategoryInfo.getProjectEndTime());
         try {
             projectCategory.setProjectCategoryName(projectCategoryInfo.getProjectName());
             projectCategory.setProjectCategoryDescription(projectCategoryInfo.getProjectDescription());

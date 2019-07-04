@@ -19,7 +19,7 @@ public class ProjectCategoryInfo {
     private String principalPhone;
     private int projectType;
     private String projectTypeName;
-    private List<Integer> applicantType;
+    private Integer applicantType;
     private String maxMoney;
     private String projectApplicationDownloadAddress;
     private Boolean isExistMeetingReview;

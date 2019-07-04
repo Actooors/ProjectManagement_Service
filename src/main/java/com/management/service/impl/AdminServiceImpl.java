@@ -83,17 +83,17 @@ public class AdminServiceImpl implements AdminService {
             projectCategory.setPrincipalId(adminUser.getUserId());
             projectCategory.setPrincipalPhone(projectCategoryInfo.getPrincipalPhone());
             projectCategory.setProjectType(projectCategoryInfo.getProjectType());
-            StringBuilder applicantType = new StringBuilder();
-            List<Integer> applicantList = projectCategoryInfo.getApplicantType();
-            int cou = applicantList.size();
+//            StringBuilder applicantType = new StringBuilder();
+//            List<Integer> applicantList = projectCategoryInfo.getApplicantType();
+//            int cou = applicantList.size();
             // 学生和老师
-            for (int i = 0; i < cou; i++) {
-                applicantType.append(applicantList.get(i));
-                if (i != cou - 1) {
-                    applicantType.append("|");
-                }
-            }
-            projectCategory.setApplicantType(applicantType.toString());
+//            for (int i = 0; i < cou; i++) {
+//                applicantType.append(applicantList.get(i));
+//                if (i != cou - 1) {
+//                    applicantType.append("|");
+//                }
+//            }
+            projectCategory.setApplicantType(projectCategoryInfo.getApplicantType().toString());
             projectCategory.setMaxMoney(projectCategoryInfo.getMaxMoney());
             projectCategory.setProjectCategoryDescriptionAddress(projectCategoryInfo.getProjectDescriptionAddress());
             if (projectCategoryInfo.getIsExistMeetingReview().equals(true)) {

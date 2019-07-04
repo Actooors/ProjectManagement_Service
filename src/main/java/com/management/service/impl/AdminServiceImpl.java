@@ -486,7 +486,7 @@ public class AdminServiceImpl implements AdminService {
                         res.setExpertOpinion(getExpertOpinionList(application.getProjectApplicationId()));
                     }
                     if (reviewPhase == ADMIN_INDEX) {
-                        res.setIndexContent(application.getProjectIndex());
+                        res.setIndexContent(ConstCorrespond.downloadAddress + application.getProjectIndex());
                     }
                     resList.add(res);
                 }

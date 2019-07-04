@@ -149,6 +149,7 @@ public class AdminServiceImpl implements AdminService {
         res.setApplicationEndTime(timetoString(projectCategory.getApplicationEndTime()));
         res.setProjectStartTime(timetoString(projectCategory.getProjectStartTime()));
         res.setProjectEndTime(timetoString(projectCategory.getProjectEndTime()));
+        res.setProjectIndex(ConstCorrespond.downloadAddress + projectCategory.getMissionAddress());
 
         ReportInfo interimInfo = new ReportInfo();
         if (projectCategory.getIsInterimReportActivated() == 1) {

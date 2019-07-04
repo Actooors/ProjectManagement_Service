@@ -28,4 +28,5 @@ public class AdminListInfo {
     private String projectEndTime;
     private ReportInfo interimReport;
     private ReportInfo concludingReport;
+    private String projectIndex;
 }

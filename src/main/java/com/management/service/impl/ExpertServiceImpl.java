@@ -8,6 +8,7 @@ import com.management.model.entity.*;
 import com.management.model.jsonrequestbody.ExpertJudgeInfo;
 import com.management.model.jsonrequestbody.ProjectApplicationInfo;
 import com.management.model.ov.Result;
+import com.management.model.ov.resultsetting.ConstCorrespond;
 import com.management.service.ExpertService;
 import com.management.tools.ResultTool;
 import org.springframework.stereotype.Service;
@@ -73,7 +74,7 @@ public class ExpertServiceImpl implements ExpertService {
                     projectInfo.setDescription(projectApplication.getProjectDescription());
                     projectInfo.setDepartment(userBaseInfo.getDepartment());
                     projectInfo.setProjectMoney(projectApplication.getProjectMoney());
-                    projectInfo.setUploadAddress(projectApplication.getProjectApplicationUploadAddress());
+                    projectInfo.setUploadAddress(ConstCorrespond.downloadAddress + projectApplication.getProjectApplicationUploadAddress());
                     if (projectApplication.getIsMeeting() == 1) {
                         projectInfo.setIsMeeting(true);
                     } else {

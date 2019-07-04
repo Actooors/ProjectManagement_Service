@@ -294,7 +294,7 @@ public class UserServiceImpl implements UserService {
             res.setProjectName(application.getProjectName());
             res.setReviewPhase(ConstCorrespond
                     .reviewPhrase[application.getReviewPhase()]);
-            res.setMissionAddress(projectCategory.getMissionAddress());
+            res.setMissionAddress(ConstCorrespond.downloadAddress + projectCategory.getMissionAddress());
             res.setDescription(application.getProjectDescription());
             res.setProjectCategoryId(projectCategory.getProjectCategoryId());
             res.setType(ConstCorrespond
@@ -367,11 +367,11 @@ public class UserServiceImpl implements UserService {
                             info.setStatus(2);
                         }
                     }
-                    info.setReportAddress(projectCategory.getInterimReportDownloadAddress());
+                    info.setReportAddress(ConstCorrespond.downloadAddress + projectCategory.getInterimReportDownloadAddress());
                     info.setTime(timetoString(InterimReportEndTime));
                     if(progress.getIsFinishedInterimReport() == 1) {
                         info.setIsFinished(true);
-                        info.setMyAddress(progress.getInterimReportUploadAddress());
+                        info.setMyAddress(ConstCorrespond.downloadAddress + progress.getInterimReportUploadAddress());
                     } else {
                         info.setIsFinished(false);
                     }
@@ -393,11 +393,11 @@ public class UserServiceImpl implements UserService {
                             info.setStatus(2);
                         }
                     }
-                    info.setReportAddress(projectCategory.getConcludingReportDownloadAddress());
+                    info.setReportAddress(ConstCorrespond.downloadAddress + projectCategory.getConcludingReportDownloadAddress());
                     info.setTime(timetoString(ConcludingReportEndTime));
                     if(progress.getIsFinishedConcludingReport() == 1) {
                         info.setIsFinished(true);
-                        info.setMyAddress(progress.getConcludingReportUploadAddress());
+                        info.setMyAddress(ConstCorrespond.downloadAddress + progress.getConcludingReportUploadAddress());
                     } else {
                         info.setIsFinished(false);
                     }
@@ -431,7 +431,7 @@ public class UserServiceImpl implements UserService {
 
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(resApplication.getProjectCategoryId());
         if(resApplication.getReviewPhase() == 7) {
-            res.setProjectIndex(projectCategory.getMissionAddress());
+            res.setProjectIndex(ConstCorrespond.downloadAddress + projectCategory.getMissionAddress());
         }
         res.setApplicationAddress(ConstCorrespond.downloadAddress +
                 resApplication.getProjectApplicationUploadAddress());

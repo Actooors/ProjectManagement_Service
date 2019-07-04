@@ -130,8 +130,7 @@ public class AdminServiceImpl implements AdminService {
         res.setProjectName(projectCategory.getProjectCategoryName());
         res.setProjectDescription(projectCategory
                 .getProjectCategoryDescription());
-        res.setProjectDescriptionAddress(projectCategory
-                .getProjectCategoryDescriptionAddress());
+        res.setProjectDescriptionAddress(projectCategory.getProjectCategoryDescriptionAddress());
         res.setPrincipalPhone(projectCategory.getPrincipalPhone());
         res.setProjectType(ConstCorrespond.PROJECT_TYPE[projectCategory.getProjectType()]);
         String[] applicantTypeArray = projectCategory.getApplicantType().split("\\|");
@@ -144,27 +143,19 @@ public class AdminServiceImpl implements AdminService {
                 Arrays.asList(applicantTypeArray));
         res.setApplicantType(applicantTypeTrueList);
         res.setMaxMoney(projectCategory.getMaxMoney());
-        res.setProjectApplicationDownloadAddress(ConstCorrespond.downloadAddress + projectCategory
-                .getProjectApplicationDownloadAddress());
+        res.setProjectApplicationDownloadAddress(ConstCorrespond.downloadAddress + projectCategory.getProjectApplicationDownloadAddress());
         res.setIsExistMeetingReview(projectCategory.getIsExistMeetingReview());
-        res.setApplicationStartTime(timetoString(projectCategory
-                .getApplicationStartTime()));
-        res.setApplicationEndTime(timetoString(projectCategory
-                .getApplicationEndTime()));
-        res.setProjectStartTime(timetoString(projectCategory
-                .getProjectStartTime()));
-        res.setProjectEndTime(timetoString(projectCategory
-                .getProjectEndTime()));
+        res.setApplicationStartTime(timetoString(projectCategory.getApplicationStartTime()));
+        res.setApplicationEndTime(timetoString(projectCategory.getApplicationEndTime()));
+        res.setProjectStartTime(timetoString(projectCategory.getProjectStartTime()));
+        res.setProjectEndTime(timetoString(projectCategory.getProjectEndTime()));
 
         ReportInfo interimInfo = new ReportInfo();
         if (projectCategory.getIsInterimReportActivated() == 1) {
-            interimInfo.setDeadline(timetoString(projectCategory
-                    .getInterimReportEndTime()));
+            interimInfo.setDeadline(timetoString(projectCategory.getInterimReportEndTime()));
             interimInfo.setIsReportActivated(true);
-            interimInfo.setStartTime(timetoString(projectCategory
-                    .getInterimReportStartTime()));
-            interimInfo.setReportTemplateAddress(ConstCorrespond.downloadAddress + projectCategory
-                    .getInterimReportDownloadAddress());
+            interimInfo.setStartTime(timetoString(projectCategory.getInterimReportStartTime()));
+            interimInfo.setReportTemplateAddress(ConstCorrespond.downloadAddress + projectCategory.getInterimReportDownloadAddress());
             res.setInterimReport(interimInfo);
         } else {
             interimInfo.setIsReportActivated(false);
@@ -173,13 +164,10 @@ public class AdminServiceImpl implements AdminService {
         ReportInfo concludingInfo = new ReportInfo();
         if (projectCategory.getIsConcludingReportActivated() == 1) {
 
-            concludingInfo.setDeadline(timetoString(projectCategory
-                    .getConcludingReportEndTime()));
+            concludingInfo.setDeadline(timetoString(projectCategory.getConcludingReportEndTime()));
             concludingInfo.setIsReportActivated(true);
-            concludingInfo.setStartTime(timetoString(projectCategory
-                    .getConcludingReportStartTime()));
-            concludingInfo.setReportTemplateAddress(ConstCorrespond.downloadAddress + projectCategory
-                    .getConcludingReportDownloadAddress());
+            concludingInfo.setStartTime(timetoString(projectCategory.getConcludingReportStartTime()));
+            concludingInfo.setReportTemplateAddress(ConstCorrespond.downloadAddress + projectCategory.getConcludingReportDownloadAddress());
             res.setConcludingReport(concludingInfo);
         } else {
             concludingInfo.setIsReportActivated(false);
@@ -489,8 +477,7 @@ public class AdminServiceImpl implements AdminService {
                     res.setProjectCategoryId(category.getProjectCategoryId());
                     res.setProjectCategoryName(category.getProjectCategoryName());
                     res.setProjectId(application.getProjectApplicationId());
-                    res.setProjectDownloadAddress(application
-                            .getProjectApplicationUploadAddress());
+                    res.setProjectDownloadAddress(ConstCorrespond.downloadAddress + application.getProjectApplicationUploadAddress());
                     res.setProjectName(application.getProjectName());
                     res.setDescription(application.getProjectDescription());
                     res.setProjectMaxMoney(category.getMaxMoney());
@@ -517,7 +504,7 @@ public class AdminServiceImpl implements AdminService {
                         res.setProjectCategoryId(category.getProjectCategoryId());
                         res.setProjectCategoryName(category.getProjectCategoryName());
                         res.setProjectId(application.getProjectApplicationId());
-                        res.setProjectDownloadAddress(projectProgress.getConcludingReportUploadAddress());
+                        res.setProjectDownloadAddress(ConstCorrespond.downloadAddress + projectProgress.getConcludingReportUploadAddress());
                         res.setProjectName(application.getProjectName());
                         res.setDescription(application.getProjectDescription());
                         res.setProjectMaxMoney(category.getMaxMoney());
@@ -678,7 +665,7 @@ public class AdminServiceImpl implements AdminService {
                             if(!InterimReportStartTime.before(nowTime)) {
                                 info.setStatus(3);
                             } else if(InterimReportEndTime.after(nowTime)) {
-                                info.setReportAddress(projectCategory.getInterimReportDownloadAddress());
+                                info.setReportAddress(ConstCorrespond.downloadAddress + projectCategory.getInterimReportDownloadAddress());
                                 info.setStatus(1);
                             } else {
                                 info.setStatus(2);
@@ -695,7 +682,7 @@ public class AdminServiceImpl implements AdminService {
                             if(!ConcludingReportStartTime.before(nowTime)) {
                                 info.setStatus(3);
                             } else if(ConcludingReportEndTime.after(nowTime)) {
-                                info.setReportAddress(projectCategory.getConcludingReportDownloadAddress());
+                                info.setReportAddress(ConstCorrespond.downloadAddress + projectCategory.getConcludingReportDownloadAddress());
                                 info.setStatus(1);
                             } else {
                                 info.setStatus(2);

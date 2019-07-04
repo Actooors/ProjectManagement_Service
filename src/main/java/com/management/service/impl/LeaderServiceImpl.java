@@ -173,7 +173,7 @@ public class LeaderServiceImpl implements LeaderService {
                 res.setProjectCategoryId(category.getProjectCategoryId());
                 res.setProjectCategoryName(category.getProjectCategoryName());
                 res.setProjectId(application.getProjectApplicationId());
-                res.setProjectDownloadAddress(application.getProjectApplicationUploadAddress());
+                res.setProjectDownloadAddress(ConstCorrespond.downloadAddress + application.getProjectApplicationUploadAddress());
                 res.setProjectName(application.getProjectName());
                 res.setDescription(application.getProjectDescription());
                 res.setExpertOpinion(adminService.getExpertOpinionList(application.getProjectApplicationId()));
@@ -293,7 +293,7 @@ public class LeaderServiceImpl implements LeaderService {
                             if(!InterimReportStartTime.before(nowTime)) {
                                 info.setStatus(3);
                             } else if(InterimReportEndTime.after(nowTime)) {
-                                info.setReportAddress(projectCategory.getInterimReportDownloadAddress());
+                                info.setReportAddress(ConstCorrespond.downloadAddress + projectCategory.getInterimReportDownloadAddress());
                                 info.setStatus(1);
                             } else {
                                 info.setStatus(2);
@@ -310,7 +310,7 @@ public class LeaderServiceImpl implements LeaderService {
                             if(!ConcludingReportStartTime.before(nowTime)) {
                                 info.setStatus(3);
                             } else if(ConcludingReportEndTime.after(nowTime)) {
-                                info.setReportAddress(projectCategory.getConcludingReportDownloadAddress());
+                                info.setReportAddress(ConstCorrespond.downloadAddress + projectCategory.getConcludingReportDownloadAddress());
                                 info.setStatus(1);
                             } else {
                                 info.setStatus(2);

@@ -430,8 +430,8 @@ public class UserServiceImpl implements UserService {
         ProjectMoreInfo res = new ProjectMoreInfo();
 
         ProjectCategory projectCategory = projectCategoryMapper.selectByPrimaryKey(resApplication.getProjectCategoryId());
-        if(resApplication.getReviewPhase() == 7) {
-            res.setProjectIndex(ConstCorrespond.downloadAddress + projectCategory.getMissionAddress());
+        if(resApplication.getReviewPhase() == 8) {
+            res.setProjectIndex(ConstCorrespond.downloadAddress + resApplication.getProjectIndex());
         }
         res.setApplicationAddress(ConstCorrespond.downloadAddress +
                 resApplication.getProjectApplicationUploadAddress());

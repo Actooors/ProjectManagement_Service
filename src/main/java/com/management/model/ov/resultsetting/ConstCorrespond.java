@@ -61,6 +61,12 @@ public class ConstCorrespond {
             "系统管理员"
     };
 
+    public final static String[] IS_MEETING = {
+            "",
+            "是",
+            "否"
+    };
+
     public final static int MIDDLE_PROGRESS = 2;
     public final static int FINAL_PROGRESS = 3;
     public final static int FINISH_PROGRESS_FAILED = 5;

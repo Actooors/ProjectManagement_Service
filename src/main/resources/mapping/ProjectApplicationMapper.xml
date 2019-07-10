@@ -112,6 +112,13 @@
           and ((review_phase = 7) or (review_phase between 1 and 4) or (review_phase = 8))
   </select>
 
+  <select id="selectAllProjectApplication" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from tbl_ProjectApplication
+    where review_leader_id = #{leaderId,jdbcType=VARCHAR}
+  </select>
+
   <select id="selectFailProjectApplication" resultMap="BaseResultMap" parameterType="java.lang.String">
   select * from tbl_ProjectApplication as a
   where a.review_phase=6 or a.project_index_state=false

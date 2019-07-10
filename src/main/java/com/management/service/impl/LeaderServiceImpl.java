@@ -391,4 +391,21 @@ public class LeaderServiceImpl implements LeaderService {
 
     }
 
+    /**
+     * @Description: 领导查看负责的所有项目申请
+     * @Param:
+     * @Return:
+     * @Author: xw
+     * @Date: 19-7-10
+     */
+    public Result SelectAllApplication(String leaderId){
+        try{
+            List<ProjectApplication> applicationList =
+            projectApplicationMapper.selectAllProjectApplication(leaderId);
+            return ResultTool.success(applicationList);
+        }catch (Exception e){
+            return ResultTool.error("查询失败,请联系开发人员!");
+        }
+    }
+
 }

@@ -95,4 +95,13 @@ public interface LeaderService {
      * @Date: 19-3-27
      */
     Result leaderDataStatistics(String leaderId);
+
+    /**
+     * @Description: 领导查看负责的所有项目申请
+     * @Param:
+     * @Return:
+     * @Author: xw
+     * @Date: 19-7-10
+     */
+    Result SelectAllApplication(String leaderId);
 }

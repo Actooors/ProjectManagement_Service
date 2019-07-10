@@ -35,4 +35,7 @@ public interface ProjectApplicationMapper {
     List<ProjectApplication> selectFailProjectApplication(String userId);
 
     List<ProjectApplication> queryAllProgressAndFailProject(String userId);
+
+    //领导查看所有自己负责的项目申请
+    List<ProjectApplication> selectAllProjectApplication(String leaderId);
 }

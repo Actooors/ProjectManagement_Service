@@ -1,5 +1,7 @@
 package com.management.controller;
 
+import com.management.dao.ProjectApplicationMapper;
+import com.management.model.entity.ProjectApplication;
 import com.management.model.jsonrequestbody.IsProjectCategoryPassedPostInfo;
 import com.management.model.jsonrequestbody.LeaderJudgeInfo;
 import com.management.model.ov.Result;
@@ -90,6 +92,13 @@ public class LeaderController {
     public Result queryDataStatistics(){
         String leaderId = UserContext.getCurrentUser().getUserId();
         return leaderService.leaderDataStatistics(leaderId);
+    }
+
+    @GetMapping("/AllApplication")
+    @ApiOperation(value = "领导查看自己负责的所有项目申请")
+    public Result queryAllApplication(){
+        String leaderId = UserContext.getCurrentUser().getUserId();
+        return leaderService.SelectAllApplication(leaderId);
     }
 
 }

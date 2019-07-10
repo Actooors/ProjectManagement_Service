@@ -5,6 +5,8 @@ import com.management.model.entity.ProjectCategoryExample;
 
 import java.util.Date;
 import java.util.List;
+
+import com.management.model.ov.resultsetting.AllApplication;
 import org.apache.ibatis.annotations.Param;
 
 public interface ProjectCategoryMapper {
@@ -30,7 +32,9 @@ public interface ProjectCategoryMapper {
 
     int updateByPrimaryKey(ProjectCategory record);
 
-
     //获取可申报项目ApplicationEndTime>NowTime
     List<ProjectCategory> selectCanProjectCategory(Date time);
+
+    //获取所有项目大类Id
+    List<AllApplication> getAllProjectCategoryId();
 }

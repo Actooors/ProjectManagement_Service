@@ -117,6 +117,7 @@
     <include refid="Base_Column_List" />
     from tbl_ProjectApplication
     where review_leader_id = #{leaderId,jdbcType=VARCHAR}
+          and project_category_id = #{projectCategoryId,jdbcType=VARCHAR}
   </select>
 
   <select id="selectFailProjectApplication" resultMap="BaseResultMap" parameterType="java.lang.String">

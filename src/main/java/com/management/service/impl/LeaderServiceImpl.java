@@ -11,6 +11,7 @@ import com.management.model.ov.Result;
 import com.management.model.ov.resultsetting.*;
 import com.management.service.LeaderService;
 import com.management.tools.ResultTool;
+import com.management.tools.TimeTool;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -400,9 +401,34 @@ public class LeaderServiceImpl implements LeaderService {
      */
     public Result SelectAllApplication(String leaderId){
         try{
-            List<ProjectApplication> applicationList =
-            projectApplicationMapper.selectAllProjectApplication(leaderId);
-            return ResultTool.success(applicationList);
+
+            List<AllApplication> allApplicationList = projectCategoryMapper.getAllProjectCategoryId();
+            for(AllApplication allApplication : allApplicationList){
+                List<ApplicationInfo> applicationInfoList = new ArrayList<>();
+
+                List<ProjectApplication> applicationList =
+                        projectApplicationMapper.selectAllProjectApplication(leaderId,allApplication.getProjectCategoryId());
+                for(ProjectApplication application : applicationList){
+                    ApplicationInfo applicationInfo = new ApplicationInfo();
+                    applicationInfo.setProjectName(application.getProjectName());
+                    applicationInfo.setProjectDescription(application.getProjectDescription());
+                    applicationInfo.setProjectMoney(application.getProjectMoney());
+                    applicationInfo.setUserId(application.getUserId());
+                    UserBaseInfo userBaseInfo = userMapper.selectUserInfoByUserId(application.getUserId());
+                    applicationInfo.setUserName(userBaseInfo.getUserName());
+                    applicationInfo.setProjectApplicationUploadAddress(application.getProjectApplicationUploadAddress());
+                    applicationInfo.setIsMeeting(application.getIsMeeting());
+                    applicationInfo.setMeetingReviewMessage(application.getMeetingReviewMessage());
+                    applicationInfo.setReviewPhase(ConstCorrespond.reviewPhrase[application.getReviewPhase()]);
+                    applicationInfo.setFailureReason(application.getFailureReason());
+                    applicationInfo.setApplicationTime(TimeTool.timeToString1(application.getApplicationTime()));
+
+                    applicationInfoList.add(applicationInfo);
+
+                }
+                allApplication.setApplicationList(applicationInfoList);
+            }
+            return ResultTool.success(allApplicationList);
         }catch (Exception e){
             return ResultTool.error("查询失败,请联系开发人员!");
         }

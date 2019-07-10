@@ -32,6 +32,12 @@
     <result column="mission_address" property="missionAddress" jdbcType="VARCHAR" />
     <result column="modify_frequency" property="modifyFrequency" jdbcType="INTEGER" />
   </resultMap>
+    <resultMap id="AllProjectCategoryId" type="com.management.model.ov.resultsetting.AllApplication" >
+        <id column="project_category_id" property="projectCategoryId" jdbcType="VARCHAR" />
+        <result column="project_category_name" property="projectCategoryName" jdbcType="VARCHAR" />
+        <result column="project_category_description" property="projectCategoryDescription" jdbcType="VARCHAR" />
+        <result column="user_name" property="principalName" jdbcType="VARCHAR" />
+    </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -121,6 +127,13 @@
     from tbl_ProjectCategory
     where project_category_id = #{projectCategoryId,jdbcType=VARCHAR}
   </select>
+    <select id="getAllProjectCategoryId" resultMap="AllProjectCategoryId" parameterType="java.lang.String" >
+      select a.project_category_id,a.project_category_name,b.user_name,
+      a.project_category_description
+      from tbl_ProjectCategory as a, tbl_User as b
+      where a.principal_id = b.user_id
+
+    </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
     delete from tbl_ProjectCategory
     where project_category_id = #{projectCategoryId,jdbcType=VARCHAR}

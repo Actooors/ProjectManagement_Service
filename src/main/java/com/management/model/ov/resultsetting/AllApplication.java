@@ -16,5 +16,6 @@ public class AllApplication {
     String projectCategoryName;
     String projectCategoryDescription;
     String principalName;
+    String maxMoney;
     List<ApplicationInfo> applicationList;
 }

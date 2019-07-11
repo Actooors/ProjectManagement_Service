@@ -37,6 +37,7 @@
         <result column="project_category_name" property="projectCategoryName" jdbcType="VARCHAR" />
         <result column="project_category_description" property="projectCategoryDescription" jdbcType="VARCHAR" />
         <result column="user_name" property="principalName" jdbcType="VARCHAR" />
+        <result column="max_money" property="maxMoney" jdbcType="VARCHAR"/>
     </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -129,7 +130,7 @@
   </select>
     <select id="getAllProjectCategoryId" resultMap="AllProjectCategoryId" parameterType="java.lang.String" >
       select a.project_category_id,a.project_category_name,b.user_name,
-      a.project_category_description
+      a.project_category_description,a.max_money
       from tbl_ProjectCategory as a, tbl_User as b
       where a.principal_id = b.user_id
 

@@ -404,6 +404,8 @@ public class LeaderServiceImpl implements LeaderService {
 
             List<AllApplication> allApplicationList = projectCategoryMapper.getAllProjectCategoryId();
             for(AllApplication allApplication : allApplicationList){
+                allApplication.setMaxMoney(allApplication.getMaxMoney() + "元");
+
                 List<ApplicationInfo> applicationInfoList = new ArrayList<>();
 
                 List<ProjectApplication> applicationList =

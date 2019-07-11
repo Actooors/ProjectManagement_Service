@@ -17,6 +17,7 @@ public class ApplicationInfo {
     private Integer projectMoney;
     private String userId;
     private String userName;
+    private String projectIndex;
     private String projectApplicationUploadAddress;
     private String isMeeting;
     private String meetingReviewMessage;

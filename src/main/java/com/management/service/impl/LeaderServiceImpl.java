@@ -418,7 +418,12 @@ public class LeaderServiceImpl implements LeaderService {
                     applicationInfo.setUserId(application.getUserId());
                     UserBaseInfo userBaseInfo = userMapper.selectUserInfoByUserId(application.getUserId());
                     applicationInfo.setUserName(userBaseInfo.getUserName());
-                    applicationInfo.setProjectIndex(ConstCorrespond.downloadAddress + application.getProjectIndex());
+                    if(application.getProjectIndex() != null){
+                        applicationInfo.setProjectIndex(ConstCorrespond.downloadAddress + application.getProjectIndex());
+                    }else {
+                        applicationInfo.setProjectIndex(null);
+                    }
+//                    applicationInfo.setProjectIndex(ConstCorrespond.downloadAddress + application.getProjectIndex());
                     applicationInfo.setProjectApplicationUploadAddress(ConstCorrespond.downloadAddress + application.getProjectApplicationUploadAddress());
                     applicationInfo.setIsMeeting(ConstCorrespond.IS_MEETING[application.getIsMeeting()]);
                     applicationInfo.setMeetingReviewMessage(application.getMeetingReviewMessage());

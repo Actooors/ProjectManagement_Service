@@ -3,7 +3,7 @@
 /src/main/resources/application.yml
 /src/main/resources/generator/generatorConfig.xml
 /src/main/java/com/management/tools/AuthTool.java
-
+/sql_new.sql
 
 ### STS ###
 .apt_generated

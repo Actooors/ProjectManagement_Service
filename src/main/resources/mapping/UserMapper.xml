@@ -3,6 +3,7 @@
 <mapper namespace="com.management.dao.UserMapper" >
   <resultMap id="BaseResultMap" type="com.management.model.entity.User" >
     <id column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="sex" property="sex" jdbcType="VARCHAR" />
     <result column="department" property="department" jdbcType="VARCHAR" />
@@ -104,7 +105,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    user_id, user_name, sex, department, phone, mail, position, major, identity,
+    user_id, password, user_name, sex, department, phone, mail, position, major, identity,
     is_able_login, leader_id
   </sql>
   <sql id="User_Info_List">
@@ -129,7 +130,7 @@
     </if>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select 
+    select
     <include refid="Base_Column_List" />
     from tbl_User
     where user_id = #{userId,jdbcType=VARCHAR}

@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
             return ResultTool.error("账号或密码不能为空");
         }
 
-        User existedUser;
+        User existedUser = new User();
         try{
             existedUser = userMapper.selectByPrimaryKey(loginUser.getUserId());
             if(existedUser.getIsAbleLogin() == 2){
@@ -102,13 +102,16 @@ public class UserServiceImpl implements UserService {
         //如果该账户在数据库已经存在
         if (existedUser != null) {
             //如果该账户的账号密码验证正确并且可以登录
-            boolean auth = AuthTool.getAuth(loginUser.getUserId(), loginUser.getPassword());
-            //TODO 如果密码输入错误
-            if(!auth) {
-                return ResultTool.error("密码错误或未使用校园网登录导致请求超时");
-            } else if(existedUser.getIsAbleLogin() == LOGIN_ENABLE) {
+            if ((loginUser.getUserId().equals(existedUser.getUserId())
+                    && MD5Tool.getMD5(loginUser.getPassword()).equals(existedUser.getPassword()))
+                    && existedUser.getIsAbleLogin() == LOGIN_ENABLE) {
                 return ResultTool.success(setLoginResponse(loginUser.getUserId(),
                         existedUser.getIdentity(), existedUser.getUserName()));
+                //如果密码输入错误
+            } else if (!(loginUser.getUserId().equals(existedUser.getUserId())
+                    && MD5Tool.getMD5(loginUser.getPassword()).equals(existedUser.getPassword()))) {
+                return ResultTool.error("密码输入错误");
+                //如果该账户登录权限为禁止登陆
             } else {
                 return ResultTool.error("您没有权限登录该系统");
             }
@@ -116,10 +119,12 @@ public class UserServiceImpl implements UserService {
             // 请求上海大学登陆接口查看有没有该用户，有的话该用户进入我们的数据库，没有的话返回登陆失败的信息
             if (AuthTool.getAuth(loginUser.getUserId(), loginUser.getPassword())) {
                 User newUser = AuthTool.getInfo(loginUser.getUserId());
+                String pwd = loginUser.getPassword();
                 //如果返回了newUser，说明操作正常
                 if (newUser != null) {
                     newUser.setIdentity("1");
                     newUser.setIsAbleLogin(1);
+                    newUser.setPassword(MD5Tool.getMD5(pwd));
                     userMapper.insert(newUser);
 
                     return ResultTool.success(setLoginResponse(loginUser.getUserId(),
@@ -133,6 +138,7 @@ public class UserServiceImpl implements UserService {
                 return ResultTool.error("账号或密码输入错误");
             }
         }
+
 
     }
 

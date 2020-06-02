@@ -49,7 +49,6 @@ public class JwtUtil {
                 .withIssuedAt(currentDate)
                 .withExpiresAt(calendar.getTime())
                 .withSubject(subject)
-                // TODO
                 .withClaim("identity", identity)
                 .sign(algorithm);
 
